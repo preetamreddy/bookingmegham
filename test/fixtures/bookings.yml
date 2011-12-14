@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  guest_name: MyString
+  guest_phone_number: 1
+  guest_email_id: MyString
+  number_of_rooms: 1
+  from: 2011-12-14
+  to: 2011-12-14
+  number_of_adults: 1
+  number_of_children: 1
+  number_of_infants: 1
+  guests_arrival_time: 2011-12-14 14:45:20
+  guests_arriving_from: MyString
+  guests_food_preferences: MyString
+  total_price: 1
+  paid: 1
+  balance_payment: 1
+  pay_by_date: 2011-12-14
+  comments: MyText
+
+two:
+  guest_name: MyString
+  guest_phone_number: 1
+  guest_email_id: MyString
+  number_of_rooms: 1
+  from: 2011-12-14
+  to: 2011-12-14
+  number_of_adults: 1
+  number_of_children: 1
+  number_of_infants: 1
+  guests_arrival_time: 2011-12-14 14:45:20
+  guests_arriving_from: MyString
+  guests_food_preferences: MyString
+  total_price: 1
+  paid: 1
+  balance_payment: 1
+  pay_by_date: 2011-12-14
+  comments: MyText

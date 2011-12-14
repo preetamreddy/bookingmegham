@@ -1,0 +1,85 @@
+<%= form_for(@booking) do |f| %>
+  <% if @booking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+
+      <ul>
+      <% @booking.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :guest_name %><br />
+    <%= f.text_field :guest_name %>
+  </div>
+  <div class="field">
+    <%= f.label :guest_phone_number %><br />
+    <%= f.number_field :guest_phone_number %>
+  </div>
+  <div class="field">
+    <%= f.label :guest_email_id %><br />
+    <%= f.text_field :guest_email_id %>
+  </div>
+  <div class="field">
+    <%= f.label :number_of_rooms %><br />
+    <%= f.number_field :number_of_rooms %>
+  </div>
+  <div class="field">
+    <%= f.label :from %><br />
+    <%= f.date_select :from %>
+  </div>
+  <div class="field">
+    <%= f.label :to %><br />
+    <%= f.date_select :to %>
+  </div>
+  <div class="field">
+    <%= f.label :number_of_adults %><br />
+    <%= f.number_field :number_of_adults %>
+  </div>
+  <div class="field">
+    <%= f.label :number_of_children %><br />
+    <%= f.number_field :number_of_children %>
+  </div>
+  <div class="field">
+    <%= f.label :number_of_infants %><br />
+    <%= f.number_field :number_of_infants %>
+  </div>
+  <div class="field">
+    <%= f.label :guests_arrival_time %><br />
+    <%= f.time_select :guests_arrival_time %>
+  </div>
+  <div class="field">
+    <%= f.label :guests_arriving_from %><br />
+    <%= f.text_field :guests_arriving_from %>
+  </div>
+  <div class="field">
+    <%= f.label :guests_food_preferences %><br />
+    <%= f.text_field :guests_food_preferences %>
+  </div>
+  <div class="field">
+    <%= f.label :total_price %><br />
+    <%= f.number_field :total_price %>
+  </div>
+  <div class="field">
+    <%= f.label :paid %><br />
+    <%= f.number_field :paid %>
+  </div>
+  <div class="field">
+    <%= f.label :balance_payment %><br />
+    <%= f.number_field :balance_payment %>
+  </div>
+  <div class="field">
+    <%= f.label :pay_by_date %><br />
+    <%= f.date_select :pay_by_date %>
+  </div>
+  <div class="field">
+    <%= f.label :comments %><br />
+    <%= f.text_area :comments, rows: 6 %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

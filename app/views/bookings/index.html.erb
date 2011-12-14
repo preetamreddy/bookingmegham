@@ -1,0 +1,58 @@
+<h1>Listing bookings</h1>
+
+<table>
+	<% @bookings.each do |booking| %>
+  <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+
+    <td>
+			<dl class='list_description'>
+				<dt><%= booking.guest_name %></dt>
+    		<dd><%= booking.guest_phone_number %></dd>
+    		<dd><%= booking.guest_email_id %></dd>
+			</dl>
+		</td>
+
+    <td>
+			<dl class='list_description'>
+				<dt><%= booking.number_of_rooms %> room(s)</dt>
+    		<dd><%= booking.from %> to <%= booking.to %></dd>
+			</dl>
+		</td>
+
+    <td width=75>
+			Adults: <%= booking.number_of_adults %><br/>
+    	Children: <%= booking.number_of_children %><br/>
+    	Infants: <%= booking.number_of_infants %>
+		</td>
+
+    <td>
+			<dl class='list_description'>
+				<dt>Arriving at <%= booking.guests_arrival_time.hour %>:00</dt>
+    		<dd>From <%= booking.guests_arriving_from %></dd>
+			</dl>
+		</td>
+
+    <td>
+			<dl class='list_description'>
+				<dt>Rs. <%= booking.total_price %></dt>
+    		<dd>Paid: <%= booking.paid %>; Balance: <%= booking.balance_payment %></dd>
+    		<dd>Pay by: <%= booking.pay_by_date %></dd>
+			</dl>
+		</td>
+
+    <td><b>Food preferences: </b><%= booking.guests_food_preferences %></td>
+
+    <td><%= booking.comments %></td>
+
+    <td class='list_actions'>
+			<%= link_to 'Show', booking %><br/>
+    	<%= link_to 'Edit', edit_booking_path(booking) %><br/>
+    	<%= link_to 'Destroy', booking, confirm: 'Are you sure?', method: :delete %>
+		</td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Booking', new_booking_path %>

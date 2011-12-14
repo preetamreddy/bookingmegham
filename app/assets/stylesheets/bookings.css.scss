@@ -1,0 +1,49 @@
+// Place all the styles related to the Bookings controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.bookings {
+
+	table {
+		border-collapse: collapse;
+	}
+
+	table tr td {
+		padding: 5px;
+		vertical-align: center;
+	}
+	
+	.list_description {
+		white-space: nowrap;
+
+		dl {
+			margin: 0;
+		}
+
+		dt {
+			font-weight: bold;
+			font-size: larger;
+		}
+
+		dd {
+			margin: 0;
+		}
+	}
+
+	.list_line_odd {
+		background: #036339;
+		color: white;
+	}
+
+	.list_line_even {
+		background: #A3BE1F;
+		color: black;
+	}
+
+	.list_actions {
+		font-size: x-small;
+		text-align: right;
+		padding-left: 1em;
+	}
+
+}

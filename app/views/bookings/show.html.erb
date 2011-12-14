@@ -1,0 +1,90 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Guest name:</b>
+  <%= @booking.guest_name %>
+</p>
+
+<p>
+  <b>Guest phone number:</b>
+  <%= @booking.guest_phone_number %>
+</p>
+
+<p>
+  <b>Guest email:</b>
+  <%= @booking.guest_email_id %>
+</p>
+
+<p>
+  <b>Number of rooms:</b>
+  <%= @booking.number_of_rooms %>
+</p>
+
+<p>
+  <b>From:</b>
+  <%= @booking.from %>
+</p>
+
+<p>
+  <b>To:</b>
+  <%= @booking.to %>
+</p>
+
+<p>
+  <b>Number of adults:</b>
+  <%= @booking.number_of_adults %>
+</p>
+
+<p>
+  <b>Number of children:</b>
+  <%= @booking.number_of_children %>
+</p>
+
+<p>
+  <b>Number of infants:</b>
+  <%= @booking.number_of_infants %>
+</p>
+
+<p>
+  <b>Guests arrival time:</b>
+  <%= @booking.guests_arrival_time %>
+</p>
+
+<p>
+  <b>Guests arriving from:</b>
+  <%= @booking.guests_arriving_from %>
+</p>
+
+<p>
+  <b>Guests food preferences:</b>
+  <%= @booking.guests_food_preferences %>
+</p>
+
+<p>
+  <b>Total price:</b>
+  <%= @booking.total_price %>
+</p>
+
+<p>
+  <b>Paid:</b>
+  <%= @booking.paid %>
+</p>
+
+<p>
+  <b>Balance payment:</b>
+  <%= @booking.balance_payment %>
+</p>
+
+<p>
+  <b>Pay by date:</b>
+  <%= @booking.pay_by_date %>
+</p>
+
+<p>
+  <b>Comments:</b>
+  <%= @booking.comments %>
+</p>
+
+
+<%= link_to 'Edit', edit_booking_path(@booking) %> |
+<%= link_to 'Back', bookings_path %>
