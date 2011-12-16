@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :guest_phone_number %><br />
-    <%= f.number_field :guest_phone_number %>
+    <%= f.text_field :guest_phone_number %>
   </div>
   <div class="field">
     <%= f.label :guest_email_id %><br />
@@ -25,31 +25,36 @@
   </div>
   <div class="field">
     <%= f.label :number_of_rooms %><br />
-    <%= f.number_field :number_of_rooms %>
+    <%= f.number_field :number_of_rooms, :min => 1 %>
   </div>
   <div class="field">
     <%= f.label :from %><br />
-    <%= f.date_select :from %>
+    <%= f.date_select :from, :start_year => Time.now.year, 
+			:end_year => Time.now.year + 1, :prompt => { 
+			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
   </div>
   <div class="field">
     <%= f.label :to %><br />
-    <%= f.date_select :to %>
+    <%= f.date_select :to, :start_year => Time.now.year, 
+			:end_year => Time.now.year + 1, :prompt => {
+			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
   </div>
   <div class="field">
     <%= f.label :number_of_adults %><br />
-    <%= f.number_field :number_of_adults %>
+    <%= f.number_field :number_of_adults, :min => 1 %>
   </div>
   <div class="field">
     <%= f.label :number_of_children %><br />
-    <%= f.number_field :number_of_children %>
+    <%= f.number_field :number_of_children, :min => 0 %>
   </div>
   <div class="field">
     <%= f.label :number_of_infants %><br />
-    <%= f.number_field :number_of_infants %>
+    <%= f.number_field :number_of_infants, :min => 0 %>
   </div>
   <div class="field">
     <%= f.label :guests_arrival_time %><br />
-    <%= f.time_select :guests_arrival_time %>
+    <%= f.time_select :guests_arrival_time, :prompt => {
+			:hour => 'Select hour', :minute => 'Select minute'} %>
   </div>
   <div class="field">
     <%= f.label :guests_arriving_from %><br />
@@ -61,19 +66,21 @@
   </div>
   <div class="field">
     <%= f.label :total_price %><br />
-    <%= f.number_field :total_price %>
+    <%= f.text_field :total_price %>
   </div>
   <div class="field">
     <%= f.label :paid %><br />
-    <%= f.number_field :paid %>
+    <%= f.text_field :paid %>
   </div>
   <div class="field">
     <%= f.label :balance_payment %><br />
-    <%= f.number_field :balance_payment %>
+    <%= f.text_field :balance_payment %>
   </div>
   <div class="field">
     <%= f.label :pay_by_date %><br />
-    <%= f.date_select :pay_by_date %>
+    <%= f.date_select :pay_by_date, :start_year => Time.now.year,
+			:end_year => Time.now.year + 1, :prompt => {
+			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
   </div>
   <div class="field">
     <%= f.label :comments %><br />

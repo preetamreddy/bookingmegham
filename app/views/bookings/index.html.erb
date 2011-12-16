@@ -27,7 +27,10 @@
 
     <td>
 			<dl class='list_description'>
-				<dt>Arriving at <%= booking.guests_arrival_time.hour %>:00</dt>
+				<dt>Arriving at <%= unless booking.guests_arrival_time.nil?
+															booking.guests_arrival_time.hour.to_s + ':' +
+															booking.guests_arrival_time.min.to_s.ljust(2, '0')
+														end %></dt>
     		<dd>From <%= booking.guests_arriving_from %></dd>
 			</dl>
 		</td>
