@@ -1,4 +1,4 @@
-<h1>Listing bookings</h1>
+<h1>Bookings</h1>
 
 <table>
 	<% @bookings.each do |booking| %>
@@ -15,7 +15,7 @@
     <td>
 			<dl class='list_description'>
 				<dt><%= booking.number_of_rooms %> room(s)</dt>
-    		<dd><%= booking.from %> to <%= booking.to %></dd>
+    		<dd><%= l booking.from, :format => :short %> to <%= l booking.to, :format => :short %></dd>
 			</dl>
 		</td>
 
@@ -28,8 +28,7 @@
     <td>
 			<dl class='list_description'>
 				<dt>Arriving at <%= unless booking.guests_arrival_time.nil?
-															booking.guests_arrival_time.hour.to_s + ':' +
-															booking.guests_arrival_time.min.to_s.ljust(2, '0')
+															l booking.guests_arrival_time, :format => :short
 														end %></dt>
     		<dd>From <%= booking.guests_arriving_from %></dd>
 			</dl>
@@ -37,9 +36,16 @@
 
     <td>
 			<dl class='list_description'>
-				<dt>Rs. <%= booking.total_price %></dt>
-    		<dd>Paid: <%= booking.paid %>; Balance: <%= booking.balance_payment %></dd>
-    		<dd>Pay by: <%= booking.pay_by_date %></dd>
+				<dt><% if booking.total_price != 0 %>
+									<%= number_to_currency(booking.total_price) %>
+						<% end %></dt>
+    		<dd>Paid: <% if booking.paid != 0 %>
+												<%= number_to_currency(booking.paid) %>
+									<% end %></dd>
+				<dd>Balance: <%if booking.balance_payment != 0 %>
+													<%= number_to_currency(booking.balance_payment) %>
+										 <% end %></dd>
+    		<dd>Pay by: <%= l booking.pay_by_date, :format => :short %></dd>
 			</dl>
 		</td>
 

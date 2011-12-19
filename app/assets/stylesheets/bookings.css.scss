@@ -4,6 +4,13 @@
 
 .bookings {
 
+	h1 {
+		margin: 0;
+		padding-bottom: 0.5em;
+		border-bottom: 3px dotted;
+		font: bold 150% sans-serif;
+	}
+
 	table {
 		border-collapse: collapse;
 	}
@@ -31,13 +38,11 @@
 	}
 
 	.list_line_odd {
-		background: #036339;
-		color: white;
+		background: white;
 	}
 
 	.list_line_even {
-		background: #A3BE1F;
-		color: black;
+		background: #FFCCFF;
 	}
 
 	.list_actions {
