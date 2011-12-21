@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  room_type_id: 1
+  for_date: 2011-12-21
+  count: 1
+
+two:
+  room_type_id: 1
+  for_date: 2011-12-21
+  count: 1

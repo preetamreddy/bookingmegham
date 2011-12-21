@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @property.name %>
+</p>
+
+<p>
+  <b>Price for children below 5 years:</b>
+  <%= @property.price_for_children_below_5_years %>
+</p>
+
+<p>
+  <b>Price for children below 12 years:</b>
+  <%= @property.price_for_children_below_12_years %>
+</p>
+
+<p>
+  <b>Price for triple occupancy:</b>
+  <%= @property.price_for_triple_occupancy %>
+</p>
+
+<p>
+  <b>Price for driver:</b>
+  <%= @property.price_for_driver %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @property.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_property_path(@property) %> |
+<%= link_to 'Back', properties_path %>

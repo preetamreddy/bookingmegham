@@ -1,0 +1,33 @@
+<h1>Listing properties</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Price for children below 5 years</th>
+    <th>Price for children below 12 years</th>
+    <th>Price for triple occupancy</th>
+    <th>Price for driver</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @properties.each do |property| %>
+  <tr>
+    <td><%= property.name %></td>
+    <td><%= property.price_for_children_below_5_years %></td>
+    <td><%= property.price_for_children_below_12_years %></td>
+    <td><%= property.price_for_triple_occupancy %></td>
+    <td><%= property.price_for_driver %></td>
+    <td><%= property.description %></td>
+    <td><%= link_to 'Show', property %></td>
+    <td><%= link_to 'Edit', edit_property_path(property) %></td>
+    <td><%= link_to 'Destroy', property, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Property', new_property_path %>

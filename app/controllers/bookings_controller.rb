@@ -14,6 +14,7 @@ class BookingsController < ApplicationController
   # GET /bookings/1.json
   def show
     @booking = Booking.find(params[:id])
+		@booking.revert_to(params[:version].to_i) if params[:version]
 
     respond_to do |format|
       format.html # show.html.erb
@@ -44,6 +45,10 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       if @booking.save
+
+				BookedRoom.book_rooms(@booking.room_type_id, @booking.from, 
+					@booking.to, @booking.number_of_rooms)
+
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
         format.json { render json: @booking, status: :created, location: @booking }
       else
@@ -57,9 +62,23 @@ class BookingsController < ApplicationController
   # PUT /bookings/1.json
   def update
     @booking = Booking.find(params[:id])
+		old_room_type_id = @booking.room_type_id
+		old_from_date = @booking.from
+		old_to_date = @booking.to
+		old_number_of_rooms = @booking.number_of_rooms
 
     respond_to do |format|
       if @booking.update_attributes(params[:booking])
+				if (@booking.room_type_id != old_room_type_id ||
+						@booking.from != old_from_date ||
+						@booking.to != old_to_date ||
+						@booking.number_of_rooms != old_number_of_rooms)
+							BookedRoom.cancel_rooms(old_room_type_id, old_from_date, 
+								old_to_date, old_number_of_rooms)
+							BookedRoom.book_rooms(@booking.room_type_id, @booking.from, 
+								@booking.to, @booking.number_of_rooms)
+				end
+
         format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
         format.json { head :ok }
       else
@@ -74,6 +93,9 @@ class BookingsController < ApplicationController
   def destroy
     @booking = Booking.find(params[:id])
     @booking.destroy
+
+		BookedRoom.cancel_rooms(@booking.room_type_id, @booking.from, @booking.to,
+			@booking.number_of_rooms)
 
     respond_to do |format|
       format.html { redirect_to bookings_url }

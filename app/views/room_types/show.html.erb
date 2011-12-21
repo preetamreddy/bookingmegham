@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Property:</b>
+  <%= @room_type.property.name %>
+</p>
+
+<p>
+  <b>Room type:</b>
+  <%= @room_type.room_type %>
+</p>
+
+<p>
+  <b>Price for single occupancy:</b>
+  <%= @room_type.price_for_single_occupancy %>
+</p>
+
+<p>
+  <b>Price for double occupancy:</b>
+  <%= @room_type.price_for_double_occupancy %>
+</p>
+
+<p>
+  <b>Number of rooms:</b>
+  <%= @room_type.number_of_rooms %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @room_type.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_room_type_path(@room_type) %> |
+<%= link_to 'Back', room_types_path %>

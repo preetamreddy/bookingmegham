@@ -14,7 +14,8 @@
 
     <td>
 			<dl class='list_description'>
-				<dt><%= booking.number_of_rooms %> room(s)</dt>
+				<dd><%= booking.room_type.property.name %></dd>
+				<dd><%= pluralize(booking.number_of_rooms, booking.room_type.room_type) %></dd>
     		<dd><%= l booking.from, :format => :short %> to <%= l booking.to, :format => :short %></dd>
 			</dl>
 		</td>

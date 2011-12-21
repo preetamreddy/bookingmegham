@@ -16,6 +16,16 @@
 </p>
 
 <p>
+	<b>Property:</b>
+	<%= @booking.room_type.property.name %>
+</p>
+
+<p>
+	<b>Room type:</b>
+	<%= @booking.room_type.room_type %>
+</p>
+
+<p>
   <b>Number of rooms:</b>
   <%= @booking.number_of_rooms %>
 </p>
@@ -87,4 +97,11 @@
 
 
 <%= link_to 'Edit', edit_booking_path(@booking) %> |
-<%= link_to 'Back', bookings_path %>
+<%= link_to 'Back', bookings_path %> |
+Version <%= @booking.version %> |
+<% if params[:version] %>
+	<%= link_to 'Latest Version', :version => nil %> |
+<% end %>
+<% if @booking.version > 1 %>
+	<%= link_to 'Previous Version', :version => @booking.version-1 %>
+<% end %>

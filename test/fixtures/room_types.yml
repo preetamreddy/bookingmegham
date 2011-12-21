@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  property_id: 1
+  room_type: MyString
+  price_for_single_occupancy: 1
+  price_for_double_occupancy: 1
+  description: MyText
+
+two:
+  property_id: 1
+  room_type: MyString
+  price_for_single_occupancy: 1
+  price_for_double_occupancy: 1
+  description: MyText

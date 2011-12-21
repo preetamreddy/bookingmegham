@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  price_for_children_below_12_years: 1
+  price_for_children_below_5_years: 1
+  price_for_triple_occupancy: 1
+  price_for_driver: 1
+  description: MyText
+
+two:
+  name: MyString
+  price_for_children_below_12_years: 1
+  price_for_children_below_5_years: 1
+  price_for_triple_occupancy: 1
+  price_for_driver: 1
+  description: MyText

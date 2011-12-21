@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111214091520) do
+ActiveRecord::Schema.define(:version => 20111221182520) do
+
+  create_table "booked_rooms", :force => true do |t|
+    t.integer  "room_type_id"
+    t.date     "for_date"
+    t.integer  "count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "bookings", :force => true do |t|
     t.string   "guest_name"
@@ -33,6 +41,50 @@ ActiveRecord::Schema.define(:version => 20111214091520) do
     t.text     "comments"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "room_type_id"
   end
+
+  create_table "properties", :force => true do |t|
+    t.string   "name"
+    t.integer  "price_for_children_below_12_years"
+    t.integer  "price_for_children_below_5_years"
+    t.integer  "price_for_triple_occupancy"
+    t.integer  "price_for_driver"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "room_types", :force => true do |t|
+    t.integer  "property_id"
+    t.string   "room_type"
+    t.integer  "price_for_single_occupancy"
+    t.integer  "price_for_double_occupancy"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "number_of_rooms"
+  end
+
+  create_table "versions", :force => true do |t|
+    t.integer  "versioned_id"
+    t.string   "versioned_type"
+    t.integer  "user_id"
+    t.string   "user_type"
+    t.string   "user_name"
+    t.text     "modifications"
+    t.integer  "number"
+    t.integer  "reverted_from"
+    t.string   "tag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "versions", ["created_at"], :name => "index_versions_on_created_at"
+  add_index "versions", ["number"], :name => "index_versions_on_number"
+  add_index "versions", ["tag"], :name => "index_versions_on_tag"
+  add_index "versions", ["user_id", "user_type"], :name => "index_versions_on_user_id_and_user_type"
+  add_index "versions", ["user_name"], :name => "index_versions_on_user_name"
+  add_index "versions", ["versioned_id", "versioned_type"], :name => "index_versions_on_versioned_id_and_versioned_type"
 
 end

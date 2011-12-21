@@ -23,7 +23,11 @@
     <%= f.label :guest_email_id %><br />
     <%= f.text_field :guest_email_id %>
   </div>
-  <div class="field">
+	<div class="field">
+		<%= f.label :room_type_id %><br />
+		<%= f.number_field :room_type_id, :min => 1 %>
+	</div>
+	<div class="field">
     <%= f.label :number_of_rooms %><br />
     <%= f.number_field :number_of_rooms, :min => 1 %>
   </div>

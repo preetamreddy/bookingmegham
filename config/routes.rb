@@ -1,4 +1,10 @@
 Bookingmegham::Application.routes.draw do
+  resources :booked_rooms
+
+  resources :room_types
+
+  resources :properties
+
   resources :bookings
 
   # The priority is based upon order of creation:
