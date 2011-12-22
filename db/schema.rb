@@ -11,15 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111221182520) do
-
-  create_table "booked_rooms", :force => true do |t|
-    t.integer  "room_type_id"
-    t.date     "for_date"
-    t.integer  "count"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20111222111049) do
 
   create_table "bookings", :force => true do |t|
     t.string   "guest_name"
@@ -29,8 +21,6 @@ ActiveRecord::Schema.define(:version => 20111221182520) do
     t.date     "from"
     t.date     "to"
     t.integer  "number_of_adults"
-    t.integer  "number_of_children"
-    t.integer  "number_of_infants"
     t.time     "guests_arrival_time"
     t.string   "guests_arriving_from"
     t.string   "guests_food_preferences"
@@ -42,17 +32,28 @@ ActiveRecord::Schema.define(:version => 20111221182520) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "room_type_id"
+    t.integer  "number_of_children_between_5_and_12_years"
+    t.integer  "number_of_children_below_5_years"
+  end
+
+  create_table "line_items", :force => true do |t|
+    t.integer  "booking_id"
+    t.integer  "room_type_id"
+    t.date     "date"
+    t.integer  "number_of_rooms"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "properties", :force => true do |t|
     t.string   "name"
-    t.integer  "price_for_children_below_12_years"
     t.integer  "price_for_children_below_5_years"
     t.integer  "price_for_triple_occupancy"
     t.integer  "price_for_driver"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "price_for_children_between_5_and_12_years"
   end
 
   create_table "room_types", :force => true do |t|

@@ -4,7 +4,7 @@ class RoomType < ActiveRecord::Base
 
 	has_many :bookings
 
-	has_many :bookedrooms
+	has_many :line_items
 
 	before_destroy :ensure_does_not_have_bookings
 

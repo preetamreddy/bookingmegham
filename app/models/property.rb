@@ -5,7 +5,7 @@ class Property < ActiveRecord::Base
 	
 	validates :name, presence: true
 
-	validates_numericality_of :price_for_children_below_12_years,
+	validates_numericality_of :price_for_children_between_5_and_12_years,
 														:price_for_children_below_5_years,
 														:price_for_triple_occupancy,
 														:price_for_driver,

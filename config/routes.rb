@@ -1,5 +1,5 @@
 Bookingmegham::Application.routes.draw do
-  resources :booked_rooms
+  resources :line_items
 
   resources :room_types
 

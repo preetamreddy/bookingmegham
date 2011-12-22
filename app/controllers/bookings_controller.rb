@@ -46,8 +46,7 @@ class BookingsController < ApplicationController
     respond_to do |format|
       if @booking.save
 
-				BookedRoom.book_rooms(@booking.room_type_id, @booking.from, 
-					@booking.to, @booking.number_of_rooms)
+				LineItem.create(@booking)
 
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
         format.json { render json: @booking, status: :created, location: @booking }
@@ -73,10 +72,8 @@ class BookingsController < ApplicationController
 						@booking.from != old_from_date ||
 						@booking.to != old_to_date ||
 						@booking.number_of_rooms != old_number_of_rooms)
-							BookedRoom.cancel_rooms(old_room_type_id, old_from_date, 
-								old_to_date, old_number_of_rooms)
-							BookedRoom.book_rooms(@booking.room_type_id, @booking.from, 
-								@booking.to, @booking.number_of_rooms)
+							LineItem.delete(@booking)
+							LineItem.create(@booking)
 				end
 
         format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
@@ -93,9 +90,6 @@ class BookingsController < ApplicationController
   def destroy
     @booking = Booking.find(params[:id])
     @booking.destroy
-
-		BookedRoom.cancel_rooms(@booking.room_type_id, @booking.from, @booking.to,
-			@booking.number_of_rooms)
 
     respond_to do |format|
       format.html { redirect_to bookings_url }

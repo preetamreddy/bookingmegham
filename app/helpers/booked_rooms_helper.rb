@@ -1,2 +1,0 @@
-module BookedRoomsHelper
-end
