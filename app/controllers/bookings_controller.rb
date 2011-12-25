@@ -62,15 +62,15 @@ class BookingsController < ApplicationController
   def update
     @booking = Booking.find(params[:id])
 		old_room_type_id = @booking.room_type_id
-		old_from_date = @booking.from
-		old_to_date = @booking.to
+		old_check_in_date = @booking.check_in_date
+		old_check_out_date = @booking.check_out_date
 		old_number_of_rooms = @booking.number_of_rooms
 
     respond_to do |format|
       if @booking.update_attributes(params[:booking])
 				if (@booking.room_type_id != old_room_type_id ||
-						@booking.from != old_from_date ||
-						@booking.to != old_to_date ||
+						@booking.check_in_date != old_check_in_date ||
+						@booking.check_out_date != old_check_out_date ||
 						@booking.number_of_rooms != old_number_of_rooms)
 							LineItem.delete(@booking)
 							LineItem.create(@booking)

@@ -32,14 +32,14 @@
     <%= f.number_field :number_of_rooms, :min => 1 %>
   </div>
   <div class="field">
-    <%= f.label :from %><br />
-    <%= f.date_select :from, :start_year => Time.now.year, 
+    <%= f.label :check_in_date %><br />
+    <%= f.date_select :check_in_date, :start_year => Time.now.year, 
 			:end_year => Time.now.year + 1, :prompt => { 
 			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
   </div>
   <div class="field">
-    <%= f.label :to %><br />
-    <%= f.date_select :to, :start_year => Time.now.year, 
+    <%= f.label :check_out_date %><br />
+    <%= f.date_select :check_out_date, :start_year => Time.now.year, 
 			:end_year => Time.now.year + 1, :prompt => {
 			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
   </div>

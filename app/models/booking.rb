@@ -5,9 +5,9 @@ class Booking < ActiveRecord::Base
 
 	has_many :line_items, dependent: :destroy
 
-	validates :guest_name, :guest_phone_number, :number_of_rooms, :from, :to,
+	validates :guest_name, :guest_phone_number, :number_of_rooms,
 						:number_of_adults, :number_of_children_between_5_and_12_years,
-						:number_of_children_below_5_years,
+						:number_of_children_below_5_years, :check_in_date, :check_out_date,
 						:total_price, :paid, :balance_payment, :pay_by_date,
 						:room_type_id, presence: true
 	validates_numericality_of :guest_phone_number, :number_of_rooms, 

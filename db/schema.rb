@@ -11,15 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111222111049) do
+ActiveRecord::Schema.define(:version => 20111225132637) do
 
   create_table "bookings", :force => true do |t|
     t.string   "guest_name"
     t.integer  "guest_phone_number"
     t.string   "guest_email_id"
     t.integer  "number_of_rooms"
-    t.date     "from"
-    t.date     "to"
     t.integer  "number_of_adults"
     t.time     "guests_arrival_time"
     t.string   "guests_arriving_from"
@@ -34,6 +32,8 @@ ActiveRecord::Schema.define(:version => 20111222111049) do
     t.integer  "room_type_id"
     t.integer  "number_of_children_between_5_and_12_years"
     t.integer  "number_of_children_below_5_years"
+    t.date     "check_in_date"
+    t.date     "check_out_date"
   end
 
   create_table "line_items", :force => true do |t|
