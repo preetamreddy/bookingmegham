@@ -6,9 +6,8 @@
 
     <td>
 			<dl class='list_description'>
-				<dt><%= booking.guest_name %></dt>
-    		<dd><%= booking.guest_phone_number %></dd>
-    		<dd><%= booking.guest_email_id %></dd>
+				<dt><%= booking.trip.guest.name %></dt>
+    		<dd><%= booking.trip.guest.phone_number %></dd>
 			</dl>
 		</td>
 
@@ -36,18 +35,9 @@
 		</td>
 
     <td>
-			<dl class='list_description'>
-				<dt><% if booking.total_price != 0 %>
-									<%= number_to_currency(booking.total_price) %>
-						<% end %></dt>
-    		<dd>Paid: <% if booking.paid != 0 %>
-												<%= number_to_currency(booking.paid) %>
-									<% end %></dd>
-				<dd>Balance: <%if booking.balance_payment != 0 %>
-													<%= number_to_currency(booking.balance_payment) %>
-										 <% end %></dd>
-    		<dd>Pay by: <%= l booking.pay_by_date, :format => :short %></dd>
-			</dl>
+			<% if booking.total_price != 0 %>
+				<%= number_to_currency(booking.total_price) %>
+			<% end %></dt>
 		</td>
 
     <td><b>Food preferences: </b><%= booking.guests_food_preferences %></td>
@@ -60,9 +50,9 @@
     	<%= link_to 'Destroy', booking, confirm: 'Are you sure?', method: :delete %>
 		</td>
   </tr>
-<% end %>
+	<% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Booking', new_booking_path %>
+<%= link_to 'New Booking', new_booking_path %> | <%= link_to 'Availability Chart', availability_chart_path %>

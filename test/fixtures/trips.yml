@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  guest_id: 1
+  start_date: 2011-12-27
+  end_date: 2011-12-27
+  number_of_rooms: 1
+  number_of_adults: 1
+  number_of_children_between_5_and_12_years: 1
+  number_of_children_below_5_years: 1
+  food_preferences: MyString
+  total_price: 1
+  paid: 1
+  balance_payment: 1
+  pay_by_date: 2011-12-27
+  comments: MyText
+
+two:
+  guest_id: 1
+  start_date: 2011-12-27
+  end_date: 2011-12-27
+  number_of_rooms: 1
+  number_of_adults: 1
+  number_of_children_between_5_and_12_years: 1
+  number_of_children_below_5_years: 1
+  food_preferences: MyString
+  total_price: 1
+  paid: 1
+  balance_payment: 1
+  pay_by_date: 2011-12-27
+  comments: MyText

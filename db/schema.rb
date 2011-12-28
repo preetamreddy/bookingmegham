@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111225132637) do
+ActiveRecord::Schema.define(:version => 20111228131622) do
 
   create_table "bookings", :force => true do |t|
     t.string   "guest_name"
@@ -34,15 +34,26 @@ ActiveRecord::Schema.define(:version => 20111225132637) do
     t.integer  "number_of_children_below_5_years"
     t.date     "check_in_date"
     t.date     "check_out_date"
+    t.integer  "trip_id"
+  end
+
+  create_table "guests", :force => true do |t|
+    t.string   "name"
+    t.integer  "phone_number"
+    t.string   "email_id"
+    t.string   "resident_of"
+    t.text     "other_information"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "line_items", :force => true do |t|
     t.integer  "booking_id"
     t.integer  "room_type_id"
     t.date     "date"
-    t.integer  "number_of_rooms"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "booked_rooms"
   end
 
   create_table "properties", :force => true do |t|
@@ -65,6 +76,27 @@ ActiveRecord::Schema.define(:version => 20111225132637) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "number_of_rooms"
+  end
+
+  create_table "trips", :force => true do |t|
+    t.integer  "guest_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "number_of_rooms"
+    t.integer  "number_of_adults"
+    t.integer  "number_of_children_between_5_and_12_years"
+    t.integer  "number_of_children_below_5_years"
+    t.string   "food_preferences"
+    t.integer  "total_price"
+    t.integer  "paid"
+    t.integer  "balance_payment"
+    t.date     "pay_by_date"
+    t.text     "comments"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+    t.integer  "discount"
+    t.integer  "final_price"
   end
 
   create_table "versions", :force => true do |t|

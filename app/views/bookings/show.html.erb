@@ -1,18 +1,17 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <b>Trip id:</b>
+  <%= @booking.trip_id %>
+</p>
+<p>
   <b>Guest name:</b>
-  <%= @booking.guest_name %>
+  <%= @booking.trip.guest.name %>
 </p>
 
 <p>
   <b>Guest phone number:</b>
-  <%= @booking.guest_phone_number %>
-</p>
-
-<p>
-  <b>Guest email:</b>
-  <%= @booking.guest_email_id %>
+  <%= @booking.trip.guest.phone_number %>
 </p>
 
 <p>
@@ -73,21 +72,6 @@
 <p>
   <b>Total price:</b>
   <%= @booking.total_price %>
-</p>
-
-<p>
-  <b>Paid:</b>
-  <%= @booking.paid %>
-</p>
-
-<p>
-  <b>Balance payment:</b>
-  <%= @booking.balance_payment %>
-</p>
-
-<p>
-  <b>Pay by date:</b>
-  <%= @booking.pay_by_date %>
 </p>
 
 <p>

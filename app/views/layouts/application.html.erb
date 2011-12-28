@@ -13,10 +13,22 @@
 	</div>
 	<div id="columns">
 		<div id="side">
+			<% if session[:guest_id] %>
+				<dl>
+					<dt>Guest name:</dt>
+					<dd><%= Guest.find(session[:guest_id]).name %></dd>
+				</dl>
+			<% end %>
+			<% if session[:trip_id] %>
+				<dl>
+					<dt>Trip name:</dt>
+					<dd><%= Trip.find(session[:trip_id]).name %></dd>
+				</dl>
+			<% end %>
 			<ul>
-				<li><a href="http://www....">Home</a></li>
-				<li><a href="http://www....">View Bookings</a></li>
-				<li><a href="http://www...."">New Booking</a></li>
+				<li><%= link_to 'Manage Properties', properties_path %></li>
+				<li><%= link_to 'Guests', guests_path %></li>
+				<li><%= link_to 'Availability Chart', availability_chart_path %></li>
 			</ul>
 		</div>
 		<div id="main">

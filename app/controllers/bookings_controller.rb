@@ -2,7 +2,15 @@ class BookingsController < ApplicationController
   # GET /bookings
   # GET /bookings.json
   def index
-    @bookings = Booking.all
+    if params[:trip_id]
+			session[:trip_id] = params[:trip_id]
+		end
+			
+		if session[:trip_id]
+			@bookings = Booking.find_all_by_trip_id(session[:trip_id])
+		else
+			@bookings = Booking.all
+		end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -26,6 +34,8 @@ class BookingsController < ApplicationController
   # GET /bookings/new.json
   def new
     @booking = Booking.new
+		@booking.room_type_id = params[:room_type_id]
+		@booking.trip_id = session[:trip_id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -61,20 +71,11 @@ class BookingsController < ApplicationController
   # PUT /bookings/1.json
   def update
     @booking = Booking.find(params[:id])
-		old_room_type_id = @booking.room_type_id
-		old_check_in_date = @booking.check_in_date
-		old_check_out_date = @booking.check_out_date
-		old_number_of_rooms = @booking.number_of_rooms
 
     respond_to do |format|
       if @booking.update_attributes(params[:booking])
-				if (@booking.room_type_id != old_room_type_id ||
-						@booking.check_in_date != old_check_in_date ||
-						@booking.check_out_date != old_check_out_date ||
-						@booking.number_of_rooms != old_number_of_rooms)
-							LineItem.delete(@booking)
-							LineItem.create(@booking)
-				end
+				LineItem.delete(@booking)
+				LineItem.create(@booking)
 
         format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
         format.json { head :ok }
