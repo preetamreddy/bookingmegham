@@ -8,9 +8,9 @@ class TripsController < ApplicationController
 		end
 
 		if session[:guest_id]
-			@trips = Trip.find_all_by_guest_id(session[:guest_id])
+			@trips = Trip.order("start_date DESC, end_date DESC").find_all_by_guest_id(session[:guest_id])
 		else
-    	@trips = Trip.all
+    	@trips = Trip.order("start_date DESC, end_date DESC").all
 		end
 
 		session[:trip_id] = nil
@@ -47,6 +47,7 @@ class TripsController < ApplicationController
   # GET /trips/1/edit
   def edit
     @trip = Trip.find(params[:id])
+		@trip.total_price = @trip.total_price
   end
 
   # POST /trips

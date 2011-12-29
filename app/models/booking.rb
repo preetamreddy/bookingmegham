@@ -23,4 +23,29 @@ class Booking < ActiveRecord::Base
 														only_integer: true, greater_than_or_equal_to: 0,
 														allow_nil: true, 
 														message: "should be a positive number or zero"
+
+	def create_line_items
+		date = check_in_date
+		while date < check_out_date do
+			line_item = line_items.build(room_type_id: room_type_id,
+										date: date,
+										booked_rooms: number_of_rooms)
+			line_item.save!
+			date += 1
+		end
+	end
+
+	def delete_line_items
+		line_items.destroy_all
+	end
+
+	def update_line_items
+		line_items.destroy_all
+		create_line_items
+	end
+
+	def calculate_total_price
+		return true	
+	end
+
 end

@@ -11,21 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111228131622) do
+ActiveRecord::Schema.define(:version => 20111229122658) do
 
   create_table "bookings", :force => true do |t|
-    t.string   "guest_name"
-    t.integer  "guest_phone_number"
-    t.string   "guest_email_id"
     t.integer  "number_of_rooms"
     t.integer  "number_of_adults"
     t.time     "guests_arrival_time"
     t.string   "guests_arriving_from"
     t.string   "guests_food_preferences"
     t.integer  "total_price"
-    t.integer  "paid"
-    t.integer  "balance_payment"
-    t.date     "pay_by_date"
     t.text     "comments"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -35,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20111228131622) do
     t.date     "check_in_date"
     t.date     "check_out_date"
     t.integer  "trip_id"
+    t.integer  "number_of_drivers"
   end
 
   create_table "guests", :force => true do |t|
@@ -97,6 +92,7 @@ ActiveRecord::Schema.define(:version => 20111228131622) do
     t.string   "name"
     t.integer  "discount"
     t.integer  "final_price"
+    t.integer  "number_of_drivers"
   end
 
   create_table "versions", :force => true do |t|

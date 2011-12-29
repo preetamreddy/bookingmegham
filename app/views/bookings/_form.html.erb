@@ -56,6 +56,10 @@
     <%= f.number_field :number_of_children_below_5_years, :min => 0 %>
   </div>
   <div class="field">
+    <%= f.label :number_of_drivers %><br />
+    <%= f.number_field :number_of_drivers, :min => 0 %>
+  </div>
+  <div class="field">
     <%= f.label :guests_arrival_time %><br />
     <%= f.time_select :guests_arrival_time, :prompt => {
 			:hour => 'Select hour', :minute => 'Select minute'} %>

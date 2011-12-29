@@ -7,4 +7,13 @@
 	.link {
 		white-space: nowrap;
 	}
+
+	table {
+		colspace: 2px;
+
+		th, td {
+			background: #CCFF99;
+		}
+	}
+
 }

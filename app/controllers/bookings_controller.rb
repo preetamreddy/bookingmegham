@@ -7,9 +7,9 @@ class BookingsController < ApplicationController
 		end
 			
 		if session[:trip_id]
-			@bookings = Booking.find_all_by_trip_id(session[:trip_id])
+			@bookings = Booking.order("check_in_date, check_out_date").find_all_by_trip_id(session[:trip_id])
 		else
-			@bookings = Booking.all
+			@bookings = Booking.order("check_in_date, check_out_date").all
 		end
 
     respond_to do |format|
@@ -36,6 +36,15 @@ class BookingsController < ApplicationController
     @booking = Booking.new
 		@booking.room_type_id = params[:room_type_id]
 		@booking.trip_id = session[:trip_id]
+		
+		trip = Trip.find(session[:trip_id])
+		@booking.number_of_rooms = trip.number_of_rooms
+		@booking.number_of_adults = trip.number_of_adults
+		@booking.number_of_children_between_5_and_12_years = trip.number_of_children_between_5_and_12_years
+		@booking.number_of_children_below_5_years = trip.number_of_children_below_5_years
+		@booking.number_of_drivers = trip.number_of_drivers
+		@booking.guests_food_preferences = trip.food_preferences
+		@booking.comments = trip.comments
 
     respond_to do |format|
       format.html # new.html.erb
@@ -52,11 +61,12 @@ class BookingsController < ApplicationController
   # POST /bookings.json
   def create
     @booking = Booking.new(params[:booking])
+		@booking.calculate_total_price
 
     respond_to do |format|
       if @booking.save
 
-				LineItem.create(@booking)
+				@booking.create_line_items
 
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
         format.json { render json: @booking, status: :created, location: @booking }
@@ -71,11 +81,12 @@ class BookingsController < ApplicationController
   # PUT /bookings/1.json
   def update
     @booking = Booking.find(params[:id])
+		@booking.calculate_total_price
 
     respond_to do |format|
       if @booking.update_attributes(params[:booking])
-				LineItem.delete(@booking)
-				LineItem.create(@booking)
+
+				@booking.update_line_items
 
         format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
         format.json { head :ok }
