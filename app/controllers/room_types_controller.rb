@@ -76,7 +76,7 @@ class RoomTypesController < ApplicationController
     @room_type.destroy
 
     respond_to do |format|
-      format.html { redirect_to room_types_url }
+      format.html { redirect_to room_types_url, notice: @room_type.errors[:base][0] }
       format.json { head :ok }
     end
   end

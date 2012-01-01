@@ -3,7 +3,7 @@
 "en-IN":
   date:
     formats:
-      default: "%d-%m-%Y"
+      default: "%d-%b-%y"
       short: "%d-%b"
       long: "%d %B, %Y"
 

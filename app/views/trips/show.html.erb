@@ -12,12 +12,12 @@
 
 <p>
   <b>Start date:</b>
-  <%= @trip.start_date %>
+  <%= l @trip.start_date if @trip.start_date %>
 </p>
 
 <p>
   <b>End date:</b>
-  <%= @trip.end_date %>
+  <%= l @trip.end_date if @trip.end_date %>
 </p>
 
 <p>
@@ -77,7 +77,7 @@
 
 <p>
   <b>Pay by date:</b>
-  <%= @trip.pay_by_date %>
+  <%= l @trip.pay_by_date if @trip.pay_by_date %>
 </p>
 
 <p>

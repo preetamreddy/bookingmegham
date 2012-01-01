@@ -7,11 +7,14 @@
 */
 
 #banner {
-	background: #036339;
 	font: small-caps 40px/60px "Trebuchet MS" sans-serif;
 	color: black;
-	text-align: center;
+	text-align: right;
+	padding-right: 1em;
 	height: 60px;
+	border-radius-top-right: 25px;
+	background: #036339;
+	border-radius: 0 35px 35px 0;
 
 	img {
 		float: left;
@@ -20,18 +23,20 @@
 }
 
 #columns {
-	background: #CCFFCC;
 
 	#main {
-		margin-left: 12em;
-		padding: 1em;
+		margin-left: 14.5em;
+		padding-top: 0.4em;
+		padding-right: 1em;
 		background: white;
 	}
 
 	#side {
+		background: #bcebd6;
+		border-radius: 10px;
+		margin: 20px 0 0 7px;
 		float: left;
-		padding: 1em;
-		width: 10em;
+		width: 12em;
 
 		ul {
 			padding: 0;
@@ -42,13 +47,112 @@
 		}
 
 		dl {
+			margin-top: 0;
+			padding-left: 1em;
+			line-height: 1.6em;
+
 			dt {
+				padding-top: 1em;
 				font-weight: bold;
 			}
 
 			dd {
 				margin: 0;
+				&:before {
+					padding-right: 5px;
+					content: "»";
+				}
 			}
 		}
+	}
+}
+
+.action_container {
+	background-color: #F4F3F8;
+	padding: 8px;
+	border-radius: 10px;
+
+	a {
+		font-size: 1.2em;
+		color: red !important;
+	}
+}
+
+.show_saved_record {
+	p {
+		overflow: hidden;
+	}
+
+	b {
+		display: block;
+		width: 20%;
+		float: left;
+		text-align: right;
+		padding-right: 10px;
+	}
+
+	.saved_value {
+		display: block;
+		width: 75%;
+		color: green;
+		float: left;
+	}
+}
+
+.back {
+	float: right;
+	display: inline-block;
+	margin: -30px 12px 0 0;
+}
+
+h1 {
+	color: #999;
+}
+
+.highlight {
+	color: #000;
+}
+
+table {
+	border-spacing: 0;
+	border-collapse: collapse;
+	border-color: #CFCCCA;
+	width: 100%;
+	
+	th {
+		padding: 5px;
+		background: #605C59;
+		color: #FFF;
+
+		&:nth-last-child(2) {
+			width: 20%;
+		}
+	}
+
+	td {
+		padding: 2px 4px;
+		vertical-align: top;
+
+		&:nth-last-child(1) {
+			font-size: .9em;
+			white-space: nowrap;
+			width: 80px;
+		}
+	}
+
+	.nowrap_cell {
+		white-space: nowrap
+	}
+
+	.number {
+		text-align: right;
+	}
+
+	.list_line_odd {
+		background: white;
+	}
+
+	.list_line_even {
+		background: #F2EEEC;
 	}
 }

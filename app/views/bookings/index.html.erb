@@ -1,59 +1,67 @@
-<h1>Bookings</h1>
+<% if @bookings.count > 0 %>
+<h2>Bookings</h2>
 
-<table>
+<table border="1">
+	<tr>
+		<th>Guest</th>
+		<th>Rooms</th>
+		<th>The Team</th>
+		<th>Arriving from</th>
+		<th>Total price</th>
+		<th>Food preferences</th>
+		<th>Comments</th>
+		<th></th>
+	</tr>
+
 	<% @bookings.each do |booking| %>
   <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 
-    <td>
-			<dl class='list_description'>
-				<dt><%= booking.trip.guest.name %></dt>
-    		<dd><%= booking.trip.guest.phone_number %></dd>
-			</dl>
+    <td class="nowrap_cell">
+			<%= booking.trip.guest.name %><br/>
+    	<%= booking.trip.guest.phone_number %>
 		</td>
 
-    <td>
-			<dl class='list_description'>
-        <dd><%= booking.room_type.property.name %></dd>
-        <dd><%= pluralize(booking.number_of_rooms, booking.room_type.room_type) %></dd>
-    		<dd><%= l booking.check_in_date, :format => :short %> to <%= l booking.check_out_date, :format => :short %></dd>
-			</dl>
+    <td class="nowrap_cell">
+    	<%= booking.room_type.property.name %></br>
+      <%= pluralize(booking.number_of_rooms, booking.room_type.room_type) %></br>
+    	<%= l booking.check_in_date, :format => :short %> to <%= l booking.check_out_date, :format => :short %>
 		</td>
 
-    <td width=75>
+    <td class="nowrap_cell">
 			Adults: <%= booking.number_of_adults %><br/>
     	Children (btw 5 & 12): <%= booking.number_of_children_between_5_and_12_years %><br/>
-    	Children below 5: <%= booking.number_of_children_below_5_years %>
+    	Children below 5: <%= booking.number_of_children_below_5_years %><br/>
 			Drivers: <%= booking.number_of_drivers %>
 		</td>
 
-    <td>
-			<dl class='list_description'>
-				<dt>Arriving at <%= unless booking.guests_arrival_time.nil?
-															l booking.guests_arrival_time, :format => :short
-														end %></dt>
-    		<dd>From <%= booking.guests_arriving_from %></dd>
-			</dl>
+    <td class="nowrap_cell">
+    	<%= booking.guests_arriving_from %><br/>
+			<%= l booking.guests_arrival_time, :format => :short if booking.guests_arrival_time %>
 		</td>
 
-    <td>
+    <td class="nowrap_cell">
 			<% if booking.total_price != 0 %>
 				<%= number_to_currency(booking.total_price) %>
-			<% end %></dt>
+			<% end %>
 		</td>
 
-    <td><b>Food preferences: </b><%= booking.guests_food_preferences %></td>
+    <td>
+			<%= booking.guests_food_preferences %>
+		</td>
 
     <td><%= booking.comments %></td>
 
-    <td class='list_actions'>
-			<%= link_to 'Show', booking %><br/>
+    <td class='link'>
     	<%= link_to 'Edit', edit_booking_path(booking) %><br/>
     	<%= link_to 'Destroy', booking, confirm: 'Are you sure?', method: :delete %>
 		</td>
   </tr>
 	<% end %>
 </table>
+<% else %>
+	<p>Click below for creating a new booking</p> 
+<% end %>
 
-<br />
-
-<%= link_to 'New Booking', new_booking_path %> | <%= link_to 'Availability Chart', availability_chart_path %>
+<div class="action_container">
+	<%= link_to 'New Booking', new_booking_path %>
+</div>

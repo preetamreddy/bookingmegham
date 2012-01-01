@@ -13,25 +13,26 @@
 	</div>
 	<div id="columns">
 		<div id="side">
-			<% if session[:guest_id] %>
-				<dl>
-					<dt>Guest name:</dt>
-					<dd><%= Guest.find(session[:guest_id]).name %></dd>
-				</dl>
-			<% end %>
-			<% if session[:trip_id] %>
-				<dl>
-					<dt>Trip name:</dt>
-					<dd><%= Trip.find(session[:trip_id]).name %></dd>
-				</dl>
-			<% end %>
-			<ul>
-				<li><%= link_to 'Manage Properties', properties_path %></li>
-				<li><%= link_to 'Guests', guests_path %></li>
-				<li><%= link_to 'Availability Chart', availability_chart_path %></li>
+			<dl>
+				<dt>Property Admin</dt>
+				<dd><%= link_to 'Properties', properties_path %></dd>
+				<dd><%= link_to 'Room Types', room_types_path %></dd>
+				<dt>Booking Mgmt</dt>
+				<dd><%= link_to 'Guest List', guests_path %></dd>
+				<dd><%= link_to 'Trips', trips_path %></dd>
+				<dd><%= link_to 'Bookings', bookings_path %></dd>
+				<dd><%= link_to 'Availability Chart', availability_chart_path %></dd>
 			</ul>
 		</div>
 		<div id="main">
+			<% if session[:trip_id] %>
+				<h1>Guest <span class="highlight"><%= Guest.find(session[:guest_id]).name %></span>
+						Trip <span class="highlight"><%= Trip.find(session[:trip_id]).name %></span></h1>
+			<% else %>
+				<% if session[:guest_id] %>
+					<h1>Guest <span class="highlight"><%= Guest.find(session[:guest_id]).name %></span></h1>
+				<% end %>
+			<% end %>
 			<%= yield %>
 		</div>
 	</div>

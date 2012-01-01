@@ -1,35 +1,38 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"><span class="saved_value"><%= notice %></p>
 
+<div class="show_saved_record">
 <p>
   <b>Name:</b>
-  <%= @property.name %>
+  <span class="saved_value"><%= @property.name %></span>
 </p>
 
 <p>
   <b>Price for children below 5 years:</b>
-  <%= @property.price_for_children_below_5_years %>
+  <span class="saved_value"><%= @property.price_for_children_below_5_years %></span>
 </p>
 
 <p>
   <b>Price for children btw 5 & 12:</b>
-  <%= @property.price_for_children_between_5_and_12_years %>
+  <span class="saved_value"><%= @property.price_for_children_between_5_and_12_years %></span>
 </p>
 
 <p>
   <b>Price for triple occupancy:</b>
-  <%= @property.price_for_triple_occupancy %>
+  <span class="saved_value"><%= @property.price_for_triple_occupancy %></span>
 </p>
 
 <p>
   <b>Price for driver:</b>
-  <%= @property.price_for_driver %>
+  <span class="saved_value"><%= @property.price_for_driver %></span>
 </p>
 
 <p>
   <b>Description:</b>
-  <%= @property.description %>
+  <span class="saved_value"><%= @property.description %></span>
 </p>
+</div>
 
-
-<%= link_to 'Edit', edit_property_path(@property) %> |
-<%= link_to 'Back', properties_path %>
+<div class="action_container">
+	<%= link_to 'Edit', edit_property_path(@property) %>
+	<%= link_to 'Finish', properties_path %>
+</div>

@@ -3,13 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .availability_chart {
-	
-	table {
-		cell_spacing: 2px;
-
-		td {
-			background: #99FF33;
-		}
+	table th:nth-last-child(2) {
+		width: auto;
 	}
-
 }

@@ -1,29 +1,33 @@
-<h1>Availability Chart</h1>
+<h2>Availability Chart</h2>
 
-<table>
+<table border="1">
 	<tr>
-		<td>Room Type</td>
+		<th>Room Type</th>
+		<th>Rooms</th>
 		<% chart_date = @chart_start_date %>
 		<% @days_to_show_in_chart.times do %>
-			<td><%= l chart_date, :format => :short %></td>
+			<th><%= l chart_date, :format => :short %></th>
 			<% chart_date += 1 %>
 		<% end %>
   </tr>
 	<% cnt = 0 %>
 	<% @room_types.count.times do %>
-		<tr>
+		<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 			<td><%= @room_types[cnt].room_type %></td>
+			<td class="number"><%= @room_types[cnt].number_of_rooms %></td>
 			<% column_date = @chart_start_date %>
 			<% @days_to_show_in_chart.times do %>
 				<% if @line_items[[@room_types[cnt].id, column_date]] %>
-					<td><%= (@room_types[cnt].number_of_rooms - @line_items[[@room_types[cnt].id, column_date]]) %></td>
+					<td class="number"><%= (@room_types[cnt].number_of_rooms - @line_items[[@room_types[cnt].id, column_date]]) %></td>
 				<% else %>
-					<td><%= @room_types[cnt].number_of_rooms %></td>
+					<td class="number"><%= @room_types[cnt].number_of_rooms %></td>
 				<% end %>
 				<% column_date += 1 %>
 			<% end %>
 			<% if session[:guest_id] && session[:trip_id] %>
-				<td><%= link_to 'Create Booking', new_booking_path(:room_type_id => @room_types[cnt].id) %></td>
+				<td class="link">
+					<%= link_to 'Create Booking', new_booking_path(:room_type_id => @room_types[cnt].id) %>
+				</td>
 			<% end %>	
 		</tr>
 		<% cnt += 1 %>

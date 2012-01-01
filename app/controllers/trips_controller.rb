@@ -89,7 +89,7 @@ class TripsController < ApplicationController
     @trip.destroy
 
     respond_to do |format|
-      format.html { redirect_to trips_url }
+      format.html { redirect_to trips_url, notice: @trip.errors[:base][0] }
       format.json { head :ok }
     end
   end

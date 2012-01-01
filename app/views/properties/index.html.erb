@@ -1,31 +1,42 @@
-<h1>Listing properties</h1>
+<% if @properties.count > 0 %>
+<h2>Listing Properties</h2>
 
-<table>
+<% if notice %>
+	<div id="error_explanation">
+		<h2>Unable to destroy</h2>
+		<ul>
+			<li><%= notice %></li>
+		</ul>
+	</div>
+<% end %>
+
+<table border="1">
   <tr>
-    <th>Name</th>
-    <th class="price">Price for children below 5</th>
-    <th class="price">Price for children btw 5 & 12</th>
-    <th class="price">Price for triple occupancy</th>
-    <th class="price">Price for driver</th>
-    <th>Description</th>
+   	<th>Name</th>
+   	<th class="number">Price for children below 5</th>
+   	<th class="number">Price for children btw 5 & 12</th>
+   	<th class="number">Price for triple occupancy</th>
+   	<th class="number">Price for driver</th>
+   	<th>Description</th>
+		<th></th>
   </tr>
 
+
 <% @properties.each do |property| %>
-  <tr>
+	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
     <td><%= property.name %></td>
-    <td class="price">
+    <td class="number">
 			<% if property.price_for_children_below_5_years && property.price_for_children_below_5_years != 0 %>
 				<%= number_to_currency(property.price_for_children_below_5_years) %>
 			<% else %>
 				<%= "Complimentary" %>
 			<% end %>
 		</td>
-    <td class="price"><%= number_to_currency(property.price_for_children_between_5_and_12_years) %></td>
-    <td class="price"><%= number_to_currency(property.price_for_triple_occupancy) %></td>
-    <td class="price"><%= number_to_currency(property.price_for_driver) %></td>
+    <td class="number"><%= number_to_currency(property.price_for_children_between_5_and_12_years) %></td>
+    <td class="number"><%= number_to_currency(property.price_for_triple_occupancy) %></td>
+    <td class="number"><%= number_to_currency(property.price_for_driver) %></td>
     <td><%= property.description %></td>
-    <td>
-			<%= link_to 'Show', property %></br>
+    <td class="link">
     	<%= link_to 'Edit', edit_property_path(property) %></br>
     	<%= link_to 'Destroy', property, confirm: 'Are you sure?', 
 					method: :delete %></br>
@@ -33,7 +44,12 @@
   </tr>
 <% end %>
 </table>
-
+<% else %>
+	<h2>Start by creating properties</h2>
+	<p>Click below for creating a new property</p>
+<% end %>
 <br />
 
-<%= link_to 'New Property', new_property_path %>
+<div class="action_container">
+	<%= link_to 'New Property', new_property_path %>
+</div>

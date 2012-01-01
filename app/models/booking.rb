@@ -2,7 +2,6 @@ class Booking < ActiveRecord::Base
 	versioned :dependent => :tracking
 
 	belongs_to :room_type
-
 	belongs_to :trip
 
 	has_many :line_items, dependent: :destroy
@@ -23,6 +22,9 @@ class Booking < ActiveRecord::Base
 														only_integer: true, greater_than_or_equal_to: 0,
 														allow_nil: true, 
 														message: "should be a positive number or zero"
+
+	after_save :update_trip_roll_up_attributes
+	after_destroy :update_trip_roll_up_attributes
 
 	def create_line_items
 		date = check_in_date
@@ -47,5 +49,11 @@ class Booking < ActiveRecord::Base
 	def calculate_total_price
 		return true	
 	end
+
+	private
+
+		def update_trip_roll_up_attributes
+			Trip.update_roll_up_attributes(trip_id)
+		end
 
 end

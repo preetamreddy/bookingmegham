@@ -1,25 +1,35 @@
-<h1>Listing guests</h1>
+<h2>Listing Guests</h2>
 
-<table>
-  <tr>
+<% if notice %>
+	<div id="error_explanation">
+		<h2>Unable to destroy</h2>
+		<ul>
+			<li><%= notice %></li>
+		</ul>
+	</div>
+<% end %>
+
+<table border="1">
+	<tr>
     <th>Name</th>
     <th>Phone number</th>
     <th>Email</th>
     <th>Resident of</th>
     <th>Other information</th>
+		<th></th>
   </tr>
 
 <% @guests.each do |guest| %>
-  <tr>
-    <td><%= guest.name %></td>
+	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+    <td class="name"><%= guest.name %></td>
     <td><%= guest.phone_number %></td>
     <td><%= guest.email_id %></td>
     <td><%= guest.resident_of %></td>
     <td><%= guest.other_information %></td>
 
     <td class="link">
-			<%= link_to 'Edit', edit_guest_path(guest) %> | 
-			<%= link_to 'Destroy', guest, confirm: 'Are you sure?', method: :delete %> | 
+			<%= link_to 'Edit', edit_guest_path(guest) %></br>
+			<%= link_to 'Destroy', guest, confirm: 'Are you sure?', method: :delete %></br>
 			<%= link_to 'View Trips', trips_path(:guest_id => guest.id) %>
 		</td>
   </tr>

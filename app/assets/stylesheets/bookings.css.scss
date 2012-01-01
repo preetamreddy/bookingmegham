@@ -4,22 +4,10 @@
 
 .bookings {
 
-	h1 {
-		margin: 0;
-		padding-bottom: 0.5em;
-		border-bottom: 3px dotted;
-		font: bold 150% sans-serif;
+	table th:nth-last-child(3) {
+		width: 15%;
 	}
 
-	table {
-		border-collapse: collapse;
-	}
-
-	table tr td {
-		padding: 5px;
-		vertical-align: center;
-	}
-	
 	.list_description {
 		white-space: nowrap;
 
@@ -35,14 +23,6 @@
 		dd {
 			margin: 0;
 		}
-	}
-
-	.list_line_odd {
-		background: white;
-	}
-
-	.list_line_even {
-		background: #FFCCFF;
 	}
 
 	.list_actions {

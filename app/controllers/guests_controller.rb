@@ -78,7 +78,7 @@ class GuestsController < ApplicationController
     @guest.destroy
 
     respond_to do |format|
-      format.html { redirect_to guests_url }
+      format.html { redirect_to guests_url, notice: @guest.errors[:base][0] }
       format.json { head :ok }
     end
   end

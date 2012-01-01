@@ -15,10 +15,10 @@ class Property < ActiveRecord::Base
 	private
 	
 		def ensure_does_not_have_bookings
-			if room_types.bookings.empty?
+			if room_types.empty?
 				return true
 			else
-				errors.add(:base, 'Bookings exist for this Property')
+				errors.add(:base, "Destroy failed because the property '#{name}' has rooms")
 				return false
 			end
 		end

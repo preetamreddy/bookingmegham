@@ -22,12 +22,20 @@ class Trip < ActiveRecord::Base
 		if bookings.empty?
 			return true
 		else
-			errors.add(:base, 'This trip has bookings')
+			errors.add(:base, "Destroy failed because the trip '#{name}' has bookings")
 			return false
 		end
 	end
 
-	def total_price
+	def Trip.update_roll_up_attributes(id)
+		trip = Trip.find(id)
+		trip.total_price = trip.compute_total_price
+		trip.start_date = trip.get_start_date
+		trip.end_date = trip.get_end_date
+		trip.save!
+	end
+
+	def compute_total_price
 		if bookings.empty?
 			return nil
 		else
@@ -36,7 +44,7 @@ class Trip < ActiveRecord::Base
 		end
 	end
 
-	def start_date
+	def get_start_date
 		if bookings.empty?
 			return nil
 		else
@@ -45,7 +53,7 @@ class Trip < ActiveRecord::Base
 		end
 	end
 
-	def end_date
+	def get_end_date
 		if bookings.empty?
 			return nil
 		else

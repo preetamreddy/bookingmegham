@@ -23,17 +23,13 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
-  <div class="field">
+  <div class="field" style="display: none;">
     <%= f.label :start_date %><br />
-    <%= f.date_select :start_date,
-			:start_year => Time.now.year, :end_year => Time.now.year + 1, :prompt => {
-			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
+    <%= f.date_select :start_date, :include_blank => true %>
   </div>
-  <div class="field">
+  <div class="field" style="display: none;">
     <%= f.label :end_date %><br />
-    <%= f.date_select :end_date,
-			:start_year => Time.now.year, :end_year => Time.now.year + 1, :prompt => {
-			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
+    <%= f.date_select :end_date, :include_blank => true %>
   </div>
   <div class="field">
     <%= f.label :number_of_rooms %><br />

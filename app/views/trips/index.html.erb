@@ -1,52 +1,44 @@
-<h1>Listing trips</h1>
+<h2>Listing Trips</h2>
 
-<table>
+<% if notice %>
+	<div id="error_explanation">
+		<h2>Unable to delete</h2>
+		<ul>
+			<li><%= notice %></li>
+		</ul>
+	</div>
+<% end %>
+
+<table border="1">
   <tr>
     <th>Guest</th>
-    <th>Name</th>
+    <th>Trip</th>
     <th>Start date</th>
     <th>End date</th>
-    <th>Number of rooms</th>
-    <th>Number of adults</th>
-    <th>Number of children between 5 and 12 years</th>
-    <th>Number of children below 5 years</th>
-    <th>Number of drivers</th>
-    <th>Food preferences</th>
-    <th>Total price</th>
-    <th>Discount</th>
+    <th>Rooms</th>
     <th>Final price</th>
-    <th>Paid</th>
-    <th>Balance payment</th>
-    <th>Pay by date</th>
+		<th>Paid</th>
+    <th>Balance</th>
     <th>Comments</th>
-    <th></th>
-    <th></th>
     <th></th>
   </tr>
 
 	<% if @trips %>
 		<% @trips.each do |trip| %>
-  		<tr>
-	    	<td><%= trip.guest_id %></td>
-		    <td><%= trip.name %></td>
-		    <td><%= trip.start_date %></td>
-		    <td><%= trip.end_date %></td>
-		    <td><%= trip.number_of_rooms %></td>
-		    <td><%= trip.number_of_adults %></td>
-		    <td><%= trip.number_of_children_between_5_and_12_years %></td>
-		    <td><%= trip.number_of_children_below_5_years %></td>
-		    <td><%= trip.number_of_drivers %></td>
-		    <td><%= trip.food_preferences %></td>
-		    <td><%= trip.total_price %></td>
-		    <td><%= trip.discount %></td>
-		    <td><%= trip.final_price %></td>
-		    <td><%= trip.paid %></td>
-		    <td><%= trip.balance_payment %></td>
-		    <td><%= trip.pay_by_date %></td>
+			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+	    	<td class="name"><%= trip.guest.name %></td>
+		    <td class="name"><%= trip.name %></td>
+		    <td class="date"><%= l trip.start_date if trip.start_date %></td>
+		    <td class="date"><%= l trip.end_date if trip.start_date %></td>
+		    <td class="number"><%= trip.number_of_rooms %></td>
+		    <td class="number"><%= number_to_currency(trip.final_price) %></td>
+		    <td class="number"><%= number_to_currency(trip.paid) %></td>
+		    <td class="number"><%= number_to_currency(trip.balance_payment) %></td>
 		    <td><%= trip.comments %></td>
 		    <td class="link">
-					<%= link_to 'Edit', edit_trip_path(trip) %> | 
-		    	<%= link_to 'Destroy', trip, confirm: 'Are you sure?', method: :delete %> | 
+					<%= link_to 'Show details', trip %></br>
+					<%= link_to 'Edit', edit_trip_path(trip) %></br>
+		    	<%= link_to 'Destroy', trip, confirm: 'Are you sure?', method: :delete %></br>
 					<%= link_to 'View Bookings', bookings_path(:trip_id => trip.id) %>
 		  </tr>
 		<% end %>

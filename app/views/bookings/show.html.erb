@@ -31,12 +31,12 @@
 
 <p>
   <b>Check in date:</b>
-  <%= @booking.check_in_date %>
+  <%= l @booking.check_in_date if @booking.check_in_date %>
 </p>
 
 <p>
   <b>Check out date:</b>
-  <%= @booking.check_out_date %>
+  <%= l @booking.check_out_date if @booking.check_out_date %>
 </p>
 
 <p>
@@ -61,7 +61,7 @@
 
 <p>
   <b>Guests arrival time:</b>
-  <%= @booking.guests_arrival_time %>
+  <%= l @booking.guests_arrival_time, :format => :short if @booking.guests_arrival_time %>
 </p>
 
 <p>

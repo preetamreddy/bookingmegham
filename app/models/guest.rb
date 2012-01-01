@@ -1,5 +1,5 @@
 class Guest < ActiveRecord::Base
-	validates :name, presence: true, uniqueness: true
+	validates :name, presence: true, :uniqueness => { :case_sensitive => false }
 	validates_numericality_of :phone_number, 
 														only_integer: true, greater_than: 0,
 														allow_nil: true,
@@ -13,7 +13,7 @@ class Guest < ActiveRecord::Base
 		if trips.empty?
 			return true
 		else
-			errors.add(:base, 'This guest has trips')
+			errors.add(:base, "Destroy failed because guest '#{name}' has trips")
 			return false
 		end
 	end
