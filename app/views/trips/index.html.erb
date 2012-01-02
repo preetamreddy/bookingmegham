@@ -1,4 +1,8 @@
-<h2>Listing Trips</h2>
+<% if session[:guest_id] %>
+	<h1>Listing Trips for Guest '<%= Guest.find(session[:guest_id]).name %>'</h1>
+<% else %>
+	<h1>Listing Trips for all Guests</h1>
+<% end %>
 
 <% if notice %>
 	<div id="error_explanation">
@@ -9,33 +13,34 @@
 	</div>
 <% end %>
 
+<% if @trips.count > 0 %>
 <table border="1">
   <tr>
-    <th>Guest</th>
-    <th>Trip</th>
-    <th>Start date</th>
-    <th>End date</th>
-    <th>Rooms</th>
-    <th>Final price</th>
-		<th>Paid</th>
-    <th>Balance</th>
-    <th>Comments</th>
+    <th class="text">Guest</th>
+    <th class="text">Trip</th>
+    <th class="text">Start date</th>
+    <th class="text">End date</th>
+    <th class="number">Rooms</th>
+    <th class="number">Final price</th>
+		<th class="number">Paid</th>
+    <th class="number">Balance</th>
+    <th class="text">Comments</th>
     <th></th>
   </tr>
 
 	<% if @trips %>
 		<% @trips.each do |trip| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-	    	<td class="name"><%= trip.guest.name %></td>
-		    <td class="name"><%= trip.name %></td>
-		    <td class="date"><%= l trip.start_date if trip.start_date %></td>
-		    <td class="date"><%= l trip.end_date if trip.start_date %></td>
+	    	<td class="text"><%= trip.guest.name %></td>
+		    <td class="text"><%= trip.name %></td>
+		    <td class="text"><%= l trip.start_date if trip.start_date %></td>
+		    <td class="text"><%= l trip.end_date if trip.start_date %></td>
 		    <td class="number"><%= trip.number_of_rooms %></td>
-		    <td class="number"><%= number_to_currency(trip.final_price) %></td>
-		    <td class="number"><%= number_to_currency(trip.paid) %></td>
-		    <td class="number"><%= number_to_currency(trip.balance_payment) %></td>
-		    <td><%= trip.comments %></td>
-		    <td class="link">
+		    <td class="number"><%= number_to_currency(trip.final_price) if trip.final_price%></td>
+		    <td class="number"><%= number_to_currency(trip.paid) if trip.paid %></td>
+		    <td class="number"><%= number_to_currency(trip.balance_payment) if trip.balance_payment%></td>
+		    <td class="text"><%= trip.comments %></td>
+		    <td>
 					<%= link_to 'Show details', trip %></br>
 					<%= link_to 'Edit', edit_trip_path(trip) %></br>
 		    	<%= link_to 'Destroy', trip, confirm: 'Are you sure?', method: :delete %></br>
@@ -44,7 +49,15 @@
 		<% end %>
 	<% end %>
 </table>
+<% else %>
+	<div id="error_explanation">
+		<h2>Guest doesn't have any Trips</h2>
+		<ul>
+			<li>Click below for creating Trips</li>
+		</ul>
+  </div>
+<% end %>
 
-<br />
-
-<%= link_to 'New Trip', new_trip_path %>
+<div class="action_container">
+	<%= link_to 'New Trip', new_trip_path %>
+</div>

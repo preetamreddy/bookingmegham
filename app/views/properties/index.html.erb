@@ -1,5 +1,4 @@
-<% if @properties.count > 0 %>
-<h2>Listing Properties</h2>
+<h1>Listing Properties</h1>
 
 <% if notice %>
 	<div id="error_explanation">
@@ -10,21 +9,22 @@
 	</div>
 <% end %>
 
+<% if @properties.count > 0 %>
 <table border="1">
   <tr>
-   	<th>Name</th>
+   	<th class="text">Name</th>
    	<th class="number">Price for children below 5</th>
    	<th class="number">Price for children btw 5 & 12</th>
    	<th class="number">Price for triple occupancy</th>
    	<th class="number">Price for driver</th>
-   	<th>Description</th>
+   	<th class="text">Description</th>
 		<th></th>
   </tr>
 
 
 <% @properties.each do |property| %>
 	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-    <td><%= property.name %></td>
+    <td class="text"><%= property.name %></td>
     <td class="number">
 			<% if property.price_for_children_below_5_years && property.price_for_children_below_5_years != 0 %>
 				<%= number_to_currency(property.price_for_children_below_5_years) %>
@@ -35,20 +35,24 @@
     <td class="number"><%= number_to_currency(property.price_for_children_between_5_and_12_years) %></td>
     <td class="number"><%= number_to_currency(property.price_for_triple_occupancy) %></td>
     <td class="number"><%= number_to_currency(property.price_for_driver) %></td>
-    <td><%= property.description %></td>
-    <td class="link">
+    <td class="text"><%= property.description %></td>
+    <td>
     	<%= link_to 'Edit', edit_property_path(property) %></br>
     	<%= link_to 'Destroy', property, confirm: 'Are you sure?', 
 					method: :delete %></br>
-			<%= link_to 'Room Types', room_types_path %></td>
+			<%= link_to 'Room Types', room_types_path(:property_id => property.id) %>
+		</td>
   </tr>
 <% end %>
 </table>
 <% else %>
-	<h2>Start by creating properties</h2>
-	<p>Click below for creating a new property</p>
+  <div id="error_explanation">
+		<h2>Room Types have not been created</h2>
+		<ul>
+			<li>Click below for creating Room Types</li>
+		</ul>
+  </div>
 <% end %>
-<br />
 
 <div class="action_container">
 	<%= link_to 'New Property', new_property_path %>

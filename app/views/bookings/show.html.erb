@@ -1,96 +1,101 @@
 <p id="notice"><%= notice %></p>
+<h1>Booking details</h1>
 
-<p>
-  <b>Trip id:</b>
-  <%= @booking.trip_id %>
-</p>
+<div class="show_saved_record">
 <p>
   <b>Guest name:</b>
-  <%= @booking.trip.guest.name %>
+  <span class="saved_value"><%= @booking.trip.guest.name %>
 </p>
 
 <p>
   <b>Guest phone number:</b>
-  <%= @booking.trip.guest.phone_number %>
+  <span class="saved_value"><%= @booking.trip.guest.phone_number %>
+</p>
+
+<p>
+  <b>Trip name:</b>
+  <span class="saved_value"><%= @booking.trip.name %>
 </p>
 
 <p>
 	<b>Property:</b>
-	<%= @booking.room_type.property.name %>
+	<span class="saved_value"><%= @booking.room_type.property.name %>
 </p>
 
 <p>
 	<b>Room type:</b>
-	<%= @booking.room_type.room_type %>
+	<span class="saved_value"><%= @booking.room_type.room_type %>
 </p>
 
 <p>
   <b>Number of rooms:</b>
-  <%= @booking.number_of_rooms %>
+  <span class="saved_value"><%= @booking.number_of_rooms %>
 </p>
 
 <p>
   <b>Check in date:</b>
-  <%= l @booking.check_in_date if @booking.check_in_date %>
+  <span class="saved_value"><%= l @booking.check_in_date if @booking.check_in_date %>
 </p>
 
 <p>
   <b>Check out date:</b>
-  <%= l @booking.check_out_date if @booking.check_out_date %>
+  <span class="saved_value"><%= l @booking.check_out_date if @booking.check_out_date %>
 </p>
 
 <p>
   <b>Number of adults:</b>
-  <%= @booking.number_of_adults %>
+  <span class="saved_value"><%= @booking.number_of_adults %>
 </p>
 
 <p>
   <b>Number of children btw 5 & 12:</b>
-  <%= @booking.number_of_children_between_5_and_12_years %>
+  <span class="saved_value"><%= @booking.number_of_children_between_5_and_12_years %>
 </p>
 
 <p>
   <b>Number of children below 5:</b>
-  <%= @booking.number_of_children_below_5_years %>
+  <span class="saved_value"><%= @booking.number_of_children_below_5_years %>
 </p>
 
 <p>
   <b>Number of drivers:</b>
-  <%= @booking.number_of_drivers %>
+  <span class="saved_value"><%= @booking.number_of_drivers %>
 </p>
 
 <p>
   <b>Guests arrival time:</b>
-  <%= l @booking.guests_arrival_time, :format => :short if @booking.guests_arrival_time %>
+  <span class="saved_value"><%= l @booking.guests_arrival_time, :format => :short if @booking.guests_arrival_time %>
 </p>
 
 <p>
   <b>Guests arriving from:</b>
-  <%= @booking.guests_arriving_from %>
+  <span class="saved_value"><%= @booking.guests_arriving_from %>
 </p>
 
 <p>
   <b>Guests food preferences:</b>
-  <%= @booking.guests_food_preferences %>
+  <span class="saved_value"><%= @booking.guests_food_preferences %>
 </p>
 
 <p>
   <b>Total price:</b>
-  <%= @booking.total_price %>
+  <span class="saved_value"><%= number_to_currency(@booking.total_price) if @booking.total_price %>
 </p>
 
 <p>
   <b>Comments:</b>
-  <%= @booking.comments %>
+  <span class="saved_value"><%= @booking.comments %>
 </p>
 
 
-<%= link_to 'Edit', edit_booking_path(@booking) %> |
-<%= link_to 'Back', bookings_path %> |
-Version <%= @booking.version %> |
-<% if params[:version] %>
-	<%= link_to 'Latest Version', :version => nil %> |
-<% end %>
-<% if @booking.version > 1 %>
-	<%= link_to 'Previous Version', :version => @booking.version-1 %>
-<% end %>
+<div class="action_container">
+	<%= link_to 'Edit', edit_booking_path(@booking) %> |
+	<%= link_to 'Back to Booking Listing', bookings_path(:trip_id => session[:trip_id]) %> |
+	Version <%= @booking.version %> |
+	<% if params[:version] %>
+		<%= link_to 'Latest Version', :version => nil %> |
+	<% end %>
+	<% if @booking.version > 1 %>
+		<%= link_to 'Previous Version', :version => @booking.version-1 %>
+	<% end %>
+</div>

@@ -1,6 +1,5 @@
-<h2>Editing booking</h2>
+<h1>Editing Booking</h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @booking %> |
-<%= link_to 'Back', bookings_path %>
+<%= link_to 'Cancel', bookings_path(:trip_id => session[:trip_id]), :class => "cancel_link" %>

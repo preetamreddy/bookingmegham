@@ -14,25 +14,17 @@
 	<div id="columns">
 		<div id="side">
 			<dl>
-				<dt>Property Admin</dt>
+				<dt>Property Mgmt</dt>
 				<dd><%= link_to 'Properties', properties_path %></dd>
-				<dd><%= link_to 'Room Types', room_types_path %></dd>
+				<dd><%= link_to 'Room Types', room_types_path(:property_id => nil) %></dd>
 				<dt>Booking Mgmt</dt>
 				<dd><%= link_to 'Guest List', guests_path %></dd>
-				<dd><%= link_to 'Trips', trips_path %></dd>
-				<dd><%= link_to 'Bookings', bookings_path %></dd>
+				<dd><%= link_to 'Trips', trips_path(:guest_id => session[:guest_id]) %></dd>
+				<dd><%= link_to 'Bookings', bookings_path(:trip_id => session[:trip_id]) %></dd>
 				<dd><%= link_to 'Availability Chart', availability_chart_path %></dd>
 			</ul>
 		</div>
 		<div id="main">
-			<% if session[:trip_id] %>
-				<h1>Guest <span class="highlight"><%= Guest.find(session[:guest_id]).name %></span>
-						Trip <span class="highlight"><%= Trip.find(session[:trip_id]).name %></span></h1>
-			<% else %>
-				<% if session[:guest_id] %>
-					<h1>Guest <span class="highlight"><%= Guest.find(session[:guest_id]).name %></span></h1>
-				<% end %>
-			<% end %>
 			<%= yield %>
 		</div>
 	</div>

@@ -1,4 +1,4 @@
-<h2>Listing Guests</h2>
+<h1>Listing Guests</h1>
 
 <% if notice %>
 	<div id="error_explanation">
@@ -9,25 +9,26 @@
 	</div>
 <% end %>
 
+<% if @guests.count > 0 %>
 <table border="1">
 	<tr>
-    <th>Name</th>
-    <th>Phone number</th>
-    <th>Email</th>
-    <th>Resident of</th>
-    <th>Other information</th>
+    <th class="text">Name</th>
+    <th class="number">Phone number</th>
+    <th class="text">Email</th>
+    <th class="text">Resident of</th>
+    <th class="text">Other information</th>
 		<th></th>
   </tr>
 
 <% @guests.each do |guest| %>
 	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-    <td class="name"><%= guest.name %></td>
-    <td><%= guest.phone_number %></td>
-    <td><%= guest.email_id %></td>
-    <td><%= guest.resident_of %></td>
-    <td><%= guest.other_information %></td>
+    <td class="text"><%= guest.name %></td>
+    <td class="number"><%= guest.phone_number %></td>
+    <td class="text"><%= guest.email_id %></td>
+    <td class="text"><%= guest.resident_of %></td>
+    <td class="text"><%= guest.other_information %></td>
 
-    <td class="link">
+    <td>
 			<%= link_to 'Edit', edit_guest_path(guest) %></br>
 			<%= link_to 'Destroy', guest, confirm: 'Are you sure?', method: :delete %></br>
 			<%= link_to 'View Trips', trips_path(:guest_id => guest.id) %>
@@ -35,7 +36,15 @@
   </tr>
 <% end %>
 </table>
+<% else %>
+  <div id="error_explanation">
+		<h2>Guests non-existent</h2>
+		<ul>
+			<li>Click below for adding Guests</li>
+		</ul>
+  </div>
+<% end %>
 
-<br />
-
-<%= link_to 'New Guest', new_guest_path %>
+<div class="action_container">
+	<%= link_to 'New Guest', new_guest_path %>
+</div>

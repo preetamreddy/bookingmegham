@@ -1,6 +1,5 @@
-<h2>Editing room_type</h2>
+<h1>Editing Room Type</h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @room_type %> |
-<%= link_to 'Back', room_types_path %>
+<%= link_to 'Cancel', room_types_path(:property_id => session[:property_id]), :class => "cancel_link" %>

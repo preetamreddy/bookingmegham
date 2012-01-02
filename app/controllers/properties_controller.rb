@@ -2,6 +2,8 @@ class PropertiesController < ApplicationController
   # GET /properties
   # GET /properties.json
   def index
+		session[:property_id] = nil
+
     @properties = Property.all
 
     respond_to do |format|

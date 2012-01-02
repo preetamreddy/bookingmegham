@@ -4,8 +4,12 @@
 
 .bookings {
 
+	table th:nth-last-child(2) {
+		width: 20%;
+	}
+
 	table th:nth-last-child(3) {
-		width: 15%;
+		width: 14%;
 	}
 
 	.list_description {

@@ -2,9 +2,10 @@ class GuestsController < ApplicationController
   # GET /guests
   # GET /guests.json
   def index
-    @guests = Guest.all
 		session[:guest_id] = nil
 		session[:trip_id] = nil
+
+    @guests = Guest.all
 
     respond_to do |format|
       format.html # index.html.erb

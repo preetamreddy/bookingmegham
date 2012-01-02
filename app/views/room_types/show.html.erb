@@ -1,35 +1,39 @@
 <p id="notice"><%= notice %></p>
+<h1>Room Type Details</h1>
 
+<div class="show_saved_record">
 <p>
   <b>Property:</b>
-  <%= @room_type.property.name %>
+  <span class="saved_value"><%= @room_type.property.name %>
 </p>
 
 <p>
   <b>Room type:</b>
-  <%= @room_type.room_type %>
+  <span class="saved_value"><%= @room_type.room_type %>
 </p>
 
 <p>
   <b>Price for single occupancy:</b>
-  <%= @room_type.price_for_single_occupancy %>
+  <span class="saved_value"><%= @room_type.price_for_single_occupancy %>
 </p>
 
 <p>
   <b>Price for double occupancy:</b>
-  <%= @room_type.price_for_double_occupancy %>
+  <span class="saved_value"><%= @room_type.price_for_double_occupancy %>
 </p>
 
 <p>
   <b>Number of rooms:</b>
-  <%= @room_type.number_of_rooms %>
+  <span class="saved_value"><%= @room_type.number_of_rooms %>
 </p>
 
 <p>
   <b>Description:</b>
-  <%= @room_type.description %>
+  <span class="saved_value"><%= @room_type.description %>
 </p>
+</div>
 
-
-<%= link_to 'Edit', edit_room_type_path(@room_type) %> |
-<%= link_to 'Back', room_types_path %>
+<div class="action_container">
+	<%= link_to 'Edit', edit_room_type_path(@room_type) %> |
+	<%= link_to 'Back to Room Type Listing', room_types_path(:property_id => session[:property_id]) %>
+</div>

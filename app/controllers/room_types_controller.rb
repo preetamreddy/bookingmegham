@@ -2,7 +2,13 @@ class RoomTypesController < ApplicationController
   # GET /room_types
   # GET /room_types.json
   def index
-    @room_types = RoomType.all
+		session[:property_id] = params[:property_id]
+
+		if session[:property_id]
+			@room_types = RoomType.find_all_by_property_id(session[:property_id])
+		else
+    	@room_types = RoomType.all
+		end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,6 +31,7 @@ class RoomTypesController < ApplicationController
   # GET /room_types/new.json
   def new
     @room_type = RoomType.new
+		@room_type.property_id = session[:property_id]
 
     respond_to do |format|
       format.html # new.html.erb

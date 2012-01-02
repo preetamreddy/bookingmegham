@@ -2,11 +2,10 @@ class BookingsController < ApplicationController
   # GET /bookings
   # GET /bookings.json
   def index
-    if params[:trip_id]
-			session[:trip_id] = params[:trip_id]
-		end
+		session[:trip_id] = params[:trip_id]
 			
 		if session[:trip_id]
+			session[:guest_id] = Trip.find(session[:trip_id]).guest_id
 			@bookings = Booking.order("check_in_date, check_out_date").find_all_by_trip_id(session[:trip_id])
 		else
 			if session[:guest_id]

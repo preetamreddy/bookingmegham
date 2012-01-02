@@ -1,55 +1,62 @@
-<% if @bookings.count > 0 %>
-<h2>Bookings</h2>
+<% if session[:trip_id] %>
+	<h1>Listing Bookings for Trip '<%= Trip.find(session[:trip_id]).name %>' of Guest '<%= Guest.find(session[:guest_id]).name %>'</h1>
+	<%= link_to 'List all Bookings of the Guest', bookings_path(:trip_id => nil) %>
+<% else %>
+	<% if session[:guest_id] %>
+		<h1>Listing all Bookings of Guest '<%= Guest.find(session[:guest_id]).name %>'</h1>
+	<% else %>
+		<h1>Listing all Bookings</h1>
+	<% end %>
+<% end %>
 
+<% if @bookings.count > 0 %>
 <table border="1">
 	<tr>
-		<th>Guest</th>
-		<th>Rooms</th>
-		<th>The Team</th>
-		<th>Arriving from</th>
-		<th>Total price</th>
-		<th>Food preferences</th>
-		<th>Comments</th>
+		<th class="text">Guest</th>
+		<th class="text">Rooms</th>
+		<th class="text">The Team</th>
+		<th class="text">Arriving from</th>
+		<th class="number">Total price</th>
+		<th class="text">Food preferences</th>
+		<th class="text">Comments</th>
 		<th></th>
 	</tr>
 
 	<% @bookings.each do |booking| %>
   <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 
-    <td class="nowrap_cell">
+    <td class="text">
 			<%= booking.trip.guest.name %><br/>
     	<%= booking.trip.guest.phone_number %>
 		</td>
 
-    <td class="nowrap_cell">
+    <td class="text">
     	<%= booking.room_type.property.name %></br>
       <%= pluralize(booking.number_of_rooms, booking.room_type.room_type) %></br>
     	<%= l booking.check_in_date, :format => :short %> to <%= l booking.check_out_date, :format => :short %>
 		</td>
 
-    <td class="nowrap_cell">
+    <td class="text">
 			Adults: <%= booking.number_of_adults %><br/>
     	Children (btw 5 & 12): <%= booking.number_of_children_between_5_and_12_years %><br/>
     	Children below 5: <%= booking.number_of_children_below_5_years %><br/>
 			Drivers: <%= booking.number_of_drivers %>
 		</td>
 
-    <td class="nowrap_cell">
+    <td class="text">
     	<%= booking.guests_arriving_from %><br/>
 			<%= l booking.guests_arrival_time, :format => :short if booking.guests_arrival_time %>
 		</td>
 
-    <td class="nowrap_cell">
+    <td class="number">
 			<% if booking.total_price != 0 %>
 				<%= number_to_currency(booking.total_price) %>
 			<% end %>
 		</td>
 
-    <td>
-			<%= booking.guests_food_preferences %>
-		</td>
+    <td class="text"><%= booking.guests_food_preferences %></td>
 
-    <td><%= booking.comments %></td>
+    <td class="text"><%= booking.comments %></td>
 
     <td class='link'>
     	<%= link_to 'Edit', edit_booking_path(booking) %><br/>
@@ -59,7 +66,12 @@
 	<% end %>
 </table>
 <% else %>
-	<p>Click below for creating a new booking</p> 
+	<div id="error_explanation">
+		<h2>Guest doesn't have any Bookings for this trip</h2>
+		<ul>
+			<li>Click below for creating Bookings</li>
+		</ul>
+	</div>
 <% end %>
 
 <div class="action_container">

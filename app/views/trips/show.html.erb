@@ -1,90 +1,94 @@
 <p id="notice"><%= notice %></p>
+<h1>Trip Details</h1>
 
+<div class="show_saved_record">
 <p>
   <b>Guest:</b>
-  <%= @trip.guest_id %>
+  <span class="saved_value"><%= @trip.guest.name %>
 </p>
 
 <p>
   <b>Name:</b>
-  <%= @trip.name %>
+  <span class="saved_value"><%= @trip.name %>
 </p>
 
 <p>
   <b>Start date:</b>
-  <%= l @trip.start_date if @trip.start_date %>
+  <span class="saved_value"><%= l @trip.start_date if @trip.start_date %>
 </p>
 
 <p>
   <b>End date:</b>
-  <%= l @trip.end_date if @trip.end_date %>
+  <span class="saved_value"><%= l @trip.end_date if @trip.end_date %>
 </p>
 
 <p>
   <b>Number of rooms:</b>
-  <%= @trip.number_of_rooms %>
+  <span class="saved_value"><%= @trip.number_of_rooms %>
 </p>
 
 <p>
   <b>Number of adults:</b>
-  <%= @trip.number_of_adults %>
+  <span class="saved_value"><%= @trip.number_of_adults %>
 </p>
 
 <p>
   <b>Number of children between 5 and 12 years:</b>
-  <%= @trip.number_of_children_between_5_and_12_years %>
+  <span class="saved_value"><%= @trip.number_of_children_between_5_and_12_years %>
 </p>
 
 <p>
   <b>Number of children below 5 years:</b>
-  <%= @trip.number_of_children_below_5_years %>
+  <span class="saved_value"><%= @trip.number_of_children_below_5_years %>
 </p>
 
 <p>
   <b>Number of drivers:</b>
-  <%= @trip.number_of_drivers %>
+  <span class="saved_value"><%= @trip.number_of_drivers %>
 </p>
 
 <p>
   <b>Food preferences:</b>
-  <%= @trip.food_preferences %>
+  <span class="saved_value"><%= @trip.food_preferences %>
 </p>
 
 <p>
   <b>Total price:</b>
-  <%= @trip.total_price %>
+  <span class="saved_value"><%= number_to_currency(@trip.total_price) if @trip.total_price %>
 </p>
 
 <p>
   <b>Discount:</b>
-  <%= @trip.discount %>
+  <span class="saved_value"><%= number_to_currency(@trip.discount) if @trip.discount %>
 </p>
 
 <p>
   <b>Final price:</b>
-  <%= @trip.final_price %>
+  <span class="saved_value"><%= number_to_currency(@trip.final_price) if @trip.final_price %>
 </p>
 
 <p>
   <b>Paid:</b>
-  <%= @trip.paid %>
+  <span class="saved_value"><%= number_to_currency(@trip.paid) if @trip.paid %>
 </p>
 
 <p>
   <b>Balance payment:</b>
-  <%= @trip.balance_payment %>
+  <span class="saved_value"><%= number_to_currency(@trip.balance_payment) if @trip.balance_payment %>
 </p>
 
 <p>
   <b>Pay by date:</b>
-  <%= l @trip.pay_by_date if @trip.pay_by_date %>
+  <span class="saved_value"><%= l @trip.pay_by_date if @trip.pay_by_date %>
 </p>
 
 <p>
   <b>Comments:</b>
-  <%= @trip.comments %>
+  <span class="saved_value"><%= @trip.comments %>
 </p>
+</div>
 
-
-<%= link_to 'Edit', edit_trip_path(@trip) %> |
-<%= link_to 'Back', trips_path %>
+<div class="action_container">
+	<%= link_to 'Edit', edit_trip_path(@trip) %> |
+	<%= link_to 'Back to Trip Listing', trips_path(:guest_id => session[:guest_id]) %>
+</div>
