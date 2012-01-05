@@ -67,13 +67,9 @@ class BookingsController < ApplicationController
   # POST /bookings.json
   def create
     @booking = Booking.new(params[:booking])
-		@booking.calculate_total_price
 
     respond_to do |format|
       if @booking.save
-
-				@booking.create_line_items
-
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
         format.json { render json: @booking, status: :created, location: @booking }
       else
@@ -87,13 +83,9 @@ class BookingsController < ApplicationController
   # PUT /bookings/1.json
   def update
     @booking = Booking.find(params[:id])
-		@booking.calculate_total_price
 
     respond_to do |format|
       if @booking.update_attributes(params[:booking])
-
-				@booking.update_line_items
-
         format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
         format.json { head :ok }
       else

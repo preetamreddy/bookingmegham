@@ -1,4 +1,8 @@
-<h1>New Trip</h1>
+<% if session[:guest_id] %>
+	<h1>New Trip for Guest '<%= Guest.find(session[:guest_id]).name %>'</h1>
+<% else %>
+	<h1>New Trip</h1>
+<% end %>
 
 <%= render 'form' %>
 

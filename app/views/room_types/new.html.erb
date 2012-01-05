@@ -1,4 +1,8 @@
-<h1>New Room Type</h1>
+<% if session[:property_id] %>
+	<h1>New Room Type for Property '<%= Property.find(session[:property_id]).name %>'</h1>
+<% else %>
+	<h1>New Room Type</h1>
+<% end %>
 
 <%= render 'form' %>
 

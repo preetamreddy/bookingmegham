@@ -1,7 +1,7 @@
 <%= form_for(@booking) do |f| %>
   <% if @booking.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+      <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this Booking from being saved:</h2>
 
       <ul>
       <% @booking.errors.full_messages.each do |msg| %>
@@ -12,25 +12,21 @@
   <% end %>
 
   <div class="field">
+   	<%= f.label :trip_id %><br />
 		<% if session[:trip_id] %>
-			<%= f.hidden_field :trip_id %>
+    	<%= f.number_field :trip_id, :readonly => true %>
 		<% else %>
-    	<%= f.label :trip_id %><br />
     	<%= f.number_field :trip_id, :min => 1 %>
 		<% end %>
   </div>
 	<div class="field">
+   	<%= f.label :room_type_id %><br />
 		<% if params[:room_type_id] %>
-			<%= f.hidden_field :room_type_id %>
+    	<%= f.number_field :room_type_id, :readonly => true %>
 		<% else %>
-    	<%= f.label :room_type_id %><br />
     	<%= f.number_field :room_type_id, :min => 1 %>
 		<% end %>
 	</div>
-	<div class="field">
-    <%= f.label :number_of_rooms %><br />
-    <%= f.number_field :number_of_rooms, :min => 1 %>
-  </div>
   <div class="field">
     <%= f.label :check_in_date %><br />
     <%= f.date_select :check_in_date, :start_year => Time.now.year, 
@@ -54,6 +50,10 @@
   <div class="field">
     <%= f.label :number_of_children_below_5_years %><br />
     <%= f.number_field :number_of_children_below_5_years, :min => 0 %>
+  </div>
+	<div class="field">
+    <%= f.label :number_of_rooms %><br />
+    <%= f.number_field :number_of_rooms, :min => 1 %>
   </div>
   <div class="field">
     <%= f.label :number_of_drivers %><br />

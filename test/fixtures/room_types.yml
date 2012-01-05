@@ -1,15 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  property_id: 1
-  room_type: MyString
-  price_for_single_occupancy: 1
-  price_for_double_occupancy: 1
-  description: MyText
+sangla_deluxe_tent:
+  property: sangla
+  room_type: Deluxe tent
+  price_for_single_occupancy: 5600
+  price_for_double_occupancy: 6500
+  description: At ground level
+  number_of_rooms: 8
 
-two:
-  property_id: 1
-  room_type: MyString
-  price_for_single_occupancy: 1
-  price_for_double_occupancy: 1
-  description: MyText
+sangla_super_deluxe_tent:
+  property: sangla
+  room_type: Super deluxe tent
+  price_for_single_occupancy: 6100
+  price_for_double_occupancy: 7000
+  description: On a raised platform
+  number_of_rooms: 5

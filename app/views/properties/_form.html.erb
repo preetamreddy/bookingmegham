@@ -1,7 +1,7 @@
 <%= form_for(@property) do |f| %>
   <% if @property.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@property.errors.count, "error") %> prohibited this property from being saved:</h2>
+      <h2><%= pluralize(@property.errors.count, "error") %> prohibited this Property from being saved:</h2>
 
       <ul>
       <% @property.errors.full_messages.each do |msg| %>
@@ -17,19 +17,19 @@
   </div>
   <div class="field">
     <%= f.label :price_for_children_below_5_years %><br />
-    <%= f.number_field :price_for_children_below_5_years %>
+    <%= f.number_field :price_for_children_below_5_years, :min => 0 %>
   </div>
   <div class="field">
     <%= f.label :price_for_children_between_5_and_12_years %><br />
-    <%= f.number_field :price_for_children_between_5_and_12_years %>
+    <%= f.number_field :price_for_children_between_5_and_12_years, :min => 0 %>
   </div>
   <div class="field">
     <%= f.label :price_for_triple_occupancy %><br />
-    <%= f.number_field :price_for_triple_occupancy %>
+    <%= f.number_field :price_for_triple_occupancy, :min => 0 %>
   </div>
   <div class="field">
     <%= f.label :price_for_driver %><br />
-    <%= f.number_field :price_for_driver %>
+    <%= f.number_field :price_for_driver, :min => 0 %>
   </div>
   <div class="field">
     <%= f.label :description %><br />

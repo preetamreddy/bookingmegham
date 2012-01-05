@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class BookingTest < ActiveSupport::TestCase
-  test 'Booking details can not be empty' do 
+  test 'booking details can not be empty' do 
 		booking = Booking.new
 		assert booking.invalid?
 		assert booking.errors[:guest_name].any?

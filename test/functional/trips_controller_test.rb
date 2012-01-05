@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TripsControllerTest < ActionController::TestCase
   setup do
-    @trip = trips(:one)
+    @trip = trips(:preetam_trip)
   end
 
   test "should get index" do

@@ -24,6 +24,7 @@
     <th class="number">Final price</th>
 		<th class="number">Paid</th>
     <th class="number">Balance</th>
+		<th class="text">Pay by</th>
     <th class="text">Comments</th>
     <th></th>
   </tr>
@@ -39,11 +40,13 @@
 		    <td class="number"><%= number_to_currency(trip.final_price) if trip.final_price%></td>
 		    <td class="number"><%= number_to_currency(trip.paid) if trip.paid %></td>
 		    <td class="number"><%= number_to_currency(trip.balance_payment) if trip.balance_payment%></td>
+				<td class="text"><%= l trip.pay_by_date if trip.pay_by_date %></td>
 		    <td class="text"><%= trip.comments %></td>
 		    <td>
 					<%= link_to 'Show details', trip %></br>
 					<%= link_to 'Edit', edit_trip_path(trip) %></br>
 		    	<%= link_to 'Destroy', trip, confirm: 'Are you sure?', method: :delete %></br>
+					<%= link_to 'Check Availability', availability_chart_path(:trip_id => trip.id) %></br>
 					<%= link_to 'View Bookings', bookings_path(:trip_id => trip.id) %>
 		  </tr>
 		<% end %>

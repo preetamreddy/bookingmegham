@@ -1,39 +1,33 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  guest_name: MyString
-  guest_phone_number: 1
-  guest_email_id: MyString
+preetam_booking:
   number_of_rooms: 1
-  from: 2011-12-14
-  to: 2011-12-14
-  number_of_adults: 1
-  number_of_children: 1
-  number_of_infants: 1
-  guests_arrival_time: 2011-12-14 14:45:20
-  guests_arriving_from: MyString
-  guests_food_preferences: MyString
-  total_price: 1
-  paid: 1
-  balance_payment: 1
-  pay_by_date: 2011-12-14
-  comments: MyText
+  number_of_adults: 2
+  guests_arrival_time: 2012-05-01 14:00:00
+  guests_arriving_from: Thanedar
+  guests_food_preferences: "Adults: 1 pesco veg, 1 non-veg; Child - Veg"
+  total_price: 28000
+  comments: Fifth trip to Sangla
+  room_type: sangla_super_deluxe_tent
+  number_of_children_between_5_and_12_years: 0
+  number_of_children_below_5_years: 1
+  check_in_date: 2012-05-01
+  check_out_date: 2012-05-05
+  trip: preetam_trip
+  number_of_drivers: 0
 
-two:
-  guest_name: MyString
-  guest_phone_number: 1
-  guest_email_id: MyString
+naren_booking:
   number_of_rooms: 1
-  from: 2011-12-14
-  to: 2011-12-14
-  number_of_adults: 1
-  number_of_children: 1
-  number_of_infants: 1
-  guests_arrival_time: 2011-12-14 14:45:20
-  guests_arriving_from: MyString
-  guests_food_preferences: MyString
-  total_price: 1
-  paid: 1
-  balance_payment: 1
-  pay_by_date: 2011-12-14
-  comments: MyText
+  number_of_adults: 2
+  guests_arrival_time: 2012-05-01 14:00:00
+  guests_arriving_from: Thanedar
+  guests_food_preferences: Veg
+  total_price: 30000
+  comments: Third trip to Sangla
+  room_type: sangla_super_deluxe_tent
+  number_of_children_between_5_and_12_years: 0
+  number_of_children_below_5_years: 0
+  check_in_date: 2012-05-01
+  check_out_date: 2012-05-05
+  trip_id: naren_trip
+  number_of_drivers: 1

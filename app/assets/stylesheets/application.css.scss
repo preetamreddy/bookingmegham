@@ -38,14 +38,6 @@
 		float: left;
 		width: 12em;
 
-		ul {
-			padding: 0;
-
-			li {
-				list-style: none;
-			}
-		}
-
 		dl {
 			margin-top: 0;
 			padding-left: 1em;
@@ -103,10 +95,6 @@
 	float: right;
 	display: inline-block;
 	margin: -30px 12px 0 0;
-}
-
-.highlight {
-	color: #036339;
 }
 
 table {

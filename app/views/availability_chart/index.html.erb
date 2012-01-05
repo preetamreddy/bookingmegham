@@ -6,7 +6,7 @@
 		<th class="text">Room Type</th>
 		<th class="number">Rooms</th>
 		<% chart_date = @chart_start_date %>
-		<% @days_to_show_in_chart.times do %>
+		<% while chart_date < @chart_end_date do %>
 			<th class="number"><%= l chart_date, :format => :short %></th>
 			<% chart_date += 1 %>
 		<% end %>
@@ -19,7 +19,7 @@
 			<td class="text"><%= @room_types[cnt].room_type %></td>
 			<td class="number"><%= @room_types[cnt].number_of_rooms %></td>
 			<% column_date = @chart_start_date %>
-			<% @days_to_show_in_chart.times do %>
+			<% while column_date < @chart_end_date do %>
 				<% if @line_items[[@room_types[cnt].id, column_date]] %>
 					<td class="number"><%= (@room_types[cnt].number_of_rooms - @line_items[[@room_types[cnt].id, column_date]]) %></td>
 				<% else %>

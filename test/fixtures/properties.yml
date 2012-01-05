@@ -1,17 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  name: MyString
-  price_for_children_below_12_years: 1
-  price_for_children_below_5_years: 1
-  price_for_triple_occupancy: 1
-  price_for_driver: 1
-  description: MyText
+sangla:
+  name: Sangla
+  price_for_children_below_5_years: 0
+  price_for_triple_occupancy: 2000
+  price_for_driver: 500
+  description: In Kinnaur, HP
+  price_for_children_between_5_and_12_years: 1200
 
-two:
-  name: MyString
-  price_for_children_below_12_years: 1
-  price_for_children_below_5_years: 1
-  price_for_triple_occupancy: 1
-  price_for_driver: 1
-  description: MyText
+kaza:
+  name: Kaza
+  price_for_children_below_5_years: 0
+  price_for_triple_occupancy: 2000
+  price_for_driver: 500
+  description: In Lahual, HP
+  price_for_children_between_5_and_12_years: 1200

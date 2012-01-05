@@ -18,11 +18,11 @@
 				<dd><%= link_to 'Properties', properties_path %></dd>
 				<dd><%= link_to 'Room Types', room_types_path(:property_id => nil) %></dd>
 				<dt>Booking Mgmt</dt>
-				<dd><%= link_to 'Guest List', guests_path %></dd>
+				<dd><%= link_to 'Guests', guests_path %></dd>
 				<dd><%= link_to 'Trips', trips_path(:guest_id => session[:guest_id]) %></dd>
 				<dd><%= link_to 'Bookings', bookings_path(:trip_id => session[:trip_id]) %></dd>
-				<dd><%= link_to 'Availability Chart', availability_chart_path %></dd>
-			</ul>
+				<dd><%= link_to 'Availability Chart', availability_chart_path(:trip_id => session[:trip_id]) %></dd>
+			</dl>
 		</div>
 		<div id="main">
 			<%= yield %>

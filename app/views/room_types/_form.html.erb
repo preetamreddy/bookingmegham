@@ -1,7 +1,7 @@
 <%= form_for(@room_type) do |f| %>
   <% if @room_type.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@room_type.errors.count, "error") %> prohibited this room_type from being saved:</h2>
+      <h2><%= pluralize(@room_type.errors.count, "error") %> prohibited this Room Type from being saved:</h2>
 
       <ul>
       <% @room_type.errors.full_messages.each do |msg| %>
@@ -12,10 +12,10 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :property_id %><br />
 		<% if session[:property_id] %>
-			<%= f.hidden_field :property_id %>
+    	<%= f.number_field :property_id, :readonly => true %>
 		<% else %>
-    	<%= f.label :property_id %><br />
     	<%= f.number_field :property_id %>
 		<% end %>
   </div>
@@ -25,15 +25,15 @@
   </div>
   <div class="field">
     <%= f.label :price_for_single_occupancy %><br />
-    <%= f.number_field :price_for_single_occupancy %>
+    <%= f.number_field :price_for_single_occupancy, :min => 0 %>
   </div>
   <div class="field">
     <%= f.label :price_for_double_occupancy %><br />
-    <%= f.number_field :price_for_double_occupancy %>
+    <%= f.number_field :price_for_double_occupancy, :min => 0 %>
   </div>
   <div class="field">
     <%= f.label :number_of_rooms %><br />
-    <%= f.number_field :number_of_rooms %>
+    <%= f.number_field :number_of_rooms, :min => 1 %>
   </div>
   <div class="field">
     <%= f.label :description %><br />

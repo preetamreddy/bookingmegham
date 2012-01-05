@@ -1,31 +1,39 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  guest_id: 1
-  start_date: 2011-12-27
-  end_date: 2011-12-27
+preetam_trip:
+  guest: preetam
+  start_date: 2012-05-01
+  end_date: 2012-05-05
   number_of_rooms: 1
-  number_of_adults: 1
-  number_of_children_between_5_and_12_years: 1
+  number_of_adults: 2
+  number_of_children_between_5_and_12_years: 0
   number_of_children_below_5_years: 1
-  food_preferences: MyString
-  total_price: 1
-  paid: 1
-  balance_payment: 1
-  pay_by_date: 2011-12-27
-  comments: MyText
+  food_preferences: "Adults: 1 pesco veg, 1 non-veg; Child: veg"
+  total_price: 28000
+  paid: 0
+  balance_payment: 28000
+  pay_by_date: 2012-05-01
+  comments: 2012 Sangla trip
+  name: Preetam 2012 Sangla
+  discount: 0
+  final_price: 28000
+  number_of_drivers: 0
 
-two:
-  guest_id: 1
-  start_date: 2011-12-27
-  end_date: 2011-12-27
+naren_trip:
+  guest: naren
+  start_date: 2012-05-01
+  end_date: 2012-05-05
   number_of_rooms: 1
-  number_of_adults: 1
-  number_of_children_between_5_and_12_years: 1
-  number_of_children_below_5_years: 1
-  food_preferences: MyString
-  total_price: 1
-  paid: 1
-  balance_payment: 1
-  pay_by_date: 2011-12-27
-  comments: MyText
+  number_of_adults: 2
+  number_of_children_between_5_and_12_years: 0
+  number_of_children_below_5_years: 0
+  food_preferences: Veg
+  total_price: 30000
+  paid: 0
+  balance_payment: 30000
+  pay_by_date: 2012-05-01
+  comments: 2012 Sangla trip
+  name: Naren 2012 Sangla
+  discount: 0
+  final_price: 30000
+  number_of_drivers: 1

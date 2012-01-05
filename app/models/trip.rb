@@ -1,8 +1,16 @@
 class Trip < ActiveRecord::Base
-	validates :guest_id, :number_of_rooms, :number_of_adults, 
-						:number_of_children_between_5_and_12_years,
-						:number_of_children_below_5_years, :number_of_drivers,
+	belongs_to :guest
+
+	has_many :bookings
+
+	before_save :ensure_guest_exists
+
+	before_destroy :ensure_not_referenced_by_booking
+
+	validates :guest_id, :name, :number_of_rooms, :number_of_adults, 
+						:start_date, :end_date,
 						presence: true
+
 	validates_numericality_of :guest_id, :number_of_rooms, :number_of_adults,
 						only_integer: true, greater_than: 0, allow_nil: true,
 						message: "should be a number greater than 0"
@@ -10,19 +18,13 @@ class Trip < ActiveRecord::Base
 	validates_numericality_of :number_of_children_between_5_and_12_years,
 						:number_of_children_below_5_years, :number_of_drivers,
 						only_integer: true, greater_than_or_equal_to: 0, allow_nil: true,
-						message: "should be a positive number or 0"
-
-	belongs_to :guest
-
-	has_many :bookings
-
-	before_destroy :ensure_not_referenced_by_booking
+						message: "should be a number greater than or equal to 0"
 
 	def ensure_not_referenced_by_booking
 		if bookings.empty?
 			return true
 		else
-			errors.add(:base, "Destroy failed because the trip '#{name}' has bookings")
+			errors.add(:base, "Destroy failed because the trip '#{name}' has bookings. Please destroy the bookings first.")
 			return false
 		end
 	end
@@ -30,8 +32,6 @@ class Trip < ActiveRecord::Base
 	def Trip.update_roll_up_attributes(id)
 		trip = Trip.find(id)
 		trip.total_price = trip.compute_total_price
-		trip.start_date = trip.get_start_date
-		trip.end_date = trip.get_end_date
 		trip.save!
 	end
 
@@ -40,26 +40,20 @@ class Trip < ActiveRecord::Base
 			return nil
 		else
 			cumulated_total_price_from_bookings = bookings.to_a.sum { |booking| booking.total_price }
-			return cumulated_total_price_from_bookings	
+			return cumulated_total_price_from_bookings
 		end
 	end
 
-	def get_start_date
-		if bookings.empty?
-			return nil
-		else
-			start_date = bookings.order("check_in_date").first.check_in_date
-			return start_date
-		end
-	end
+	private
 
-	def get_end_date
-		if bookings.empty?
-			return nil
-		else
-			end_date = bookings.order("check_out_date").last.check_out_date
-			return end_date
-		end
-	end
-
+		def ensure_guest_exists
+			begin
+				guest = Guest.find(guest_id)
+			rescue ActiveRecord::RecordNotFound
+				errors.add(:base, "Could not create Trip as Guest '#{guest_id}' does not exist")
+				return false
+			else
+				return true
+			end
+		end	
 end

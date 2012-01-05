@@ -1,8 +1,7 @@
 <%= form_for(@trip) do |f| %>
   <% if @trip.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@trip.errors.count, "error") %> prohibited this trip from being saved:</h2>
-
+      <h2><%= pluralize(@trip.errors.count, "error") %> prohibited this Trip from being saved:</h2>
       <ul>
       <% @trip.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -12,10 +11,10 @@
   <% end %>
 
  	<div class="field">
+   	<%= f.label :guest_id %><br />
 		<% if session[:guest_id] %>
-			<%= f.hidden_field :guest_id %>
+    	<%= f.number_field :guest_id, :readonly => true %>
 		<% else %>
-    	<%= f.label :guest_id %><br />
     	<%= f.number_field :guest_id %>
 		<% end %>
   </div>
@@ -23,17 +22,17 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
-  <div class="field" style="display: none;">
+  <div class="field">
     <%= f.label :start_date %><br />
-    <%= f.date_select :start_date, :include_blank => true %>
-  </div>
-  <div class="field" style="display: none;">
-    <%= f.label :end_date %><br />
-    <%= f.date_select :end_date, :include_blank => true %>
+    <%= f.date_select :start_date, :start_year => Time.now.year,
+			:end_year => Time.now.year + 1, :prompt => {
+			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
   </div>
   <div class="field">
-    <%= f.label :number_of_rooms %><br />
-    <%= f.number_field :number_of_rooms, :min => 1 %>
+    <%= f.label :end_date %><br />
+    <%= f.date_select :end_date, :start_year => Time.now.year,
+			:end_year => Time.now.year + 1, :prompt => {
+			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
   </div>
   <div class="field">
     <%= f.label :number_of_adults %><br />
@@ -46,6 +45,10 @@
   <div class="field">
     <%= f.label :number_of_children_below_5_years %><br />
     <%= f.number_field :number_of_children_below_5_years, :min => 0 %>
+  </div>
+  <div class="field">
+    <%= f.label :number_of_rooms %><br />
+    <%= f.number_field :number_of_rooms, :min => 1 %>
   </div>
   <div class="field">
     <%= f.label :number_of_drivers %><br />
