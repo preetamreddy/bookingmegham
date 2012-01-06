@@ -7,7 +7,7 @@ class Booking < ActiveRecord::Base
 	has_many :line_items, dependent: :destroy
 
 	before_save :ensure_trip_exists, :ensure_room_type_exists
-	after_save :create_line_items, :update_roll_up_attributes_for_the_trip
+	after_save :update_line_items, :update_roll_up_attributes_for_the_trip
 
 	after_destroy :update_roll_up_attributes_for_the_trip
 
@@ -22,7 +22,8 @@ class Booking < ActiveRecord::Base
 														message: "should be a number greater than 0"
 
 	validates_numericality_of :number_of_children_between_5_and_12_years,
-														:number_of_children_below_5_years, :total_price,
+														:number_of_children_below_5_years,
+														:number_of_drivers, :total_price,
 														only_integer: true, greater_than_or_equal_to: 0,
 														allow_nil: true, 
 														message: "should be a number greater than or equal to 0"
@@ -55,7 +56,7 @@ class Booking < ActiveRecord::Base
 			Trip.update_roll_up_attributes(trip_id)
 		end
 
-		def create_line_items
+		def update_line_items
 			date = check_in_date
 			delete_line_items
 			while date < check_out_date do
