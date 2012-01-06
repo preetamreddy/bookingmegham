@@ -33,12 +33,14 @@ class BookingTest < ActiveSupport::TestCase
 
 	#save is not executing callback after_save. Parking this for now.
 	test "line items are created and updated based on changes to bookings" do
-		assert true
+		true
 	end
 
-	#Though I haven't tried this, for reasons cited above, parking this as well
 	test "corresponding trip roll up attributes are updated" do
-		assert true
+		himachal_booking = new_booking(@preetam_trip_id, @sangla_super_deluxe_tent_id, 2, 1, 22000)
+		himachal_booking.save
+		himachal_booking_id = himachal_booking.id
+		assert_equal himachal_booking.trip.total_price, 50000
 	end
 
   test 'booking details can not be empty' do 

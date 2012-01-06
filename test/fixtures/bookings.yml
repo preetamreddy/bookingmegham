@@ -4,7 +4,7 @@ preetam_booking:
   number_of_rooms: 1
   number_of_adults: 2
   guests_arrival_time: 2012-05-01 14:00:00
-  guests_arriving_from: Thanedar
+  guests_arriving_from: Sojha
   guests_food_preferences: "Adults: 1 pesco veg, 1 non-veg; Child - Veg"
   total_price: 28000
   comments: Fifth trip to Sangla

@@ -3,7 +3,7 @@
 preetam_trip:
   guest: preetam
   start_date: 2012-05-01
-  end_date: 2012-05-05
+  end_date: 2012-05-10
   number_of_rooms: 1
   number_of_adults: 2
   number_of_children_between_5_and_12_years: 0
@@ -13,7 +13,7 @@ preetam_trip:
   paid: 0
   balance_payment: 28000
   pay_by_date: 2012-05-01
-  comments: 2012 Sangla trip
+  comments: 2012 HP trip
   name: Preetam 2012 Sangla
   discount: 0
   final_price: 28000
