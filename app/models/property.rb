@@ -12,6 +12,12 @@ class Property < ActiveRecord::Base
 														allow_nil: true, only_integer: true,
 														greater_than_or_equal_to: 0,
 														message: "should be a number greater than or equal to 0"
+	
+	def number_of_rooms
+		number_of_rooms = room_types.to_a.sum { |room_type| 
+												room_type.number_of_rooms }
+		return number_of_rooms
+	end	
 
 	private
 	

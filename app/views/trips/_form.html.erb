@@ -1,4 +1,4 @@
-<%= form_for(@trip) do |f| %>
+<%= nested_form_for(@trip) do |f| %>
   <% if @trip.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@trip.errors.count, "error") %> prohibited this Trip from being saved:</h2>
@@ -11,7 +11,7 @@
   <% end %>
 
  	<div class="field">
-   	<%= f.label :guest_id %><br />
+   	<%= f.label :guest_id, "Guest name" %><br />
 		<% if session[:guest_id] %>
     	<%= f.number_field :guest_id, :readonly => true %>
 		<% else %>
@@ -19,8 +19,8 @@
 		<% end %>
   </div>
   <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= f.label :name, "Trip name" %><br />
+    <%= f.text_field :name, size: 30 %>
   </div>
   <div class="field">
     <%= f.label :start_date %><br />
@@ -34,59 +34,69 @@
 			:end_year => Time.now.year + 1, :prompt => {
 			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
   </div>
-  <div class="field">
+
+	<div class="field">
+		<%= f.label :rooms %>
+	</div>
+
+	<div class="nested_form">
+		<%= f.fields_for :rooms %>
+		<%= f.link_to_add "Add row", :rooms %><br/>
+	</div>
+
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :number_of_adults %><br />
     <%= f.number_field :number_of_adults, :min => 1 %>
-  </div>
-  <div class="field">
+	<% end %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :number_of_children_between_5_and_12_years %><br />
     <%= f.number_field :number_of_children_between_5_and_12_years, :min => 0 %>
-  </div>
-  <div class="field">
+	<% end %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :number_of_children_below_5_years %><br />
     <%= f.number_field :number_of_children_below_5_years, :min => 0 %>
-  </div>
-  <div class="field">
+	<% end %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :number_of_rooms %><br />
     <%= f.number_field :number_of_rooms, :min => 1 %>
-  </div>
-  <div class="field">
+	<% end %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :number_of_drivers %><br />
     <%= f.number_field :number_of_drivers, :min => 0 %>
-  </div>
-  <div class="field">
+	<% end %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :food_preferences %><br />
     <%= f.text_field :food_preferences %>
-  </div>
-  <div class="field">
+	<% end %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :total_price %><br />
     <%= f.number_field :total_price, :readonly => true %>
-  </div>
-  <div class="field">
+	<% end %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :discount %><br />
     <%= f.number_field :discount, :min => 0 %>
-  </div>
-  <div class="field">
+	<% end %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :final_price %><br />
     <%= f.number_field :final_price, :min => 0 %>
-  </div>
-  <div class="field">
+	<% end %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :paid %><br />
     <%= f.number_field :paid, :min => 0 %>
-  </div>
-  <div class="field">
+	<% end %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :balance_payment %><br />
     <%= f.number_field :balance_payment, :min => 0 %>
-  </div>
-  <div class="field">
+	<% end %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :pay_by_date %><br />
     <%= f.date_select :pay_by_date, :start_year => Time.now.year,
 			:end_year => Time.now.year + 1, :prompt => {
 			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
-  </div>
+	<% end %>
   <div class="field">
     <%= f.label :comments %><br />
-    <%= f.text_area :comments, rows: 6 %>
+    <%= f.text_area :comments, rows: 6, cols: 50 %>
   </div>
   <div class="action_container">
     <%= f.submit %>

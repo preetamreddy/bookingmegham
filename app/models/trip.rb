@@ -1,15 +1,16 @@
 class Trip < ActiveRecord::Base
 	belongs_to :guest
 
+	has_many :rooms
+	accepts_nested_attributes_for :rooms, :allow_destroy => true
+
 	has_many :bookings
 
 	before_save :ensure_guest_exists
 
 	before_destroy :ensure_not_referenced_by_booking
 
-	validates :guest_id, :name, :number_of_rooms, :number_of_adults, 
-						:start_date, :end_date,
-						presence: true
+	validates :guest_id, :name, :start_date, :end_date, presence: true
 
 	validates_numericality_of :guest_id, :number_of_rooms, :number_of_adults,
 						only_integer: true, greater_than: 0, allow_nil: true,

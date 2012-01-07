@@ -3,32 +3,43 @@
 <table border="1">
 	<tr>
 		<th class="text">Property</th>
-		<th class="text">Room Type</th>
 		<th class="number">Rooms</th>
-		<% chart_date = @chart_start_date %>
-		<% while chart_date < @chart_end_date do %>
-			<th class="number"><%= l chart_date, :format => :short %></th>
-			<% chart_date += 1 %>
+		<% @chart_date_range.each do |date| %>
+			<th class="number"><%= date %></th>
 		<% end %>
 		<th></th>
   </tr>
-	<% cnt = 0 %>
-	<% @room_types.count.times do %>
-		<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-			<td class="text"><%= Property.find(@room_types[cnt].property_id).name %></td>
-			<td class="text"><%= @room_types[cnt].room_type %></td>
-			<td class="number"><%= @room_types[cnt].number_of_rooms %></td>
-			<% column_date = @chart_start_date %>
-			<% while column_date < @chart_end_date do %>
-				<% if @line_items[[@room_types[cnt].id, column_date]] %>
-					<td class="number"><%= (@room_types[cnt].number_of_rooms - @line_items[[@room_types[cnt].id, column_date]]) %></td>
-				<% else %>
-					<td class="number"><%= @room_types[cnt].number_of_rooms %></td>
-				<% end %>
-				<% column_date += 1 %>
+
+	<% @properties.each do |property| %>
+		<tr class="property">
+			<td class="text"><%= property.name %></td>
+			<td class="number"><%= property.number_of_rooms %></td>
+			<% @chart_date_range.each do |date| %>
+				<td class="number">
+					<%= @availability[[:property, property.id, date]] %>
+				</td>
 			<% end %>
-			<td><%= link_to 'New Booking', new_booking_path(:room_type_id => @room_types[cnt].id) %></td>
+			<td>
+				<%= link_to 'New Booking', new_booking_path(:room_type_id => nil) %>
+			</td>
 		</tr>
-		<% cnt += 1 %>
+
+		<% @room_types.each do |room_type| %>
+			<% if room_type.property_id == property.id %>
+				<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+					<td class="room_type"><%= room_type.room_type %></td>
+					<td class="number"><%= room_type.number_of_rooms %></td>
+					<% @chart_date_range.each do |date| %>
+						<td class="number">
+							<%= @availability[[:room_type, room_type.id, date]] %>
+						</td>
+					<% end %>
+					<td>
+						<%= link_to 'New Booking', 
+							new_booking_path(:room_type_id => room_type.id) %>
+					</td>
+				</tr>
+			<% end %>
+		<% end %>
 	<% end %>
 </table>

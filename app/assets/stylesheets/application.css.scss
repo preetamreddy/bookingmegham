@@ -141,3 +141,51 @@ table {
 		background: #F2EEEC;
 	}
 }
+
+.new_form {
+	fieldset {
+		legend {
+			color: #036339;
+			background: #CFCFCF;
+			font-size: 1.1em;
+			padding: 0.2em 1em;
+		}
+		form {
+			margin-top: 0.5em;
+			.field {
+				label {
+					width: 6em;
+					float: left;
+					text-align: right;
+					padding-top: 0.1em;
+					margin-right: 0.7em;
+					display: block;
+				}
+				select, textarea, input {
+					margin-right: 0.5em;
+				}
+				br {
+					display: none;
+				}
+			}
+		}
+	}
+}
+
+.nested_form {
+	margin-bottom: 10px;
+	padding-left: 7em;
+
+	.add_nested_fields {
+		float: left;
+	}
+
+	input {
+		margin-right: 0.2em;
+		margin-left: 0.2em;
+	}
+
+	a {
+		padding-left: 0.5em;
+	}
+}

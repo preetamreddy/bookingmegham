@@ -28,8 +28,6 @@ class TripTest < ActiveSupport::TestCase
 		assert himachal_trip.invalid?
 		assert himachal_trip.errors[:guest_id].any?
 		assert himachal_trip.errors[:name].any?
-		assert himachal_trip.errors[:number_of_rooms].any?
-		assert himachal_trip.errors[:number_of_adults].any?
 		assert himachal_trip.errors[:start_date].any?
 		assert himachal_trip.errors[:end_date].any?
 	end

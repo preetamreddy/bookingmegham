@@ -1,4 +1,6 @@
 Bookingmegham::Application.routes.draw do
+  resources :rooms
+
   resources :trips
 
   resources :guests

@@ -32,6 +32,7 @@ class TripsController < ApplicationController
   # GET /trips/new.json
   def new
     @trip = Trip.new
+		@trip.rooms.build
 		@trip.guest_id = session[:guest_id]
 
     respond_to do |format|
