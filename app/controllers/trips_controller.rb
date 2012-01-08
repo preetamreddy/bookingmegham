@@ -21,6 +21,7 @@ class TripsController < ApplicationController
   # GET /trips/1.json
   def show
     @trip = Trip.find(params[:id])
+		session[:trip_id] = params[:id]
 
     respond_to do |format|
       format.html # show.html.erb
@@ -50,9 +51,6 @@ class TripsController < ApplicationController
   # POST /trips.json
   def create
     @trip = Trip.new(params[:trip])
-		@trip.number_of_adults = @trip.adults_in_rooms
-		@trip.number_of_children_between_5_and_12_years = @trip.children_in_rooms
-		@trip.number_of_rooms = @trip.total_rooms
 
     respond_to do |format|
       if @trip.save
@@ -69,9 +67,6 @@ class TripsController < ApplicationController
   # PUT /trips/1.json
   def update
     @trip = Trip.find(params[:id])
-		@trip.number_of_adults = @trip.adults_in_rooms
-		@trip.number_of_children_between_5_and_12_years = @trip.children_in_rooms
-		@trip.number_of_rooms = @trip.total_rooms
 
     respond_to do |format|
       if @trip.update_attributes(params[:trip])
@@ -91,7 +86,8 @@ class TripsController < ApplicationController
     @trip.destroy
 
     respond_to do |format|
-      format.html { redirect_to trips_url, notice: @trip.errors[:base][0] }
+      format.html { redirect_to trips_url(:guest_id => session[:guest_id]),
+											notice: @trip.errors[:base][0] }
       format.json { head :ok }
     end
   end

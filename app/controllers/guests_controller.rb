@@ -17,6 +17,7 @@ class GuestsController < ApplicationController
   # GET /guests/1.json
   def show
     @guest = Guest.find(params[:id])
+		session[:guest_id] = params[:id]
 
     respond_to do |format|
       format.html # show.html.erb

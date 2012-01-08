@@ -12,12 +12,12 @@ class Trip < ActiveRecord::Base
 
 	validates :guest_id, :name, :start_date, :end_date, presence: true
 
-	validates_numericality_of :guest_id, :number_of_rooms, :number_of_adults,
+	validates_numericality_of :guest_id,
 						only_integer: true, greater_than: 0, allow_nil: true,
 						message: "should be a number greater than 0"
 
-	validates_numericality_of :number_of_children_between_5_and_12_years,
-						:number_of_children_below_5_years, :number_of_drivers,
+	validates_numericality_of :number_of_children_below_5_years, 
+						:number_of_drivers,
 						only_integer: true, greater_than_or_equal_to: 0, allow_nil: true,
 						message: "should be a number greater than or equal to 0"
 
@@ -30,7 +30,7 @@ class Trip < ActiveRecord::Base
 		end
 	end
 
-	def adults_in_rooms
+	def number_of_adults
 		if rooms.empty?
 			return nil
 		else
@@ -38,7 +38,7 @@ class Trip < ActiveRecord::Base
 		end
 	end
 
-	def children_in_rooms
+	def number_of_children_between_5_and_12_years
 		if rooms.empty?
 			return nil
 		else
@@ -47,7 +47,7 @@ class Trip < ActiveRecord::Base
 		end
 	end
 
-	def total_rooms
+	def number_of_rooms
 		if rooms.empty?
 			return nil
 		else

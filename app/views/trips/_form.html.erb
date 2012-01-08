@@ -44,19 +44,6 @@
 		<%= f.link_to_add "Add row", :rooms %><br/>
 	</div>
 
-	<%= hidden_div_if(true, class: "field") do %>
-    <%= f.label :number_of_adults %><br />
-    <%= f.number_field :number_of_adults, :min => 1 %>
-	<% end %>
-	<%= hidden_div_if(true, class: "field") do %>
-    <%= f.label :number_of_children_between_5_and_12_years %><br />
-    <%= f.number_field :number_of_children_between_5_and_12_years, :min => 0 %>
-	<% end %>
-	<%= hidden_div_if(true, class: "field") do %>
-    <%= f.label :number_of_rooms %><br />
-    <%= f.number_field :number_of_rooms, :min => 1 %>
-	<% end %>
-
 	<div class="field">
     <%= f.label :number_of_children_below_5_years, "Children below 5" %><br />
     <%= f.number_field :number_of_children_below_5_years, :min => 0 %>
