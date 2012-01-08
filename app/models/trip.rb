@@ -30,6 +30,31 @@ class Trip < ActiveRecord::Base
 		end
 	end
 
+	def adults_in_rooms
+		if rooms.empty?
+			return nil
+		else
+			rooms.to_a.sum { |room| room.number_of_adults * room.number_of_rooms }
+		end
+	end
+
+	def children_in_rooms
+		if rooms.empty?
+			return nil
+		else
+			rooms.to_a.sum { |room| 
+				room.number_of_children_between_5_and_12_years * room.number_of_rooms }
+		end
+	end
+
+	def total_rooms
+		if rooms.empty?
+			return nil
+		else
+			rooms.to_a.sum { |room| room.number_of_rooms }
+		end
+	end
+
 	def Trip.update_roll_up_attributes(id)
 		trip = Trip.find(id)
 		trip.total_price = trip.compute_total_price

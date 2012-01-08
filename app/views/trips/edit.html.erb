@@ -1,5 +1,16 @@
-<h1>Editing Trip</h1>
+<div class="edit_form">
+	<fieldset>
+		<% if session[:guest_id] %>
+			<legend>
+				Edit Trip for Guest '<%= Guest.find(session[:guest_id]).name %>'
+			</legend>
+		<% else %>
+			<legend>Edit Trip</legend>
+		<% end %>
 
-<%= render 'form' %>
+		<%= render 'form' %>
 
-<%= link_to 'Cancel', trips_path(:guest_id => session[:guest_id]), :class => "cancel_link" %>
+		<%= link_to 'Cancel', trips_path(:guest_id => session[:guest_id]),
+														:class => "cancel_link" %>
+	</fieldset>
+</div>

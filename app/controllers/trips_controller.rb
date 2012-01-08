@@ -50,6 +50,9 @@ class TripsController < ApplicationController
   # POST /trips.json
   def create
     @trip = Trip.new(params[:trip])
+		@trip.number_of_adults = @trip.adults_in_rooms
+		@trip.number_of_children_between_5_and_12_years = @trip.children_in_rooms
+		@trip.number_of_rooms = @trip.total_rooms
 
     respond_to do |format|
       if @trip.save
@@ -66,6 +69,9 @@ class TripsController < ApplicationController
   # PUT /trips/1.json
   def update
     @trip = Trip.find(params[:id])
+		@trip.number_of_adults = @trip.adults_in_rooms
+		@trip.number_of_children_between_5_and_12_years = @trip.children_in_rooms
+		@trip.number_of_rooms = @trip.total_rooms
 
     respond_to do |format|
       if @trip.update_attributes(params[:trip])

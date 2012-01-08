@@ -1,16 +1,20 @@
-	<%= f.radio_button :occupancy, 'Single' %>
-	<%= f.label :single, "Single room" %>
-	<%= f.radio_button :occupancy, 'Double' %>
-	<%= f.label :double, "Double room" %>
-
-	<%= f.number_field :number_of_adults, min: 1, max: 4 %>
+<div class="nested_form_row">
+	<fieldset>
+		<%= f.radio_button :occupancy, 'Single' %>
+		<%= f.label :single, "Single room" %>
+		<%= f.radio_button :occupancy, 'Double' %>
+		<%= f.label :double, "Double room" %>
+	</fieldset>
+	
 	<%= f.label :number_of_adults, "Adults / room" %>
-
+	<%= f.number_field :number_of_adults, min: 1, max: 4 %>
+	
+	<%= f.label :number_of_children, "Children / room" %>
 	<%= f.number_field :number_of_children_between_5_and_12_years, 
 				min: 0, max: 4 %>
-	<%= f.label :number_of_children, "Children / room" %>
-
-	<b>&times;</b><%= f.number_field :number_of_rooms, min: 1, max: 25 %>
+	
 	<%= f.label :number_of_rooms, "Rooms" %>
-
+	<%= f.number_field :number_of_rooms, min: 1, max: 25 %>
+	
 	<%= f.link_to_remove "Remove" %>
+</div>
