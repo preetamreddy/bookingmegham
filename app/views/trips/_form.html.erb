@@ -12,7 +12,7 @@
 
  	<div class="field">
    	<%= f.label :guest_id, "Guest Id" %><br />
-		<% if session[:guest_id] %>
+		<% if @trip.guest_id %>
     	<%= f.number_field :guest_id, :readonly => true %>
 		<% else %>
     	<%= f.number_field :guest_id %>

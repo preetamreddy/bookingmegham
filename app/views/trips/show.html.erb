@@ -98,5 +98,4 @@
 				availability_chart_path(:trip_id => @trip.id) %>
 </div>
 
-<%= link_to 'Back to Trip Listing',
-			trips_path(:guest_id => session[:guest_id]), :class => "back_link" %>
+<%= link_to 'Back to Trip Listing', trips_path, :class => "back_link" %>

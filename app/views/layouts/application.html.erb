@@ -13,15 +13,27 @@
 	</div>
 	<div id="columns">
 		<div id="side">
+			<%= hidden_div_if(!session[:guest_id], id: 'session_info') do %>
+				<table>
+					<% if session[:guest_id] %>
+						<% guest = Guest.find(session[:guest_id]) %>
+						<%= render(guest) %>
+					<% end %>
+					<% if session[:trip_id] %>
+						<% trip = Trip.find(session[:trip_id]) %>
+						<%= render(trip) %>
+					<% end %>
+				</table>
+			<% end %>
 			<dl>
 				<dt>Property Mgmt</dt>
 				<dd><%= link_to 'Properties', properties_path %></dd>
 				<dd><%= link_to 'Room Types', room_types_path(:property_id => nil) %></dd>
 				<dt>Booking Mgmt</dt>
 				<dd><%= link_to 'Guests', guests_path %></dd>
-				<dd><%= link_to 'Trips', trips_path(:guest_id => session[:guest_id]) %></dd>
-				<dd><%= link_to 'Bookings', bookings_path(:trip_id => session[:trip_id]) %></dd>
-				<dd><%= link_to 'Availability Chart', availability_chart_path(:trip_id => session[:trip_id]) %></dd>
+				<dd><%= link_to 'Trips', trips_path %></dd>
+				<dd><%= link_to 'Bookings', bookings_path %></dd>
+				<dd><%= link_to 'Availability Chart', availability_chart_path %></dd>
 			</dl>
 		</div>
 		<div id="main">

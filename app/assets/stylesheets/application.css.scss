@@ -227,3 +227,22 @@
 		border: 1px solid grey;
 	}
 }
+
+#session_info {
+	margin-left: 9px;
+	table {
+		border-bottom: 1px solid grey;
+		height: 1em;
+		td {
+			line-height: 1.2em;
+			font-family: sans-serif verdana;
+			color: #036339; 
+			width: 4em;
+			white-space: nowrap;
+		}
+	}
+}
+
+.highlight {
+	color: #036339;
+}

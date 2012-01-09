@@ -1,16 +1,9 @@
 <div class="new_form">
 	<fieldset>
-		<% if session[:guest_id] %>
-			<legend>
-				New Trip for Guest '<%= Guest.find(session[:guest_id]).name %>'
-			</legend>
-		<% else %>
-			<legend>New Trip</legend>
-		<% end %>
+		<legend>New Trip</legend>
 
 		<%= render 'form' %>
 
-		<%= link_to 'Cancel', trips_path(:guest_id => session[:guest_id]),
-														:class => "cancel_link" %>
+		<%= link_to 'Cancel', trips_path, :class => "cancel_link" %>
 	</fieldset>
 </div>

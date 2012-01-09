@@ -1,10 +1,12 @@
 class AvailabilityChartController < ApplicationController
   def index
-		session[:trip_id] = params[:trip_id]
+		if params[:trip_id]
+			session[:trip_id] = params[:trip_id]
+			session[:guest_id] = Trip.find(session[:trip_id]).guest_id
+		end
 
 		if session[:trip_id]
 			trip = Trip.find(session[:trip_id])
-			session[:guest_id] = trip.guest_id
 			@chart_start_date = trip.start_date
 			@chart_end_date = trip.end_date
 		else

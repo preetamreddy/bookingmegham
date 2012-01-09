@@ -2,10 +2,13 @@ class GuestsController < ApplicationController
   # GET /guests
   # GET /guests.json
   def index
-		session[:guest_id] = nil
-		session[:trip_id] = nil
-
-    @guests = Guest.all
+		if !session[:guest_id] || params[:guest_id] == "All"
+    	@guests = Guest.order("name ASC").all
+			session[:trip_id] = nil
+			session[:guest_id] = nil
+		else
+			@guests = Guest.find(:all, :conditions => { :id => session[:guest_id] })
+		end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,7 +20,6 @@ class GuestsController < ApplicationController
   # GET /guests/1.json
   def show
     @guest = Guest.find(params[:id])
-		session[:guest_id] = params[:id]
 
     respond_to do |format|
       format.html # show.html.erb

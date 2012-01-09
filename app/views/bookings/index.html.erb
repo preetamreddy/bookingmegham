@@ -1,13 +1,4 @@
-<% if session[:trip_id] %>
-	<h1>Listing Bookings for Trip '<%= Trip.find(session[:trip_id]).name %>' of Guest '<%= Guest.find(session[:guest_id]).name %>'</h1>
-	<%= link_to 'List all Bookings of the Guest', bookings_path(:trip_id => nil) %>
-<% else %>
-	<% if session[:guest_id] %>
-		<h1>Listing all Bookings of Guest '<%= Guest.find(session[:guest_id]).name %>'</h1>
-	<% else %>
-		<h1>Listing all Bookings</h1>
-	<% end %>
-<% end %>
+<h1>Listing Bookings</h1>
 
 <% if @bookings.count > 0 %>
 <table class="index_table" border="1">
@@ -76,5 +67,5 @@
 
 <div class="action_container">
 	<%= link_to 'New Booking', new_booking_path %> |
-	<%= link_to 'Availability Chart', availability_chart_path(:trip_id => session[:trip_id]) %>
+	<%= link_to 'Availability Chart', availability_chart_path %>
 </div>

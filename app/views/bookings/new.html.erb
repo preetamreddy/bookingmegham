@@ -1,13 +1,5 @@
-<% if session[:trip_id] %>
-  <h1>New Booking for Guest '<%= Guest.find(session[:guest_id]).name %>' in Trip '<%= Trip.find(session[:trip_id]).name %>'</h1>
-<% else %>
-  <% if session[:guest_id] %>
-    <h1>New Booking for Guest '<%= Guest.find(session[:guest_id]).name %>'</h1>
-  <% else %>
-    <h1>New Booking</h1>
-  <% end %>
-<% end %>
+<h1>New Booking</h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Cancel', bookings_path(:trip_id => session[:trip_id]), :class => "cancel_link" %>
+<%= link_to 'Cancel', bookings_path, :class => "cancel_link" %>

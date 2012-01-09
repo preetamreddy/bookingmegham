@@ -1,8 +1,4 @@
-<% if session[:guest_id] %>
-	<h1>Listing Trips for Guest '<%= Guest.find(session[:guest_id]).name %>'</h1>
-<% else %>
-	<h1>Listing Trips for all Guests</h1>
-<% end %>
+<h1>Listing Trips</h1>
 
 <% if notice %>
 	<div id="error_explanation">

@@ -2,10 +2,12 @@ class BookingsController < ApplicationController
   # GET /bookings
   # GET /bookings.json
   def index
-		session[:trip_id] = params[:trip_id]
+		if params[:trip_id]
+			session[:trip_id] = params[:trip_id]
+			session[:guest_id] = Trip.find(session[:trip_id]).guest_id
+		end
 			
 		if session[:trip_id]
-			session[:guest_id] = Trip.find(session[:trip_id]).guest_id
 			@bookings = Booking.order("check_in_date, check_out_date").find_all_by_trip_id(session[:trip_id])
 		else
 			if session[:guest_id]
@@ -37,12 +39,18 @@ class BookingsController < ApplicationController
   # GET /bookings/new
   # GET /bookings/new.json
   def new
+		if params[:trip_id]
+			session[:trip_id] = params[:trip_id]
+			session[:guest_id] = Trip.find(session[:trip_id]).guest_id
+		end
+
     @booking = Booking.new
 		@booking.room_type_id = params[:room_type_id]
 		
 		if session[:trip_id]	
-			@booking.trip_id = session[:trip_id]
 			trip = Trip.find(session[:trip_id])
+
+			@booking.trip_id = session[:trip_id]
 			@booking.number_of_rooms = trip.number_of_rooms
 			@booking.number_of_adults = trip.number_of_adults
 			@booking.number_of_children_between_5_and_12_years = trip.number_of_children_between_5_and_12_years

@@ -1,4 +1,10 @@
-<h1>Listing Guests</h1>
+<% if session[:guest_id] %>
+	<h1>Guest <span class="highlight"><%= @guests[0].name %></span></h1>
+	<%= link_to 'List all Guests', guests_path(:guest_id => "All") %>
+<% else %>
+	<h1>Listing all Guests</h1>
+	<%= link_to 'New Guest', new_guest_path %>
+<% end %>
 
 <% if notice %>
 	<div id="error_explanation">
@@ -45,6 +51,6 @@
   </div>
 <% end %>
 
-<div class="action_container">
+<%= hidden_div_if(session[:guest_id], class: "action_container") do %>
 	<%= link_to 'New Guest', new_guest_path %>
-</div>
+<% end %>
