@@ -74,11 +74,11 @@
     <%= f.number_field :paid, :min => 0 %>
 	<% end %>
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
-    <%= f.label :balance_payment %><br />
+    <%= f.label :balance_payment, "Balance" %><br />
     <%= f.number_field :balance_payment, :min => 0 %>
 	<% end %>
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
-    <%= f.label :pay_by_date %><br />
+    <%= f.label :pay_by_date, "Pay by" %><br />
     <%= f.date_select :pay_by_date, :start_year => Time.now.year,
 			:end_year => Time.now.year + 1, :prompt => {
 			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>

@@ -230,15 +230,18 @@
 
 #session_info {
 	margin-left: 9px;
+	width: 12em;
 	table {
 		border-bottom: 1px solid grey;
-		height: 1em;
 		td {
 			line-height: 1.2em;
 			font-family: sans-serif verdana;
 			color: #036339; 
-			width: 4em;
-			white-space: nowrap;
+			text-align: left;
+
+			&:nth-child(1) {
+				width: 4em;
+			}
 		}
 	}
 }

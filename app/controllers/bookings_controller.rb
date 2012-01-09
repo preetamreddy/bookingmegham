@@ -39,11 +39,6 @@ class BookingsController < ApplicationController
   # GET /bookings/new
   # GET /bookings/new.json
   def new
-		if params[:trip_id]
-			session[:trip_id] = params[:trip_id]
-			session[:guest_id] = Trip.find(session[:trip_id]).guest_id
-		end
-
     @booking = Booking.new
 		@booking.room_type_id = params[:room_type_id]
 		

@@ -77,12 +77,12 @@
 <% end %>
 
 <%= hidden_p_unless(@trip.balance_payment) do %>
-  <b>Balance payment:</b>
+  <b>Balance:</b>
   <span class="saved_value"><%= number_to_currency(@trip.balance_payment) if @trip.balance_payment %>
 <% end %>
 
 <%= hidden_p_unless(@trip.pay_by_date) do %>
-  <b>Pay by date:</b>
+  <b>Pay by:</b>
   <span class="saved_value"><%= l @trip.pay_by_date if @trip.pay_by_date %>
 <% end %>
 
