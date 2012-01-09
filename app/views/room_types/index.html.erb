@@ -33,7 +33,7 @@
     <td class="number"><%= number_to_currency(room_type.price_for_single_occupancy) %></td>
     <td class="number"><%= number_to_currency(room_type.price_for_double_occupancy) %></td>
     <td class="number"><%= room_type.number_of_rooms %></td>
-    <td class="text"><%= room_type.description %></td>
+    <td class="comment"><%= room_type.description %></td>
 
     <td>
     	<%= link_to 'Edit', edit_room_type_path(room_type) %></br>

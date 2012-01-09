@@ -81,6 +81,10 @@ class GuestsController < ApplicationController
     @guest = Guest.find(params[:id])
     @guest.destroy
 
+		if session[:guest_id] == params[:id]
+			session[:guest_id] = nil
+		end
+
     respond_to do |format|
       format.html { redirect_to guests_url, notice: @guest.errors[:base][0] }
       format.json { head :ok }

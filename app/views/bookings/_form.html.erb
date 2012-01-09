@@ -13,7 +13,7 @@
 
   <div class="field">
    	<%= f.label :trip_id %><br />
-		<% if @booking.trip_id] %>
+		<% if @booking.trip_id %>
     	<%= f.number_field :trip_id, :readonly => true %>
 		<% else %>
     	<%= f.number_field :trip_id, :min => 1 %>

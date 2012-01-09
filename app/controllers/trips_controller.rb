@@ -89,6 +89,10 @@ class TripsController < ApplicationController
     @trip = Trip.find(params[:id])
     @trip.destroy
 
+		if session[:trip_id] == params[:id]
+			session[:trip_id] = nil
+		end
+
     respond_to do |format|
       format.html { redirect_to trips_url, notice: @trip.errors[:base][0] }
       format.json { head :ok }

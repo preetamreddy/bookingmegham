@@ -89,6 +89,7 @@
 		color: green;
 		width: 60%;
 		float: left;
+		white-space: pre;
 	}
 }
 
@@ -194,6 +195,10 @@
 
 .text {
 	text-align: left;
+}
+
+.comment {
+	white-space: pre;
 }
 
 .list_line_odd {

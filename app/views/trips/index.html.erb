@@ -37,7 +37,7 @@
 		    <td class="number"><%= number_to_currency(trip.paid) if trip.paid %></td>
 		    <td class="number"><%= number_to_currency(trip.balance_payment) if trip.balance_payment%></td>
 				<td class="text"><%= l trip.pay_by_date if trip.pay_by_date %></td>
-		    <td class="text"><%= trip.comments %></td>
+		    <td class="comment"><%= trip.comments %></td>
 		    <td>
 					<%= link_to 'Show details', trip %></br>
 					<%= link_to 'Edit', edit_trip_path(trip) %></br>
