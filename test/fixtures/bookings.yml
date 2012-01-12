@@ -1,15 +1,12 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 preetam_booking:
-  number_of_rooms: 1
-  number_of_adults: 2
   guests_arrival_time: 2012-05-01 14:00:00
   guests_arriving_from: Sojha
   guests_food_preferences: "Adults: 1 pesco veg, 1 non-veg; Child - Veg"
   total_price: 28000
   comments: Fifth trip to Sangla
   room_type: sangla_super_deluxe_tent
-  number_of_children_between_5_and_12_years: 0
   number_of_children_below_5_years: 1
   check_in_date: 2012-05-01
   check_out_date: 2012-05-05
@@ -17,15 +14,12 @@ preetam_booking:
   number_of_drivers: 0
 
 naren_booking:
-  number_of_rooms: 1
-  number_of_adults: 2
   guests_arrival_time: 2012-05-01 14:00:00
   guests_arriving_from: Thanedar
   guests_food_preferences: Veg
   total_price: 30000
   comments: Third trip to Sangla
   room_type: sangla_super_deluxe_tent
-  number_of_children_between_5_and_12_years: 0
   number_of_children_below_5_years: 0
   check_in_date: 2012-05-01
   check_out_date: 2012-05-05

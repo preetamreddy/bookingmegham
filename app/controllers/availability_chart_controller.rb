@@ -7,15 +7,17 @@ class AvailabilityChartController < ApplicationController
 
 		if session[:trip_id]
 			trip = Trip.find(session[:trip_id])
+			@rooms_required = trip.number_of_rooms
 			@chart_start_date = trip.start_date
 			@chart_end_date = trip.end_date
 		else
+			@rooms_required = 0
 			@chart_start_date = Time.now.to_date
 			@chart_end_date = @chart_start_date + 10
 		end
 
-		@chart_date_range = (@chart_start_date...@chart_end_date).to_a.collect {
-													|date| l date, :format => :short }
+		@chart_date_range = (@chart_start_date...@chart_end_date)
+		@chart_date_range_short = (@chart_start_date...@chart_end_date).to_a.collect { |date| l date, :format => :short }
 
 		@properties = Property.order(:id)
 		line_items_by_property = LineItem.

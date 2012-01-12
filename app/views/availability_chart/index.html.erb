@@ -1,11 +1,13 @@
 <h1>Availability Chart</h1>
 
+<div id="new_booking"></div>
+
 <table class="index_table" border="1">
 	<tr>
 		<th class="text">Property</th>
 		<th class="number">Rooms</th>
-		<% @chart_date_range.each do |date| %>
-			<th class="number"><%= date %></th>
+		<% @chart_date_range_short.each do |date| %>
+			<th><%= date %></th>
 		<% end %>
 		<th></th>
   </tr>
@@ -15,13 +17,11 @@
 			<td class="text"><%= property.name %></td>
 			<td class="number"><%= property.number_of_rooms %></td>
 			<% @chart_date_range.each do |date| %>
-				<td class="number">
+				<%= show_availability_with_color_codes(:property, @availability[[:property, property.id, date]], @rooms_required, class: 'number') do %>
 					<%= @availability[[:property, property.id, date]] %>
-				</td>
+				<% end %>
 			<% end %>
-			<td>
-				<%= link_to 'New Booking', new_booking_path(:room_type_id => nil) %>
-			</td>
+			<td></td>
 		</tr>
 
 		<% @room_types.each do |room_type| %>
@@ -30,13 +30,14 @@
 					<td class="room_type"><%= room_type.room_type %></td>
 					<td class="number"><%= room_type.number_of_rooms %></td>
 					<% @chart_date_range.each do |date| %>
-						<td class="number">
-							<%= @availability[[:room_type, room_type.id, date]] %>
-						</td>
+						<%= show_availability_with_color_codes(
+							:room_type, @availability[[:room_type, room_type.id, date]], 
+							@rooms_required, { id: 'availability' }) do %>
+								<%= @availability[[:room_type, room_type.id, date]] %>
+						<% end %>
 					<% end %>
 					<td>
-						<%= link_to 'New Booking', 
-							new_booking_path(:room_type_id => room_type.id) %>
+						<%= link_to 'New Booking', new_booking_path(:room_type_id => room_type.id), :remote => true %>
 					</td>
 				</tr>
 			<% end %>

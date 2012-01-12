@@ -2,7 +2,16 @@
 	<td colspan=3><b><%= trip.name %></b></td>
 </tr>
 <tr>
-	<td></td>
 	<td><%= l trip.start_date, :format => :short %></td>
 	<td><%= l trip.end_date, :format => :short %></td>
+	<td class="number"><%= number_to_currency(trip.total_price) %></td>
 </tr>
+<% trip.rooms.each do |room| %>
+	<tr>
+		<td colspan=2><%= pluralize(room.number_of_rooms, room.occupancy) %></td>
+		<td>
+			@ <%= room.number_of_adults %> 
+			<%= (" + " + room.number_of_children_between_5_and_12_years.to_s) if room.number_of_children_between_5_and_12_years != 0 %> / room
+		</td>
+	</tr>
+<% end %>

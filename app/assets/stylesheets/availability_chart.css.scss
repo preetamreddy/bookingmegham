@@ -15,4 +15,24 @@
 	.room_type {
 		padding-left: 1em;
 	}
+
+	.sold_out {
+		text-align: right;
+		color: red;
+	}
+
+	.not_serviceble {
+		text-align: right;
+		color: red;
+	}
+
+	.partial {
+		text-align: right;
+		color: orange;
+	}
+
+	.available {
+		text-align: right;
+		color: green
+	}
 }

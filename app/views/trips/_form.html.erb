@@ -58,10 +58,6 @@
     <%= f.text_field :food_preferences %>
 	<% end %>
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
-    <%= f.label :total_price %><br />
-    <%= f.number_field :total_price, :readonly => true %>
-	<% end %>
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :discount %><br />
     <%= f.number_field :discount, :min => 0 %>
 	<% end %>

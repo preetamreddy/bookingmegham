@@ -1,4 +1,6 @@
 Bookingmegham::Application.routes.draw do
+  get "params/index", as: 'params'
+
   resources :rooms
 
   resources :trips

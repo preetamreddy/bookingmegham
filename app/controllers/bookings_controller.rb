@@ -46,17 +46,17 @@ class BookingsController < ApplicationController
 			trip = Trip.find(session[:trip_id])
 
 			@booking.trip_id = session[:trip_id]
-			@booking.number_of_rooms = trip.number_of_rooms
-			@booking.number_of_adults = trip.number_of_adults
-			@booking.number_of_children_between_5_and_12_years = trip.number_of_children_between_5_and_12_years
 			@booking.number_of_children_below_5_years = trip.number_of_children_below_5_years
 			@booking.number_of_drivers = trip.number_of_drivers
 			@booking.guests_food_preferences = trip.food_preferences
 			@booking.comments = trip.comments
+
+			@booking.add_rooms_from_trip(trip)
 		end
 
     respond_to do |format|
       format.html # new.html.erb
+			format.js
       format.json { render json: @booking }
     end
   end
@@ -70,13 +70,22 @@ class BookingsController < ApplicationController
   # POST /bookings.json
   def create
     @booking = Booking.new(params[:booking])
+		
+		@booking.initialize_attributes_when_nil
+
+		if @booking.valid?
+			@booking.update_room_rate
+			@booking.update_total_price
+		end
 
     respond_to do |format|
       if @booking.save
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
+				format.js
         format.json { render json: @booking, status: :created, location: @booking }
       else
         format.html { render action: "new" }
+				format.js {render action: "new" }
         format.json { render json: @booking.errors, status: :unprocessable_entity }
       end
     end
