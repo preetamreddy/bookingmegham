@@ -49,6 +49,10 @@ class TripsController < ApplicationController
   # GET /trips/1/edit
   def edit
     @trip = Trip.find(params[:id])
+
+		if @trip.payments.empty?
+			@trip.payments.build
+		end
   end
 
   # POST /trips
@@ -74,11 +78,17 @@ class TripsController < ApplicationController
 
     respond_to do |format|
       if @trip.update_attributes(params[:trip])
-        format.html { redirect_to @trip, notice: 'Trip was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @trip.errors, status: :unprocessable_entity }
+				payment_status = @trip.get_payment_status
+				if @trip.update_attributes(payment_status: payment_status)
+        	format.html { redirect_to @trip, notice: 'Trip was successfully updated.' }
+        	format.json { head :ok }
+      	else
+        	format.html { render action: "edit" }
+        	format.json { render json: @trip.errors, status: :unprocessable_entity }
+				end
+			else
+       	format.html { render action: "edit" }
+       	format.json { render json: @trip.errors, status: :unprocessable_entity }
       end
     end
   end

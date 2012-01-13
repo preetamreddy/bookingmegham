@@ -1,4 +1,5 @@
 class Room < ActiveRecord::Base
+	ROOM_OCCUPANCY_TYPES = [ "Single", "Double" ]
 
 	belongs_to :trip
 	belongs_to :booking
@@ -7,8 +8,7 @@ class Room < ActiveRecord::Base
 
 	validates :occupancy, :number_of_adults, :number_of_rooms, presence: true
 
-	validates :occupancy, :inclusion => { :in => %w(Single Double),
-		:message => "%{value} is not a valid occupancy" }
+	validates :occupancy, inclusion: ROOM_OCCUPANCY_TYPES
 
 	validates :number_of_adults, allow_nil: true,
 		:inclusion => { :in => [1, 2, 3, 4],

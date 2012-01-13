@@ -22,6 +22,7 @@
   <span class="saved_value"><%= l @trip.end_date if @trip.end_date %>
 </p>
 
+<% if @trip.rooms.any? %>	
 	<b>Rooms:</b>
 	<table class="nested_table">
 		<tr>
@@ -40,6 +41,7 @@
 			</tr>
 		<% end %>
 	</table>
+<% end %>
 
 <p>
   <b>Number of children below 5 years:</b>
@@ -71,9 +73,23 @@
   <span class="saved_value"><%= number_to_currency(@trip.final_price) if @trip.final_price %>
 <% end %>
 
-<%= hidden_p_unless(@trip.paid) do %>
-  <b>Paid:</b>
-  <span class="saved_value"><%= number_to_currency(@trip.paid) if @trip.paid %>
+<% if @trip.payments.any? %>
+	<b>Payments:</b>
+	<table class="nested_table">
+		<tr>
+			<th class="text">Date</th>
+			<th class="number">Amount</th>
+			<th class="text">Details</th>
+		</tr>
+
+		<% @trip.payments.each do |payment| %>
+			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">	
+				<td class="text"><%= l payment.date_recieved %></td>
+				<td class="number"><%= number_to_currency(payment.amount) %></td>
+				<td class="text"><%= payment.details %></td>
+			</tr>
+		<% end %>
+	</table>
 <% end %>
 
 <%= hidden_p_unless(@trip.balance_payment) do %>

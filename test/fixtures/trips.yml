@@ -6,14 +6,11 @@ preetam_trip:
   end_date: 2012-05-10
   number_of_children_below_5_years: 1
   food_preferences: "Adults: 1 pesco veg, 1 non-veg; Child: veg"
-  total_price: 28000
-  paid: 0
-  balance_payment: 28000
+  payment_status: "Blocked"
   pay_by_date: 2012-05-01
   comments: 2012 HP trip
   name: Preetam 2012 Sangla
   discount: 0
-  final_price: 28000
   number_of_drivers: 0
 
 naren_trip:
@@ -22,12 +19,9 @@ naren_trip:
   end_date: 2012-05-05
   number_of_children_below_5_years: 0
   food_preferences: Veg
-  total_price: 30000
-  paid: 0
-  balance_payment: 30000
+  payment_status: "Blocked"
   pay_by_date: 2012-05-01
   comments: 2012 Sangla trip
   name: Naren 2012 Sangla
   discount: 0
-  final_price: 30000
   number_of_drivers: 1

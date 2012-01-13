@@ -61,18 +61,16 @@
     <%= f.label :discount %><br />
     <%= f.number_field :discount, :min => 0 %>
 	<% end %>
+
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
-    <%= f.label :final_price %><br />
-    <%= f.number_field :final_price, :min => 0 %>
+		<%= f.label :payments %>
 	<% end %>
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
-    <%= f.label :paid %><br />
-    <%= f.number_field :paid, :min => 0 %>
+
+	<%= hidden_div_if(@trip.new_record?, class: "nested_form") do %>
+		<%= f.fields_for :payments %>
+		<%= f.link_to_add "Add row", :payments %><br/>
 	<% end %>
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
-    <%= f.label :balance_payment, "Balance" %><br />
-    <%= f.number_field :balance_payment, :min => 0 %>
-	<% end %>
+
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :pay_by_date, "Pay by" %><br />
     <%= f.date_select :pay_by_date, :start_year => Time.now.year,

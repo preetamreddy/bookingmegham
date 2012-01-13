@@ -1,4 +1,6 @@
 class Trip < ActiveRecord::Base
+	PAYMENT_STATUS = [ "Blocked", "Partially Paid", "Fully Paid" ]
+
 	belongs_to :guest
 
 	has_many :rooms, dependent: :destroy
@@ -6,6 +8,10 @@ class Trip < ActiveRecord::Base
 		:allow_destroy => true
 
 	has_many :bookings
+
+	has_many :payments, dependent: :destroy
+	accepts_nested_attributes_for :payments, :reject_if => :all_blank,
+		:allow_destroy => true
 
 	before_save :ensure_guest_exists, :set_defaults_if_nil
 
@@ -22,19 +28,7 @@ class Trip < ActiveRecord::Base
 						only_integer: true, greater_than_or_equal_to: 0, allow_nil: true,
 						message: "should be a number greater than or equal to 0"
 
-	def set_defaults_if_nil
-		self.number_of_children_below_5_years ||= 0
-		self.number_of_drivers ||= 0
-	end
-
-	def ensure_not_referenced_by_booking
-		if bookings.empty?
-			return true
-		else
-			errors.add(:base, "Destroy failed because the trip '#{name}' has bookings. Please destroy the bookings first.")
-			return false
-		end
-	end
+	validates :payment_status, inclusion: PAYMENT_STATUS, allow_nil: true
 
 	def number_of_adults
 		if rooms.empty?
@@ -69,6 +63,35 @@ class Trip < ActiveRecord::Base
 		end
 	end
 
+	def paid
+		if payments.empty?
+			return 0
+		else
+			payments.to_a.sum { |payment| payment.amount }
+		end
+	end
+
+	def balance_payment
+		final_price - paid
+	end
+
+	def final_price
+		total_price - discount
+	end
+
+	def get_payment_status
+		if balance_payment <= 0
+			payment_status = 'Fully Paid'
+		else
+			if paid > 0
+				payment_status = 'Partially Paid'
+			else
+				payment_status = 'Blocked'
+			end
+		end
+		return payment_status
+	end
+
 	private
 
 		def ensure_guest_exists
@@ -81,4 +104,20 @@ class Trip < ActiveRecord::Base
 				return true
 			end
 		end	
+
+		def set_defaults_if_nil
+			self.number_of_children_below_5_years ||= 0
+			self.number_of_drivers ||= 0
+			self.discount ||= 0
+			self.payment_status ||= 'Blocked'
+		end
+
+		def ensure_not_referenced_by_booking
+			if bookings.empty?
+				return true
+			else
+				errors.add(:base, "Destroy failed because the trip '#{name}' has bookings. Please destroy the bookings first.")
+				return false
+			end
+		end
 end

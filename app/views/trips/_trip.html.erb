@@ -4,7 +4,7 @@
 <tr>
 	<td><%= l trip.start_date, :format => :short %></td>
 	<td><%= l trip.end_date, :format => :short %></td>
-	<td class="number"><%= number_to_currency(trip.total_price) %></td>
+	<td class="number"><%= number_to_currency(trip.final_price) %></td>
 </tr>
 <% trip.rooms.each do |room| %>
 	<tr>

@@ -50,8 +50,7 @@ class TripTest < ActiveSupport::TestCase
 											name: "Himachal Trip",
 											start_date: 2012-06-01,
 											end_date: 2012-06-05)
-		assert_equal himachal_trip.total_price, nil
-		assert_equal himachal_trip.compute_total_price, nil
+		assert_equal himachal_trip.total_price, 0
 		sangla_super_deluxe_tent = room_types(:sangla_super_deluxe_tent)
 		himachal_booking_1 = himachal_trip.bookings.build(
 			room_type_id: sangla_super_deluxe_tent,
@@ -59,13 +58,13 @@ class TripTest < ActiveSupport::TestCase
 			check_out_date: 2012-06-05,
 			total_price: 28000)
 		himachal_booking_1.save
-		assert_equal himachal_trip.compute_total_price, 28000
+		assert_equal himachal_trip.total_price, 28000
 		himachal_booking_2 = himachal_trip.bookings.build(
 			room_type_id: sangla_super_deluxe_tent,
 			check_in_date: 2012-06-01,
 			check_out_date: 2012-06-05,
 			total_price: 28000)
 		himachal_booking_2.save
-		assert_equal himachal_trip.compute_total_price, 56000
+		assert_equal himachal_trip.total_price, 56000
 	end
 end

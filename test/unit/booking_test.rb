@@ -48,7 +48,6 @@ class BookingTest < ActiveSupport::TestCase
 		assert himachal_booking.errors[:room_type_id].any?
 		assert himachal_booking.errors[:check_in_date].any?
 		assert himachal_booking.errors[:check_out_date].any?
-		assert himachal_booking.errors[:total_price].any?
   end
 
 	test "non adults and total price should be greater than or equal to 0" do

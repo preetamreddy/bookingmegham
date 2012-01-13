@@ -9,6 +9,9 @@ class Booking < ActiveRecord::Base
 
 	has_many :line_items, dependent: :destroy
 
+	before_update :initialize_attributes_when_nil,
+								:update_room_rate, :update_total_price
+
 	before_save :ensure_trip_exists, :ensure_room_type_exists
 	after_save :update_line_items
 
