@@ -8,11 +8,6 @@
 </p>
 
 <p>
-  <b>Guest phone number:</b>
-  <span class="saved_value"><%= @booking.trip.guest.phone_number %>
-</p>
-
-<p>
   <b>Trip name:</b>
   <span class="saved_value"><%= @booking.trip.name %>
 </p>
@@ -28,11 +23,6 @@
 </p>
 
 <p>
-  <b>Number of rooms:</b>
-  <span class="saved_value"><%= @booking.number_of_rooms %>
-</p>
-
-<p>
   <b>Check in date:</b>
   <span class="saved_value"><%= l @booking.check_in_date if @booking.check_in_date %>
 </p>
@@ -42,40 +32,51 @@
   <span class="saved_value"><%= l @booking.check_out_date if @booking.check_out_date %>
 </p>
 
-<p>
-  <b>Number of adults:</b>
-  <span class="saved_value"><%= @booking.number_of_adults %>
-</p>
+	<b>Rooms:</b>
+	<table class="nested_table">
+		<tr>
+			<th class="text">Single / Double</th>
+			<th class="number">Adults / room</th>
+			<th class="number">Children / room</th>
+			<th class="number">Number of rooms</th>
+			<th class="number">Room rate / night</th>
+		</tr>
 
-<p>
-  <b>Number of children btw 5 & 12:</b>
-  <span class="saved_value"><%= @booking.number_of_children_between_5_and_12_years %>
-</p>
+		<% @booking.rooms.each do |room| %>
+			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+				<td class="text"><%= room.occupancy %></td>
+				<td class="number"><%= room.number_of_adults %></td>
+				<td class="number"><%= room.number_of_children_between_5_and_12_years %></td>
+				<td class="number"><%= room.number_of_rooms %></td>
+				<td class="number"><%= room.room_rate %></td>
+			</tr>
+		<% end %>
+	</table>
 
-<p>
+<%= hidden_p_unless(@booking.number_of_children_below_5_years) do %>
   <b>Number of children below 5:</b>
   <span class="saved_value"><%= @booking.number_of_children_below_5_years %>
-</p>
+<% end %>
 
-<p>
+<%= hidden_p_unless(@booking.number_of_drivers) do %>
   <b>Number of drivers:</b>
   <span class="saved_value"><%= @booking.number_of_drivers %>
-</p>
+<% end %>
 
-<p>
+<%= hidden_p_unless(@booking.guests_arrival_time) do %>
   <b>Guests arrival time:</b>
   <span class="saved_value"><%= l @booking.guests_arrival_time, :format => :short if @booking.guests_arrival_time %>
-</p>
+<% end %>
 
-<p>
+<%= hidden_p_unless(@booking.guests_arriving_from) do %>
   <b>Guests arriving from:</b>
   <span class="saved_value"><%= @booking.guests_arriving_from %>
-</p>
+<% end %>
 
-<p>
+<%= hidden_p_unless(@booking.guests_food_preferences != "") do %>
   <b>Guests food preferences:</b>
   <span class="saved_value"><%= @booking.guests_food_preferences %>
-</p>
+<% end %>
 
 <p>
   <b>Total price:</b>
@@ -91,11 +92,4 @@
 <div class="action_container">
 	<%= link_to 'Edit', edit_booking_path(@booking) %> |
 	<%= link_to 'Back to Booking Listing', bookings_path %> |
-	Version <%= @booking.version %> |
-	<% if params[:version] %>
-		<%= link_to 'Latest Version', :version => nil %> |
-	<% end %>
-	<% if @booking.version > 1 %>
-		<%= link_to 'Previous Version', :version => @booking.version-1 %>
-	<% end %>
 </div>

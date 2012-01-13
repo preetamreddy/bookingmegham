@@ -1,5 +1,4 @@
 class Booking < ActiveRecord::Base
-	versioned :dependent => :tracking
 
 	belongs_to :trip
 	belongs_to :room_type

@@ -28,7 +28,6 @@ class BookingsController < ApplicationController
   # GET /bookings/1.json
   def show
     @booking = Booking.find(params[:id])
-		@booking.revert_to(params[:version].to_i) if params[:version]
 
     respond_to do |format|
       format.html # show.html.erb
