@@ -36,9 +36,9 @@ class TripsController < ApplicationController
 			session[:guest_id] = params[:guest_id]
 		end
 
-    @trip = Trip.new
+    @trip = Trip.new(:guest_id => session[:guest_id])
 		@trip.rooms.build
-		@trip.guest_id = session[:guest_id]
+		#@trip.guest_id = session[:guest_id]
 
     respond_to do |format|
       format.html # new.html.erb

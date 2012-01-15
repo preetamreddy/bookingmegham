@@ -14,17 +14,20 @@
   <div class="field">
    	<%= f.label :trip_id %><br />
 		<% if @booking.trip_id %>
-    	<%= f.number_field :trip_id, :readonly => true %>
+    	<%= f.collection_select(:trip_id, 
+						Trip.find_all_by_id(@booking.trip_id), :id, :name) %>
 		<% else %>
-    	<%= f.number_field :trip_id, :min => 1 %>
+    	<%= f.collection_select(:trip_id, Trip.order("name").all, :id, :name) %>
 		<% end %>
   </div>
 	<div class="field">
    	<%= f.label :room_type_id %><br />
 		<% if @booking.room_type_id %>
-    	<%= f.number_field :room_type_id, :readonly => true %>
+    	<%= f.collection_select(:room_type_id, 
+						RoomType.find_all_by_id(@booking.room_type_id), :id, :room_type) %>
 		<% else %>
-    	<%= f.number_field :room_type_id, :min => 1 %>
+    	<%= f.collection_select(:room_type_id, 
+						RoomType.order("room_type").all, :id, :room_type) %>
 		<% end %>
 	</div>
   <div class="field">

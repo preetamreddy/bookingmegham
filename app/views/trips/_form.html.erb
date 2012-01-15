@@ -13,9 +13,10 @@
  	<div class="field">
    	<%= f.label :guest_id, "Guest Id" %><br />
 		<% if @trip.guest_id %>
-    	<%= f.number_field :guest_id, :readonly => true %>
+    	<%= f.collection_select(:guest_id, 
+						Guest.find_all_by_id(@trip.guest_id), :id, :name) %>
 		<% else %>
-    	<%= f.number_field :guest_id %>
+    	<%= f.collection_select(:guest_id, Guest.order("name").all, :id, :name) %>
 		<% end %>
   </div>
   <div class="field">

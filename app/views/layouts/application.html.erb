@@ -22,14 +22,11 @@
 					<% if session[:trip_id] %>
 						<% trip = Trip.find(session[:trip_id]) %>
 						<%= render(trip) %>
-					<% end %>
-					<% if trip.bookings.any? %>
+						<%= render(trip.rooms) %>
 						<tr>
 							<td colspan=3><b>Bookings</b></td>
 						</tr>
-						<% trip.bookings.each do |booking| %>
-							<%= render(booking) %>
-						<% end %>
+						<%= render(trip.bookings) %>
 					<% end %>
 				</table>
 			<% end %>
