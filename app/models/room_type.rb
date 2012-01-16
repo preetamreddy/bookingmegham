@@ -51,6 +51,31 @@ class RoomType < ActiveRecord::Base
 		return room_rate
 	end
 
+	def long_name
+		property.name + ' - ' + room_type
+	end
+
+	def available_rooms(date)
+		booked_rooms = LineItem.booked_rooms(:room_type, id, date)	
+		if booked_rooms
+			available_rooms = number_of_rooms - booked_rooms
+		else
+			available_rooms = number_of_rooms	
+		end
+
+		return available_rooms
+	end
+
+	def availability(start_date, end_date, rooms_required)
+		(start_date...end_date).each do |date|
+			if available_rooms(date) < rooms_required
+				return false
+			end
+		end
+		
+		return true
+	end
+
 	private
 	
 		def ensure_property_exists

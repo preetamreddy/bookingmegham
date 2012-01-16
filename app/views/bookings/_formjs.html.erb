@@ -14,30 +14,40 @@
   <div class="field">
    	<%= f.label :trip_id %><br />
 		<% if @booking.trip_id %>
-    	<%= f.number_field :trip_id, :readonly => true %>
+    	<%= f.collection_select(:trip_id, 
+						Trip.find_all_by_id(@booking.trip_id), :id, :long_name) %>
+		<% elsif session[:guest_id] %>
+    	<%= f.collection_select(:trip_id, Trip.
+						joins('JOIN guests ON guests.id = trips.guest_id').
+						order('guests.name, trips.name').
+						find_all_by_guest_id(session[:guest_id]), :id, :long_name) %>
 		<% else %>
-    	<%= f.number_field :trip_id, :min => 1 %>
+    	<%= f.collection_select(:trip_id, Trip.
+						joins('JOIN guests ON guests.id = trips.guest_id').
+						order('guests.name, trips.name').all, :id, :long_name) %>
 		<% end %>
   </div>
 	<div class="field">
    	<%= f.label :room_type_id %><br />
 		<% if @booking.room_type_id %>
-    	<%= f.number_field :room_type_id, :readonly => true %>
+    	<%= f.collection_select(:room_type_id, 
+						RoomType.find_all_by_id(@booking.room_type_id), :id, :long_name) %>
 		<% else %>
-    	<%= f.number_field :room_type_id, :min => 1 %>
+    	<%= f.collection_select(:room_type_id, RoomType.
+						joins('JOIN properties ON properties.id = room_types.property_id').
+						order('properties.name, room_types.room_type').all,
+						:id, :long_name) %>
 		<% end %>
 	</div>
   <div class="field">
     <%= f.label :check_in_date %><br />
     <%= f.date_select :check_in_date, :start_year => Time.now.year, 
-			:end_year => Time.now.year + 1, :prompt => { 
-			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
+			:end_year => Time.now.year + 1, :prompt => true %>
   </div>
   <div class="field">
     <%= f.label :check_out_date %><br />
     <%= f.date_select :check_out_date, :start_year => Time.now.year, 
-			:end_year => Time.now.year + 1, :prompt => {
-			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
+			:end_year => Time.now.year + 1, :prompt => true %>
   </div>
 
 	<div class="field">
@@ -59,8 +69,7 @@
 	<% end %>
 	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
     <%= f.label :guests_arrival_time %><br />
-    <%= f.time_select :guests_arrival_time, :prompt => {
-			:hour => 'Select hour', :minute => 'Select minute'} %>
+    <%= f.time_select :guests_arrival_time, :prompt => true %>
 	<% end %>
 	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
     <%= f.label :guests_arriving_from %><br />

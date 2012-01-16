@@ -80,7 +80,7 @@ class BookingsController < ApplicationController
     respond_to do |format|
       if @booking.save
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
-				format.js
+				format.js { render :js => "window.location.replace('#{booking_url(@booking)}');" }
         format.json { render json: @booking, status: :created, location: @booking }
       else
         format.html { render action: "new" }

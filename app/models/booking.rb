@@ -12,7 +12,6 @@ class Booking < ActiveRecord::Base
 	before_update :initialize_attributes_when_nil,
 								:update_room_rate, :update_total_price
 
-	before_save :ensure_trip_exists, :ensure_room_type_exists
 	after_save :update_line_items
 
 	validates :trip_id, :room_type_id, :check_in_date, :check_out_date,
@@ -24,10 +23,15 @@ class Booking < ActiveRecord::Base
 														message: "should be a number greater than 0"
 
 	validates_numericality_of :number_of_children_below_5_years,
-														:number_of_drivers, :total_price,
+														:number_of_drivers,
 														only_integer: true, greater_than_or_equal_to: 0,
 														allow_nil: true, 
 														message: "should be a number greater than or equal to 0"
+
+	validate 	:ensure_trip_exists, :ensure_room_type_exists,
+						:ensure_check_out_date_is_greater_than_check_in_date,
+						:ensure_booking_is_within_trip_dates,
+						:ensure_room_availability
 
 	def add_rooms_from_trip(trip)
 		trip.rooms.each do |trip_room|
@@ -108,6 +112,29 @@ class Booking < ActiveRecord::Base
 				return false
  			else
         return true
+			end
+		end
+		
+		def ensure_check_out_date_is_greater_than_check_in_date
+			if check_out_date <= check_in_date
+				errors.add(:base, "Could not create Booking as check-out date is earlier than or same as check-in date")
+				return false
+			end
+		end
+
+		def ensure_booking_is_within_trip_dates
+			if (check_in_date < trip.start_date or check_in_date > trip.end_date) or
+					(check_out_date < trip.start_date or check_out_date > trip.end_date)
+				errors.add(:base, "Could not create booking as booking is not within the trip dates")
+				return false
+			end
+		end
+
+		def ensure_room_availability
+			if room_type.availability(check_in_date, check_out_date, number_of_rooms)
+				return true
+			else
+				return false
 			end
 		end
 

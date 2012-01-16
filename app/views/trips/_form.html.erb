@@ -26,14 +26,12 @@
   <div class="field">
     <%= f.label :start_date %><br />
     <%= f.date_select :start_date, :start_year => Time.now.year,
-			:end_year => Time.now.year + 1, :prompt => {
-			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
+			:end_year => Time.now.year + 1, :prompt => true %>
   </div>
   <div class="field">
     <%= f.label :end_date %><br />
     <%= f.date_select :end_date, :start_year => Time.now.year,
-			:end_year => Time.now.year + 1, :prompt => {
-			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
+			:end_year => Time.now.year + 1, :prompt => true %>
   </div>
 
 	<div class="field">
@@ -75,8 +73,7 @@
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :pay_by_date, "Pay by" %><br />
     <%= f.date_select :pay_by_date, :start_year => Time.now.year,
-			:end_year => Time.now.year + 1, :prompt => {
-			:year => 'Select year', :month => 'Select month', :day => 'Select day'} %>
+			:end_year => Time.now.year + 1, :prompt => true %>
 	<% end %>
   <div class="field">
     <%= f.label :comments %><br />

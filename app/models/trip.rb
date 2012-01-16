@@ -13,7 +13,7 @@ class Trip < ActiveRecord::Base
 	accepts_nested_attributes_for :payments, :reject_if => :all_blank,
 		:allow_destroy => true
 
-	before_save :ensure_guest_exists, :set_defaults_if_nil
+	before_save :set_defaults_if_nil
 
 	before_destroy :ensure_not_referenced_by_booking
 
@@ -29,6 +29,8 @@ class Trip < ActiveRecord::Base
 						message: "should be a number greater than or equal to 0"
 
 	validates :payment_status, inclusion: PAYMENT_STATUS, allow_nil: true
+
+	validate :ensure_guest_exists, :ensure_end_date_is_greater_than_start_date
 
 	def number_of_adults
 		if rooms.empty?
@@ -92,6 +94,10 @@ class Trip < ActiveRecord::Base
 		return payment_status
 	end
 
+	def long_name
+		guest.name + ' - ' + name
+	end
+
 	private
 
 		def ensure_guest_exists
@@ -117,6 +123,13 @@ class Trip < ActiveRecord::Base
 				return true
 			else
 				errors.add(:base, "Destroy failed because the trip '#{name}' has bookings. Please destroy the bookings first.")
+				return false
+			end
+		end
+
+		def ensure_end_date_is_greater_than_start_date
+			if end_date <= start_date
+				errors.add(:base, "Could not create Trip as end date is earlier than start date")
 				return false
 			end
 		end
