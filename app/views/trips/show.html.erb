@@ -84,7 +84,9 @@
 
 		<% @trip.payments.each do |payment| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">	
-				<td class="text"><%= l payment.date_recieved %></td>
+				<td class="text">
+					<%= l payment.date_recieved if payment.date_recieved %>
+				</td>
 				<td class="number"><%= number_to_currency(payment.amount) %></td>
 				<td class="text"><%= payment.details %></td>
 			</tr>

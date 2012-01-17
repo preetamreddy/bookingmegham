@@ -14,6 +14,8 @@ class Trip < ActiveRecord::Base
 		:allow_destroy => true
 
 	before_save :set_defaults_if_nil
+	
+	after_save :update_line_item_status
 
 	before_destroy :ensure_not_referenced_by_booking
 
@@ -27,8 +29,6 @@ class Trip < ActiveRecord::Base
 						:number_of_drivers,
 						only_integer: true, greater_than_or_equal_to: 0, allow_nil: true,
 						message: "should be a number greater than or equal to 0"
-
-	validates :payment_status, inclusion: PAYMENT_STATUS, allow_nil: true
 
 	validate :ensure_guest_exists, :ensure_end_date_is_greater_than_start_date
 
@@ -81,16 +81,17 @@ class Trip < ActiveRecord::Base
 		total_price - discount
 	end
 
-	def get_payment_status
-		if balance_payment <= 0
+	def payment_status
+		if total_price == 0
+			payment_status = 'Blocked'
+		elsif total_price > 0 and balance_payment <= 0
 			payment_status = 'Fully Paid'
+		elsif total_price > 0 and balance_payment > 0 and paid > 0
+			payment_status = 'Partially Paid'
 		else
-			if paid > 0
-				payment_status = 'Partially Paid'
-			else
-				payment_status = 'Blocked'
-			end
+			payment_status = 'Blocked'
 		end
+
 		return payment_status
 	end
 
@@ -115,7 +116,6 @@ class Trip < ActiveRecord::Base
 			self.number_of_children_below_5_years ||= 0
 			self.number_of_drivers ||= 0
 			self.discount ||= 0
-			self.payment_status ||= 'Blocked'
 		end
 
 		def ensure_not_referenced_by_booking
@@ -131,6 +131,23 @@ class Trip < ActiveRecord::Base
 			if end_date <= start_date
 				errors.add(:base, "Could not create Trip as end date is earlier than start date")
 				return false
+			end
+		end
+
+		def update_line_item_status
+			if payment_status == 'Blocked'
+				blocked = 1
+			else
+				blocked = 0
+			end
+
+			if bookings.any?
+				bookings.each do |booking|
+					booking.line_items.each do |line_item|
+						line_item.blocked = blocked
+						line_item.save!
+					end
+				end
 			end
 		end
 end

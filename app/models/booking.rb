@@ -93,6 +93,15 @@ class Booking < ActiveRecord::Base
 
 	private
 
+		def ensure_room_availability
+			if room_type.availability(check_in_date, check_out_date, number_of_rooms)
+				return true
+			else
+				errors.add(:base, "Could not create booking due to unavailability of rooms")
+				return false
+			end
+		end
+
 		def ensure_trip_exists
 			begin
 				trip = Trip.find(trip_id)
@@ -125,15 +134,7 @@ class Booking < ActiveRecord::Base
 		def ensure_booking_is_within_trip_dates
 			if (check_in_date < trip.start_date or check_in_date > trip.end_date) or
 					(check_out_date < trip.start_date or check_out_date > trip.end_date)
-				errors.add(:base, "Could not create booking as booking is not within the trip dates")
-				return false
-			end
-		end
-
-		def ensure_room_availability
-			if room_type.availability(check_in_date, check_out_date, number_of_rooms)
-				return true
-			else
+				errors.add(:base, "Could not create booking as it is not within the trip dates")
 				return false
 			end
 		end
@@ -149,12 +150,19 @@ class Booking < ActiveRecord::Base
 		end
 
 		def add_line_items
+			if trip.payment_status == 'Blocked'
+				blocked = 1
+			else
+				blocked = 0
+			end
+
 			date = check_in_date
 			while date < check_out_date do
 				rooms.each do |room|
 					line_item = line_items.build(room_type_id: room_type_id,
 												date: date,
-												booked_rooms: room.number_of_rooms)
+												booked_rooms: room.number_of_rooms,
+												blocked: blocked)
 					line_item.save!
 				end
 				date += 1

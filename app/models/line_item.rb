@@ -6,8 +6,8 @@ class LineItem < ActiveRecord::Base
 
 	validates :booking_id, :room_type_id, :date, :booked_rooms, :presence => true
 
-	def LineItem.booked_rooms(property_or_room_type, id, date)
-		if property_or_room_type == :room_type
+	def LineItem.booked_rooms(id, date, consider_blocked_rooms_as_booked)
+		if consider_blocked_rooms_as_booked == 'Y'
 			bookings = LineItem.
 				where("room_type_id = :id AND date = :date",
 					{ :id => id, :date => date }).
@@ -15,13 +15,12 @@ class LineItem < ActiveRecord::Base
 				sum(:booked_rooms)
 		else
 			bookings = LineItem.
-				joins('LEFT OUTER JOIN room_types ON
-					room_types.id = line_items.room_type_id').
-				where("property_id = :id AND date = :date",
+				where("room_type_id = :id AND date = :date AND blocked = 0",
 					{ :id => id, :date => date }).
-				group(:property_id, :date).
+				group(:room_type_id, :date).
 				sum(:booked_rooms)
 		end
+
 		return bookings[[id, date]]
 	end
 

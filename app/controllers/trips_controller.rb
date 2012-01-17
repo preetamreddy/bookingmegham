@@ -78,14 +78,8 @@ class TripsController < ApplicationController
 
     respond_to do |format|
       if @trip.update_attributes(params[:trip])
-				payment_status = @trip.get_payment_status
-				if @trip.update_attributes(payment_status: payment_status)
-        	format.html { redirect_to @trip, notice: 'Trip was successfully updated.' }
-        	format.json { head :ok }
-      	else
-        	format.html { render action: "edit" }
-        	format.json { render json: @trip.errors, status: :unprocessable_entity }
-				end
+        format.html { redirect_to @trip, notice: 'Trip was successfully updated.' }
+        format.json { head :ok }
 			else
        	format.html { render action: "edit" }
        	format.json { render json: @trip.errors, status: :unprocessable_entity }

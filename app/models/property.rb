@@ -19,6 +19,11 @@ class Property < ActiveRecord::Base
 		return number_of_rooms
 	end	
 
+	def available_rooms(date, consider_blocked_rooms_as_booked)
+		room_types.to_a.sum { |room_type| 
+			room_type.available_rooms(date, consider_blocked_rooms_as_booked) }
+	end
+
 	private
 	
 		def ensure_does_not_have_room_types
