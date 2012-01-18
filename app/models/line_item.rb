@@ -7,7 +7,7 @@ class LineItem < ActiveRecord::Base
 	validates :booking_id, :room_type_id, :date, :booked_rooms, :presence => true
 
 	def LineItem.booked_rooms(id, date, consider_blocked_rooms_as_booked)
-		if consider_blocked_rooms_as_booked == 'Y'
+		if consider_blocked_rooms_as_booked == 1
 			bookings = LineItem.
 				where("room_type_id = :id AND date = :date",
 					{ :id => id, :date => date }).

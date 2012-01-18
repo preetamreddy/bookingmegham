@@ -13,11 +13,7 @@ class RoomType < ActiveRecord::Base
 	validates :room_type, :uniqueness => { :case_sensitive => false }
 
 	validates_numericality_of :number_of_rooms,
-						allow_nil: true, only_integer: true,
-						greater_than: 0,
-						message: "should be a number greater than 0"
-
-	validates_numericality_of :price_for_single_occupancy,
+														:price_for_single_occupancy,
 														:price_for_double_occupancy,
 														allow_nil: true, only_integer: true,
 														greater_than_or_equal_to: 0,
@@ -66,11 +62,17 @@ class RoomType < ActiveRecord::Base
 		return available_rooms
 	end
 
+	def ensure_availability_before_booking
+		return property.ensure_availability_before_booking
+	end
+
 	def availability(start_date, end_date, rooms_required)
 		availability_status = true
-		(start_date...end_date).each do |date|
-			if available_rooms(date, consider_blocked_rooms_as_booked) < rooms_required
-				availability_status = false
+		if ensure_availability_before_booking == 1
+			(start_date...end_date).each do |date|
+				if available_rooms(date, consider_blocked_rooms_as_booked) < rooms_required
+					availability_status = false
+				end
 			end
 		end
 		

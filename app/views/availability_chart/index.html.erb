@@ -1,10 +1,10 @@
 <h1 id="avl_chart_h1">Availability Chart</h1>
-<% if session[:consider_blocked_rooms_as_booked] == 'Y' %>
+<% if session[:consider_blocked_rooms_as_booked] == 1 %>
 	<%= link_to 'Ignore blocked rooms', 
-				availability_chart_path(:include_blocked_rooms => 'N') %>
+				availability_chart_path(:include_blocked_rooms => 0) %>
 <% else %>
 	<%= link_to 'Include blocked rooms',
-				availability_chart_path(:include_blocked_rooms => 'Y') %>
+				availability_chart_path(:include_blocked_rooms => 1) %>
 <% end %>
 
 <div id="new_booking"></div>

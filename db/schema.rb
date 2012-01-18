@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120117124424) do
+ActiveRecord::Schema.define(:version => 20120118074557) do
 
   create_table "bookings", :force => true do |t|
     t.time     "guests_arrival_time"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20120117124424) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "price_for_children_between_5_and_12_years"
+    t.integer  "ensure_availability_before_booking",        :default => 1
   end
 
   create_table "room_types", :force => true do |t|
@@ -78,7 +79,7 @@ ActiveRecord::Schema.define(:version => 20120117124424) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "number_of_rooms"
-    t.string   "consider_blocked_rooms_as_booked", :default => "Y"
+    t.integer  "consider_blocked_rooms_as_booked", :default => 1
   end
 
   create_table "rooms", :force => true do |t|

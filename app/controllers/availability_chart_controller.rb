@@ -1,10 +1,10 @@
 class AvailabilityChartController < ApplicationController
   def index
-		if params[:include_blocked_rooms]
+		if params[:include_blocked_rooms] == nil
+			session[:consider_blocked_rooms_as_booked] = 1
+		else
 			session[:consider_blocked_rooms_as_booked] = 
 													params[:include_blocked_rooms]
-		else
-			session[:consider_blocked_rooms_as_booked] = 'Y'
 		end
 
 		if params[:trip_id]
@@ -30,21 +30,19 @@ class AvailabilityChartController < ApplicationController
 
 		@availability = {}
 
-		@properties = Property.order(:id)
+		@properties = Property.order(:id).find_all_by_ensure_availability_before_booking(1)
 		@properties.each do |property|
 			@chart_date_range.each do |date|
-				@availability.store(
-						[:property, property.id, date], 
-							property.available_rooms(date, consider_blocked_rooms_as_booked))
+				@availability.store([:property, property.id, date], 
+					property.available_rooms(date, consider_blocked_rooms_as_booked))
 			end
 		end
 
-		@room_types = RoomType.order(:property_id, :price_for_double_occupancy)
+		@room_types = RoomType.order(:property_id, :price_for_double_occupancy).find_all_by_property_id(@properties)
 		@room_types.each do |room_type|
 			@chart_date_range.each do |date|
-				@availability.store(
-						[:room_type, room_type.id, date], 
-							room_type.available_rooms(date, consider_blocked_rooms_as_booked))
+				@availability.store([:room_type, room_type.id, date], 
+					room_type.available_rooms(date, consider_blocked_rooms_as_booked))
 			end
 		end
 
