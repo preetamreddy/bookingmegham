@@ -65,7 +65,6 @@
 					<%= link_to 'Show details', trip %></br>
 					<%= link_to 'Edit', edit_trip_path(trip) %></br>
 		    	<%= link_to 'Destroy', trip, confirm: 'Are you sure?', method: :delete %></br>
-					<%= link_to 'Check Availability', availability_chart_path(:trip_id => trip.id) %></br>
 					<%= link_to 'View Bookings', bookings_path(:trip_id => trip.id) %>
 		  </tr>
 		<% end %>

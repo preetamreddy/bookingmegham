@@ -1,4 +1,4 @@
-<p id="notice"><span class="saved_value"><%= notice %></p>
+<p id="notice"><span class="saved_value"><%= notice %></span></p>
 <h1>Property details</h1>
 
 <div class="show_saved_record">
@@ -8,12 +8,12 @@
 </p>
 
 <p>
-  <b>Price for children below 5 years:</b>
+  <b>Price for children below 5:</b>
   <span class="saved_value"><%= number_to_currency(@property.price_for_children_below_5_years) %></span>
 </p>
 
 <p>
-  <b>Price for children btw 5 & 12:</b>
+  <b>Price for children btw 5 and 12:</b>
   <span class="saved_value"><%= number_to_currency(@property.price_for_children_between_5_and_12_years) %></span>
 </p>
 
@@ -28,9 +28,30 @@
 </p>
 
 <p>
-  <b>Ensure availability:</b>
+  <b>Ensure availability before booking:</b>
   <span class="saved_value"><%= @property.ensure_availability_before_booking %></span>
 </p>
+
+<% if @property.value_added_services.any? %>
+	<b>Value added services:</b>
+	<table class="nested_table">
+		<tr>
+			<th class="text">Name</th>
+			<th class="number">Unit price</th>
+			<th class="text">Description</th>
+		</tr>
+
+		<% @property.value_added_services.each do |value_added_service| %>
+			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+				<td class="text"><%= value_added_service.name %></td>
+				<td class="currency">
+					<%= number_to_currency(value_added_service.unit_price) %>
+				</td>
+				<td class="text"><%= value_added_service.description %></td>
+			</tr>
+		<% end %>
+	</table>
+<% end %>
 
 <p>
   <b>Description:</b>
@@ -39,6 +60,8 @@
 </div>
 
 <div class="action_container">
-	<%= link_to 'Edit', edit_property_path(@property) %> | 
-	<%= link_to 'Back to Property Listing', properties_path %>
+	<%= link_to 'Edit', edit_property_path(@property) %>
 </div>
+
+<%= link_to 'Back to Property Listing', properties_path, 
+			:class => "back_link" %>

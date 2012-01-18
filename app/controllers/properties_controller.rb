@@ -27,6 +27,7 @@ class PropertiesController < ApplicationController
   # GET /properties/new.json
   def new
     @property = Property.new
+		@property.value_added_services.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -37,6 +38,11 @@ class PropertiesController < ApplicationController
   # GET /properties/1/edit
   def edit
     @property = Property.find(params[:id])
+
+		if @property.value_added_services.empty?
+			@property.value_added_services.build
+		end
+
   end
 
   # POST /properties

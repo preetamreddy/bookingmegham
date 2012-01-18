@@ -59,30 +59,30 @@
 		<%= f.link_to_add "Add row", :rooms %><br/>
 	</div>
 
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
+	<div class="field">
     <%= f.label :number_of_children_below_5_years, "Children below 5" %><br />
     <%= f.number_field :number_of_children_below_5_years, :min => 0 %>
-	<% end %>
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
+	</div>
+	<div class="field">
     <%= f.label :number_of_drivers %><br />
     <%= f.number_field :number_of_drivers, :min => 0 %>
-	<% end %>
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
+	</div>
+	<div class="field">
     <%= f.label :guests_arrival_time, "Arrival time" %><br />
     <%= f.time_select :guests_arrival_time, :prompt => true %>
-	<% end %>
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
+	</div>
+	<div class="field">
     <%= f.label :guests_arriving_from, "Arriving from" %><br />
     <%= f.text_field :guests_arriving_from %>
-	<% end %>
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
+	</div>
+	<div class="field">
     <%= f.label :guests_food_preferences, "Food preferences" %><br />
     <%= f.text_field :guests_food_preferences %>
-	<% end %>
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
+	</div>
+	<div class="field">
     <%= f.label :total_price %><br />
     <%= f.text_field :total_price, :readonly => true %>
-	<% end %>
+	</div>
 
   <div class="field">
     <%= f.label :comments %><br />

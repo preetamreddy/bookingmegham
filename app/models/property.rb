@@ -1,6 +1,10 @@
 class Property < ActiveRecord::Base
 	has_many :room_types
 
+	has_many :value_added_services, dependent: :destroy
+	accepts_nested_attributes_for :value_added_services, :reject_if => :all_blank,
+		:allow_destroy => true
+
 	before_destroy :ensure_does_not_have_room_types
 	
 	validates :name, presence: true, :uniqueness => { :case_sensitive => false }

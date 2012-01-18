@@ -59,31 +59,6 @@
 		<%= f.link_to_add "Add row", :rooms %><br/>
 	</div>
 
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
-    <%= f.label :number_of_children_below_5_years %><br />
-    <%= f.number_field :number_of_children_below_5_years, :min => 0 %>
-	<% end %>
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
-    <%= f.label :number_of_drivers %><br />
-    <%= f.number_field :number_of_drivers, :min => 0 %>
-	<% end %>
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
-    <%= f.label :guests_arrival_time %><br />
-    <%= f.time_select :guests_arrival_time, :prompt => true %>
-	<% end %>
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
-    <%= f.label :guests_arriving_from %><br />
-    <%= f.text_field :guests_arriving_from %>
-	<% end %>
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
-    <%= f.label :guests_food_preferences %><br />
-    <%= f.text_field :guests_food_preferences %>
-	<% end %>
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
-    <%= f.label :total_price %><br />
-    <%= f.text_field :total_price %>
-	<% end %>
-
   <div class="field">
     <%= f.label :comments %><br />
     <%= f.text_area :comments, rows: 6 %>

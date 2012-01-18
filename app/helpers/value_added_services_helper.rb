@@ -1,0 +1,2 @@
+module ValueAddedServicesHelper
+end

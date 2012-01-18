@@ -1,0 +1,51 @@
+<h1>Listing Value Added Services</h1>
+
+<% if notice %>
+	<div id="error_explanation">
+		<h2>Unable to destroy</h2>
+		<ul>
+			<li><%= notice %></li>
+		</ul>
+	</div>
+<% end %>
+
+<% if @value_added_services.count > 0 %>
+<table class="index_table" border="1">
+  <tr>
+    <th class="text">Property</th>
+    <th class="text">Name</th>
+    <th class="number">Unit price</th>
+    <th class="text">Description</th>
+    <th></th>
+  </tr>
+
+<% @value_added_services.each do |value_added_service| %>
+  <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+    <td class="text">
+			<%= value_added_service.property.name if value_added_service.property_id %>
+		</td>
+    <td class="text"><%= value_added_service.name %></td>
+    <td class="currency">
+			<%= number_to_currency(value_added_service.unit_price) %>
+		</td>
+    <td class="text"><%= value_added_service.description %></td>
+    <td>
+			<%= link_to 'Edit', edit_value_added_service_path(value_added_service) %></br>
+    	<%= link_to 'Destroy', value_added_service, confirm: 'Are you sure?',
+						method: :delete %>
+		</td>
+  </tr>
+<% end %>
+</table>
+<% else %>
+	<div id="error_explanation">
+		<h2>Value Added Services have not yet been created</h2>
+		<ul>
+			<li>Click below for creating new Value Added Services</li>
+		</ul>
+	</div>
+<% end %>
+
+<div class="action_container">
+	<%= link_to 'New Value Added Service', new_value_added_service_path %>
+</div>
