@@ -2,7 +2,7 @@ class ValueAddedServicesController < ApplicationController
   # GET /value_added_services
   # GET /value_added_services.json
   def index
-    @value_added_services = ValueAddedService.all
+    @value_added_services = ValueAddedService.order("property_id, name").all
 
     respond_to do |format|
       format.html # index.html.erb

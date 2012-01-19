@@ -15,6 +15,8 @@
     <th class="text">Property</th>
     <th class="text">Name</th>
     <th class="number">Unit price</th>
+    <th class="number">Min people required</th>
+    <th class="number">Max people</th>
     <th class="text">Description</th>
     <th></th>
   </tr>
@@ -28,6 +30,8 @@
     <td class="currency">
 			<%= number_to_currency(value_added_service.unit_price) %>
 		</td>
+    <td class="number"><%= value_added_service.minimum_people_required %></td>
+    <td class="number"><%= value_added_service.maximum_people %></td>
     <td class="text"><%= value_added_service.description %></td>
     <td>
 			<%= link_to 'Edit', edit_value_added_service_path(value_added_service) %></br>

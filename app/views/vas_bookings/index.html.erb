@@ -1,0 +1,35 @@
+<h1>Listing vas_bookings</h1>
+
+<table>
+  <tr>
+    <th>Trip</th>
+    <th>Booking</th>
+    <th>Vas</th>
+    <th>Unit price</th>
+    <th>Number of people</th>
+    <th>Number of days</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @vas_bookings.each do |vas_booking| %>
+  <tr>
+    <td><%= vas_booking.trip_id %></td>
+    <td><%= vas_booking.booking_id %></td>
+    <td><%= vas_booking.vas_id %></td>
+    <td><%= vas_booking.unit_price %></td>
+    <td><%= vas_booking.number_of_people %></td>
+    <td><%= vas_booking.number_of_days %></td>
+    <td><%= vas_booking.description %></td>
+    <td><%= link_to 'Show', vas_booking %></td>
+    <td><%= link_to 'Edit', edit_vas_booking_path(vas_booking) %></td>
+    <td><%= link_to 'Destroy', vas_booking, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Vas booking', new_vas_booking_path %>

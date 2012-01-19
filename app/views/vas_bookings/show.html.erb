@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Trip:</b>
+  <%= @vas_booking.trip_id %>
+</p>
+
+<p>
+  <b>Booking:</b>
+  <%= @vas_booking.booking_id %>
+</p>
+
+<p>
+  <b>Vas:</b>
+  <%= @vas_booking.vas_id %>
+</p>
+
+<p>
+  <b>Unit price:</b>
+  <%= @vas_booking.unit_price %>
+</p>
+
+<p>
+  <b>Number of people:</b>
+  <%= @vas_booking.number_of_people %>
+</p>
+
+<p>
+  <b>Number of days:</b>
+  <%= @vas_booking.number_of_days %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @vas_booking.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_vas_booking_path(@vas_booking) %> |
+<%= link_to 'Back', vas_bookings_path %>

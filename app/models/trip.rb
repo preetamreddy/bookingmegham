@@ -13,6 +13,12 @@ class Trip < ActiveRecord::Base
 	accepts_nested_attributes_for :payments, :reject_if => :all_blank,
 		:allow_destroy => true
 
+	has_many :vas_bookings, dependent: :destroy
+	accepts_nested_attributes_for :vas_bookings, :reject_if => :all_blank,
+		:allow_destroy => true
+
+	before_update :update_vas_unit_price
+
 	before_save :set_defaults_if_nil
 	
 	after_save :update_line_item_status
@@ -58,11 +64,23 @@ class Trip < ActiveRecord::Base
 	end
 
 	def total_price
-		if bookings.empty?
-			return 0
+		if bookings.any?
+			price_for_bookings = bookings.to_a.sum { |booking| booking.total_price }
 		else
-			bookings.to_a.sum { |booking| booking.total_price }
+			price_for_bookings = 0
 		end
+
+		if vas_bookings.any?
+			price_for_vas = vas_bookings.to_a.sum { |vas_booking|
+				vas_booking.unit_price * vas_booking.number_of_people *
+					vas_booking.number_of_days }
+		else
+			price_for_vas = 0
+		end
+
+		ttl_price = price_for_bookings + price_for_vas
+
+		return ttl_price
 	end
 
 	def paid
@@ -150,4 +168,14 @@ class Trip < ActiveRecord::Base
 				end
 			end
 		end
+
+		def update_vas_unit_price
+			if vas_bookings.any?
+				vas_bookings.each do |vas_booking|
+					vas_booking.unit_price = ValueAddedService.unit_price(
+																		vas_booking.value_added_service_id)
+				end
+			end
+		end
+
 end

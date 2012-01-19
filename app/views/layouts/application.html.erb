@@ -26,7 +26,7 @@
 						<tr>
 							<td colspan=3><b>Itinerary</b></td>
 						</tr>
-						<%= render(trip.bookings) %>
+						<%= render(trip.bookings.order('check_in_date')) %>
 					<% end %>
 				</table>
 			<% end %>
@@ -34,6 +34,7 @@
 				<dt>Property Mgmt</dt>
 				<dd><%= link_to 'Properties', properties_path %></dd>
 				<dd><%= link_to 'Room Types', room_types_path(:property_id => nil) %></dd>
+				<dd><%= link_to 'Value Added Services', value_added_services_path %></dd>
 				<dt>Booking Mgmt</dt>
 				<dd><%= link_to 'Guests', guests_path %></dd>
 				<dd><%= link_to 'Trips', trips_path %></dd>

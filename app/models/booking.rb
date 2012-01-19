@@ -7,10 +7,14 @@ class Booking < ActiveRecord::Base
 	accepts_nested_attributes_for :rooms, :reject_if => :all_blank,
 		:allow_destroy => true
 
+	has_many :vas_bookings, dependent: :destroy
+	accepts_nested_attributes_for :vas_bookings, :reject_if => :all_blank,
+		:allow_destroy => true
+
 	has_many :line_items, dependent: :destroy
 
 	before_update :initialize_attributes_when_nil,
-								:update_room_rate, :update_total_price
+								:update_room_rate, :update_vas_unit_price, :update_total_price
 
 	after_save :update_line_items
 
@@ -59,11 +63,35 @@ class Booking < ActiveRecord::Base
 		end
 	end
 
+	def update_vas_unit_price
+		if vas_bookings.any?
+			vas_bookings.each do |vas_booking|
+				vas_booking.unit_price = ValueAddedService.unit_price(
+																		vas_booking.value_added_service_id)
+			end
+		end
+	end
+
 	def update_total_price
-		price_per_night = rooms.to_a.sum { |room|
-			room.room_rate * room.number_of_rooms }
+		if rooms.any?
+			price_per_night = rooms.to_a.sum { |room|
+				room.room_rate * room.number_of_rooms }
+		else
+			price_per_night = 0
+		end
+
 		number_of_days = (check_out_date - check_in_date).to_i
-		self.total_price = price_per_night * number_of_days
+		price_for_rooms = price_per_night * number_of_days
+
+		if vas_bookings.any?
+			price_for_vas = vas_bookings.to_a.sum { |vas_booking|
+				vas_booking.unit_price * vas_booking.number_of_people * 
+					vas_booking.number_of_days }
+		else
+			price_for_vas = 0
+		end
+
+		self.total_price = price_for_rooms + price_for_vas
 	end
 
 	def number_of_adults

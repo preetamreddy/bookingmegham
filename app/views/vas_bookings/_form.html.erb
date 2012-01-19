@@ -1,0 +1,45 @@
+<%= form_for(@vas_booking) do |f| %>
+  <% if @vas_booking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vas_booking.errors.count, "error") %> prohibited this vas_booking from being saved:</h2>
+
+      <ul>
+      <% @vas_booking.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :trip_id %><br />
+    <%= f.number_field :trip_id %>
+  </div>
+  <div class="field">
+    <%= f.label :booking_id %><br />
+    <%= f.number_field :booking_id %>
+  </div>
+  <div class="field">
+    <%= f.label :vas_id %><br />
+    <%= f.number_field :vas_id %>
+  </div>
+  <div class="field">
+    <%= f.label :unit_price %><br />
+    <%= f.number_field :unit_price %>
+  </div>
+  <div class="field">
+    <%= f.label :number_of_people %><br />
+    <%= f.number_field :number_of_people %>
+  </div>
+  <div class="field">
+    <%= f.label :number_of_days %><br />
+    <%= f.number_field :number_of_days %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

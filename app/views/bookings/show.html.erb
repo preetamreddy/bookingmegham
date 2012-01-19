@@ -78,6 +78,29 @@
   <span class="saved_value"><%= @booking.guests_food_preferences %>
 <% end %>
 
+<% if @booking.vas_bookings.any? %>
+	<b>Value Added Services:</b>
+	<table class="nested_table">
+		<tr>
+			<th class="text">Name</th>
+			<th class="number">#</th>
+			<th class="number">Days</th>
+			<th class="number">Unit price</th>
+			<th class="text">Description</th>
+		</tr>
+	
+		<% @booking.vas_bookings.each do |vas_booking| %>
+			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+				<td class="text"><%= vas_booking.value_added_service.name %></td>
+				<td class="number"><%= vas_booking.number_of_people %></td>
+				<td class="number"><%= vas_booking.number_of_days %></td>
+				<td class="number"><%= vas_booking.unit_price %></td>
+				<td class="text"><%= vas_booking.description %></td>
+			</tr>
+		<% end %>
+	</table>
+<% end %>
+
 <p>
   <b>Total price:</b>
   <span class="saved_value"><%= number_to_currency(@booking.total_price) if @booking.total_price %>

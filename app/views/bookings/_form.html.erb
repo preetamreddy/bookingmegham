@@ -79,6 +79,18 @@
     <%= f.label :guests_food_preferences, "Food preferences" %><br />
     <%= f.text_field :guests_food_preferences %>
 	</div>
+
+	<% if @booking.room_type_id %>
+		<div class="field">
+			<%= f.label :value_added_services %>
+		</div>
+	
+		<div class="nested_form">
+			<%= f.fields_for :vas_bookings %>
+			<%= f.link_to_add "Add row", :vas_bookings %><br/>
+		</div>
+	<% end %>
+
 	<div class="field">
     <%= f.label :total_price %><br />
     <%= f.text_field :total_price, :readonly => true %>

@@ -1,0 +1,17 @@
+<div class="nested_form_row">
+	<%= f.collection_select(:value_added_service_id, 
+				ValueAddedService.order("name").
+				where(:property_id => nil), :id, :name, 
+				:prompt => "<Select a service>") %>
+
+	<%= f.label :number_of_people, "#" %>
+	<%= f.number_field :number_of_people, min: 0, max: 999 %>
+
+	<%= f.label :number_of_days, "Days" %>
+	<%= f.number_field :number_of_days, min: 0, max: 99 %>
+
+	<%= f.label :description %>
+	<%= f.text_field :description %>
+
+	<%= f.link_to_remove "Remove" %>
+</div>	

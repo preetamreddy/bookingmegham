@@ -1,6 +1,5 @@
 <div class="nested_form_row">
 	
-	<%= f.label :date_recieved, "Date" %>
 	<%= f.date_select :date_recieved, :start_year => Time.now.year,
 		:end_year => Time.now.year + 1, :prompt => {
 		:year => 'Year', :month => 'Month', :day => 'Day'} %>

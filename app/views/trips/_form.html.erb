@@ -53,9 +53,21 @@
 	</div>
 
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
-    <%= f.label :food_preferences %><br />
-    <%= f.text_field :food_preferences %>
+		<%= f.label :value_added_services %>
 	<% end %>
+
+	<%= hidden_div_if(@trip.new_record?, class: "nested_form") do %>
+		<%= f.fields_for :vas_bookings %>
+		<%= f.link_to_add "Add row", :vas_bookings %><br/>
+	<% end %>
+
+	<div class="field">
+    <%= f.label :total_price %><br />
+		<p><span class="highlight">
+			<%= number_to_currency(@trip.total_price) %>
+		</span></p>
+	</div>	
+
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :discount %><br />
     <%= f.number_field :discount, :min => 0 %>
@@ -71,9 +83,15 @@
 	<% end %>
 
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
-    <%= f.label :pay_by_date, "Pay by" %><br />
-    <%= f.date_select :pay_by_date, :start_year => Time.now.year,
-			:end_year => Time.now.year + 1, :prompt => true %>
+		<% if @trip.balance_payment > 0 %>
+    	<%= f.label :pay_by_date, "Pay balance by" %><br />
+    	<%= f.date_select :pay_by_date, :start_year => Time.now.year,
+				:end_year => Time.now.year + 1, :prompt => true %>
+		<% end %>
+	<% end %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+    <%= f.label :food_preferences %><br />
+    <%= f.text_field :food_preferences %>
 	<% end %>
   <div class="field">
     <%= f.label :comments %><br />

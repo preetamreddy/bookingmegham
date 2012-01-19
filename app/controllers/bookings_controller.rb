@@ -51,6 +51,8 @@ class BookingsController < ApplicationController
 			@booking.comments = trip.comments
 
 			@booking.add_rooms_from_trip(trip)
+		else
+			@booking.rooms.build
 		end
 
     respond_to do |format|
@@ -63,6 +65,10 @@ class BookingsController < ApplicationController
   # GET /bookings/1/edit
   def edit
     @booking = Booking.find(params[:id])
+
+		if @booking.vas_bookings.empty?
+			@booking.vas_bookings.build
+		end
   end
 
   # POST /bookings

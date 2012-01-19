@@ -13,7 +13,18 @@
 
   <div class="field">
     <%= f.label :property_id %><br />
-    <%= f.number_field :property_id %>
+		<% if @value_added_service.new_record? %>
+    	<%= f.collection_select(:property_id, Property.order("name").find_all,
+																:id, :name) %>
+		<% else %>
+			<% if @value_added_service.property_id %>
+				<%= f.collection_select(:property_id, 
+							Property.find_all_by_id(@value_added_service.property_id),
+							:id, :name) %>
+			<% else %>
+				<%= f.number_field :property_id, readonly: true %>
+			<% end %>
+		<% end %>
   </div>
   <div class="field">
     <%= f.label :name %><br />
@@ -22,6 +33,14 @@
   <div class="field">
     <%= f.label :unit_price %><br />
     <%= f.number_field :unit_price %>
+  </div>
+  <div class="field">
+    <%= f.label :minimum_people_required, "Min people required" %><br />
+    <%= f.number_field :minimum_people_required %>
+  </div>
+  <div class="field">
+    <%= f.label :maximum_people %><br />
+    <%= f.number_field :maximum_people %>
   </div>
   <div class="field">
     <%= f.label :description %><br />
