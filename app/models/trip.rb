@@ -96,7 +96,13 @@ class Trip < ActiveRecord::Base
 	end
 
 	def final_price
-		total_price - discount
+		if discount != nil
+			final_price = total_price - discount
+		else
+			final_price = total_price
+		end
+
+		return final_price
 	end
 
 	def payment_status

@@ -41,13 +41,23 @@
 	</div>
   <div class="field">
     <%= f.label :check_in_date %><br />
-    <%= f.date_select :check_in_date, :start_year => Time.now.year, 
-			:end_year => Time.now.year + 1, :prompt => true %>
+		<% if @booking.check_in_date %>
+    	<%= f.date_select :check_in_date, :start_year => Time.now.year, 
+				:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
+		<% else %>
+    	<%= f.date_select :check_in_date, :start_year => Time.now.year, 
+				:end_year => Time.now.year + 1, :prompt => true %>
+		<% end %>
   </div>
   <div class="field">
     <%= f.label :check_out_date %><br />
-    <%= f.date_select :check_out_date, :start_year => Time.now.year, 
-			:end_year => Time.now.year + 1, :prompt => true %>
+		<% if @booking.check_out_date %>
+    	<%= f.date_select :check_out_date, :start_year => Time.now.year, 
+				:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
+		<% else %>
+    	<%= f.date_select :check_out_date, :start_year => Time.now.year, 
+				:end_year => Time.now.year + 1, :prompt => true %>
+		<% end %>
   </div>
 
 	<div class="field">
@@ -60,10 +70,6 @@
 	</div>
 
 	<div class="field">
-    <%= f.label :number_of_children_below_5_years, "Children below 5" %><br />
-    <%= f.number_field :number_of_children_below_5_years, :min => 0 %>
-	</div>
-	<div class="field">
     <%= f.label :number_of_drivers %><br />
     <%= f.number_field :number_of_drivers, :min => 0 %>
 	</div>
@@ -74,10 +80,6 @@
 	<div class="field">
     <%= f.label :guests_arriving_from, "Arriving from" %><br />
     <%= f.text_field :guests_arriving_from %>
-	</div>
-	<div class="field">
-    <%= f.label :guests_food_preferences, "Food preferences" %><br />
-    <%= f.text_field :guests_food_preferences %>
 	</div>
 
 	<% if @booking.room_type_id %>
@@ -91,10 +93,10 @@
 		</div>
 	<% end %>
 
-	<div class="field">
+	<%= hidden_div_if(!@booking.total_price, class: "field") do %>
     <%= f.label :total_price %><br />
     <%= f.text_field :total_price, :readonly => true %>
-	</div>
+	<% end %>
 
   <div class="field">
     <%= f.label :comments %><br />

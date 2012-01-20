@@ -49,14 +49,6 @@ class TripsController < ApplicationController
   # GET /trips/1/edit
   def edit
     @trip = Trip.find(params[:id])
-
-		if @trip.payments.empty?
-			@trip.payments.build
-		end
-
-		if @trip.vas_bookings.empty?
-			@trip.vas_bookings.build
-		end
   end
 
   # POST /trips

@@ -32,6 +32,11 @@
   <span class="saved_value"><%= @property.ensure_availability_before_booking %></span>
 </p>
 
+<p>
+  <b>Consider blocked rooms as booked:</b>
+  <span class="saved_value"><%= @property.consider_blocked_rooms_as_booked %></span>
+</p>
+
 <% if @property.value_added_services.any? %>
 	<b>Value added services:</b>
 	<table class="nested_table">

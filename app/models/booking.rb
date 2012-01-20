@@ -13,8 +13,11 @@ class Booking < ActiveRecord::Base
 
 	has_many :line_items, dependent: :destroy
 
-	before_update :initialize_attributes_when_nil,
-								:update_room_rate, :update_vas_unit_price, :update_total_price
+	before_validation :update_number_of_rooms
+
+	before_save :initialize_attributes_when_nil,
+							:update_room_rate, :update_vas_unit_price,
+							:update_total_price
 
 	after_save :update_line_items
 
@@ -26,8 +29,7 @@ class Booking < ActiveRecord::Base
 														allow_nil: true, 
 														message: "should be a number greater than 0"
 
-	validates_numericality_of :number_of_children_below_5_years,
-														:number_of_drivers,
+	validates_numericality_of :number_of_drivers,
 														only_integer: true, greater_than_or_equal_to: 0,
 														allow_nil: true, 
 														message: "should be a number greater than or equal to 0"
@@ -36,6 +38,14 @@ class Booking < ActiveRecord::Base
 						:ensure_check_out_date_is_greater_than_check_in_date,
 						:ensure_booking_is_within_trip_dates,
 						:ensure_room_availability
+
+	def number_of_children_below_5_years
+		return trip.number_of_children_below_5_years
+	end
+
+	def food_preferences
+		return trip.food_preferences
+	end
 
 	def add_rooms_from_trip(trip)
 		trip.rooms.each do |trip_room|
@@ -53,6 +63,16 @@ class Booking < ActiveRecord::Base
 				room.number_of_children_between_5_and_12_years = 0 
 			end
 		end
+	end
+
+	def update_number_of_rooms
+		if rooms.any?
+			num_rooms = rooms.to_a.sum { |room| room.number_of_rooms }
+		else
+			num_rooms = 0
+		end
+
+		self.number_of_rooms = num_rooms
 	end
 
 	def update_room_rate
@@ -91,7 +111,14 @@ class Booking < ActiveRecord::Base
 			price_for_vas = 0
 		end
 
-		self.total_price = price_for_rooms + price_for_vas
+		if number_of_drivers
+			price_for_drivers = number_of_drivers * number_of_days *
+														room_type.property.price_for_driver
+		else
+			price_for_drivers = 0
+		end
+
+		self.total_price = price_for_rooms + price_for_vas + price_for_drivers
 	end
 
 	def number_of_adults
@@ -111,22 +138,22 @@ class Booking < ActiveRecord::Base
 		end 
 	end
 
-	def number_of_rooms
-		if rooms.empty?
-			return 0
-		else
-			rooms.to_a.sum { |room| room.number_of_rooms }
-		end
-	end
-
 	private
 
 		def ensure_room_availability
-			if room_type.availability(check_in_date, check_out_date, number_of_rooms)
-				return true
+			if new_record?
+				rooms_required = number_of_rooms
 			else
-				errors.add(:base, "Could not create booking due to unavailability of rooms")
-				return false
+				rooms_required = number_of_rooms - number_of_rooms_was 
+			end
+
+			if rooms_required > 0
+				if room_type.availability(check_in_date, check_out_date, rooms_required)
+					return true
+				else
+					errors.add(:base, "Could not create booking due to unavailability of rooms")
+					return false
+				end
 			end
 		end
 

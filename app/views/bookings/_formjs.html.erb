@@ -60,6 +60,11 @@
 	</div>
 
   <div class="field">
+    <%= f.label :number_of_drivers, "Drivers" %><br />
+    <%= f.number_field :number_of_drivers %>
+  </div>
+
+  <div class="field">
     <%= f.label :comments %><br />
     <%= f.text_area :comments, rows: 6 %>
   </div>

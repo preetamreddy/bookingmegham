@@ -38,6 +38,11 @@
 					'Ensure availability before booking' %><br />
     <%= f.check_box :ensure_availability_before_booking %>
   </div>
+  <div class="field">
+    <%= f.label :consider_blocked_rooms_as_booked, 
+					'Consider blocked rooms as booked' %><br />
+    <%= f.check_box :consider_blocked_rooms_as_booked %>
+  </div>
 	
 	<div class="field">
 		<%= f.label :value_added_services %>

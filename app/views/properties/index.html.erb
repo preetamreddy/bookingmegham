@@ -18,6 +18,7 @@
    	<th class="number">Price for triple occupancy</th>
    	<th class="number">Price for driver</th>
 		<th class="number">Ensure availability</th>
+		<th class="number">Blocked rooms > Booked?</th>
    	<th class="text">Description</th>
 		<th></th>
   </tr>
@@ -38,6 +39,13 @@
     <td class="number"><%= number_to_currency(property.price_for_driver) %></td>
     <td class="number">
 			<% if property.ensure_availability_before_booking == 1 %>
+				Yes
+			<% else %>
+				No
+			<% end %>
+		</td>
+    <td class="number">
+			<% if property.consider_blocked_rooms_as_booked == 1 %>
 				Yes
 			<% else %>
 				No

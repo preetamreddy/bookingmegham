@@ -45,9 +45,7 @@ class BookingsController < ApplicationController
 			trip = Trip.find(session[:trip_id])
 
 			@booking.trip_id = session[:trip_id]
-			@booking.number_of_children_below_5_years = trip.number_of_children_below_5_years
 			@booking.number_of_drivers = trip.number_of_drivers
-			@booking.guests_food_preferences = trip.food_preferences
 			@booking.comments = trip.comments
 
 			@booking.add_rooms_from_trip(trip)
@@ -65,10 +63,6 @@ class BookingsController < ApplicationController
   # GET /bookings/1/edit
   def edit
     @booking = Booking.find(params[:id])
-
-		if @booking.vas_bookings.empty?
-			@booking.vas_bookings.build
-		end
   end
 
   # POST /bookings
@@ -78,10 +72,10 @@ class BookingsController < ApplicationController
 		
 		@booking.initialize_attributes_when_nil
 
-		if @booking.valid?
-			@booking.update_room_rate
-			@booking.update_total_price
-		end
+#		if @booking.valid?
+#			@booking.update_room_rate
+#			@booking.update_total_price
+#		end
 
     respond_to do |format|
       if @booking.save

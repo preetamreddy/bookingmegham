@@ -54,11 +54,6 @@
 	</table>
 
 <p>
-  <b>Children below 5:</b>
-  <span class="saved_value"><%= @booking.number_of_children_below_5_years %>
-</p>
-
-<p>
   <b>Drivers:</b>
   <span class="saved_value"><%= @booking.number_of_drivers %>
 </p>
@@ -71,11 +66,6 @@
 <%= hidden_p_unless(@booking.guests_arriving_from != "") do %>
   <b>Guests arriving from:</b>
   <span class="saved_value"><%= @booking.guests_arriving_from %>
-<% end %>
-
-<%= hidden_p_unless(@booking.guests_food_preferences != "") do %>
-  <b>Guests food preferences:</b>
-  <span class="saved_value"><%= @booking.guests_food_preferences %>
 <% end %>
 
 <% if @booking.vas_bookings.any? %>

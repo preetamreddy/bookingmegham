@@ -66,6 +66,10 @@ class RoomType < ActiveRecord::Base
 		return property.ensure_availability_before_booking
 	end
 
+	def consider_blocked_rooms_as_booked
+		return property.consider_blocked_rooms_as_booked
+	end
+
 	def availability(start_date, end_date, rooms_required)
 		availability_status = true
 		if ensure_availability_before_booking == 1

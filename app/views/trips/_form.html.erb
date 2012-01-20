@@ -61,12 +61,12 @@
 		<%= f.link_to_add "Add row", :vas_bookings %><br/>
 	<% end %>
 
-	<div class="field">
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :total_price %><br />
 		<p><span class="highlight">
 			<%= number_to_currency(@trip.total_price) %>
 		</span></p>
-	</div>	
+	<% end %>
 
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :discount %><br />
