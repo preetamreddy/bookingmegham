@@ -15,6 +15,8 @@ class Booking < ActiveRecord::Base
 
 	before_validation :update_number_of_rooms
 
+	before_create :update_guest_id, :update_property_id
+
 	before_save :initialize_attributes_when_nil,
 							:update_room_rate, :update_vas_unit_price,
 							:update_total_price
@@ -143,7 +145,7 @@ class Booking < ActiveRecord::Base
 		def ensure_room_availability
 			if new_record?
 				rooms_required = number_of_rooms
-			else
+			else	
 				rooms_required = number_of_rooms - number_of_rooms_was 
 			end
 
@@ -226,5 +228,13 @@ class Booking < ActiveRecord::Base
 
 		def delete_line_items
 			line_items.destroy_all
+		end
+
+		def update_guest_id
+			self.guest_id = trip.guest_id
+		end
+
+		def update_property_id
+			self.property_id = room_type.property_id
 		end
 end

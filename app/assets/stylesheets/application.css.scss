@@ -97,6 +97,7 @@
 	float: right;
 	display: inline-block;
 	margin: -30px 12px 0 0;
+	line-height: 28px;
 }
 
 .index_table {
@@ -243,6 +244,21 @@
 	width: 12em;
 	table {
 		border-bottom: 1px solid grey;
+		width: 13em;
+		.heading {
+			text-align: left;
+			font-size: 13px;
+		}
+		.clear {
+			text-align: right;
+			font-size: 11px;
+		}
+		th {
+			line-height: 1.2em;
+			width: 4.5em;
+			white-space: nowrap;
+			overflow: hidden;
+		}
 		td {
 			line-height: 1.2em;
 			font-family: sans-serif verdana;

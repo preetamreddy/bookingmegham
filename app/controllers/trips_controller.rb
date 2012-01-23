@@ -4,6 +4,7 @@ class TripsController < ApplicationController
   def index
 		if params[:guest_id]
 			session[:guest_id] = params[:guest_id]
+			session[:trip_id] = nil
 		end
 
 		if session[:guest_id]

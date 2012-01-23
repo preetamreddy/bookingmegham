@@ -41,22 +41,22 @@
 	</div>
   <div class="field">
     <%= f.label :check_in_date %><br />
-		<% if @booking.check_in_date %>
-    	<%= f.date_select :check_in_date, :start_year => Time.now.year, 
-				:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
-		<% else %>
+		<% if @booking.new_record? %>
     	<%= f.date_select :check_in_date, :start_year => Time.now.year, 
 				:end_year => Time.now.year + 1, :prompt => true %>
+		<% else %>
+    	<%= f.date_select :check_in_date, :start_year => Time.now.year, 
+				:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
 		<% end %>
   </div>
   <div class="field">
     <%= f.label :check_out_date %><br />
-		<% if @booking.check_out_date %>
-    	<%= f.date_select :check_out_date, :start_year => Time.now.year, 
-				:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
-		<% else %>
+		<% if @booking.new_record? %>
     	<%= f.date_select :check_out_date, :start_year => Time.now.year, 
 				:end_year => Time.now.year + 1, :prompt => true %>
+		<% else %>
+    	<%= f.date_select :check_out_date, :start_year => Time.now.year, 
+				:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
 		<% end %>
   </div>
 

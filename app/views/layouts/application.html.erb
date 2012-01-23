@@ -15,6 +15,11 @@
 		<div id="side">
 			<%= hidden_div_if(!session[:guest_id], id: 'session_info') do %>
 				<table>
+					<tr>
+						<th class="heading" colspan=2>Bookings for</th>
+						<th class="clear"><%= link_to 'Clear', 
+												guests_path(:clear => 1) %></th>
+					</tr>
 					<% if session[:guest_id] %>
 						<% guest = Guest.find(session[:guest_id]) %>
 						<%= render(guest) %>

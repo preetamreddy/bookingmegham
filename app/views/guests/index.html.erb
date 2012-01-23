@@ -1,56 +1,58 @@
-<% if session[:guest_id] %>
-	<h1>Guest <span class="highlight"><%= @guests[0].name %></span></h1>
-	<%= link_to 'List all Guests', guests_path(:guest_id => "All") %>
-<% else %>
-	<h1>Listing all Guests</h1>
-	<%= link_to 'New Guest', new_guest_path %>
-<% end %>
-
-<% if notice %>
+<% if @records_returned == nil %>
+	<h1>Search Guests</h1>
+	<div id="search">
+		<%= render 'search' %>
+	</div>
+<% elsif @records_returned == 0 %>
+	<h1>Search Guests</h1>
 	<div id="error_explanation">
-		<h2>Unable to destroy</h2>
+		<h2>Guests with matching criteria not found</h2>
 		<ul>
-			<li><%= notice %></li>
+			<li>Search again or create a new Guest</li>
 		</ul>
 	</div>
-<% end %>
-
-<% if @guests.count > 0 %>
-<table class="index_table" border="1">
-	<tr>
-    <th class="text">Name</th>
-    <th class="number">Phone number</th>
-    <th class="text">Email</th>
-    <th class="text">Resident of</th>
-    <th class="text">Other information</th>
-		<th></th>
-  </tr>
-
-<% @guests.each do |guest| %>
-	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-    <td class="text"><%= guest.name %></td>
-    <td class="number"><%= guest.phone_number %></td>
-    <td class="text"><%= guest.email_id %></td>
-    <td class="text"><%= guest.resident_of %></td>
-    <td class="comment"><%= guest.other_information %></td>
-
-    <td>
-			<%= link_to 'Edit', edit_guest_path(guest) %></br>
-			<%= link_to 'Destroy', guest, confirm: 'Are you sure?', method: :delete %></br>
-			<%= link_to 'View Trips', trips_path(:guest_id => guest.id) %>
-		</td>
-  </tr>
-<% end %>
-</table>
+	<div id="search">
+		<%= render 'search' %>
+	</div>
 <% else %>
-  <div id="error_explanation">
-		<h2>Guests have not been created</h2>
-		<ul>
-			<li>Click below for creating new Guests</li>
-		</ul>
-  </div>
+	<h1>Listing Guests</h1>
+	<div id="search">
+		<%= render 'search' %>
+	</div>
+	<% if notice %>
+		<div id="error_explanation">
+			<h2>Unable to destroy</h2>
+			<ul>
+				<li><%= notice %></li>
+			</ul>
+		</div>
+	<% end %>
+	<table class="index_table" border="1">
+		<tr>
+	    <th class="text">Name</th>
+	    <th class="number">Phone number</th>
+	    <th class="text">Email</th>
+	    <th class="text">Resident of</th>
+	    <th class="text">Other information</th>
+			<th></th>
+	  </tr>
+		<% @guests.each do |guest| %>
+			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+		    <td class="text"><%= guest.name %></td>
+		    <td class="number"><%= guest.phone_number %></td>
+		    <td class="text"><%= guest.email_id %></td>
+		    <td class="text"><%= guest.resident_of %></td>
+		    <td class="comment"><%= guest.other_information %></td>
+		    <td>
+					<%= link_to 'Edit', edit_guest_path(guest) %></br>
+					<%= link_to 'Destroy', guest, confirm: 'Are you sure?',
+									method: :delete %></br>
+					<%= link_to 'View Trips', trips_path(:guest_id => guest.id) %>
+				</td>
+		  </tr>
+		<% end %>
+	</table>
 <% end %>
-
-<%= hidden_div_if(session[:guest_id], class: "action_container") do %>
+<div class="action_container">
 	<%= link_to 'New Guest', new_guest_path %>
-<% end %>
+</div>

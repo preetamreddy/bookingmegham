@@ -2,12 +2,22 @@ class GuestsController < ApplicationController
   # GET /guests
   # GET /guests.json
   def index
-		if !session[:guest_id] || params[:guest_id] == "All"
-    	@guests = Guest.order("name ASC").all
+		if params[:clear]
 			session[:trip_id] = nil
 			session[:guest_id] = nil
+		end
+
+		if (params[:name] or params[:phone_number] or params[:email_id])
+			@guests = Guest.find(:all, :conditions => [ 
+									'name like ? and phone_number like ? and email_id like ?',
+									"%#{params[:name]}%", "%#{params[:phone_number]}%",
+									"%#{params[:email_id]}%" ])
+		end
+
+		if !@guests
+			@records_returned = nil
 		else
-			@guests = Guest.find(:all, :conditions => { :id => session[:guest_id] })
+			@records_returned = @guests.count
 		end
 
     respond_to do |format|
