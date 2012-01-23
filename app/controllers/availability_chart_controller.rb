@@ -1,10 +1,10 @@
 class AvailabilityChartController < ApplicationController
   def index
 		if params[:include_blocked_rooms] == nil
-			session[:consider_blocked_rooms_as_booked] = 1
+			@consider_blocked_rooms_as_booked = 1
 		else
-			session[:consider_blocked_rooms_as_booked] = 
-													params[:include_blocked_rooms]
+			@consider_blocked_rooms_as_booked = 
+								params[:include_blocked_rooms]
 		end
 
 		if params[:trip_id]
@@ -18,12 +18,27 @@ class AvailabilityChartController < ApplicationController
 			@chart_start_date = trip.start_date
 			@chart_end_date = trip.end_date
 		else
+			if params[:date]
+				@chart_start_date = Date.civil(params[:date][:year].to_i,
+														params[:date][:month].to_i,
+														params[:date][:day].to_i)
+			elsif params[:chart_start_date]
+				@chart_start_date = Date.strptime(params[:chart_start_date], "%Y-%m-%d")
+			else
+				@chart_start_date = Time.now.to_date
+			end
+
+			if params[:number_of_days]
+				@number_of_days = params[:number_of_days].to_i
+			else
+				@number_of_days = 10
+			end
+
 			@rooms_required = 0
-			@chart_start_date = Time.now.to_date
-			@chart_end_date = @chart_start_date + 10
+			@chart_end_date = @chart_start_date + @number_of_days
 		end
 
-		consider_blocked_rooms_as_booked = session[:consider_blocked_rooms_as_booked]
+		consider_blocked_rooms_as_booked = @consider_blocked_rooms_as_booked
 
 		@chart_date_range = (@chart_start_date...@chart_end_date)
 		@chart_date_range_short = (@chart_start_date...@chart_end_date).to_a.collect { |date| l date, :format => :short }

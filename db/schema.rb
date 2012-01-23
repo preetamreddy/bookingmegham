@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120122142016) do
+ActiveRecord::Schema.define(:version => 20120123182200) do
 
   create_table "bookings", :force => true do |t|
     t.time     "guests_arrival_time"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20120122142016) do
     t.string   "name"
     t.integer  "discount"
     t.integer  "number_of_drivers"
+    t.string   "payment_status"
   end
 
   create_table "value_added_services", :force => true do |t|

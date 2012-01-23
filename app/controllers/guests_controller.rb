@@ -8,7 +8,7 @@ class GuestsController < ApplicationController
 		end
 
 		if (params[:name] or params[:phone_number] or params[:email_id])
-			@guests = Guest.find(:all, :conditions => [ 
+			@guests = Guest.order('name, resident_of').find(:all, :conditions => [ 
 									'name like ? and phone_number like ? and email_id like ?',
 									"%#{params[:name]}%", "%#{params[:phone_number]}%",
 									"%#{params[:email_id]}%" ])

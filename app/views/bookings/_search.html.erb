@@ -1,0 +1,28 @@
+<%= form_tag trips_path, :method => "get" do %>
+	<div class="field">
+		<%= label_tag :guest_id %><br />
+		<% if session[:guest_id] %>
+			<%= select_tag(:guest_id, options_from_collection_for_select(
+						Guest.find_all_by_id(session[:guest_id]), :id, :name)) %>
+		<% else %>
+			<%= select_tag(:guest_id, options_from_collection_for_select(
+						Guest.order("name").all, :id, :name), :allow_blank => true) %>
+		<% end %>
+	</div>
+	<div class="field">
+		<%= label_tag :trip_name %><br />
+		<%= text_field_tag :trip_name, params[:trip_name] %>
+	</div>
+	<div class="field">
+		<%= label_tag :payment_status %><br />
+		<%= select_tag :payment_status,
+					options_for_select([
+						['', ''],
+						['Blocked', 'Blocked'],
+						['Partially Paid', 'Partially Paid'],
+						['Fully Paid', 'Fully Paid']], 'Blocked')  %>
+	</div>
+	<div class="action_container">
+		<%= submit_tag "Search", :name => nil %>
+	</div>
+<% end %>

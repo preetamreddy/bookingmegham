@@ -1,14 +1,31 @@
 <h1 id="avl_chart_h1">Availability Chart</h1>
-<% if session[:consider_blocked_rooms_as_booked] == 1 %>
-	<%= link_to 'Ignore blocked rooms', 
-				availability_chart_path(:include_blocked_rooms => 0) %>
-<% else %>
-	<%= link_to 'Include blocked rooms',
-				availability_chart_path(:include_blocked_rooms => 1) %>
-<% end %>
 
 <div id="new_booking"></div>
 
+<div id="search">
+	<% if !session[:trip_id] %>
+		<p>
+			<%= render 'search' %>
+		</p>
+	<% end %>
+</div>
+
 <div id="chart">
 	<%= render 'availability_chart' %>
+</div>
+<div class="action_container">
+	a<%= @consider_blocked_rooms_as_booked %>b
+	<% if @consider_blocked_rooms_as_booked == 1 %>
+		<%= link_to 'Ignore blocked rooms', 
+					availability_chart_path(
+						:include_blocked_rooms => 0,
+						:chart_start_date => @chart_start_date,
+						:number_of_days => @number_of_days) %>
+	<% else %>
+		<%= link_to 'Include blocked rooms',
+					availability_chart_path(
+						:include_blocked_rooms => 1,
+						:chart_start_date => @chart_start_date,
+						:number_of_days => @number_of_days) %>
+	<% end %>
 </div>

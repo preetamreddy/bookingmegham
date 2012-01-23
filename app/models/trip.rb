@@ -1,5 +1,5 @@
 class Trip < ActiveRecord::Base
-	PAYMENT_STATUS = [ "Blocked", "Partially Paid", "Fully Paid" ]
+	PAYMENT_STATUS = [ 'Blocked', 'Partially Paid', 'Fully Paid' ]
 
 	belongs_to :guest
 
@@ -17,10 +17,10 @@ class Trip < ActiveRecord::Base
 	accepts_nested_attributes_for :vas_bookings, :reject_if => :all_blank,
 		:allow_destroy => true
 
+	before_save :set_defaults_if_nil, :update_payment_status
+
 	before_update :update_vas_unit_price
 
-	before_save :set_defaults_if_nil
-	
 	after_save :update_line_item_status
 
 	before_destroy :ensure_not_referenced_by_booking
@@ -105,25 +105,25 @@ class Trip < ActiveRecord::Base
 		return final_price
 	end
 
-	def payment_status
-		if total_price == 0
-			payment_status = 'Blocked'
-		elsif total_price > 0 and balance_payment <= 0
-			payment_status = 'Fully Paid'
-		elsif total_price > 0 and balance_payment > 0 and paid > 0
-			payment_status = 'Partially Paid'
-		else
-			payment_status = 'Blocked'
-		end
-
-		return payment_status
-	end
-
 	def long_name
 		guest.name + ' - ' + name
 	end
 
 	private
+
+		def update_payment_status
+			if total_price == 0
+				pay_status = 'Blocked'
+			elsif total_price > 0 and balance_payment <= 0
+				pay_status = 'Fully Paid'
+			elsif total_price > 0 and balance_payment > 0 and paid > 0
+				pay_status = 'Partially Paid'
+			else
+				pay_status = 'Blocked'
+			end
+	
+			self.payment_status = pay_status
+		end
 
 		def ensure_guest_exists
 			begin
@@ -140,6 +140,7 @@ class Trip < ActiveRecord::Base
 			self.number_of_children_below_5_years ||= 0
 			self.number_of_drivers ||= 0
 			self.discount ||= 0
+			self.pay_by_date ||= Date.today + 7
 		end
 
 		def ensure_not_referenced_by_booking

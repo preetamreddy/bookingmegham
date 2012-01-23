@@ -1,56 +1,73 @@
-<h1>Listing Trips</h1>
-
-<% if notice %>
-	<div id="error_explanation">
-		<h2>Unable to delete</h2>
-		<ul>
-			<li><%= notice %></li>
-		</ul>
+<% if @records_returned == nil %>
+	<div class="search_form">
+		<fieldset>
+			<legend>Search Trips</legend>
+			<%= render 'search' %>
+		</fieldset>
 	</div>
-<% end %>
+<% elsif @records_returned == 0 %>
+	<div class="search_form">
+		<fieldset>
+			<legend>Search Trips</legend>
 
-<% if @trips.count > 0 %>
-<table class="index_table" border="1">
-  <tr>
-    <th class="text">Guest</th>
-    <th class="text">Trip</th>
-    <th class="text">Rooms</th>
-    <th class="number">Price</th>
-		<th class="number">Payment</th>
-    <th class="text">Comments</th>
-    <th></th>
-  </tr>
+		 	<div id="error_explanation">
+				<h2>Trips with matching criteria not found</h2>
+				<ul>
+					<li>Search again or create a new Trip</li>
+				</ul>
+			</div>
 
-	<% if @trips %>
+			<%= render 'search' %>
+		</fieldset>
+	</div>
+<% else %>	
+	<h1>Listing Trips</h1>
+
+	<% if notice %>
+		<div id="error_explanation">
+			<h2>Unable to delete</h2>
+			<ul>
+				<li><%= notice %></li>
+			</ul>
+		</div>
+	<% end %>
+
+	<table class="index_table" border="1">
+	  <tr>
+	    <th class="text">Guest</th>
+	    <th class="text">Trip</th>
+	    <th class="text">Rooms</th>
+	    <th class="number">Price</th>
+			<th class="number">Payment</th>
+	    <th class="text">Comments</th>
+	    <th></th>
+	  </tr>
+	
 		<% @trips.each do |trip| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-	    	<td class="text">
+		   	<td class="text">
 					<%= trip.guest.name %><br/>
 					<%= trip.guest.phone_number %>
 				</td>
-
-		    <td class="text">
+			  <td class="text">
 					<%= trip.name %><br/>
-		    	<%= l trip.start_date %> to <%= l trip.end_date %>
+			   	<%= l trip.start_date %> to <%= l trip.end_date %>
 				</td>
-
-		    <td class="text">
+			  <td class="text">
 					<% trip.rooms.each do |room| %>
 						<%= pluralize(room.number_of_rooms, room.occupancy) %> @ 
-							<%= room.number_of_adults %>
-							<%= (" + " + room.number_of_children_between_5_and_12_years.to_s) if room.number_of_children_between_5_and_12_years != 0 %> / room<br/>
+						<%= room.number_of_adults %>
+						<%= (" + " + room.number_of_children_between_5_and_12_years.to_s) if room.number_of_children_between_5_and_12_years != 0 %> / room<br/>
 					<% end %>
 					Children below 5: <%= trip.number_of_children_below_5_years %><br/>
 					Drivers: <%= trip.number_of_drivers %>
 				</td>
-
-		    <td class="number">
+			  <td class="number">
 					Total: <%= number_to_currency(trip.total_price) %><br/>
 					Discount: <%= number_to_currency(trip.discount) %><br/>
 					Final: <%= number_to_currency(trip.final_price) %>
 				</td>
-
-		    <td class="number">
+			  <td class="number">
 					<%= trip.payment_status %><br/>
 					Paid: <%= number_to_currency(trip.paid) %><br/>
 					Balance: <%= number_to_currency(trip.balance_payment) %><br/>
@@ -58,27 +75,19 @@
 						Pay by: <%= l trip.pay_by_date if trip.pay_by_date %>
 					<% end %>
 				</td>
-
-		    <td class="comment"><%= trip.comments %></td>
-
-		    <td>
+			  <td class="comment"><%= trip.comments %></td>
+			  <td>
 					<%= link_to 'Show details', trip %></br>
 					<%= link_to 'Edit', edit_trip_path(trip) %></br>
-		    	<%= link_to 'Destroy', trip, confirm: 'Are you sure?', method: :delete %></br>
+			   	<%= link_to 'Destroy', trip, confirm: 'Are you sure?',
+								method: :delete %></br>
 					<%= link_to 'View Bookings', bookings_path(:trip_id => trip.id) %>
-		  </tr>
+				</td>
+			</tr>
 		<% end %>
-	<% end %>
-</table>
-<% else %>
-	<div id="error_explanation">
-		<h2>Guest doesn't have any Trips</h2>
-		<ul>
-			<li>Click below for creating Trips</li>
-		</ul>
-  </div>
+	</table>
+	<div class="action_container">
+		<%= link_to 'New Trip', new_trip_path %>
+	</div>
+	<%= link_to "Back to Search", trips_path, :class => "back_link" %>
 <% end %>
-
-<div class="action_container">
-	<%= link_to 'New Trip', new_trip_path %>
-</div>

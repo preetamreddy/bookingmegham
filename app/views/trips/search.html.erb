@@ -1,7 +1,0 @@
-<%= form_tag trips_path, :method => "get" do %>
-	<%= text_field_tag :guest_name, params[:guest_name],
-				:placeholder => "Guest name" %>
-	<%= text_field_tag :trip_name, params[:trip_name],
-				:placeholder => "Trip name" %>
-	<%= submit_tag("Search") %>
-<% end %>

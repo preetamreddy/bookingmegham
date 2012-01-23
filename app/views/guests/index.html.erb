@@ -1,24 +1,29 @@
 <% if @records_returned == nil %>
 	<h1>Search Guests</h1>
+
 	<div id="search">
 		<%= render 'search' %>
 	</div>
 <% elsif @records_returned == 0 %>
 	<h1>Search Guests</h1>
+
 	<div id="error_explanation">
 		<h2>Guests with matching criteria not found</h2>
 		<ul>
 			<li>Search again or create a new Guest</li>
 		</ul>
 	</div>
+
 	<div id="search">
 		<%= render 'search' %>
 	</div>
 <% else %>
 	<h1>Listing Guests</h1>
+
 	<div id="search">
 		<%= render 'search' %>
 	</div>
+
 	<% if notice %>
 		<div id="error_explanation">
 			<h2>Unable to destroy</h2>
@@ -27,6 +32,7 @@
 			</ul>
 		</div>
 	<% end %>
+
 	<table class="index_table" border="1">
 		<tr>
 	    <th class="text">Name</th>
