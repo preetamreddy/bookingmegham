@@ -35,4 +35,18 @@
 		text-align: right;
 		color: green
 	}
+
+	.heading {
+		padding: 0;
+		margin: 0;
+
+		h1 {
+			margin-bottom: 0;
+		}
+	}
+	
+	.avl_chart_link {
+		font-size: 14px;
+		vertical-align: bottom;
+	}
 }

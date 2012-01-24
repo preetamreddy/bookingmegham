@@ -17,7 +17,7 @@ class Trip < ActiveRecord::Base
 	accepts_nested_attributes_for :vas_bookings, :reject_if => :all_blank,
 		:allow_destroy => true
 
-	before_save :set_defaults_if_nil, :update_payment_status
+	before_save :set_defaults_if_nil, :update_payment_status, :update_pay_by_date
 
 	before_update :update_vas_unit_price
 
@@ -123,6 +123,12 @@ class Trip < ActiveRecord::Base
 			end
 	
 			self.payment_status = pay_status
+		end
+
+		def update_pay_by_date
+			if payment_status == 'Fully Paid'
+				self.pay_by_date = nil
+			end
 		end
 
 		def ensure_guest_exists

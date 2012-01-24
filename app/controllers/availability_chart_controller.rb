@@ -1,10 +1,10 @@
 class AvailabilityChartController < ApplicationController
   def index
-		if params[:include_blocked_rooms] == nil
+		if !params[:consider_blocked_rooms_as_booked]
 			@consider_blocked_rooms_as_booked = 1
-		else
+		else 
 			@consider_blocked_rooms_as_booked = 
-								params[:include_blocked_rooms]
+					params[:consider_blocked_rooms_as_booked].to_i
 		end
 
 		if params[:trip_id]
@@ -18,10 +18,11 @@ class AvailabilityChartController < ApplicationController
 			@chart_start_date = trip.start_date
 			@chart_end_date = trip.end_date
 		else
-			if params[:date]
-				@chart_start_date = Date.civil(params[:date][:year].to_i,
-														params[:date][:month].to_i,
-														params[:date][:day].to_i)
+			if params[:chart_start_date_arr]
+				@chart_start_date = Date.civil(
+														params[:chart_start_date_arr][:year].to_i,
+														params[:chart_start_date_arr][:month].to_i,
+														params[:chart_start_date_arr][:day].to_i)
 			elsif params[:chart_start_date]
 				@chart_start_date = Date.strptime(params[:chart_start_date], "%Y-%m-%d")
 			else
