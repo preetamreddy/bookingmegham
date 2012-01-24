@@ -12,13 +12,11 @@ class GuestsController < ApplicationController
 									'name like ? and phone_number like ? and email_id like ?',
 									"%#{params[:name]}%", "%#{params[:phone_number]}%",
 									"%#{params[:email_id]}%" ])
+		else
+			@guests = Guest.order('name, resident_of').find(:all)
 		end
 
-		if !@guests
-			@records_returned = nil
-		else
-			@records_returned = @guests.count
-		end
+		@records_returned = @guests.count
 
     respond_to do |format|
       format.html # index.html.erb

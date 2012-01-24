@@ -8,27 +8,22 @@ class TripsController < ApplicationController
 		end
 
 		if session[:guest_id]
-			@trips = Trip.order('start_date DESC, end_date DESC').
-									find(:all, :conditions => [
-										'guest_id = ?',
-										session[:guest_id] ])
+			@trips = Trip.order("start_date DESC, end_date DESC").find_all_by_guest_id(session[:guest_id])
 		else
-			if (params[:payment_status] or params[:pay_by_date])
-				pay_by_date = Date.civil(params[:pay_by_date][:year].to_i,
-												params[:pay_by_date][:month].to_i,
-												params[:pay_by_date][:day].to_i)
-				@trips = Trip.order('pay_by_date ASC, start_date DESC, end_date DESC').
-										find(:all, :conditions => [
-											'payment_status like ? and pay_by_date < ?',
-											"%#{params[:payment_status]}%", pay_by_date ])
+			if params[:payment_status]
+    		@trips = Trip.order("pay_by_date ASC, start_date DESC, end_date DESC").
+									find_all_by_payment_status(params[:payment_status])
+			elsif params[:payment_overdue]
+    		@trips = Trip.order('pay_by_date ASC, start_date DESC, end_date DESC').
+									find(:all, :conditions => [
+										'payment_status != ? and pay_by_date < ?',
+										'Fully Paid', Date.today ])
+			else
+    		@trips = Trip.order("start_date DESC, end_date DESC").all
 			end
 		end
 
-		if !@trips
-			@records_returned = nil
-		else
-			@records_returned = @trips.count
-		end
+		@records_returned = @trips.count
 
     respond_to do |format|
       format.html # index.html.erb

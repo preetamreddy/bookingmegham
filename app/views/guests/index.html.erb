@@ -1,29 +1,17 @@
-<% if @records_returned == nil %>
-	<h1>Search Guests</h1>
+<h1>Listing Guests</h1>
 
-	<div id="search">
-		<%= render 'search' %>
-	</div>
-<% elsif @records_returned == 0 %>
-	<h1>Search Guests</h1>
+<div id="search">
+	<%= render 'search' %>
+</div>
 
+<% if @records_returned == 0 %>
 	<div id="error_explanation">
-		<h2>Guests with matching criteria not found</h2>
+		<h2>Guests not found</h2>
 		<ul>
-			<li>Search again or create a new Guest</li>
+			<li>Change tour search or click below to create a new Guest</li>
 		</ul>
 	</div>
-
-	<div id="search">
-		<%= render 'search' %>
-	</div>
 <% else %>
-	<h1>Listing Guests</h1>
-
-	<div id="search">
-		<%= render 'search' %>
-	</div>
-
 	<% if notice %>
 		<div id="error_explanation">
 			<h2>Unable to destroy</h2>

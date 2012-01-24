@@ -74,6 +74,13 @@
 	<% end %>
 
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+    <%= f.label :final_price %><br />
+		<p><span class="highlight">
+			<%= number_to_currency(@trip.final_price) %>
+		</span></p>
+	<% end %>
+
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
 		<%= f.label :payments %>
 	<% end %>
 

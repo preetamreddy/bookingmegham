@@ -7,16 +7,53 @@ class BookingsController < ApplicationController
 			session[:guest_id] = Trip.find(session[:trip_id]).guest_id
 		end
 			
-		if session[:trip_id]
-			@bookings = Booking.order("check_in_date, check_out_date").find_all_by_trip_id(session[:trip_id])
+		if params[:property_id]
+			@property_id = params[:property_id].to_i
 		else
-			if session[:guest_id]
-				trips = Trip.select("id").find_all_by_guest_id(session[:guest_id])
-				@bookings = Booking.order("check_in_date, check_out_date").find_all_by_trip_id(trips)
+			@property_id = 0
+		end
+
+		if params[:check_in_date_first]
+			@check_in_date_first = Date.civil(
+															params[:check_in_date_first][:year].to_i,
+															params[:check_in_date_first][:month].to_i,
+															params[:check_in_date_first][:day].to_i)
+		else
+			@check_in_date_first = Date.today
+		end
+
+		if params[:number_of_days]
+			@number_of_days = params[:number_of_days].to_i
+		else
+			@number_of_days = 7
+		end
+
+		@check_in_date_last = @check_in_date_first + @number_of_days
+
+		if session[:trip_id]
+			@bookings = Booking.order("check_in_date DESC, check_out_date DESC").
+										find_all_by_trip_id(session[:trip_id])
+		elsif session[:guest_id]
+			trips = Trip.select("id").find_all_by_guest_id(session[:guest_id])
+			@bookings = Booking.order("check_in_date DESC, check_out_date DESC").
+										find_all_by_trip_id(trips)
+		else
+			if @property_id > 0
+				@bookings = Booking.order("check_in_date ASC, check_out_date ASC").
+											find(:all, :conditions => [
+												'property_id = ? and check_in_date >= ? and
+												check_in_date < ?',
+												@property_id, @check_in_date_first,
+												@check_in_date_last ])
 			else
-				@bookings = Booking.order("check_in_date, check_out_date").all
+				@bookings = Booking.order("check_in_date ASC, check_out_date ASC").
+											find(:all, :conditions => [
+												'check_in_date >= ? and check_in_date < ?',
+												@check_in_date_first, @check_in_date_last ])
 			end
 		end
+
+		@records_returned = @bookings.count
 
     respond_to do |format|
       format.html # index.html.erb

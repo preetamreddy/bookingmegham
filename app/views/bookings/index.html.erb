@@ -1,72 +1,79 @@
 <h1>Listing Bookings</h1>
 
-<% if @bookings.count > 0 %>
-<table class="index_table" border="1">
-	<tr>
-		<th class="text">Guest</th>
-		<th class="text">Rooms</th>
-		<th class="text">The Team</th>
-		<th class="text">Arriving from</th>
-		<th class="number">Total price</th>
-		<th class="text">Food preferences</th>
-		<th class="text">Comments</th>
-		<th></th>
-	</tr>
-
-	<% @bookings.each do |booking| %>
-  <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-
-    <td class="text">
-			<%= booking.trip.guest.name %><br/>
-    	<%= booking.trip.guest.phone_number %>
-		</td>
-
-    <td class="text">
-    	<%= booking.room_type.property.name %></br>
-      <%= pluralize(booking.number_of_rooms, booking.room_type.room_type) %></br>
-    	<%= l booking.check_in_date, :format => :short %> to <%= l booking.check_out_date, :format => :short %>
-		</td>
-
-    <td class="text">
-			Adults: <%= booking.number_of_adults %><br/>
-    	Children (btw 5 & 12): <%= booking.number_of_children_between_5_and_12_years %><br/>
-    	Children below 5: <%= booking.number_of_children_below_5_years %><br/>
-			Drivers: <%= booking.number_of_drivers %>
-		</td>
-
-    <td class="text">
-    	<%= booking.guests_arriving_from %><br/>
-			<%= l booking.guests_arrival_time, :format => :short if booking.guests_arrival_time %>
-		</td>
-
-    <td class="number">
-			<% if booking.total_price != 0 %>
-				<%= number_to_currency(booking.total_price) %>
-			<% end %>
-		</td>
-
-    <td class="text"><%= booking.food_preferences %></td>
-
-    <td class="comment"><%= booking.comments %></td>
-
-    <td class='link'>
-			<%= link_to 'Show details', booking %><br/>
-    	<%= link_to 'Edit', edit_booking_path(booking) %><br/>
-    	<%= link_to 'Destroy', booking, confirm: 'Are you sure?', method: :delete %>
-		</td>
-  </tr>
-	<% end %>
-</table>
-<% else %>
-	<div id="error_explanation">
-		<h2>Guest doesn't have any Bookings for this trip</h2>
-		<ul>
-			<li>Click below for creating Bookings</li>
-		</ul>
+<% if !session[:guest_id] %>
+	<div id="search">
+		<%= render 'search' %>
 	</div>
 <% end %>
 
-<div class="action_container">
-	<%= link_to 'New Booking', new_booking_path %> |
-	<%= link_to 'Availability Chart', availability_chart_path %>
-</div>
+<% if @records_returned == 0 %>
+	<div id="error_explanation">
+		<h2>Bookings not found</h2>
+		<ul>
+			<% if session[:trip_id] %>
+				<li>Click below to create a new Booking</li>
+			<% else %>
+				<li>Change your search conditions</li>
+			<% end %>
+		</ul>
+	</div>
+<% else %>	
+	<table class="index_table" border="1">
+		<tr>
+			<th class="text">Guest</th>
+			<th class="text">Rooms</th>
+			<th class="text">The Team</th>
+			<th class="text">Arriving from</th>
+			<th class="number">Total price</th>
+			<th class="text">Food preferences</th>
+			<th class="text">Comments</th>
+			<th></th>
+		</tr>
+	
+		<% @bookings.each do |booking| %>
+		  <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+		    <td class="text">
+					<%= booking.trip.guest.name %><br/>
+		    	<%= booking.trip.guest.phone_number %>
+				</td>
+		    <td class="text">
+		    	<%= booking.room_type.property.name %></br>
+		      <%= pluralize(booking.number_of_rooms, 
+								booking.room_type.room_type) %></br>
+		    	<%= l booking.check_in_date, :format => :short %> to <%= l booking.check_out_date, :format => :short %>
+				</td>
+		    <td class="text">
+					Adults: <%= booking.number_of_adults %><br/>
+		    	Children (btw 5 & 12): <%= booking.number_of_children_between_5_and_12_years %><br/>
+		    	Children below 5: <%= booking.number_of_children_below_5_years %><br/>
+					Drivers: <%= booking.number_of_drivers %>
+				</td>
+		    <td class="text">
+		    	<%= booking.guests_arriving_from %><br/>
+					<%= l booking.guests_arrival_time, :format => :short if booking.guests_arrival_time %>
+				</td>
+		    <td class="number">
+					<% if booking.total_price != 0 %>
+						<%= number_to_currency(booking.total_price) %>
+					<% end %>
+				</td>
+		    <td class="text"><%= booking.food_preferences %></td>
+		    <td class="comment"><%= booking.comments %></td>
+		
+		    <td class='link'>
+					<%= link_to 'Show details', booking %><br/>
+		    	<%= link_to 'Edit', edit_booking_path(booking) %><br/>
+		    	<%= link_to 'Destroy', booking, confirm: 'Are you sure?', 
+								method: :delete %>
+				</td>
+		  </tr>
+		<% end %>
+	</table>
+<% end %>
+
+<% if session[:trip_id] %>
+	<div class="action_container">
+		<%= link_to 'New Booking', new_booking_path %>
+		<%= link_to 'Availability Chart', availability_chart_path %>
+	</div>
+<% end %>
