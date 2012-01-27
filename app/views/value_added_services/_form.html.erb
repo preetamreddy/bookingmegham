@@ -15,7 +15,7 @@
     <%= f.label :property_id %><br />
 		<% if @value_added_service.new_record? %>
     	<%= f.collection_select(:property_id, Property.order("name").find_all,
-																:id, :name) %>
+																:id, :name, { :include_blank => true } ) %>
 		<% else %>
 			<% if @value_added_service.property_id %>
 				<%= f.collection_select(:property_id, 
