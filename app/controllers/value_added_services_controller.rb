@@ -25,6 +25,7 @@ class ValueAddedServicesController < ApplicationController
   # GET /value_added_services/new.json
   def new
     @value_added_service = ValueAddedService.new
+		@value_added_service.vas_prices.build
 
     respond_to do |format|
       format.html # new.html.erb

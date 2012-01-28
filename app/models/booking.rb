@@ -89,7 +89,14 @@ class Booking < ActiveRecord::Base
 		if vas_bookings.any?
 			vas_bookings.each do |vas_booking|
 				vas_booking.unit_price = ValueAddedService.unit_price(
-																		vas_booking.value_added_service_id)
+																		vas_booking.value_added_service_id,
+																		vas_booking.number_of_people)
+				if vas_booking.unit_price == 0
+					errors.add(:base, "Could not create Trip as price for 
+						'#{vas_booking.value_added_service.name}' for 
+						#{vas_booking.number_of_people} participant was not found")
+					return false
+				end
 			end
 		end
 	end

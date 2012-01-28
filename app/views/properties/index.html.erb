@@ -37,14 +37,14 @@
     <td class="number"><%= number_to_currency(property.price_for_children_between_5_and_12_years) %></td>
     <td class="number"><%= number_to_currency(property.price_for_triple_occupancy) %></td>
     <td class="number"><%= number_to_currency(property.price_for_driver) %></td>
-    <td class="number">
+    <td class="text">
 			<% if property.ensure_availability_before_booking == 1 %>
 				Yes
 			<% else %>
 				No
 			<% end %>
 		</td>
-    <td class="number">
+    <td class="text">
 			<% if property.consider_blocked_rooms_as_booked == 1 %>
 				Yes
 			<% else %>

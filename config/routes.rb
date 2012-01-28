@@ -1,4 +1,6 @@
 Bookingmegham::Application.routes.draw do
+  resources :vas_prices
+
   resources :vas_bookings
 
   resources :value_added_services

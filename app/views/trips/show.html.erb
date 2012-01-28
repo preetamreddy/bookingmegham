@@ -53,6 +53,11 @@
   <span class="saved_value"><%= @trip.number_of_drivers %>
 </p>
 
+<p>
+  <b>Number of trekkers:</b>
+  <span class="saved_value"><%= @trip.number_of_trekkers %>
+</p>
+
 <% if @trip.vas_bookings.any? %>
 	<b>Value added services:</b>
 	<table class="nested_table">

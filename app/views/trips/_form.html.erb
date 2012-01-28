@@ -52,14 +52,14 @@
     <%= f.number_field :number_of_drivers, :min => 0 %>
 	</div>
 
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+	<div class="field">
 		<%= f.label :value_added_services %>
-	<% end %>
+	</div>
 
-	<%= hidden_div_if(@trip.new_record?, class: "nested_form") do %>
+	<div class="nested_form">
 		<%= f.fields_for :vas_bookings %>
 		<%= f.link_to_add "Add row", :vas_bookings %><br/>
-	<% end %>
+	</div>
 
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :total_price %><br />
@@ -96,10 +96,11 @@
 				:end_year => Time.now.year + 1, :prompt => true %>
 		<% end %>
 	<% end %>
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+
+	<div class="field">
     <%= f.label :food_preferences %><br />
     <%= f.text_field :food_preferences %>
-	<% end %>
+  </div>
   <div class="field">
     <%= f.label :comments %><br />
     <%= f.text_area :comments, rows: 6, cols: 50 %>

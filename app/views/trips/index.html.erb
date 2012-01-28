@@ -66,8 +66,15 @@
 						<%= room.number_of_adults %>
 						<%= (" + " + room.number_of_children_between_5_and_12_years.to_s) if room.number_of_children_between_5_and_12_years != 0 %> / room<br/>
 					<% end %>
-					Children below 5: <%= trip.number_of_children_below_5_years %><br/>
-					Drivers: <%= trip.number_of_drivers %>
+					<% if trip.number_of_children_below_5_years != 0 %>
+						Children below 5: <%= trip.number_of_children_below_5_years %><br/>
+					<% end %>
+					<% if trip.number_of_drivers != 0 %>
+						Drivers: <%= trip.number_of_drivers %>
+					<% end %>
+					<% if trip.rooms.empty? and trip.number_of_trekkers != 0 %>
+						Number of trekkers: <%= trip.number_of_trekkers %>
+					<% end %>
 				</td>
 		    <td class="number">
 					Total: <%= number_to_currency(trip.total_price) %><br/>

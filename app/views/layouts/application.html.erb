@@ -28,10 +28,18 @@
 						<% trip = Trip.find(session[:trip_id]) %>
 						<%= render(trip) %>
 						<%= render(trip.rooms) %>
-						<tr>
-							<td colspan=3><b>Itinerary</b></td>
-						</tr>
-						<%= render(trip.bookings.order('check_in_date')) %>
+						<% if trip.bookings.any? %>
+							<tr>
+								<td colspan=3><b>Itinerary</b></td>
+							</tr>
+							<%= render(trip.bookings.order('check_in_date')) %>
+						<% end %>
+						<% if trip.vas_bookings.any? %>
+							<tr>
+								<td colspan=3><b>Value Added Services</b></td>
+							</tr>
+							<%= render(trip.vas_bookings) %>
+						<% end %>
 					<% end %>
 				</table>
 			<% end %>

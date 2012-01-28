@@ -17,9 +17,9 @@ class Trip < ActiveRecord::Base
 	accepts_nested_attributes_for :vas_bookings, :reject_if => :all_blank,
 		:allow_destroy => true
 
-	before_save :set_defaults_if_nil, :update_payment_status, :update_pay_by_date
-
-	before_update :update_vas_unit_price
+	before_save :set_defaults_if_nil, :update_vas_unit_price,
+							:update_payment_status, :update_pay_by_date,
+							:update_number_of_trekkers
 
 	after_save :update_line_item_status
 
@@ -131,6 +131,20 @@ class Trip < ActiveRecord::Base
 			end
 		end
 
+		def update_number_of_trekkers
+			trekkers = 0
+			if vas_bookings.any?
+				vas_bookings.each do |vas_booking|
+					if vas_booking.value_added_service.is_trek?
+						trekkers = vas_booking.number_of_people
+					end
+				end
+			end
+			if trekkers != 0
+				self.number_of_trekkers = trekkers
+			end
+		end
+
 		def ensure_guest_exists
 			begin
 				guest = Guest.find(guest_id)
@@ -186,7 +200,14 @@ class Trip < ActiveRecord::Base
 			if vas_bookings.any?
 				vas_bookings.each do |vas_booking|
 					vas_booking.unit_price = ValueAddedService.unit_price(
-																		vas_booking.value_added_service_id)
+																		vas_booking.value_added_service_id,
+																		vas_booking.number_of_people)
+					if !vas_booking.unit_price or vas_booking.unit_price == 0
+						errors.add(:base, "Could not create Trip as price for
+							'#{vas_booking.value_added_service.name}' and 
+							#{vas_booking.number_of_people} people was not found")
+						return false
+					end
 				end
 			end
 		end

@@ -1,4 +1,4 @@
-<%= form_for(@value_added_service) do |f| %>
+<%= nested_form_for(@value_added_service) do |f| %>
   <% if @value_added_service.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@value_added_service.errors.count, "error") %> prohibited this value_added_service from being saved:</h2>
@@ -31,17 +31,19 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :unit_price %><br />
-    <%= f.number_field :unit_price %>
+    <%= f.label :is_trek, "Is trek?" %><br />
+		<%= f.check_box :is_trek %> 
   </div>
-  <div class="field">
-    <%= f.label :minimum_people_required, "Min people required" %><br />
-    <%= f.number_field :minimum_people_required %>
-  </div>
-  <div class="field">
-    <%= f.label :maximum_people %><br />
-    <%= f.number_field :maximum_people %>
-  </div>
+
+	<div class="field">
+		<%= f.label :pricing %>
+	</div>
+
+	<div class="nested_form">
+		<%= f.fields_for :vas_prices %>
+		<%= f.link_to_add "Add row", :vas_prices %><br />
+	</div>
+
   <div class="field">
     <%= f.label :description %><br />
     <%= f.text_area :description, rows: 6 %>
