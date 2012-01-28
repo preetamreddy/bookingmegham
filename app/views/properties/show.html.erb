@@ -37,27 +37,6 @@
   <span class="saved_value"><%= @property.consider_blocked_rooms_as_booked %></span>
 </p>
 
-<% if @property.value_added_services.any? %>
-	<b>Value added services:</b>
-	<table class="nested_table">
-		<tr>
-			<th class="text">Name</th>
-			<th class="number">Unit price</th>
-			<th class="text">Description</th>
-		</tr>
-
-		<% @property.value_added_services.each do |value_added_service| %>
-			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-				<td class="text"><%= value_added_service.name %></td>
-				<td class="currency">
-					<%= number_to_currency(value_added_service.unit_price) %>
-				</td>
-				<td class="text"><%= value_added_service.description %></td>
-			</tr>
-		<% end %>
-	</table>
-<% end %>
-
 <p>
   <b>Description:</b>
   <span class="saved_value"><%= @property.description %></span>
