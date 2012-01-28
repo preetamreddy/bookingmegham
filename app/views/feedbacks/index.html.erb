@@ -1,0 +1,43 @@
+<h1>Listing feedbacks</h1>
+
+<% if notice %>
+	<div id="error_explanation">
+		<h2>Unable to destroy</h2>
+		<ul>
+			<li><%= notice %></li>
+		</ul>
+	</div>
+<% end %>
+
+<% if @feedbacks.count > 0 %>
+	<table class="index_table" border="1">
+	  <tr>
+	    <th class="text">Model</th>
+	    <th class="text">View</th>
+	    <th class="text">Defect</th>
+	    <th class="text">Suggestion</th>
+	    <th class="text">Status</th>
+	    <th></th>
+	  </tr>
+	
+		<% @feedbacks.each do |feedback| %>
+		  <tr>
+		    <td class="text"><%= feedback.model %></td>
+		    <td class="text"><%= feedback.view %></td>
+		    <td class="text"><%= feedback.defect %></td>
+		   	<td class="text"><%= feedback.suggestion %></td>
+		    <td class="text"><%= feedback.status %></td>
+		    <td>
+					<%= link_to 'Show Details', feedback %>
+		    	<%= link_to 'Edit', edit_feedback_path(feedback) %>
+		    	<%= link_to 'Destroy', feedback, confirm: 'Are you sure?', 
+								method: :delete %>
+				</td>
+		  </tr>
+		<% end %>
+	</table>
+<% end %>
+
+<div class="action_container">
+	<%= link_to 'New Feedback', new_feedback_path %>
+</div>

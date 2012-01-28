@@ -1,0 +1,49 @@
+<%= form_for(@feedback) do |f| %>
+  <% if @feedback.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@feedback.errors.count, "error") %> prohibited this feedback from being saved:</h2>
+
+      <ul>
+      <% @feedback.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :model %><br />
+    <%= f.select(:model, options_for_select([['', ''],
+													['Property', 'Property'],
+													['Room Type', 'Room Type'],
+													['Value Added Service', 'Value Added Service'],
+													['Guest', 'Guest'],
+													['Trip', 'Trip'],
+													['Booking', 'Booking'],
+													['Availability Chart', 'Availability Chart'],
+													['Feedback', 'Feedback']])) %>
+  </div>
+  <div class="field">
+    <%= f.label :view %><br />
+		<%= f.select(:view, options_for_select([['', ''],
+													['Listing', 'Listing'],
+													['Edit', 'Edit'],
+													['Show Details', 'Show Details'],
+													['New', 'New']])) %>
+  </div>
+  <div class="field">
+    <%= f.label :defect %><br />
+    <%= f.text_area :defect, :rows => 6 %>
+  </div>
+  <div class="field">
+    <%= f.label :suggestion %><br />
+    <%= f.text_area :suggestion, :rows => 6 %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br />
+    <%= f.text_field :status %>
+  </div>
+  <div class="action_container">
+    <%= f.submit %>
+  </div>
+<% end %>

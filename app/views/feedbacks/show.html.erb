@@ -1,0 +1,35 @@
+<p id="notice"><span class="saved_value"><%= notice %></span></p>
+<h1>Feedback details</h1>
+
+<div class="show_saved_record">
+<p>
+  <b>Model:</b>
+  <span class="saved_value"><%= @feedback.model %></span>
+</p>
+
+<p>
+  <b>View:</b>
+  <span class="saved_value"><%= @feedback.view %></span>
+</p>
+
+<% if @feedback.defect %>
+<p>
+  <b>Defect:</b>
+  <span class="saved_value"><%= @feedback.defect %></span>
+</p>
+<% end %>
+
+<% if @feedback.suggestion %>
+<p>
+  <b>Suggestion:</b>
+  <span class="saved_value"><%= @feedback.suggestion %></span>
+</p>
+<% end %>
+
+<p>
+  <b>Status:</b>
+  <span class="saved_value"><%= @feedback.status %></span>
+</p>
+</div>
+
+<%= link_to 'Back to Feedback Listing', feedbacks_path, :class => "back_link" %>
