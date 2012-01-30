@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120128180812) do
+ActiveRecord::Schema.define(:version => 20120130105836) do
 
   create_table "bookings", :force => true do |t|
     t.time     "guests_arrival_time"
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(:version => 20120128180812) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "priority"
+    t.string   "criticality"
   end
 
   create_table "guests", :force => true do |t|

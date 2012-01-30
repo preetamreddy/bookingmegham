@@ -12,6 +12,11 @@
   <span class="saved_value"><%= @feedback.view %></span>
 </p>
 
+<p>
+  <b>Criticality:</b>
+  <span class="saved_value"><%= @feedback.criticality %></span>
+</p>
+
 <% if @feedback.defect %>
 <p>
   <b>Defect:</b>
@@ -26,10 +31,20 @@
 </p>
 <% end %>
 
-<p>
-  <b>Status:</b>
-  <span class="saved_value"><%= @feedback.status %></span>
-</p>
+<% if @feedback.priority %>
+	<p>
+		<b>Priority:</b>
+		<span class="saved_value"><%= @feedback.priority %></span>
+	</p>
+<% end %>
+
+<% if @feedback.status %>
+	<p>
+	  <b>Status:</b>
+	  <span class="saved_value"><%= @feedback.status %></span>
+	</p>
+<% end %>
+
 </div>
 
 <%= link_to 'Back to Feedback Listing', feedbacks_path, :class => "back_link" %>

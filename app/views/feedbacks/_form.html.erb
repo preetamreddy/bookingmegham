@@ -14,22 +14,38 @@
   <div class="field">
     <%= f.label :model %><br />
     <%= f.select(:model, options_for_select([['', ''],
+													['Availability Chart', 'Availability Chart'],
+													['Booking', 'Booking'],
+													['Feedback', 'Feedback'],
+													['Guest', 'Guest'],
 													['Property', 'Property'],
 													['Room Type', 'Room Type'],
-													['Value Added Service', 'Value Added Service'],
-													['Guest', 'Guest'],
 													['Trip', 'Trip'],
-													['Booking', 'Booking'],
-													['Availability Chart', 'Availability Chart'],
-													['Feedback', 'Feedback']])) %>
+													['Value Added Service', 'Value Added Service']],
+													@feedback.model)) %>
   </div>
   <div class="field">
     <%= f.label :view %><br />
 		<%= f.select(:view, options_for_select([['', ''],
-													['Listing', 'Listing'],
 													['Edit', 'Edit'],
-													['Show Details', 'Show Details'],
-													['New', 'New']])) %>
+													['Listing', 'Listing'],
+													['New', 'New'],
+													['Show Details', 'Show Details']],
+													@feedback.view)) %>
+  </div>
+  <div class="field">
+    <%= f.label :criticality %><br />
+		<%= f.select(:criticality, options_for_select([['', ''],
+													['Suggestion for Improvement', 
+															'9 - Suggestion for Improvement'],
+													['Eyesore', '4 - Eyesore'],
+													['Unable to use a non-critical feature', 
+															'3 - Unable to use a non-critical feature'],
+													['Showstopper - There is a Work-around', 
+															'2 - Showstopper - there is a Work-around'],
+													['Showstopper - No Work-around', 
+															'1 - Showstopper - No Work-around']],
+													@feedback.criticality)) %>
   </div>
   <div class="field">
     <%= f.label :defect %><br />
@@ -39,10 +55,30 @@
     <%= f.label :suggestion %><br />
     <%= f.text_area :suggestion, :rows => 6 %>
   </div>
-  <div class="field">
-    <%= f.label :status %><br />
-    <%= f.text_field :status %>
-  </div>
+
+	<% if !@feedback.new_record? %>
+	  <div class="field">
+	    <%= f.label :priority %><br />
+			<%= f.select(:priority, options_for_select([['', ''],
+														['Immediate', '1 - Immediate'],
+														['Next scheduled Patch', 
+																'2 - Next scheduled Patch'],
+														['Next scheduled Release', 
+																'3 - Next scheduled Release'],
+														['Yet to be scheduled', 
+																'4 - Yet to be scheduled']],
+														@feedback.priority)) %>
+	  </div>
+	  <div class="field">
+	    <%= f.label :status %><br />
+			<%= f.select(:status, options_for_select([['', ''],
+													['Reported', '1 - Reported'],
+													['Scheduled', '2 - Scheduled'],
+													['Fixed', '3 - Fixed'],
+													['Released', '4 - Released']],
+													@feedback.status)) %>
+	  </div>
+	<% end %>
   <div class="action_container">
     <%= f.submit %>
   </div>

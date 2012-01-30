@@ -2,7 +2,8 @@ class FeedbacksController < ApplicationController
   # GET /feedbacks
   # GET /feedbacks.json
   def index
-    @feedbacks = Feedback.all
+    @feedbacks = Feedback.order('criticality, priority, status, model, view').
+									all
 
     respond_to do |format|
       format.html # index.html.erb
