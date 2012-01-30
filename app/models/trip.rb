@@ -17,6 +17,8 @@ class Trip < ActiveRecord::Base
 	accepts_nested_attributes_for :vas_bookings, :reject_if => :all_blank,
 		:allow_destroy => true
 
+	before_validation :update_end_date
+
 	before_save :set_defaults_if_nil, :update_vas_unit_price,
 							:update_payment_status, :update_pay_by_date,
 							:update_number_of_trekkers
@@ -25,9 +27,10 @@ class Trip < ActiveRecord::Base
 
 	before_destroy :ensure_not_referenced_by_booking
 
-	validates :guest_id, :name, :start_date, :end_date, presence: true
+	validates :guest_id, :name, :start_date, :end_date, :number_of_days, 
+						presence: true
 
-	validates_numericality_of :guest_id,
+	validates_numericality_of :guest_id, :number_of_days,
 						only_integer: true, greater_than: 0, allow_nil: true,
 						message: "should be a number greater than 0"
 
@@ -110,6 +113,10 @@ class Trip < ActiveRecord::Base
 	end
 
 	private
+
+		def update_end_date
+			self.end_date = start_date + number_of_days - 1
+		end
 
 		def update_payment_status
 			if total_price == 0

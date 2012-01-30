@@ -28,11 +28,16 @@
     <%= f.date_select :start_date, :start_year => Time.now.year,
 			:end_year => Time.now.year + 1, :prompt => true %>
   </div>
-  <div class="field">
+	<div class="field">
+    <%= f.label :number_of_days, "Days" %><br />
+    <%= f.number_field :number_of_days, :min => 1 %>
+	</div>
+
+	<%= hidden_div_if(true, class: "field") do %>
     <%= f.label :end_date %><br />
     <%= f.date_select :end_date, :start_year => Time.now.year,
 			:end_year => Time.now.year + 1, :prompt => true %>
-  </div>
+	<% end %>
 
 	<div class="field">
 		<%= f.label :rooms %>

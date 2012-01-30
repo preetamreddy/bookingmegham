@@ -58,7 +58,8 @@
 				</td>
 		    <td class="text">
 					<%= trip.name %><br/>
-		    	<%= l trip.start_date %> to <%= l trip.end_date %>
+		    	<%= l trip.start_date %> to <%= l trip.end_date %><br/>
+					(<%= trip.number_of_days %> days)
 				</td>
 		    <td class="text">
 					<% trip.rooms.each do |room| %>

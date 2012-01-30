@@ -14,12 +14,17 @@
 
 <p>
   <b>Start date:</b>
-  <span class="saved_value"><%= l @trip.start_date if @trip.start_date %>
+  <span class="saved_value"><%= l @trip.start_date %>
 </p>
 
 <p>
   <b>End date:</b>
-  <span class="saved_value"><%= l @trip.end_date if @trip.end_date %>
+  <span class="saved_value"><%= l @trip.end_date %>
+</p>
+
+<p>
+  <b>Days:</b>
+  <span class="saved_value"><%= @trip.number_of_days %>
 </p>
 
 <% if @trip.rooms.any? %>	
