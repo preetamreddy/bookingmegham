@@ -40,3 +40,5 @@ gem 'vestal_versions', :git => 'git://github.com/adamcooper/vestal_versions'
 
 # For nested forms, especially Trip and Bookings
 gem "nested_form", :git => "git://github.com/ryanb/nested_form.git"
+
+gem 'will_paginate', '~> 3.0'

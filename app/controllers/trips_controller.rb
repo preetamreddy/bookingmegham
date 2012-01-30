@@ -8,18 +8,23 @@ class TripsController < ApplicationController
 		end
 
 		if session[:guest_id]
-			@trips = Trip.order("start_date DESC, end_date DESC").find_all_by_guest_id(session[:guest_id])
+			@trips = Trip.paginate(page: params[:page], per_page: 5).
+								order("start_date DESC, end_date DESC").
+								find_all_by_guest_id(session[:guest_id])
 		else
 			if params[:payment_status]
-    		@trips = Trip.order("pay_by_date ASC, start_date DESC, end_date DESC").
+    		@trips = Trip.paginate(page: params[:page], per_page: 5).
+									order("pay_by_date ASC, start_date DESC, end_date DESC").
 									find_all_by_payment_status(params[:payment_status])
 			elsif params[:payment_overdue]
-    		@trips = Trip.order('pay_by_date ASC, start_date DESC, end_date DESC').
+    		@trips = Trip.paginate(page: params[:page], per_page: 5).
+									order('pay_by_date ASC, start_date DESC, end_date DESC').
 									find(:all, :conditions => [
 										'payment_status != ? and pay_by_date < ?',
 										'Fully Paid', Date.today ])
 			else
-    		@trips = Trip.order("start_date DESC, end_date DESC").all
+    		@trips = Trip.paginate(page: params[:page], per_page: 5).
+									order("start_date DESC, end_date DESC").all
 			end
 		end
 
