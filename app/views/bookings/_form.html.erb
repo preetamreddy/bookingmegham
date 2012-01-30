@@ -49,7 +49,16 @@
 				:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
 		<% end %>
   </div>
-  <div class="field">
+	<div class="field">
+		<%= f.label :number_of_days, "Nights" %>
+		<% if @booking.new_record? %>
+			<%= f.number_field :number_of_nights, min: 1 %>
+		<% else %>
+			<%= f.number_field :number_of_nights, :disabled => true %>
+		<% end %>
+	</div>
+
+	<%= hidden_div_if(true, class: "field") do %>
     <%= f.label :check_out_date %><br />
 		<% if @booking.new_record? %>
     	<%= f.date_select :check_out_date, :start_year => Time.now.year, 
@@ -58,7 +67,7 @@
     	<%= f.date_select :check_out_date, :start_year => Time.now.year, 
 				:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
 		<% end %>
-  </div>
+	<% end %>
 
 	<div class="field">
 		<%= f.label :rooms %>

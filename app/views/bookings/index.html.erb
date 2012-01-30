@@ -40,7 +40,8 @@
 		    	<%= booking.room_type.property.name %></br>
 		      <%= pluralize(booking.number_of_rooms, 
 								booking.room_type.room_type) %></br>
-		    	<%= l booking.check_in_date, :format => :short %> to <%= l booking.check_out_date, :format => :short %>
+		    	<%= l booking.check_in_date, :format => :short %> to <%= l booking.check_out_date, :format => :short %><br/>
+					(<%= booking.number_of_nights %> nights)
 				</td>
 		    <td class="text">
 					Adults: <%= booking.number_of_adults %><br/>

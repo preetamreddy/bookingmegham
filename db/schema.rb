@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120130115055) do
+ActiveRecord::Schema.define(:version => 20120130133934) do
 
   create_table "bookings", :force => true do |t|
     t.time     "guests_arrival_time"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20120130115055) do
     t.integer  "number_of_rooms"
     t.integer  "guest_id"
     t.integer  "property_id"
+    t.integer  "number_of_nights"
   end
 
   create_table "feedbacks", :force => true do |t|

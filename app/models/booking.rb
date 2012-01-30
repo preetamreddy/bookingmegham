@@ -13,7 +13,7 @@ class Booking < ActiveRecord::Base
 
 	has_many :line_items, dependent: :destroy
 
-	before_validation :update_number_of_rooms
+	before_validation :update_number_of_rooms, :update_check_out_date
 
 	before_create :update_guest_id, :update_property_id
 
@@ -148,6 +148,10 @@ class Booking < ActiveRecord::Base
 	end
 
 	private
+
+		def update_check_out_date
+			self.check_out_date = check_in_date + number_of_nights
+		end
 
 		def ensure_room_availability
 			if new_record?

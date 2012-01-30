@@ -24,12 +24,17 @@
 
 <p>
   <b>Check in date:</b>
-  <span class="saved_value"><%= l @booking.check_in_date if @booking.check_in_date %>
+  <span class="saved_value"><%= l @booking.check_in_date %>
+</p>
+
+<p>
+  <b>Nights:</b>
+  <span class="saved_value"><%= @booking.number_of_nights %>
 </p>
 
 <p>
   <b>Check out date:</b>
-  <span class="saved_value"><%= l @booking.check_out_date if @booking.check_out_date %>
+  <span class="saved_value"><%= l @booking.check_out_date %>
 </p>
 
 	<b>Rooms:</b>
