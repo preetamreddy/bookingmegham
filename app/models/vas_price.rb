@@ -1,8 +1,7 @@
 class VasPrice < ActiveRecord::Base
 	belongs_to :value_added_service
 
-	validates :value_added_service_id, :unit_price, :min_group_size,
-						:max_group_size, presence: true
+	validates :unit_price, :min_group_size, :max_group_size, presence: true
 
 	validates_numericality_of :value_added_service_id,
 						:unit_price, :min_group_size, :max_group_size,

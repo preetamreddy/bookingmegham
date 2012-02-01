@@ -10,8 +10,6 @@ class RoomType < ActiveRecord::Base
 
 	validates :property_id, :room_type, :number_of_rooms, presence: true
 	
-	validates :room_type, :uniqueness => { :case_sensitive => false }
-
 	validates_numericality_of :number_of_rooms,
 														:price_for_single_occupancy,
 														:price_for_double_occupancy,

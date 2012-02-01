@@ -36,6 +36,7 @@ class ValueAddedServicesController < ApplicationController
   # GET /value_added_services/1/edit
   def edit
     @value_added_service = ValueAddedService.find(params[:id])
+		@value_added_service.vas_prices.build
   end
 
   # POST /value_added_services
