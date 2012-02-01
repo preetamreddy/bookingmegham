@@ -1,0 +1,21 @@
+<p style="font-family:sans serif;font-size:10pt;padding:10pt 0">
+Dear <%= @trip.guest.name %>
+</p>
+<p style="font-family:sans serif;font-size:10pt;padding:10pt 0">
+Thank you for planning your holiday with Banjara Camps and Retreats. 
+As discussed, below are the details of your trip '<%= @trip.name %>'. 
+Please let us know if this meets your requirements.
+</p>
+<br/>
+<%= render :partial => "trips/trip_details",
+							:locals => { :trip => @trip } %>
+<br/>
+<% if @trip.vas_bookings.any? %>
+	<%= render :partial => "vas_bookings/vas_details",
+							:locals => { :trip => @trip } %>
+<% end %>
+<br/>
+<% if @trip.bookings.any? %>
+	<%= render :partial => "bookings/booking_details",
+							:locals => { :trip => @trip } %>
+<% end %>

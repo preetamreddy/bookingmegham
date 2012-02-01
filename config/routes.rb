@@ -1,27 +1,19 @@
 Bookingmegham::Application.routes.draw do
+	resources :trips do
+		get :email, :on => :member
+	end
+
   resources :feedbacks
-
-  resources :vas_prices
-
-  resources :vas_bookings
 
   resources :value_added_services
 
   resources :payments
-
-  get "params/index", as: 'params'
-
-  resources :rooms
 
   resources :trips
 
   resources :guests
 
   get "availability_chart/index"
-
-  get "booking_chart/index"
-
-  resources :line_items
 
   resources :room_types
 

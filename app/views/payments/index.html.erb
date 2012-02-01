@@ -3,7 +3,7 @@
 <table>
   <tr>
     <th>Trip</th>
-    <th>Date recieved</th>
+    <th>Date received</th>
     <th>Amount</th>
     <th>Details</th>
     <th></th>
@@ -14,7 +14,7 @@
 <% @payments.each do |payment| %>
   <tr>
     <td><%= payment.trip_id %></td>
-    <td><%= payment.date_recieved %></td>
+    <td><%= payment.date_received %></td>
     <td><%= payment.amount %></td>
     <td><%= payment.details %></td>
     <td><%= link_to 'Show', payment %></td>

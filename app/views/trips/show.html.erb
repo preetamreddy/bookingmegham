@@ -118,7 +118,7 @@
 		<% @trip.payments.each do |payment| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">	
 				<td class="text">
-					<%= l payment.date_recieved if payment.date_recieved %>
+					<%= l payment.date_received if payment.date_received %>
 				</td>
 				<td class="number"><%= number_to_currency(payment.amount) %></td>
 				<td class="text"><%= payment.details %></td>
@@ -150,8 +150,11 @@
 
 <div class="action_container">
 	<%= link_to 'Edit', edit_trip_path(@trip) %>
-	<%= link_to 'Check Availability', 
-				availability_chart_path(:trip_id => @trip.id) %>
+	<%= link_to 'View Bookings', bookings_path(:trip_id => @trip.id) %>
+	<%= link_to 'Email Trip details', 
+				email_trip_path(:trip_id => @trip.id, :type => 'details') %>
+	<%= link_to 'Email Payment Receipt', 
+				email_trip_path(:trip_id => @trip.id, :type => 'receipt') %>
 </div>
 
 <%= link_to 'Back to Trip Listing', trips_path, :class => "back_link" %>

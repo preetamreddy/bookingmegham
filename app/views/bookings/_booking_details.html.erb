@@ -1,0 +1,36 @@
+<table width="100%" cellpadding="5" border="1" style="border-spacing:0;border-collapse:collapse;border-color:#CFCCCA">
+	<tr>						
+		<th width="7%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">From</th>
+		<th width="7%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">To</th>
+		<th width="21%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Destination</th>
+		<th width="15%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Value Added Services</th>
+		<th width="40%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Proposed activities</th>
+		<th width="10%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Total Price</th>
+	</tr>
+	<% trip.bookings.order('check_in_date').each do |booking| %>
+		<tr>
+			<td align="left" style="font-size:10pt;padding:2px 4px"><%= l booking.check_in_date, :format => :short %></td>
+			<td align="left" style="font-size:10pt;padding:2px 4px"><%= l booking.check_out_date, :format => :short %></td>
+			<td align="left" style="font-size:10pt;padding:2px 4px">
+				<%= booking.room_type.property.name %><br/>
+				<%= pluralize(booking.number_of_rooms,
+				                booking.room_type.room_type) %>
+			</td>
+			<td align="left" style="font-size:10pt;padding:2px 4px">
+				<% if booking.vas_bookings.any? %>
+					<% booking.vas_bookings.each do |vas| %>
+						<%= vas.value_added_service.name %><br/>
+						(<%= pluralize(vas.number_of_people, 'person') %>, 
+						<%= pluralize(vas.number_of_days, 'day') %>)<br/>
+					<% end %>
+				<% end %>
+			</td>
+			<td align="left" style="font-size:10pt;padding:2px 4px;white-space:pre-wrap"><%= booking.comments %></td>
+			<td align="left" style="font-size:10pt;padding:2px 4px">
+				<% if booking.total_price != 0 %>
+					<%= number_to_currency(booking.total_price) %>
+				<% end %>
+			</td>
+		</tr>
+	<% end %>
+</table>

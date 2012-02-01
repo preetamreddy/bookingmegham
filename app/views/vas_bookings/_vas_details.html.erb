@@ -1,0 +1,24 @@
+<table cellpadding="5" border="1" style="border-spacing:0;border-collapse:collapse;border-color:#CFCCCA">
+	<tr>						
+		<th align="left" style="font-size:10pt;background:#605C59;color:#FFF">Value Added Service</th>
+		<th align="left" style="font-size:10pt;background:#605C59;color:#FFF">#</th>
+		<th align="left" style="font-size:10pt;background:#605C59;color:#FFF">Days</th>
+		<th align="left" style="font-size:10pt;background:#605C59;color:#FFF">Total Price</th>
+	</tr>
+	<% trip.vas_bookings.each do |vas| %>
+		<tr>
+			<td align="left" style="font-size:10pt;padding:2px 4px">
+				<%= vas.value_added_service.name %><br/>
+			</td>
+			<td align="left" style="font-size:10pt;padding:2px 4px">
+				<%= vas.number_of_people %>
+			</td>
+			<td align="left" style="font-size:10pt;padding:2px 4px">
+				<%= vas.number_of_days %>
+			</td>
+			<td align="left" style="font-size:10pt;padding:2px 4px">
+				<%= number_to_currency(vas.total_price) %>
+			</td>
+		</tr>
+	<% end %>
+</table>

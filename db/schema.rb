@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120130133934) do
+ActiveRecord::Schema.define(:version => 20120201133953) do
 
   create_table "bookings", :force => true do |t|
     t.time     "guests_arrival_time"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(:version => 20120130133934) do
 
   create_table "payments", :force => true do |t|
     t.integer  "trip_id"
-    t.date     "date_recieved"
+    t.date     "date_received"
     t.integer  "amount"
     t.string   "details"
     t.datetime "created_at"

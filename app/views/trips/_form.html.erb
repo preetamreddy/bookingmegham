@@ -98,7 +98,7 @@
 		<% if @trip.balance_payment > 0 %>
     	<%= f.label :pay_by_date, "Pay balance by" %><br />
     	<%= f.date_select :pay_by_date, :start_year => Time.now.year,
-				:end_year => Time.now.year + 1, :prompt => true %>
+				:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
 		<% end %>
 	<% end %>
 

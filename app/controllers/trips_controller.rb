@@ -116,4 +116,22 @@ class TripsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+	def email
+		trip = Trip.find(params[:trip_id])
+		if params[:type] == 'details'
+			TripNotifier.details(trip).deliver
+		elsif params[:type] == 'invoice'
+			TripNotifier.invoice(trip).deliver
+		elsif params[:type] == 'receipt'
+			TripNotifier.receipt(trip).deliver
+		elsif params[:type] == 'voucher'
+			TripNotifier.voucher(trip).deliver
+		end
+
+		respond_to do |format|
+			format.html { redirect_to trip, notice: 'Email was successfully sent.' }
+      format.json { render json: @trip, status: :sent, location: @trip }
+		end
+	end
 end

@@ -135,6 +135,8 @@ class Trip < ActiveRecord::Base
 		def update_pay_by_date
 			if payment_status == 'Fully Paid'
 				self.pay_by_date = nil
+			elsif payment_status == 'Partially Paid'
+				self.pay_by_date = start_date - 21
 			end
 		end
 
@@ -167,7 +169,7 @@ class Trip < ActiveRecord::Base
 			self.number_of_children_below_5_years ||= 0
 			self.number_of_drivers ||= 0
 			self.discount ||= 0
-			self.pay_by_date ||= Date.today + 7
+			self.pay_by_date ||= Date.today + 2
 		end
 
 		def ensure_not_referenced_by_booking
