@@ -19,6 +19,17 @@
     	<%= f.collection_select(:guest_id, Guest.order("name").all, :id, :name) %>
 		<% end %>
   </div>
+ 	<div class="field">
+   	<%= f.label :agency_id, "Agency" %><br />
+		<% if @trip.new_record? %>
+    	<%= f.collection_select(:agency_id, 
+						Agency.order('name').find_all, :id, :name, 
+						{ :include_blank => true }) %>
+		<% else %>
+    	<%= f.collection_select(:agency_id, 
+						Agency.order('name').find_all_by_id(@trip.agency_id), :id, :name) %>
+		<% end %>
+  </div>
   <div class="field">
     <%= f.label :name, "Trip name" %><br />
     <%= f.text_field :name, size: 30 %>
@@ -96,6 +107,10 @@
 
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
 		<% if @trip.balance_payment > 0 %>
+    	<%= f.label :balance_payment %><br />
+			<p><span class="highlight">
+				<%= number_to_currency(@trip.balance_payment) %>
+			</span></p>
     	<%= f.label :pay_by_date, "Pay balance by" %><br />
     	<%= f.date_select :pay_by_date, :start_year => Time.now.year,
 				:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
@@ -103,8 +118,16 @@
 	<% end %>
 
 	<div class="field">
+    <%= f.label :payee_name %><br />
+    <%= f.text_field :payee_name %>
+  </div>
+	<div class="field">
     <%= f.label :food_preferences %><br />
     <%= f.text_field :food_preferences %>
+  </div>
+	<div class="field">
+    <%= f.label :medical_constraints %><br />
+    <%= f.text_field :medical_constraints %>
   </div>
   <div class="field">
     <%= f.label :comments %><br />

@@ -11,7 +11,29 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120201133953) do
+ActiveRecord::Schema.define(:version => 20120205123108) do
+
+  create_table "advisors", :force => true do |t|
+    t.integer  "agency_id"
+    t.string   "name"
+    t.integer  "phone_number_1"
+    t.integer  "phone_number_2"
+    t.string   "email_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "agencies", :force => true do |t|
+    t.string   "name"
+    t.integer  "phone_number"
+    t.string   "email_id"
+    t.text     "postal_address"
+    t.string   "city"
+    t.string   "url"
+    t.text     "other_information"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "bookings", :force => true do |t|
     t.time     "guests_arrival_time"
@@ -124,6 +146,18 @@ ActiveRecord::Schema.define(:version => 20120201133953) do
     t.string   "payment_status"
     t.integer  "number_of_trekkers",               :default => 0
     t.integer  "number_of_days"
+    t.string   "payee_name"
+    t.string   "medical_constraints"
+    t.integer  "agency_id"
+    t.integer  "advisor_id"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "name"
+    t.string   "password_digest"
+    t.integer  "advisor_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "value_added_services", :force => true do |t|

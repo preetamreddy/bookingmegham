@@ -13,6 +13,13 @@
 </p>
 
 <p>
+  <b>Agency:</b>
+	<% if @trip.agency_id %>
+  	<span class="saved_value"><%= @trip.agency.name %>
+	<% end %>
+</p>
+
+<p>
   <b>Start date:</b>
   <span class="saved_value"><%= l @trip.start_date %>
 </p>
@@ -137,9 +144,19 @@
   <span class="saved_value"><%= l @trip.pay_by_date if @trip.pay_by_date %>
 <% end %>
 
+<%= hidden_p_unless(@trip.payee_name != "") do %>
+  <b>Name for Receipts:</b>
+  <span class="saved_value"><%= @trip.payee_name %>
+<% end %>
+
 <%= hidden_p_unless(@trip.food_preferences != "") do %>
   <b>Food preferences:</b>
   <span class="saved_value"><%= @trip.food_preferences %>
+<% end %>
+
+<%= hidden_p_unless(@trip.medical_constraints != "") do %>
+  <b>Medical constraints:</b>
+  <span class="saved_value"><%= @trip.medical_constraints %>
 <% end %>
 
 <p>

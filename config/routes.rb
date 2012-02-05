@@ -1,4 +1,10 @@
 Bookingmegham::Application.routes.draw do
+  resources :users
+
+  resources :advisors
+
+  resources :agencies
+
 	resources :trips do
 		get :email, :on => :member
 	end

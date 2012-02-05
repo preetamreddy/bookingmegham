@@ -87,7 +87,6 @@ class BookingsController < ApplicationController
 
 			@booking.trip_id = session[:trip_id]
 			@booking.number_of_drivers = trip.number_of_drivers
-			@booking.comments = trip.comments
 
 			@booking.add_rooms_from_trip(trip)
 		else

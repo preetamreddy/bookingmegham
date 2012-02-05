@@ -1,0 +1,39 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :advisor_id %><br />
+		<% if @user.new_record? %>
+			<%= f.collection_select(:advisor_id,
+						Advisor.order('name').find_all, :id, :name) %>
+		<% else %>
+			<%= f.collection_select(:advisor_id,
+						Advisor.find_all_by_id(@user.advisor_id), :id, :name) %>
+		<% end %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, size: 40 %>
+  </div>
+  <div class="field">
+    <%= f.label :password, "Password" %><br />
+    <%= f.password_field :password, size: 40 %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation, "Confirm" %><br />
+    <%= f.password_field :password_confirmation, size: 40 %>
+  </div>
+  <div class="action_container">
+    <%= f.submit %>
+  </div>
+<% end %>

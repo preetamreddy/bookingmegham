@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Agency:</b>
+  <%= @advisor.agency_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @advisor.name %>
+</p>
+
+<p>
+  <b>Phone number 1:</b>
+  <%= @advisor.phone_number_1 %>
+</p>
+
+<p>
+  <b>Phone number 2:</b>
+  <%= @advisor.phone_number_2 %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @advisor.email_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_advisor_path(@advisor) %> |
+<%= link_to 'Back', advisors_path %>

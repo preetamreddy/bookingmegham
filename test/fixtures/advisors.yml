@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  agency_id: 1
+  name: MyString
+  phone_number_1: 1
+  phone_number_2: 1
+  email_id: MyString
+
+two:
+  agency_id: 1
+  name: MyString
+  phone_number_1: 1
+  phone_number_2: 1
+  email_id: MyString

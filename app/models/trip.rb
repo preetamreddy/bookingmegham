@@ -3,6 +3,10 @@ class Trip < ActiveRecord::Base
 
 	belongs_to :guest
 
+	belongs_to :agency
+
+	belongs_to :advisor
+
 	has_many :rooms, dependent: :destroy
 	accepts_nested_attributes_for :rooms, :reject_if => :all_blank,
 		:allow_destroy => true
@@ -40,6 +44,16 @@ class Trip < ActiveRecord::Base
 						message: "should be a number greater than or equal to 0"
 
 	validate :ensure_guest_exists, :ensure_end_date_is_greater_than_start_date
+
+	attr_accessor :name_for_receipts
+
+	after_find do |trip|
+		if trip.payee_name != ""
+			@name_for_receipts = trip.payee_name
+		else
+			@name_for_receipts = trip.guest.name
+		end
+	end
 
 	def number_of_adults
 		if rooms.empty?
