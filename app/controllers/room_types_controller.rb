@@ -2,12 +2,18 @@ class RoomTypesController < ApplicationController
   # GET /room_types
   # GET /room_types.json
   def index
-		session[:property_id] = params[:property_id]
+		if params[:property_id]
+			session[:property_id] = params[:property_id]
+		else
+			session[:property_id] = nil
+		end	
 
 		if session[:property_id]
-			@room_types = RoomType.find_all_by_property_id(session[:property_id])
+			@room_types = RoomType.order(:price_for_double_occupancy).
+											find_all_by_property_id(session[:property_id])
 		else
-    	@room_types = RoomType.all
+    	@room_types = RoomType.order('property_id, price_for_double_occupancy').
+											all
 		end
 
     respond_to do |format|

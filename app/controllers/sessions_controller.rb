@@ -20,6 +20,7 @@ class SessionsController < ApplicationController
   def destroy
 		session[:user_id] = nil
 		session[:property_id] = nil
+		session[:agency_id] = nil
 		session[:guest_id] = nil
 		session[:trip_id] = nil
 		redirect_to login_url, alert: "Logged out"

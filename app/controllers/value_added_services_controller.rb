@@ -77,7 +77,7 @@ class ValueAddedServicesController < ApplicationController
     @value_added_service.destroy
 
     respond_to do |format|
-      format.html { redirect_to value_added_services_url }
+      format.html { redirect_to value_added_services_url, notice: @value_added_service.errors[:base][0] }
       format.json { head :ok }
     end
   end

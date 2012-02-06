@@ -1,3 +1,9 @@
-// Place all the styles related to the Agencies controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.agencies {
+	table th:nth-last-child(2) {
+		width: 20%;
+	}
+
+	table th:nth-last-child(3) {
+		width: 14%;
+	}
+}

@@ -1,40 +1,44 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"><span class="saved_value"><%= notice %></span></p>
+<h1>Agency details</h1>
 
+<div class="show_saved_record">
 <p>
   <b>Name:</b>
-  <%= @agency.name %>
+  <span class="saved_value"><%= @agency.name %></span>
 </p>
 
 <p>
   <b>Phone number:</b>
-  <%= @agency.phone_number %>
+  <span class="saved_value"><%= @agency.phone_number %></span>
 </p>
 
 <p>
   <b>Email:</b>
-  <%= @agency.email_id %>
-</p>
-
-<p>
-  <b>Postal address:</b>
-  <%= @agency.postal_address %>
-</p>
-
-<p>
-  <b>City:</b>
-  <%= @agency.city %>
+  <span class="saved_value"><%= @agency.email_id %></span>
 </p>
 
 <p>
   <b>Url:</b>
-  <%= @agency.url %>
+  <span class="saved_value"><%= @agency.url %></span>
+</p>
+
+<p>
+  <b>City:</b>
+  <span class="saved_value"><%= @agency.city %></span>
+</p>
+
+<p>
+  <b>Postal address:</b>
+  <span class="saved_value"><%= @agency.postal_address %></span>
 </p>
 
 <p>
   <b>Other information:</b>
-  <%= @agency.other_information %>
+  <span class="saved_value"><%= @agency.other_information %></span>
 </p>
 
+<div class="action_container">
+	<%= link_to 'Edit', edit_agency_path(@agency) %>
+</div>
 
-<%= link_to 'Edit', edit_agency_path(@agency) %> |
-<%= link_to 'Back', agencies_path %>
+<%= link_to 'Back to Agency Listing', agencies_path, :class => "back_link" %>

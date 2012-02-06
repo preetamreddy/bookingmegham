@@ -1,6 +1,9 @@
-<h1>Editing agency</h1>
+<div class="edit_form">
+	<fieldset>
+		<legend>Edit Agency</legend>
 
-<%= render 'form' %>
+		<%= render 'form' %>
 
-<%= link_to 'Show', @agency %> |
-<%= link_to 'Back', agencies_path %>
+		<%= link_to 'Cancel', agencies_path, :class => "cancel_link" %>
+	</fieldset>
+</div>

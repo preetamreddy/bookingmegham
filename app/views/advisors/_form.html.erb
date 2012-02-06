@@ -12,8 +12,14 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :agency_id %><br />
-    <%= f.number_field :agency_id %>
+    <%= f.label :agency %><br />
+		<% if @advisor.new_record? %>
+    	<%= f.collection_select(:agency_id,
+						Agency.order('name').find_all, :id, :name) %>
+		<% else %>
+			<%= f.collection_select(:agency_id,
+						Agency.find_all_by_id(@advisor.agency_id), :id, :name) %>
+		<% end %>
   </div>
   <div class="field">
     <%= f.label :name %><br />
@@ -31,7 +37,7 @@
     <%= f.label :email_id %><br />
     <%= f.text_field :email_id %>
   </div>
-  <div class="actions">
+  <div class="action_container">
     <%= f.submit %>
   </div>
 <% end %>

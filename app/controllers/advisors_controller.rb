@@ -2,7 +2,18 @@ class AdvisorsController < ApplicationController
   # GET /advisors
   # GET /advisors.json
   def index
-    @advisors = Advisor.all
+		if params[:agency_id]
+			session[:agency_id] = params[:agency_id]
+		else
+			session[:agency_id] = nil
+		end
+
+		if session[:agency_id]
+    	@advisors = Advisor.order(:name).
+										find_all_by_agency_id(session[:agency_id])
+		else
+    	@advisors = Advisor.order('agency_id, name').all
+		end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -76,7 +87,7 @@ class AdvisorsController < ApplicationController
     @advisor.destroy
 
     respond_to do |format|
-      format.html { redirect_to advisors_url }
+      format.html { redirect_to advisors_url, notice: @advisor.errors[:base][0] }
       format.json { head :ok }
     end
   end

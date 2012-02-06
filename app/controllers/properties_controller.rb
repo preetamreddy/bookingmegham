@@ -4,7 +4,7 @@ class PropertiesController < ApplicationController
   def index
 		session[:property_id] = nil
 
-    @properties = Property.all
+    @properties = Property.order(:name).all
 
     respond_to do |format|
       format.html # index.html.erb

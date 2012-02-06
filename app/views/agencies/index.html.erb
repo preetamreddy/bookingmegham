@@ -1,35 +1,54 @@
-<h1>Listing agencies</h1>
+<h1>Listing Agencies</h1>
 
-<table>
+<% if notice %>
+	<div id="error_explanation">
+		<h2>Unable to destroy</h2>
+		<ul>
+			<li><%= notice %></li>
+		</ul>
+	</div>
+<% end %>
+
+<% if @agencies.count > 0 %>
+<table class="index_table" border="1">
   <tr>
     <th>Name</th>
     <th>Phone number</th>
     <th>Email</th>
-    <th>Postal address</th>
-    <th>City</th>
     <th>Url</th>
+    <th>City</th>
+    <th>Postal address</th>
     <th>Other information</th>
-    <th></th>
-    <th></th>
     <th></th>
   </tr>
 
 <% @agencies.each do |agency| %>
-  <tr>
+	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
     <td><%= agency.name %></td>
     <td><%= agency.phone_number %></td>
     <td><%= agency.email_id %></td>
-    <td><%= agency.postal_address %></td>
-    <td><%= agency.city %></td>
     <td><%= agency.url %></td>
+    <td><%= agency.city %></td>
+    <td><%= agency.postal_address %></td>
     <td><%= agency.other_information %></td>
-    <td><%= link_to 'Show', agency %></td>
-    <td><%= link_to 'Edit', edit_agency_path(agency) %></td>
-    <td><%= link_to 'Destroy', agency, confirm: 'Are you sure?', method: :delete %></td>
+    <td>
+    	<%= link_to 'Edit', edit_agency_path(agency) %><br />
+    	<%= link_to 'Destroy', agency, confirm: 'Are you sure?',
+						method: :delete %><br />
+			<%= link_to 'Advisors', advisors_path(:agency_id => agency.id) %>
+		</td>
   </tr>
 <% end %>
 </table>
+<% else %>
+	<div id="error_explanation">
+		<h2>Agencies have not yet been created</h2>
+		<ul>
+			<li>Click below to create a new Agency</li>
+		</ul>
+	</div>
+<% end %>
 
-<br />
-
-<%= link_to 'New Agency', new_agency_path %>
+<div class="action_container">
+	<%= link_to 'New Agency', new_agency_path %>
+</div>

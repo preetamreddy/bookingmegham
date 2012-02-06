@@ -2,7 +2,9 @@ class AgenciesController < ApplicationController
   # GET /agencies
   # GET /agencies.json
   def index
-    @agencies = Agency.all
+		session[:agency_id] = nil
+
+    @agencies = Agency.order(:name).all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -76,7 +78,7 @@ class AgenciesController < ApplicationController
     @agency.destroy
 
     respond_to do |format|
-      format.html { redirect_to agencies_url }
+      format.html { redirect_to agencies_url, notice: @agency.errors[:base][0] }
       format.json { head :ok }
     end
   end

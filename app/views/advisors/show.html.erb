@@ -1,30 +1,34 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"><span class="saved_value"><%= notice %></span></p>
+<h1>Advisor details</h1>
 
+<div class="show_saved_record">
 <p>
   <b>Agency:</b>
-  <%= @advisor.agency_id %>
+  <span class="saved_value"><%= @advisor.agency_id %></span>
 </p>
 
 <p>
   <b>Name:</b>
-  <%= @advisor.name %>
+  <span class="saved_value"><%= @advisor.name %></span>
 </p>
 
 <p>
   <b>Phone number 1:</b>
-  <%= @advisor.phone_number_1 %>
+  <span class="saved_value"><%= @advisor.phone_number_1 %></span>
 </p>
 
 <p>
   <b>Phone number 2:</b>
-  <%= @advisor.phone_number_2 %>
+  <span class="saved_value"><%= @advisor.phone_number_2 %></span>
 </p>
 
 <p>
   <b>Email:</b>
-  <%= @advisor.email_id %>
+  <span class="saved_value"><%= @advisor.email_id %></span>
 </p>
 
+<div class="action_container">
+	<%= link_to 'Edit', edit_advisor_path(@advisor) %>
+</div>
 
-<%= link_to 'Edit', edit_advisor_path(@advisor) %> |
-<%= link_to 'Back', advisors_path %>
+<%= link_to 'Back to Advisor Listing', advisors_path, :class => "back_link" %>

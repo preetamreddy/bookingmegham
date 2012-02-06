@@ -1,6 +1,23 @@
-<h1>Listing advisors</h1>
+<% if session[:agency_id] %>
+	<h1>
+		Listing Advisors for '<%= Agency.find(session[:agency_id]).name %>'
+	</h1>
+	<%= link_to 'Show all Advisors', advisors_path %>
+<% else %>
+	<h1>Listing all Advisors</h1>
+<% end %>
 
-<table>
+<% if notice %>
+	<div id="error_explanation">
+		<h2>Unable to destroy</h2>
+		<ul>
+			<li><%= notice %></li>
+		</ul>
+	</div>
+<% end %>
+
+<% if @advisors.count > 0 %>
+<table class="index_table" border="1">
   <tr>
     <th>Agency</th>
     <th>Name</th>
@@ -8,24 +25,32 @@
     <th>Phone number 2</th>
     <th>Email</th>
     <th></th>
-    <th></th>
-    <th></th>
   </tr>
 
 <% @advisors.each do |advisor| %>
-  <tr>
-    <td><%= advisor.agency_id %></td>
+	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+    <td><%= advisor.agency.name %></td>
     <td><%= advisor.name %></td>
     <td><%= advisor.phone_number_1 %></td>
     <td><%= advisor.phone_number_2 %></td>
     <td><%= advisor.email_id %></td>
-    <td><%= link_to 'Show', advisor %></td>
-    <td><%= link_to 'Edit', edit_advisor_path(advisor) %></td>
-    <td><%= link_to 'Destroy', advisor, confirm: 'Are you sure?', method: :delete %></td>
+    <td>
+    	<%= link_to 'Edit', edit_advisor_path(advisor) %><br />
+    	<%= link_to 'Destroy', advisor, confirm: 'Are you sure?',
+						method: :delete %>
+		</td>
   </tr>
 <% end %>
 </table>
+<% else %>
+	<div id="error_explanation">
+		<h2>Advisors have not yet been created</h2>
+		<ul>
+			<li>Click below to create a new Advisor</li>
+		</ul>
+	</div>
+<% end %>
 
-<br />
-
-<%= link_to 'New Advisor', new_advisor_path %>
+<div class="action_container">
+	<%= link_to 'New Advisor', new_advisor_path %>
+</div>
