@@ -2,7 +2,7 @@
 	<h1>
 		Listing Advisors for '<%= Agency.find(session[:agency_id]).name %>'
 	</h1>
-	<%= link_to 'Show all Advisors', advisors_path %>
+	<%= link_to 'Show all Advisors', advisors_path(:agency_id => 'All') %>
 <% else %>
 	<h1>Listing all Advisors</h1>
 <% end %>
@@ -19,8 +19,8 @@
 <% if @advisors.count > 0 %>
 <table class="index_table" border="1">
   <tr>
-    <th>Agency</th>
     <th>Name</th>
+    <th>Agency</th>
     <th>Phone number 1</th>
     <th>Phone number 2</th>
     <th>Email</th>
@@ -29,15 +29,18 @@
 
 <% @advisors.each do |advisor| %>
 	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-    <td><%= advisor.agency.name %></td>
     <td><%= advisor.name %></td>
+    <td><%= advisor.agency.name %></td>
     <td><%= advisor.phone_number_1 %></td>
     <td><%= advisor.phone_number_2 %></td>
     <td><%= advisor.email_id %></td>
     <td>
     	<%= link_to 'Edit', edit_advisor_path(advisor) %><br />
     	<%= link_to 'Destroy', advisor, confirm: 'Are you sure?',
-						method: :delete %>
+						method: :delete %><br />
+			<% if !advisor.user %>
+				<%= link_to 'Activate User', new_user_path(:advisor_id => advisor.id) %>
+			<% end %>
 		</td>
   </tr>
 <% end %>

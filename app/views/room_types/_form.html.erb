@@ -13,10 +13,12 @@
 
   <div class="field">
     <%= f.label :property_id %><br />
-		<% if session[:property_id] %>
-    	<%= f.number_field :property_id, :readonly => true %>
+		<% if @room_type.property_id %>
+    	<%= f.collection_select(:property_id,
+						Property.find_all_by_id(@room_type.property_id), :id, :name) %>
 		<% else %>
-    	<%= f.number_field :property_id %>
+    	<%= f.collection_select(:property_id,
+						Property.order('name').find_all, :id, :name) %>
 		<% end %>
   </div>
   <div class="field">

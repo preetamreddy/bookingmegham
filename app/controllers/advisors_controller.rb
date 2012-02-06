@@ -2,10 +2,10 @@ class AdvisorsController < ApplicationController
   # GET /advisors
   # GET /advisors.json
   def index
-		if params[:agency_id]
-			session[:agency_id] = params[:agency_id]
-		else
+		if params[:agency_id] == 'All'
 			session[:agency_id] = nil
+		elsif params[:agency_id]
+			session[:agency_id] = params[:agency_id]
 		end
 
 		if session[:agency_id]
@@ -36,6 +36,7 @@ class AdvisorsController < ApplicationController
   # GET /advisors/new.json
   def new
     @advisor = Advisor.new
+		@advisor.agency_id = session[:agency_id]
 
     respond_to do |format|
       format.html # new.html.erb

@@ -3,6 +3,8 @@ class Agency < ActiveRecord::Base
 
 	has_many :advisors
 
+	has_many :users
+
 	before_destroy :ensure_does_not_have_advisors, :ensure_does_not_have_trips
 
 	private

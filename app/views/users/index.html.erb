@@ -1,7 +1,14 @@
-<h1>Listing Users</h1>
+<% if session[:agency_id] %>
+	<h1>
+		Listing Users for '<%= Agency.find(session[:agency_id]).name %>'
+	</h1>
+	<%= link_to 'Show all Users', users_path(:agency_id => 'All') %>
+<% else %>
+	<h1>Listing all Users</h1>
+<% end %>
 
 <% if notice %>
-	<%= notice %>
+	<p><span class="highlight"><%= notice %></span></p>
 <% end %>
 
 <% if @users.count > 0 %>
@@ -16,7 +23,7 @@
 		<% @users.each do |user| %>
 		  <tr>
 		    <td><%= user.advisor.name %></td>
-		    <td><%= user.advisor.agency.name %></td>
+		    <td><%= user.agency.name %></td>
 		    <td><%= user.name %></td>
 		    <td>
 		    	<%= link_to 'Edit', edit_user_path(user) %><br />
@@ -26,8 +33,11 @@
 		  </tr>
 		<% end %>
 	</table>
+<% else %>
+	<div id="error_explanation">
+		<h2>Users have not yet been activated</h2>
+		<ul>
+			<li>Activate Users from Advisor Mgmt</li>
+		</ul>
+	</div>
 <% end %>
-
-<div class="action_container">
-	<%= link_to 'New User', new_user_path %>
-</div>

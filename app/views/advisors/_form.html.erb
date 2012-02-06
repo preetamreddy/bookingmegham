@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= f.label :agency %><br />
-		<% if @advisor.new_record? %>
-    	<%= f.collection_select(:agency_id,
-						Agency.order('name').find_all, :id, :name) %>
-		<% else %>
+		<% if @advisor.agency_id %>
 			<%= f.collection_select(:agency_id,
 						Agency.find_all_by_id(@advisor.agency_id), :id, :name) %>
+		<% else %>
+    	<%= f.collection_select(:agency_id,
+						Agency.order('name').find_all, :id, :name) %>
 		<% end %>
   </div>
   <div class="field">

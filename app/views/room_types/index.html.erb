@@ -1,6 +1,7 @@
 <% if session[:property_id] %>
 	<h1>Listing Room Types for '<%= Property.find(session[:property_id]).name %>'</h1>
-	<%= link_to 'Show Room Types for all Properties', room_types_path %>
+	<%= link_to 'Show Room Types for all Properties', 
+				room_types_path(:property_id => 'All') %>
 <% else %>
 	<h1>Listing Room Types for all Properties</h1>
 <% end %>

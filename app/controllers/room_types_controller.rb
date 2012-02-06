@@ -2,10 +2,10 @@ class RoomTypesController < ApplicationController
   # GET /room_types
   # GET /room_types.json
   def index
-		if params[:property_id]
-			session[:property_id] = params[:property_id]
-		else
+		if params[:property_id] == 'All'
 			session[:property_id] = nil
+		elsif params[:property_id]
+			session[:property_id] = params[:property_id]
 		end	
 
 		if session[:property_id]
