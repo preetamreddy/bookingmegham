@@ -2,66 +2,91 @@
 <html>
 <head>
   <title>My Booking Megham</title>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
+	<% if session[:user_id] %>
+  	<%= stylesheet_link_tag    "application" %>
+  	<%= javascript_include_tag "application" %>
+	<% else %>
+		<link href="/assets/scaffolds.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+		<link href="/assets/sessions.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+	<% end %>
   <%= csrf_meta_tags %>
 </head>
 <body class='<%= controller.controller_name %>'>
 	<div id="banner">
-		<% user = User.find(session[:user_id]) %>
-		<%= image_tag(user.advisor.agency.name + ".jpg") %>
-		<span class="user">Hi <%= user.advisor.name %></span>
-		<%= @page_title || "Booking Megham" %><br />
+		<% if session[:user_id] %>
+			<% user = User.find(session[:user_id]) %>
+			<div id="logo">
+				<%= image_tag(user.advisor.agency.name + ".jpg") %>
+			</div>
+			<div id="user_info">
+				<%= user.advisor.name %><br/>
+				<%= link_to 'Logout', logout_path, method: :delete %>
+			</div>
+		<% else %>
+			<div id="logo">
+				<%= image_tag("Booking Megham.jpg") %>
+			</div>
+		<% end %>
+		<div id="bm">
+			<%= "Booking Megham" %><br />
+		</div>
 	</div>
 	<div id="columns">
-		<div id="side">
-			<%= hidden_div_if(!session[:guest_id], id: 'session_info') do %>
-				<table>
-					<tr>
-						<th class="heading" colspan=2>Bookings for</th>
-						<th class="clear"><%= link_to 'Clear', 
-												guests_path(:clear => 1) %></th>
-					</tr>
-					<% if session[:guest_id] %>
-						<% guest = Guest.find(session[:guest_id]) %>
-						<%= render(guest) %>
-					<% end %>
-					<% if session[:trip_id] %>
-						<% trip = Trip.find(session[:trip_id]) %>
-						<%= render(trip) %>
-						<%= render(trip.rooms) %>
-						<% if trip.bookings.any? %>
-							<tr>
-								<td colspan=3><b>Itinerary</b></td>
-							</tr>
-							<%= render(trip.bookings.order('check_in_date')) %>
+		<% if session[:user_id] %>
+			<div id="side">
+				<%= hidden_div_if(!session[:guest_id], id: 'session_info') do %>
+					<table>
+						<tr>
+							<th class="heading" colspan=2>Bookings for</th>
+							<th class="clear"><%= link_to 'Clear', 
+													guests_path(:clear => 1) %></th>
+						</tr>
+						<% if session[:guest_id] %>
+							<% guest = Guest.find(session[:guest_id]) %>
+							<%= render(guest) %>
 						<% end %>
-						<% if trip.vas_bookings.any? %>
-							<tr>
-								<td colspan=3><b>Value Added Services</b></td>
-							</tr>
-							<%= render(trip.vas_bookings) %>
+						<% if session[:trip_id] %>
+							<% trip = Trip.find(session[:trip_id]) %>
+							<%= render(trip) %>
+							<%= render(trip.rooms) %>
+							<% if trip.bookings.any? %>
+								<tr>
+									<td colspan=3><b>Itinerary</b></td>
+								</tr>
+								<%= render(trip.bookings.order('check_in_date')) %>
+							<% end %>
+							<% if trip.vas_bookings.any? %>
+								<tr>
+									<td colspan=3><b>Value Added Services</b></td>
+								</tr>
+								<%= render(trip.vas_bookings) %>
+							<% end %>
 						<% end %>
-					<% end %>
-				</table>
-			<% end %>
-			<dl>
-				<dt>Property Mgmt</dt>
-				<dd><%= link_to 'Properties', properties_path %></dd>
-				<dd><%= link_to 'Room Types', 
-									room_types_path(:property_id => nil) %></dd>
-				<dd><%= link_to 'Value Added Services', 
-									value_added_services_path %></dd>
-				<dt>Booking Mgmt</dt>
-				<dd><%= link_to 'Guests', guests_path %></dd>
-				<dd><%= link_to 'Trips', trips_path %></dd>
-				<dd><%= link_to 'Bookings', bookings_path %></dd>
-				<dd><%= link_to 'Availability Chart', availability_chart_path %></dd>
-				<dt>Feedback</dt>
-				<dd><%= link_to 'Give Feedback', new_feedback_path %></dd>
-				<dd><%= link_to 'Feedback List', feedbacks_path %></dd>
-			</dl>
-		</div>
+					</table>
+				<% end %>
+				<dl>
+					<dt>Booking Mgmt</dt>
+					<dd><%= link_to 'Guests', guests_path %></dd>
+					<dd><%= link_to 'Trips', trips_path %></dd>
+					<dd><%= link_to 'Bookings', bookings_path %></dd>
+					<dd><%= link_to 'Availability Chart', availability_chart_path %></dd>
+					<dt>Property Mgmt</dt>
+					<dd><%= link_to 'Properties', properties_path %></dd>
+					<dd><%= link_to 'Room Types', 
+										room_types_path(:property_id => nil) %></dd>
+					<dd><%= link_to 'Value Added Services', 
+										value_added_services_path %></dd>
+					<dt>Feedback</dt>
+					<dd><%= link_to 'Give Feedback', new_feedback_path %></dd>
+					<dd><%= link_to 'Feedback List', feedbacks_path %></dd>
+					<dt>Admin</dt>
+					<dd><%= link_to 'New Property', new_property_path %></dd>
+					<dd><%= link_to 'Agencies', agencies_path %></dd>
+					<dd><%= link_to 'Advisors', advisors_path %></dd>
+					<dd><%= link_to 'Users', users_path %></dd>
+				</dl>
+			</div>
+		<% end %>
 		<div id="main">
 			<%= yield %>
 		</div>

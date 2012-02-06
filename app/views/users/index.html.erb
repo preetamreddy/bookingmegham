@@ -7,16 +7,16 @@
 <% if @users.count > 0 %>
 	<table class="index_table" border="1">
 	  <tr>
-	    <th>Agency</th>
 	    <th>Advisor</th>
+	    <th>Agency</th>
 	    <th>Username</th>
 	    <th></th>
 	  </tr>
 	
 		<% @users.each do |user| %>
 		  <tr>
-		    <td><%= user.advisor.agency.name %></td>
 		    <td><%= user.advisor.name %></td>
+		    <td><%= user.advisor.agency.name %></td>
 		    <td><%= user.name %></td>
 		    <td>
 					<%= link_to 'Show', user %><br />

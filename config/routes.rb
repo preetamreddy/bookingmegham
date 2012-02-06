@@ -5,6 +5,10 @@ Bookingmegham::Application.routes.draw do
 		delete 'logout' => :destroy
 	end
 
+	controller :availability_chart do
+  	get 'availability_chart' => :index
+	end
+
   resources :users
 
   resources :advisors
@@ -19,13 +23,9 @@ Bookingmegham::Application.routes.draw do
 
   resources :value_added_services
 
-  resources :payments
-
   resources :trips
 
   resources :guests
-
-  get "availability_chart/index"
 
   resources :room_types
 
@@ -82,7 +82,7 @@ Bookingmegham::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'availability_chart#index', as: 'availability_chart'
+  root :to => 'sessions#new', as: 'login'
 
   # See how all your routes lay out with "rake routes"
 

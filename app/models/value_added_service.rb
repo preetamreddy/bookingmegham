@@ -7,6 +7,7 @@ class ValueAddedService < ActiveRecord::Base
 		accepts_nested_attributes_for :vas_prices, :reject_if => :all_blank,
 		:allow_destroy => true
 
+	before_destroy :ensure_not_referenced_by_vas_bookings
 	validates :name, presence: true
 
 	validates_numericality_of :property_id,
@@ -30,4 +31,15 @@ class ValueAddedService < ActiveRecord::Base
 	def is_trek?
 		return is_trek
 	end
+
+	private
+		
+		def ensure_not_referenced_by_vas_bookings
+			if vas_bookings.empty?
+				return true
+			else
+				errors.add(:base, "Destroy failed because Value Added Service '#{name}' has bookings.")
+				return false
+			end
+		end
 end

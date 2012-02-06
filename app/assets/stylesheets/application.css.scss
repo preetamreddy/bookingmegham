@@ -7,29 +7,35 @@
 */
 
 #banner {
-	font: small-caps 40px/60px "Trebuchet MS" sans-serif;
-	color: black;
-	text-align: right;
-	padding-right: 1em;
-	height: 60px;
-	border-radius-top-right: 25px;
-	background: #036339;
-	border-radius: 0 35px 35px 0;
+	#bm {
+		font: small-caps 40px/60px "Trebuchet MS" sans-serif;
+		color: black;
+		text-align: right;
+		padding-right: 1em;
+		height: 60px;
+		border-radius-top-right: 25px;
+		background: #036339;
+		border-radius: 0 35px 35px 0;
+	}
 
-	img {
+	#logo {
 		float: left;
 		height: 60px;
 	}
 
-	.user {
-		font: 15px/22px "Trebuchet MS" sans-serif;
+	#user_info {
+		font: 15px sans-serif;
 		color: white;
 		float: left;
-		height: 22px;
 		background: #036339;
-		vertical-align: bottom;
+		vertical-align: top;
 		margin-left: 1.5em;
-		margin-top: 34px;
+		padding-top: 0.7em;
+
+		a {
+			color: white;
+			font-size: 12px;
+		}
 	}
 
 }
