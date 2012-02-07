@@ -20,6 +20,13 @@
 </p>
 
 <p>
+  <b>Advisor:</b>
+	<% if @trip.advisor_id %>
+  	<span class="saved_value"><%= @trip.advisor.name %>
+	<% end %>
+</p>
+
+<p>
   <b>Start date:</b>
   <span class="saved_value"><%= l @trip.start_date %>
 </p>

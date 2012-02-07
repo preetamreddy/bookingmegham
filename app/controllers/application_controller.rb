@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 		
 		def authorize
 			if User.find_by_id(session[:user_id])
-				if session[:last_request] < 10.minute.ago
+				if session[:last_request] < 10.minutes.ago
 					session[:user_id] = nil
 					session[:last_request] = nil
 					redirect_to login_url, alert: "Timed out. Please log in again"

@@ -23,13 +23,16 @@
    	<%= f.label :agency_id, "Agency" %><br />
 		<% if @trip.new_record? %>
     	<%= f.collection_select(:agency_id, 
-						Agency.order('name').find_all, :id, :name, 
-						{ :include_blank => true }) %>
+						Agency.order('name').find_all, :id, :name) %>
 		<% else %>
     	<%= f.collection_select(:agency_id, 
 						Agency.order('name').find_all_by_id(@trip.agency_id), :id, :name) %>
 		<% end %>
   </div>
+	<%= hidden_div_if(true, class: "field") do %>
+   	<%= f.label :advisor_id, "Advisor" %><br />
+    <%= f.number_field :advisor_id %>
+	<% end %>
   <div class="field">
     <%= f.label :name, "Trip name" %><br />
     <%= f.text_field :name, size: 30 %>
