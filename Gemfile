@@ -45,3 +45,15 @@ gem 'will_paginate', '~> 3.0'
 
 # For password encryption
 gem 'bcrypt-ruby'
+
+group :production do
+  gem 'mysql2'
+end
+
+group :development do
+  gem 'sqlite3'
+end
+
+group :test do
+  gem 'sqlite3'
+end
