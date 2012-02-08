@@ -2,34 +2,23 @@
 <html>
 <head>
   <title>My Booking Megham</title>
-	<% if session[:user_id] %>
-  	<%= stylesheet_link_tag    "application" %>
-  	<%= javascript_include_tag "application" %>
-	<% else %>
-		<link href="/assets/scaffolds.css?body=1" media="screen" rel="stylesheet" type="text/css" />
-		<link href="/assets/sessions.css?body=1" media="screen" rel="stylesheet" type="text/css" />
-	<% end %>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body class='<%= controller.controller_name %>'>
 	<div id="banner">
 		<% if session[:user_id] %>
 			<% user = User.find(session[:user_id]) %>
-			<div id="logo">
-				<%= image_tag(user.advisor.agency.name + ".jpg") %>
-			</div>
+			<%= image_tag(user.advisor.agency.name + ".jpg") %>
 			<div id="user_info">
 				<%= user.advisor.name %><br/>
 				<%= link_to 'Logout', logout_path, method: :delete %>
 			</div>
 		<% else %>
-			<div id="logo">
-				<%= image_tag("BookingMegham.jpg") %>
-			</div>
+			<%= image_tag("BookingMegham.jpg") %>
 		<% end %>
-		<div id="bm">
-			<%= "Booking Megham" %><br />
-		</div>
+		<%= "Booking Megham" %><br />
 	</div>
 	<div id="columns">
 		<% if session[:user_id] %>

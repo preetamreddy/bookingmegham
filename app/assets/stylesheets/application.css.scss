@@ -4,18 +4,16 @@
 */
 
 #banner {
-	#bm {
-		font: small-caps 40px/60px "Trebuchet MS" sans-serif;
-		color: black;
-		text-align: right;
-		padding-right: 1em;
-		height: 60px;
-		border-radius-top-right: 25px;
-		background: #036339;
-		border-radius: 0 35px 35px 0;
-	}
+	font: small-caps 40px/60px "Trebuchet MS" sans-serif;
+	color: black;
+	text-align: right;
+	padding-right: 1em;
+	height: 60px;
+	border-radius-top-right: 25px;
+	background: #036339;
+	border-radius: 0 35px 35px 0;
 
-	#logo {
+	img {
 		float: left;
 		height: 60px;
 	}
