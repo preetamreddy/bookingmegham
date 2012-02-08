@@ -29,4 +29,4 @@ User.create(
 				agency_id: Agency.find_by_name('BookingMegham').id,
 				advisor_id: Advisor.find_by_name('Preetam Reddy').id,
 				name: 'preetam',
-				password_digest: 'znmd')
+				password_digest: '$2a$10$oOXHxs5C31T8S0MbZRneAOH2n/a6vrcXbWztwg4Cl6JJZBLaUJ.4.')

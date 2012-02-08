@@ -35,9 +35,6 @@ group :test do
   gem 'turn', '0.8.2', :require => false
 end
 
-# For versioning of records, especially Bookings
-gem 'vestal_versions', :git => 'git://github.com/adamcooper/vestal_versions'
-
 # For nested forms, especially Trip and Bookings
 gem "nested_form", :git => "git://github.com/ryanb/nested_form.git"
 
