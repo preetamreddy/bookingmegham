@@ -54,3 +54,6 @@ end
 group :test do
   gem 'sqlite3'
 end
+
+# For deployment with Capistrano
+gem 'capistrano'
