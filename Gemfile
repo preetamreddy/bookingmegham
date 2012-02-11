@@ -57,3 +57,6 @@ end
 
 # For deployment with Capistrano
 gem 'capistrano'
+
+# Web server
+gem 'thin'
