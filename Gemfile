@@ -44,7 +44,7 @@ gem 'will_paginate', '~> 3.0'
 gem 'bcrypt-ruby'
 
 group :production do
-  gem 'mysql2'
+  gem 'pg'
 end
 
 group :development do
