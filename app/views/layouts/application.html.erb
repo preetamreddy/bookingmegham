@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Booking Megham</title>
+  <title>My Bookings</title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -16,7 +16,7 @@
 				<%= link_to 'Logout', logout_path, method: :delete %>
 			</div>
 		<% end %>
-		<%= "Booking Megham" %><br />
+		<%= "EZBook" %><br />
 	</div>
 	<div id="columns">
 		<% if session[:user_id] %>

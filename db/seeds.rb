@@ -6,7 +6,7 @@ Advisor.delete_all
 User.delete_all
 
 Agency.create(
-				name: 'BookingMegham',
+				name: 'EZBook',
 				phone_number: 919902012405,
 				email_id: 'preetam.reddy@gmail.com',
 				postal_address:
@@ -16,17 +16,17 @@ Agency.create(
 							Bangalore - 560103, India
 						</p>},
 				city: 'Bangalore',
-				url: 'www.bookingmegham.com')
+				url: 'www.ezbook.in')
 
 Advisor.create(
-				agency_id: Agency.find_by_name('BookingMegham').id,
+				agency_id: Agency.find_by_name('EZBook').id,
 				name: 'Preetam Reddy',
 				phone_number_1: 919902012405,
 				phone_number_2: 918025843149,
 				email_id: 'preetam.reddy@gmail.com')
 
 User.create(
-				agency_id: Agency.find_by_name('BookingMegham').id,
+				agency_id: Agency.find_by_name('EZBook').id,
 				advisor_id: Advisor.find_by_name('Preetam Reddy').id,
 				name: 'preetam',
 				password: 'znmd')
