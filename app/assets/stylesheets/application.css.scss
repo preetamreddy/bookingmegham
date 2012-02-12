@@ -5,13 +5,8 @@
 
 #banner {
 	font: small-caps 40px/60px "Trebuchet MS" sans-serif;
-	color: black;
-	text-align: right;
-	padding-right: 1em;
 	height: 60px;
-	border-radius-top-right: 25px;
-	background: #036339;
-	border-radius: 0 35px 35px 0;
+	background: #20b14c;
 
 	img {
 		float: left;
@@ -22,7 +17,7 @@
 		font: 15px sans-serif;
 		color: white;
 		float: left;
-		background: #036339;
+		background: #20b14c;
 		vertical-align: top;
 		margin-left: 1.5em;
 		padding-top: 0.7em;
@@ -31,6 +26,11 @@
 			color: white;
 			font-size: 12px;
 		}
+	}
+
+	#logo {
+		float: right;
+		height: 60px;
 	}
 
 }
