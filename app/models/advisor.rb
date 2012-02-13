@@ -7,6 +7,10 @@ class Advisor < ActiveRecord::Base
 
 	before_destroy :ensure_does_not_have_trips, :ensure_is_not_a_user
 
+	validates :phone_number_1, :phone_number_2, 
+		:format => { :with => /^[\+]?[\d\s]{8,}$/,
+		:message => "is not valid" }
+
 	private
 		
 		def ensure_does_not_have_trips

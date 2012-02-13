@@ -10,4 +10,8 @@
 	.email_id_input {
 		width: 15em;
 	}
+
+	table td:nth-child(2) {
+		white-space: nowrap;
+	}
 }

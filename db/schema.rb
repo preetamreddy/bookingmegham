@@ -11,13 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120211143627) do
+ActiveRecord::Schema.define(:version => 20120213161736) do
 
   create_table "advisors", :force => true do |t|
     t.integer  "agency_id"
     t.string   "name"
-    t.integer  "phone_number_1"
-    t.integer  "phone_number_2"
+    t.string   "phone_number_1"
+    t.string   "phone_number_2"
     t.string   "email_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20120211143627) do
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
-    t.integer  "phone_number"
+    t.string   "phone_number"
     t.string   "email_id"
     t.text     "postal_address"
     t.string   "city"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(:version => 20120211143627) do
 
   create_table "guests", :force => true do |t|
     t.string   "name"
-    t.integer  "phone_number"
+    t.string   "phone_number"
     t.string   "email_id"
     t.string   "resident_of"
     t.text     "other_information"

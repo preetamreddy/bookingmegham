@@ -7,6 +7,9 @@ class Agency < ActiveRecord::Base
 
 	before_destroy :ensure_does_not_have_advisors, :ensure_does_not_have_trips
 
+	validates :phone_number, :format => { :with => /^[\+]?[\d\s]{8,}$/,
+		:message => "is not valid" }
+
 	private
 
 		def ensure_does_not_have_advisors
