@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 	before_filter :authorize, :ensure_domain
 
 	APP_DOMAIN = 'www.ezbook.in'
+	APP_DOMAIN_SANS_WWW = 'ezbook.in'
 
 	protected
 		
@@ -22,7 +23,7 @@ class ApplicationController < ActionController::Base
 		end
 
 		def ensure_domain
-			if request.env['HTTP_HOST'] != APP_DOMAIN
+			if request.env['HTTP_HOST'] == APP_DOMAIN_SANS_WWW
 				# HTTP 301 is a permanent redirect
 				redirect_to "http://#{APP_DOMAIN}", :status => 301
 			end
