@@ -45,11 +45,8 @@ group :production do
 end
 
 group :development, :test do
-  gem 'sqlite3'
+  gem 'pg'
 end
-
-# For deployment with Capistrano
-gem 'capistrano'
 
 # Web server
 gem 'thin'
