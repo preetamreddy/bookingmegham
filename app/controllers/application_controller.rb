@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-	before_filter :authorize
+	before_filter :authorize, :ensure_domain
+
+	APP_DOMAIN = 'www.ezbook.in'
 
 	protected
 		
@@ -16,6 +18,13 @@ class ApplicationController < ActionController::Base
 				end
 			else
 				redirect_to login_url, alert: "Please log in"
+			end
+		end
+
+		def ensure_domain
+			if request.env['HTTP_HOST'] != APP_DOMAIN
+				# HTTP 301 is a permanent redirect
+				redirect_to "http://#{APP_DOMAIN}", :status => 301
 			end
 		end
 end
