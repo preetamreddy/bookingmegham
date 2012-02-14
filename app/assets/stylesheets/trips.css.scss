@@ -1,0 +1,15 @@
+.trips {
+	.new_form, .edit_form {
+		form {
+			.field {
+				label {
+					width: 9em;
+				}
+			}
+		}
+	}
+
+	.nested_form {
+		padding-left: 9.8em;
+	}
+}

@@ -5,10 +5,10 @@
 		:year => 'Year', :month => 'Month', :day => 'Day'} %>
 	
 	<%= f.label :amount, "Amount" %>
-	<%= f.number_field :amount %>
+	<%= f.number_field :amount, min: 1, max: 9999999 %>
 	
 	<%= f.label :details %>
-	<%= f.text_field :details, cols: 30 %>
+	<%= f.text_field :details, size: 20 %>
 	
 	<%= f.link_to_remove "Remove" %>
 </div>

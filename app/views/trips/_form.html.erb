@@ -71,10 +71,6 @@
     <%= f.number_field :number_of_drivers, :min => 0 %>
 	</div>
 
-	<div class="field">
-		<%= f.label :value_added_services %>
-	</div>
-
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :total_price %><br />
 		<p><span class="highlight">
