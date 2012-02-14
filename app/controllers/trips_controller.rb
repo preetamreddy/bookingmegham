@@ -3,7 +3,7 @@ class TripsController < ApplicationController
   # GET /trips.json
   def index
 		if params[:guest_id]
-			session[:guest_id] = params[:guest_id]
+			session[:guest_id] = params[:guest_id].to_i
 			session[:trip_id] = nil
 		end
 
@@ -51,7 +51,7 @@ class TripsController < ApplicationController
   # GET /trips/new.json
   def new
 		if (params[:guest_id])
-			session[:guest_id] = params[:guest_id]
+			session[:guest_id] = params[:guest_id].to_i
 		end
 
     @trip = Trip.new
@@ -109,7 +109,7 @@ class TripsController < ApplicationController
     @trip = Trip.find(params[:id])
     @trip.destroy
 
-		if session[:trip_id] == params[:id]
+		if session[:trip_id] == params[:id].to_i
 			session[:trip_id] = nil
 		end
 

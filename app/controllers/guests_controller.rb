@@ -93,7 +93,7 @@ class GuestsController < ApplicationController
     @guest = Guest.find(params[:id])
     @guest.destroy
 
-		if session[:guest_id] == params[:id]
+		if session[:guest_id] == params[:id].to_i
 			session[:guest_id] = nil
 		end
 

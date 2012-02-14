@@ -5,7 +5,7 @@ class AdvisorsController < ApplicationController
 		if params[:agency_id] == 'All'
 			session[:agency_id] = nil
 		elsif params[:agency_id]
-			session[:agency_id] = params[:agency_id]
+			session[:agency_id] = params[:agency_id].to_i
 		end
 
 		if session[:agency_id]

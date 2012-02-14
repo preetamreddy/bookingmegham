@@ -8,7 +8,7 @@ class AvailabilityChartController < ApplicationController
 		end
 
 		if params[:trip_id]
-			session[:trip_id] = params[:trip_id]
+			session[:trip_id] = params[:trip_id].to_i
 			session[:guest_id] = Trip.find(session[:trip_id]).guest_id
 		end
 
