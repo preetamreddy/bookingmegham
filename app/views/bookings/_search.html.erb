@@ -1,5 +1,5 @@
 <%= form_tag bookings_path, :method => "get" do %>
-	<%= label_tag :property_id, "Show bookings for Property" %>
+	<%= label_tag :property_id, "For property" %>
 	<%= select_tag(:property_id, options_for_select(
 				Property.all.collect { |p| [p.name, p.id] }.insert(0, 'All'), 
 				@property_id)) %>
