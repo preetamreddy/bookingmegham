@@ -2,10 +2,10 @@
 	<% if @consider_blocked_rooms_as_booked.to_i == 1 %>
 		<tr>
 			<td>
-				<h1 "id="avl_chart_h1">Availability Chart (including blocked rooms)</h1>
+				<h1 "id="avl_chart_h1">Availability Chart (incl. blocked rooms)</h1>
 			</td>
 			<td class="sub_text">
-				<%= link_to 'Ignore blocked rooms', 
+				<%= link_to 'Ign. blocked rooms', 
 							availability_chart_path(
 								:consider_blocked_rooms_as_booked => 0,
 								:chart_start_date => @chart_start_date,
@@ -15,9 +15,10 @@
 	<% else %>
 		<tr>
 			<td>
-				<h1 id="avl_chart_h1">Availability Chart (ignoring blocked rooms)</h1>
-			<td class="avl_chart_link">
-				<%= link_to 'Include blocked rooms',
+				<h1 id="avl_chart_h1">Availability Chart (ign. blocked rooms)</h1>
+			</td>
+			<td class="sub_text">
+				<%= link_to 'Incl. blocked rooms',
 							availability_chart_path(
 								:consider_blocked_rooms_as_booked => 1,
 								:chart_start_date => @chart_start_date,
