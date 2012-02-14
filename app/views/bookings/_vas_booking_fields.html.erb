@@ -2,7 +2,7 @@
 	<%= f.collection_select(:value_added_service_id, 
 				ValueAddedService.order("name").
 				find_all_by_property_id(@booking.room_type.property_id), :id, :name,
-				:prompt => "<Select a service>") %>
+				:prompt => "") %>
 
 	<%= f.label :number_of_people, "#" %>
 	<%= f.number_field :number_of_people, min: 0, max: 999 %>

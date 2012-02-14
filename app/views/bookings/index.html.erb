@@ -45,9 +45,15 @@
 				</td>
 		    <td class="text">
 					Adults: <%= booking.number_of_adults %><br/>
-		    	Children (btw 5 & 12): <%= booking.number_of_children_between_5_and_12_years %><br/>
-		    	Children below 5: <%= booking.number_of_children_below_5_years %><br/>
-					Drivers: <%= booking.number_of_drivers %>
+					<% if booking.number_of_children_between_5_and_12_years != 0 %>
+		    		Children (btw 5 & 12): <%= booking.number_of_children_between_5_and_12_years %><br/>
+					<% end %>
+					<% if booking.number_of_children_below_5_years != 0 %>
+		    		Children below 5: <%= booking.number_of_children_below_5_years %><br/>
+					<% end %>
+					<% if booking.number_of_drivers != 0 %>
+						Drivers: <%= booking.number_of_drivers %>
+					<% end %>
 				</td>
 		    <td class="text">
 		    	<%= booking.guests_arriving_from %><br/>

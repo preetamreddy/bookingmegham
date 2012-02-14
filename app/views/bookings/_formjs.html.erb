@@ -40,7 +40,7 @@
 		<% end %>
 	</div>
   <div class="field">
-    <%= f.label :check_in_date %><br />
+    <%= f.label :check_in_date, "Check-in" %><br />
     <%= f.date_select :check_in_date, :start_year => Time.now.year, 
 			:end_year => Time.now.year + 1, :prompt => true %>
   </div>
@@ -70,7 +70,7 @@
   </div>
 
   <div class="field">
-    <%= f.label :comments, 'Proposed activities' %><br />
+    <%= f.label :comments, 'Comments' %><br />
     <%= f.text_area :comments, rows: 6 %>
   </div>
   <div class="action_container">

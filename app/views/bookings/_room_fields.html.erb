@@ -6,15 +6,15 @@
 		<%= f.label :double, "Double" %>
 	</fieldset>
 	
+	<%= f.label :number_of_rooms, "#" %>
+	<%= f.number_field :number_of_rooms, min: 1, max: 99 %>
+
 	<%= f.label :number_of_adults, "Adults / room" %>
 	<%= f.number_field :number_of_adults, min: 1, max: 4 %>
 	
 	<%= f.label :number_of_children, "Children / room" %>
 	<%= f.number_field :number_of_children_between_5_and_12_years, 
 				min: 0, max: 2 %>
-	
-	<%= f.label :number_of_rooms, "Rooms" %>
-	<%= f.number_field :number_of_rooms, min: 1 %>
 	
 	<%= f.link_to_remove "Remove" %>
 </div>

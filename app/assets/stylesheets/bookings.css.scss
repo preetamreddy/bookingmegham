@@ -24,4 +24,18 @@
 			margin: 0;
 		}
 	}
+
+	.new_form, .edit_form {
+		form {
+			.field {
+				label {
+					width: 6em;
+				}
+			}
+		}
+	}
+
+	.nested_form {
+		padding-left: 6.8em;
+	}
 }

@@ -40,7 +40,7 @@
 		<% end %>
 	</div>
   <div class="field">
-    <%= f.label :check_in_date %><br />
+    <%= f.label :check_in_date, "Check-in" %><br />
 		<% if @booking.new_record? %>
     	<%= f.date_select :check_in_date, :start_year => Time.now.year, 
 				:end_year => Time.now.year + 1, :prompt => true %>
@@ -79,7 +79,7 @@
 	</div>
 
 	<div class="field">
-    <%= f.label :number_of_drivers %><br />
+    <%= f.label :number_of_drivers, "Drivers" %><br />
     <%= f.number_field :number_of_drivers, :min => 0 %>
 	</div>
 	<div class="field">
@@ -93,7 +93,7 @@
 
 	<% if @booking.room_type_id %>
 		<div class="field">
-			<%= f.label :value_added_services %>
+			<%= f.label :value_added_services, "VAS" %>
 		</div>
 	
 		<div class="nested_form">
@@ -108,7 +108,7 @@
 	<% end %>
 
   <div class="field">
-    <%= f.label :comments, 'Proposed activities' %><br />
+    <%= f.label :comments, 'Comments' %><br />
     <%= f.text_area :comments, rows: 6 %>
   </div>
   <div class="action_container">
