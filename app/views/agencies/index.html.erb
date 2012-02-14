@@ -18,7 +18,6 @@
     <th>Url</th>
     <th>City</th>
     <th>Postal address</th>
-    <th>Other information</th>
     <th></th>
   </tr>
 
@@ -30,7 +29,6 @@
     <td><%= agency.url %></td>
     <td><%= agency.city %></td>
     <td><%= agency.postal_address %></td>
-    <td><%= agency.other_information %></td>
     <td>
     	<%= link_to 'Edit', edit_agency_path(agency) %><br />
     	<%= link_to 'Destroy', agency, confirm: 'Are you sure?',
