@@ -1,9 +1,9 @@
-<% if session[:property_id] %>
-	<h1>New Room Type for Property '<%= Property.find(session[:property_id]).name %>'</h1>
-<% else %>
-	<h1>New Room Type</h1>
-<% end %>
+<div class="new_form">
+	<fieldset>
+		<legend>New Room Type</legend>
 
-<%= render 'form' %>
+		<%= render 'form' %>
 
-<%= link_to 'Cancel', room_types_path(:property_id => session[:property_id]), :class => "cancel_link" %>
+		<%= link_to 'Cancel', room_types_path, :class => "cancel_link" %>
+	</fieldset>
+</div>

@@ -1,5 +1,9 @@
-<h1>Editing Room Type</h1>
+<div class="edit_form">
+	<fieldset>
+		<legend>Edit Room Types</legend>
 
-<%= render 'form' %>
+		<%= render 'form' %>
 
-<%= link_to 'Cancel', room_types_path(:property_id => session[:property_id]), :class => "cancel_link" %>
+		<%= link_to 'Cancel', room_types_path, :class => "cancel_link" %>
+	</fieldset>
+</div>
