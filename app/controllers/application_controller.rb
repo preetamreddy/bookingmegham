@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
 	APP_DOMAIN = 'www.ezbook.in'
 	APP_DOMAIN_SANS_WWW = 'ezbook.in'
+	APP_DOMAIN_HEROKUAPP = 'bookingmegham.herokuapp.com'
 
 	protected
 		
@@ -23,7 +24,7 @@ class ApplicationController < ActionController::Base
 		end
 
 		def ensure_domain
-			if request.env['HTTP_HOST'] == APP_DOMAIN_SANS_WWW
+			if [APP_DOMAIN_SANS_WWW, APP_DOMAIN_HEROKUAPP].include? request.env['HTTP_HOST']
 				# HTTP 301 is a permanent redirect
 				redirect_to "http://#{APP_DOMAIN}", :status => 301
 			end
