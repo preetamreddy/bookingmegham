@@ -92,9 +92,9 @@ class Booking < ActiveRecord::Base
 																		vas_booking.value_added_service_id,
 																		vas_booking.number_of_people)
 				if vas_booking.unit_price == 0
-					errors.add(:base, "Could not create Trip as price for 
-						'#{vas_booking.value_added_service.name}' for 
-						#{vas_booking.number_of_people} participant was not found")
+					errors.add(:base, "Could not create Trip as
+						'#{vas_booking.value_added_service.name}' required a minumum 
+						number of people")
 					return false
 				end
 			end
