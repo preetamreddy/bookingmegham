@@ -11,7 +11,8 @@ class GuestsController < ApplicationController
 			@guests = Guest.paginate(page: params[:page], per_page: 5).
 									order('name, resident_of').
 									find(:all, :conditions => [ 
-									'name like ? and phone_number like ? and email_id like ?',
+									'lower(name) like ? and phone_number like ? and 
+									email_id like ?',
 									"%#{params[:name]}%", "%#{params[:phone_number]}%",
 									"%#{params[:email_id]}%" ])
 		else
