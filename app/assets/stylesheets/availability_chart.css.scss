@@ -3,6 +3,10 @@
 		width: auto;
 	}
 
+	table td:nth-child(1) {
+		white-space: nowrap;
+	}
+
 	.property {
 		background: #CFCFCF;
 		font-weight: bold;

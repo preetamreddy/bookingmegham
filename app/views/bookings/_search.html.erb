@@ -6,6 +6,6 @@
 	<%= label_tag :check_in_date_first, "Starting from" %>
 	<%= select_date @check_in_date_first, :prefix => 'check_in_date_first' %>
 	<%= label_tag :number_of_days, "For days" %>
-	<%= number_field_tag :number_of_days, @number_of_days %>
+	<%= number_field_tag :number_of_days, @number_of_days, min: 1, max: 999 %>
 	<%= submit_tag "Search", :name => nil %>
 <% end %>
