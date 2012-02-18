@@ -59,7 +59,7 @@
 		    	<%= booking.guests_arriving_from %><br/>
 					<%= l booking.guests_arrival_time, :format => :short if booking.guests_arrival_time %>
 				</td>
-		    <td class="currency">
+		    <td class="number">
 					<% if booking.total_price != 0 %>
 						<%= number_to_currency(booking.total_price) %><br/>
 					<% end %>
