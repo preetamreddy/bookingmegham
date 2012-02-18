@@ -29,9 +29,10 @@
 						Agency.order('name').find_all_by_id(@trip.agency_id), :id, :name) %>
 		<% end %>
   </div>
-	<%= hidden_div_if(true, class: "field") do %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
    	<%= f.label :advisor_id, "Advisor" %><br />
-    <%= f.number_field :advisor_id %>
+    <%= f.collection_select(:advisor_id,
+					Advisor.order('name').find_all_by_agency_id(@trip.advisor.agency.id), :id, :name) %>
 	<% end %>
   <div class="field">
     <%= f.label :name, "Trip name" %><br />
