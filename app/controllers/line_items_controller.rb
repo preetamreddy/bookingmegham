@@ -2,7 +2,43 @@ class LineItemsController < ApplicationController
   # GET /line_items
   # GET /line_items.json
   def index
-    @line_items = LineItem.all
+		if params[:property_id]
+			@property_id = params[:property_id].to_i
+		else
+			@property_id = 0
+		end
+
+		if params[:check_in_date_first]
+			@check_in_date_first = Date.civil(
+				params[:check_in_date_first][:year].to_i,
+				params[:check_in_date_first][:month].to_i,
+				params[:check_in_date_first][:day].to_i)
+		else
+			@check_in_date_first = Date.today
+		end
+
+		if params[:number_of_days]
+			@number_of_days = params[:number_of_days].to_i
+		else
+			@number_of_days = 1
+		end
+
+		@check_in_date_last = @check_in_date_first + @number_of_days
+
+		if @property_id > 0
+			@room_types = RoomType.find_all_by_property_id(@property_id)
+			@line_items = LineItem.order("date, room_type_id, booking_id").
+				find(:all, :conditions => [
+					'room_type_id in (?) and date >= ? and
+					date < ?',
+					@room_types, @check_in_date_first,
+					@check_in_date_last ])
+		else
+			@line_items = LineItem.order("date, room_type_id, booking_id").
+				find(:all, :conditions => [
+					'date >= ? and date < ?',
+					@check_in_date_first, @check_in_date_last ])
+		end
 
     respond_to do |format|
       format.html # index.html.erb

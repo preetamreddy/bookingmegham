@@ -9,6 +9,10 @@ Bookingmegham::Application.routes.draw do
   	get 'availability_chart' => :index
 	end
 
+  controller :line_items do
+		get 'booking_chart' => :index
+	end
+
   resources :users
 
   resources :advisors

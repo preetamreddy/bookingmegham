@@ -1,29 +1,39 @@
-<h1>Listing line_items</h1>
+<h1>Booking Chart</h1>
 
-<table>
-  <tr>
-    <th>Booking</th>
-    <th>Room type</th>
-    <th>Date</th>
-    <th>Number of rooms</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div id="search">
+	<%= render 'search' %>
+</div>
 
-<% @line_items.each do |line_item| %>
-  <tr>
-    <td><%= line_item.booking_id %></td>
-    <td><%= line_item.room_type_id %></td>
-    <td><%= line_item.date %></td>
-		<td><%= line_item.booked_rooms %></td>
-    <td><%= link_to 'Show', line_item %></td>
-    <td><%= link_to 'Edit', edit_line_item_path(line_item) %></td>
-    <td><%= link_to 'Destroy', line_item, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+<% if @line_items.count > 0 %>
+	<table class="index_table" border="1">
+	  <tr>
+	    <th>Date</th>
+	    <th>Room type</th>
+	    <th>Guest</th>
+	    <th>Food preferences</th>
+	  </tr>
+	
+		<% @line_items.each do |line_item| %>
+	  	<tr>
+	    	<td><%= line_item.date %></td>
+	    	<td><%= line_item.room_type.long_name %></td>
+	    	<td>
+					<%= line_item.booking.trip.guest.name %>, 
+					<%= line_item.booking.trip.guest.phone_number %><br/>
+					(<%= line_item.booking.number_of_adults %> + 
+					<%= line_item.booking.number_of_children_between_5_and_12_years %> + 
+					<%= line_item.booking.number_of_children_below_5_years %>)
+				</td>
+	    	<td><%= line_item.booking.food_preferences %></td>
+	  	</tr>
+		<% end %>
+	</table>
+<% else %>
+	<div id="error_explanation">
+		<h2>There are no bookings for the date chosen</h2>
+		<ul>
+			<li>Please choose another date</li>
+		</ul>
+	</div>
 <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Line item', new_line_item_path %>
