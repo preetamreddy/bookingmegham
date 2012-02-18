@@ -18,6 +18,15 @@
 		</ul>
 	</div>
 <% else %>	
+	<% if notice %>
+		<div id="error_explanation">
+			<h2>Unable to delete</h2>
+			<ul>
+				<li><%= notice %></li>
+			</ul>
+		</div>
+	<% end %>
+
 	<table class="index_table" border="1">
 		<tr>
 			<th class="number">ID</th>

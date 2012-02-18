@@ -1,5 +1,7 @@
 class Trip < ActiveRecord::Base
-	PAYMENT_STATUS = [ 'Blocked', 'Partially Paid', 'Fully Paid' ]
+	BLOCKED = 'Blocked'
+	PARTIALLY_PAID = 'Partially Paid'
+	FULLY_PAID = 'Fully Paid'
 
 	belongs_to :guest
 
@@ -107,7 +109,11 @@ class Trip < ActiveRecord::Base
 			service_tax = 0
 		end
 		
-		service_tax_rounded = ((service_tax / 100).to_i + 1) * 100
+		if service_tax != 0
+			service_tax_rounded = ((service_tax / 100).to_i + 1) * 100
+		else
+			service_tax_rounded = 0
+		end
 
 		return service_tax_rounded
 	end
@@ -150,13 +156,13 @@ class Trip < ActiveRecord::Base
 
 		def update_payment_status
 			if total_price == 0
-				pay_status = 'Blocked'
+				pay_status = BLOCKED
 			elsif total_price > 0 and balance_payment <= 0
 				pay_status = 'Fully Paid'
 			elsif total_price > 0 and balance_payment > 0 and paid > 0
 				pay_status = 'Partially Paid'
 			else
-				pay_status = 'Blocked'
+				pay_status = BLOCKED
 			end
 	
 			self.payment_status = pay_status
@@ -219,7 +225,7 @@ class Trip < ActiveRecord::Base
 		end
 
 		def update_line_item_status
-			if payment_status == 'Blocked'
+			if payment_status == BLOCKED
 				blocked = 1
 			else
 				blocked = 0

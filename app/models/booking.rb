@@ -21,6 +21,8 @@ class Booking < ActiveRecord::Base
 							:update_room_rate, :update_vas_unit_price,
 							:update_total_price, :update_service_tax
 
+	before_destroy :ensure_payments_are_not_made
+
 	after_save :update_line_items
 
 	validates :trip_id, :room_type_id, :check_in_date, :check_out_date,
@@ -153,6 +155,16 @@ class Booking < ActiveRecord::Base
 
 	private
 
+		def ensure_payments_are_not_made
+			if trip.payment_status == Trip::PARTIALLY_PAID or
+				trip.payment_status == Trip::FULLY_PAID
+					errors.add(:base, "Could not delete booking as payments have been made for the trip")
+					return false
+			else
+				return true
+			end
+		end
+
 		def update_check_out_date
 			self.check_out_date = check_in_date + number_of_nights
 		end
@@ -222,7 +234,7 @@ class Booking < ActiveRecord::Base
 		end
 
 		def add_line_items
-			if trip.payment_status == 'Blocked'
+			if trip.payment_status == Trip::BLOCKED
 				blocked = 1
 			else
 				blocked = 0
