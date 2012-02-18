@@ -1,13 +1,17 @@
 <table width="100%" cellpadding="5" border="1" style="border-spacing:0;border-collapse:collapse;border-color:#CFCCCA">
 	<tr>						
-		<th width="18%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Trip</th>
-		<th width="18%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">The Team</th>
+		<th width="18%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Trip ID</th>
+		<th width="18%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Trip Name</th>
+		<th width="18%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Number of people</th>
 		<th width="16%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Rooms</th>
 		<th width="12%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Food Preferences</th>
 		<th width="20%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Comments</th>
 		<th width="16%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Total Price</th>
 	</tr>
 	<tr>
+		<td align="right" style="font-size:10ppt;padding:2px 4px">
+			<%= trip.id %>
+		</td>
 		<td align="left" style="font-size:10pt;padding:2px 4px">
 			<%= trip.name %><br/>
 			<%= l trip.start_date %> to <%= l trip.end_date %><br/>

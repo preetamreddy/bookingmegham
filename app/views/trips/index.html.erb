@@ -41,6 +41,7 @@
 
 	<table class="index_table" border="1">
 	  <tr>
+	    <th class="number">ID</th>
 	    <th class="text">Guest</th>
 	    <th class="text">Trip</th>
 	    <th class="text">Rooms</th>
@@ -52,6 +53,9 @@
 	
 		<% @trips.each do |trip| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+				<td class="number">
+					<%= trip.id %>
+				</td>
 	    	<td class="text">
 					<%= trip.guest.name %><br/>
 					<%= trip.guest.phone_number %>

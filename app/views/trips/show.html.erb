@@ -3,6 +3,11 @@
 
 <div class="show_saved_record">
 <p>
+  <b>ID:</b>
+  <span class="saved_value"><%= @trip.id %>
+</p>
+
+<p>
   <b>Guest:</b>
   <span class="saved_value"><%= @trip.guest.name %>
 </p>
@@ -106,6 +111,7 @@
 	<b>Payments:</b>
 	<table class="nested_table">
 		<tr>
+			<th class="number">ID</th>
 			<th class="text">Date</th>
 			<th class="number">Amount</th>
 			<th class="text">Details</th>
@@ -113,6 +119,9 @@
 
 		<% @trip.payments.each do |payment| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">	
+				<td class="number">
+					<%= payment.id %>
+				</td>
 				<td class="text">
 					<%= l payment.date_received if payment.date_received %>
 				</td>

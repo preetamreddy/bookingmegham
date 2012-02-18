@@ -20,6 +20,7 @@
 <% else %>	
 	<table class="index_table" border="1">
 		<tr>
+			<th class="number">ID</th>
 			<th class="text">Guest</th>
 			<th class="text">Rooms</th>
 			<th class="text">The Team</th>
@@ -32,6 +33,9 @@
 	
 		<% @bookings.each do |booking| %>
 		  <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+				<td class="number">
+					<%= booking.id %>
+				</td>
 		    <td class="text">
 					<%= booking.trip.guest.name %><br/>
 		    	<%= booking.trip.guest.phone_number %>

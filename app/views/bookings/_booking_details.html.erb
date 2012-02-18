@@ -1,5 +1,6 @@
 <table width="100%" cellpadding="5" border="1" style="border-spacing:0;border-collapse:collapse;border-color:#CFCCCA">
 	<tr>						
+		<th width="7%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">ID</th>
 		<th width="7%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">From</th>
 		<th width="7%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">To</th>
 		<th width="21%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Destination</th>
@@ -9,6 +10,7 @@
 	</tr>
 	<% trip.bookings.order('check_in_date').each do |booking| %>
 		<tr>
+			<td align="right" style="font-size:10pt;padding:2px 4px"><%= booking.id %></td>
 			<td align="left" style="font-size:10pt;padding:2px 4px"><%= l booking.check_in_date, :format => :short %></td>
 			<td align="left" style="font-size:10pt;padding:2px 4px"><%= l booking.check_out_date, :format => :short %></td>
 			<td align="left" style="font-size:10pt;padding:2px 4px">
