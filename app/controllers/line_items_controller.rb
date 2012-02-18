@@ -27,14 +27,16 @@ class LineItemsController < ApplicationController
 
 		if @property_id > 0
 			@room_types = RoomType.find_all_by_property_id(@property_id)
-			@line_items = LineItem.order("date, room_type_id, booking_id").
+			@line_items = LineItem.paginate(page: params[:page], per_page: 5).
+				order("date, room_type_id, booking_id").
 				find(:all, :conditions => [
 					'room_type_id in (?) and date >= ? and
 					date < ?',
 					@room_types, @check_in_date_first,
 					@check_in_date_last ])
 		else
-			@line_items = LineItem.order("date, room_type_id, booking_id").
+			@line_items = LineItem.paginate(page: params[:page], per_page: 5).
+				order("date, room_type_id, booking_id").
 				find(:all, :conditions => [
 					'date >= ? and date < ?',
 					@check_in_date_first, @check_in_date_last ])
