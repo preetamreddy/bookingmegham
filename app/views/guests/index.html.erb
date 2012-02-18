@@ -27,15 +27,23 @@
 	    <th class="number">Phone number</th>
 	    <th class="text">Email</th>
 	    <th class="text">Resident of</th>
+	    <th class="text">Address</th>
 	    <th class="text">Other information</th>
 			<th></th>
 	  </tr>
 		<% @guests.each do |guest| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 		    <td class="text"><%= guest.name %></td>
-		    <td class="number"><%= guest.phone_number %></td>
-		    <td class="text"><%= guest.email_id %></td>
+		    <td class="number">
+					<%= guest.phone_number %><br/>
+					<%= guest.phone_number_2 %>
+				</td>
+		    <td class="text">
+					<%= guest.email_id %><br/>
+					<%= guest.email_id_2 %>
+				</td>
 		    <td class="text"><%= guest.resident_of %></td>
+		    <td class="comment"><%= guest.address %></td>
 		    <td class="comment"><%= guest.other_information %></td>
 		    <td>
 					<%= link_to 'Edit', edit_guest_path(guest) %></br>

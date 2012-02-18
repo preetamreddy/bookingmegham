@@ -8,8 +8,8 @@ class Guest < ActiveRecord::Base
 	validates :phone_number, :email_id, 
 						presence: true, :uniqueness => { :case_sensitive => false }
 
-	validates :phone_number, :format => { :with => /^[\+]?[\d\s]{8,}$/,
-		:message => "is not valid" }
+	validates :phone_number, :phone_number_2,
+		:format => { :with => /^[\+]?[\d\s]{8,}$/, :message => "is not valid" }
 
 	private
 
