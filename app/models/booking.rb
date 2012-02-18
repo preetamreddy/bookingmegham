@@ -156,12 +156,11 @@ class Booking < ActiveRecord::Base
 	private
 
 		def ensure_payments_are_not_made
-			if trip.payment_status == Trip::PARTIALLY_PAID or
-				trip.payment_status == Trip::FULLY_PAID
-					errors.add(:base, "Could not delete booking as payments have been made for the trip")
-					return false
-			else
+			if trip.payment_status == Trip::NOT_PAID
 				return true
+			else
+				errors.add(:base, "Could not delete booking as payments have been made for the trip")
+				return false
 			end
 		end
 
@@ -234,7 +233,7 @@ class Booking < ActiveRecord::Base
 		end
 
 		def add_line_items
-			if trip.payment_status == Trip::BLOCKED
+			if trip.payment_status == Trip::NOT_PAID
 				blocked = 1
 			else
 				blocked = 0

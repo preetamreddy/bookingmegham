@@ -1,5 +1,5 @@
 class Trip < ActiveRecord::Base
-	BLOCKED = 'Blocked'
+	NOT_PAID = 'Blocked'
 	PARTIALLY_PAID = 'Partially Paid'
 	FULLY_PAID = 'Fully Paid'
 
@@ -156,22 +156,22 @@ class Trip < ActiveRecord::Base
 
 		def update_payment_status
 			if total_price == 0
-				pay_status = BLOCKED
+				pay_status = NOT_PAID
 			elsif total_price > 0 and balance_payment <= 0
-				pay_status = 'Fully Paid'
+				pay_status = FULLY_PAID
 			elsif total_price > 0 and balance_payment > 0 and paid > 0
-				pay_status = 'Partially Paid'
+				pay_status = PARTIALLY_PAID
 			else
-				pay_status = BLOCKED
+				pay_status = NOT_PAID
 			end
 	
 			self.payment_status = pay_status
 		end
 
 		def update_pay_by_date
-			if payment_status == 'Fully Paid'
+			if payment_status == FULLY_PAID
 				self.pay_by_date = nil
-			elsif payment_status == 'Partially Paid'
+			elsif payment_status == PARTIALLY_PAID
 				self.pay_by_date = start_date - 21
 			end
 		end
@@ -225,7 +225,7 @@ class Trip < ActiveRecord::Base
 		end
 
 		def update_line_item_status
-			if payment_status == BLOCKED
+			if payment_status == NOT_PAID
 				blocked = 1
 			else
 				blocked = 0
