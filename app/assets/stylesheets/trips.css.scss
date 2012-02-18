@@ -12,4 +12,8 @@
 	.nested_form {
 		padding-left: 9.8em;
 	}
+
+	table th:nth-last-child(2) {
+		width: auto;
+	}
 }
