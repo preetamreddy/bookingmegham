@@ -1,4 +1,6 @@
 class RoomType < ActiveRecord::Base
+	SERVICE_TAX_PERCENT = 5.15
+
 	belongs_to :property
 
 	has_many :bookings
@@ -13,6 +15,7 @@ class RoomType < ActiveRecord::Base
 	validates_numericality_of :number_of_rooms,
 														:price_for_single_occupancy,
 														:price_for_double_occupancy,
+														:price_for_room,
 														allow_nil: true, only_integer: true,
 														greater_than_or_equal_to: 0,
 														message: "should be a number greater than or equal to 0"

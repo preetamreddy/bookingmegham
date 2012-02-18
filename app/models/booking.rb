@@ -19,7 +19,7 @@ class Booking < ActiveRecord::Base
 
 	before_save :initialize_attributes_when_nil,
 							:update_room_rate, :update_vas_unit_price,
-							:update_total_price
+							:update_total_price, :update_service_tax
 
 	after_save :update_line_items
 
@@ -127,6 +127,11 @@ class Booking < ActiveRecord::Base
 		end
 
 		self.total_price = price_for_rooms + price_for_vas + price_for_drivers
+	end
+
+	def update_service_tax
+		self.service_tax = number_of_nights * number_of_rooms * 
+			room_type.price_for_room * RoomType::SERVICE_TAX_PERCENT / 100
 	end
 
 	def number_of_adults

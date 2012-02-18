@@ -102,6 +102,11 @@
 </p>
 
 <p>
+  <b>Service tax:</b>
+  <span class="saved_value"><%= number_to_currency(@booking.service_tax) if @booking.service_tax %>
+</p>
+
+<p>
   <b>Comments:</b>
   <span class="saved_value"><%= @booking.comments %>
 </p>

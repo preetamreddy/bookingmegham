@@ -34,6 +34,10 @@
     <%= f.number_field :price_for_double_occupancy, :min => 0 %>
   </div>
   <div class="field">
+    <%= f.label :price_for_room, "Room Price" %><br />
+    <%= f.number_field :price_for_room, :min => 0 %>
+  </div>
+  <div class="field">
     <%= f.label :number_of_rooms %><br />
     <%= f.number_field :number_of_rooms, :min => 1 %>
   </div>

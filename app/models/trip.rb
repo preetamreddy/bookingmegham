@@ -100,6 +100,18 @@ class Trip < ActiveRecord::Base
 		return ttl_price
 	end
 
+	def service_tax
+		if bookings.any?
+			service_tax = bookings.to_a.sum { |booking| booking.service_tax }
+		else
+			service_tax = 0
+		end
+		
+		service_tax_rounded = ((service_tax / 100).to_i + 1) * 100
+
+		return service_tax_rounded
+	end
+
 	def paid
 		if payments.empty?
 			return 0
@@ -117,6 +129,10 @@ class Trip < ActiveRecord::Base
 			final_price = total_price - discount
 		else
 			final_price = total_price
+		end
+		
+		if service_tax != nil
+			final_price += service_tax
 		end
 
 		return final_price

@@ -80,6 +80,13 @@
 	<% end %>
 
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+    <%= f.label :service_tax %><br />
+		<p><span class="highlight">
+			<%= number_to_currency(@trip.service_tax) %>
+		</span></p>
+	<% end %>
+
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :discount %><br />
     <%= f.number_field :discount, :min => 0 %>
 	<% end %>

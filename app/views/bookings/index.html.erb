@@ -24,7 +24,7 @@
 			<th class="text">Rooms</th>
 			<th class="text">The Team</th>
 			<th class="text">Arriving from</th>
-			<th class="number">Total price</th>
+			<th class="number">Price</th>
 			<th class="text">Food preferences</th>
 			<th class="text">Proposed activities</th>
 			<th></th>
@@ -59,9 +59,12 @@
 		    	<%= booking.guests_arriving_from %><br/>
 					<%= l booking.guests_arrival_time, :format => :short if booking.guests_arrival_time %>
 				</td>
-		    <td class="number">
+		    <td class="currency">
 					<% if booking.total_price != 0 %>
-						<%= number_to_currency(booking.total_price) %>
+						<%= number_to_currency(booking.total_price) %><br/>
+					<% end %>
+					<% if booking.service_tax != 0 %>
+						Tax: <%= number_to_currency(booking.service_tax) %>
 					<% end %>
 				</td>
 		    <td class="text"><%= booking.food_preferences %></td>
