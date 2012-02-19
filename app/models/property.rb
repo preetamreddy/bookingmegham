@@ -16,6 +16,9 @@ class Property < ActiveRecord::Base
 														allow_nil: true, only_integer: true,
 														greater_than_or_equal_to: 0,
 														message: "should be a number greater than or equal to 0"
+
+	validates :phone_number, :phone_number_2, allow_nil: true,
+		:format => { :with => /^[\+]?[\d\s]*$/, :message => "is not valid" }
 	
 	def number_of_rooms
 		number_of_rooms = room_types.to_a.sum { |room_type| 

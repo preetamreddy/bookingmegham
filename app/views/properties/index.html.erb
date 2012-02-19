@@ -13,13 +13,12 @@
 <table class="index_table" border="1">
   <tr>
    	<th class="text">Name</th>
-   	<th class="number">Price for children below 5</th>
-   	<th class="number">Price for children btw 5 & 12</th>
-   	<th class="number">Price for triple occupancy</th>
-   	<th class="number">Price for driver</th>
+   	<th class="text">Phone Numbers</th>
+   	<th class="number">Children below 5</th>
+   	<th class="number">Children btw 5 & 12</th>
+   	<th class="number">Triple occupancy</th>
+   	<th class="number">Driver</th>
 		<th class="number">Ensure availability</th>
-		<th class="number">Blocked rooms > Booked?</th>
-   	<th class="text">Description</th>
 		<th></th>
   </tr>
 
@@ -27,6 +26,10 @@
 <% @properties.each do |property| %>
 	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
     <td class="text"><%= property.name %></td>
+    <td class="nowrap">
+			<%= property.phone_number %><br/>
+			<%= property.phone_number_2 %>
+		</td>
     <td class="currency">
 			<% if property.price_for_children_below_5_years && property.price_for_children_below_5_years != 0 %>
 				<%= number_to_currency(property.price_for_children_below_5_years) %>
@@ -44,15 +47,8 @@
 				No
 			<% end %>
 		</td>
-    <td class="text">
-			<% if property.consider_blocked_rooms_as_booked == 1 %>
-				Yes
-			<% else %>
-				No
-			<% end %>
-		</td>
-    <td class="comment"><%= property.description %></td>
     <td>
+    	<%= link_to 'Show details', property %></br>
     	<%= link_to 'Edit', edit_property_path(property) %></br>
     	<%= link_to 'Destroy', property, confirm: 'Are you sure?', 
 						method: :delete %></br>
