@@ -147,6 +147,11 @@
   <span class="saved_value"><%= @trip.payee_name %>
 <% end %>
 
+<%= hidden_p_unless(@trip.email_ids != "") do %>
+  <b>Email IDs:</b>
+  <span class="saved_value"><%= @trip.email_ids %>
+<% end %>
+
 <%= hidden_p_unless(@trip.food_preferences != "") do %>
   <b>Food preferences:</b>
   <span class="saved_value"><%= @trip.food_preferences %>
@@ -158,8 +163,8 @@
 <% end %>
 
 <p>
-  <b>Comments:</b>
-  <span class="saved_value"><%= @trip.comments %>
+  <b>Notes:</b>
+  <span class="saved_value"><%= @trip.notes %>
 </p>
 </div>
 
