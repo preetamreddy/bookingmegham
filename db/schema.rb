@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120218180001) do
+ActiveRecord::Schema.define(:version => 20120219170547) do
 
   create_table "advisors", :force => true do |t|
     t.integer  "agency_id"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20120218180001) do
     t.time     "guests_arrival_time"
     t.string   "guests_arriving_from"
     t.integer  "total_price"
-    t.text     "comments"
+    t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "room_type_id"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20120218180001) do
     t.integer  "property_id"
     t.integer  "number_of_nights"
     t.integer  "service_tax"
+    t.text     "suggested_activities"
   end
 
   create_table "feedbacks", :force => true do |t|
@@ -109,6 +110,10 @@ ActiveRecord::Schema.define(:version => 20120218180001) do
     t.integer  "ensure_availability_before_booking",        :default => 1
     t.integer  "consider_blocked_rooms_as_booked",          :default => 1
     t.integer  "agency_id"
+    t.string   "phone_number"
+    t.string   "phone_number_2"
+    t.text     "address"
+    t.text     "suggested_activities"
   end
 
   create_table "room_types", :force => true do |t|
@@ -142,7 +147,7 @@ ActiveRecord::Schema.define(:version => 20120218180001) do
     t.integer  "number_of_children_below_5_years"
     t.string   "food_preferences"
     t.date     "pay_by_date"
-    t.text     "comments"
+    t.text     "notes"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
@@ -155,6 +160,7 @@ ActiveRecord::Schema.define(:version => 20120218180001) do
     t.string   "medical_constraints"
     t.integer  "agency_id"
     t.integer  "advisor_id"
+    t.string   "email_ids"
   end
 
   create_table "users", :force => true do |t|
