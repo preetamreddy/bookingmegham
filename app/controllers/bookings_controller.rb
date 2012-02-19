@@ -80,7 +80,12 @@ class BookingsController < ApplicationController
   # GET /bookings/new.json
   def new
     @booking = Booking.new
-		@booking.room_type_id = params[:room_type_id]
+		if params[:room_type_id]
+			property = RoomType.find(params[:room_type_id]).property
+
+			@booking.room_type_id = params[:room_type_id]
+			@booking.suggested_activities = property.suggested_activities
+		end
 		
 		if session[:trip_id]	
 			trip = Trip.find(session[:trip_id])
@@ -89,8 +94,6 @@ class BookingsController < ApplicationController
 			@booking.number_of_drivers = trip.number_of_drivers
 
 			@booking.add_rooms_from_trip(trip)
-		else
-			@booking.rooms.build
 		end
 
     respond_to do |format|
