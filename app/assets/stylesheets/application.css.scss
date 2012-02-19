@@ -214,12 +214,16 @@
 	white-space: nowrap;
 }
 
-.text {
-	text-align: left;
+.nowrap {
+	white-space: nowrap;
 }
 
-.comment {
+.prewrap {
 	white-space: pre-wrap;
+}
+
+.text {
+	text-align: left;
 }
 
 .list_line_odd {

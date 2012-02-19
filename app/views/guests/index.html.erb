@@ -43,8 +43,8 @@
 					<%= guest.email_id_2 %>
 				</td>
 		    <td class="text"><%= guest.resident_of %></td>
-		    <td class="comment"><%= guest.address %></td>
-		    <td class="comment"><%= guest.other_information %></td>
+		    <td class="prewrap"><%= guest.address %></td>
+		    <td class="prewrap"><%= guest.other_information %></td>
 		    <td>
 					<%= link_to 'Edit', edit_guest_path(guest) %></br>
 					<%= link_to 'Destroy', guest, confirm: 'Are you sure?',
