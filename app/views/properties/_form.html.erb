@@ -16,6 +16,17 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
+    <%= f.label :agency, "Belongs to" %><br />
+		<% if @property.new_record? %>
+			<%= f.collection_select(:agency_id,
+						Agency.order('name').find_all, :id, :name) %>
+		<% else %>
+			<%= f.collection_select(:agency_id,
+						Agency.order('name').find_all_by_id(@property.agency_id),
+						:id, :name) %>
+		<% end %>
+  </div>
+  <div class="field">
     <%= f.label :phone_number %><br />
     <%= f.text_field :phone_number %>
   </div>

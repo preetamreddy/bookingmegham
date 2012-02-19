@@ -13,6 +13,7 @@
 <table class="index_table" border="1">
   <tr>
    	<th class="text">Name</th>
+   	<th class="text">Belongs to</th>
    	<th class="text">Phone Numbers</th>
    	<th class="number">Children below 5</th>
    	<th class="number">Children btw 5 & 12</th>
@@ -26,6 +27,7 @@
 <% @properties.each do |property| %>
 	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
     <td class="text"><%= property.name %></td>
+    <td class="text"><%= property.agency.name %></td>
     <td class="nowrap">
 			<%= property.phone_number %><br/>
 			<%= property.phone_number_2 %>

@@ -1,4 +1,6 @@
 class Property < ActiveRecord::Base
+	belongs_to :agency
+
 	has_many :room_types
 
 	has_many :value_added_services, dependent: :destroy
