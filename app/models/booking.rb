@@ -34,11 +34,6 @@ class Booking < ActiveRecord::Base
 														allow_nil: true, 
 														message: "should be a number greater than 0"
 
-	validates_numericality_of :number_of_drivers,
-														only_integer: true, greater_than_or_equal_to: 0,
-														allow_nil: true, 
-														message: "should be a number greater than or equal to 0"
-
 	validate 	:ensure_trip_exists, :ensure_room_type_exists,
 						:ensure_check_out_date_is_greater_than_check_in_date,
 						:ensure_booking_is_within_trip_dates,
@@ -48,8 +43,16 @@ class Booking < ActiveRecord::Base
 		return trip.number_of_children_below_5_years
 	end
 
+	def number_of_drivers
+		return trip.number_of_drivers
+	end
+
 	def food_preferences
 		return trip.food_preferences
+	end
+
+	def medical_constraints
+		return trip.medical_constraints
 	end
 
 	def add_rooms_from_trip(trip)

@@ -34,9 +34,8 @@
 			<th class="text">Rooms</th>
 			<th class="text"># People</th>
 			<th class="text">Arriving from</th>
-			<th class="number">Price</th>
-			<th class="text">Food preferences</th>
-			<th class="text">Suggested activities</th>
+			<th class="text">Price</th>
+			<th class="text">Medical constraints</th>
 			<th></th>
 		</tr>
 	
@@ -46,23 +45,23 @@
 					<%= booking.id %>
 				</td>
 		    <td class="text">
-					<%= booking.trip.guest.name %><br/>
-		    	<%= booking.trip.guest.phone_number %>
+					<span class="nowrap"><%= booking.trip.guest.name %></span><br/>
+		    	<span class="nowrap"><%= booking.trip.guest.phone_number %></span>
 				</td>
 		    <td class="text">
 		    	<%= booking.room_type.property.name %></br>
-		      <%= pluralize(booking.number_of_rooms, 
-								booking.room_type.room_type) %></br>
-		    	<%= l booking.check_in_date, :format => :short %> to <%= l booking.check_out_date, :format => :short %><br/>
+		      <span class="nowrap"><%= pluralize(booking.number_of_rooms, 
+								booking.room_type.room_type) %></span></br>
+		    	<span class="nowrap"><%= l booking.check_in_date, :format => :short %> to <%= l booking.check_out_date, :format => :short %></span><br/>
 					(<%= booking.number_of_nights %> nights)
 				</td>
 		    <td class="text">
 					Adults: <%= booking.number_of_adults %><br/>
 					<% if booking.number_of_children_between_5_and_12_years != 0 %>
-		    		Children (btw 5 & 12): <%= booking.number_of_children_between_5_and_12_years %><br/>
+		    		<span class="nowrap">Children btw 5 & 12: <%= booking.number_of_children_between_5_and_12_years %></span><br/>
 					<% end %>
 					<% if booking.number_of_children_below_5_years != 0 %>
-		    		Children below 5: <%= booking.number_of_children_below_5_years %><br/>
+		    		<span class="nowrap">Children below 5: <%= booking.number_of_children_below_5_years %></span><br/>
 					<% end %>
 					<% if booking.number_of_drivers != 0 %>
 						Drivers: <%= booking.number_of_drivers %>
@@ -70,18 +69,14 @@
 				</td>
 		    <td class="text">
 		    	<%= booking.guests_arriving_from %><br/>
-					<%= l booking.guests_arrival_time, :format => :short if booking.guests_arrival_time %>
-				</td>
-		    <td class="number">
-					<% if booking.total_price != 0 %>
-						<%= number_to_currency(booking.total_price) %><br/>
-					<% end %>
-					<% if booking.service_tax != 0 %>
-						Tax: <%= number_to_currency(booking.service_tax) %>
+					<% if booking.guests_arrival_time %>
+						@ <%= l booking.guests_arrival_time, :format => :short %>
 					<% end %>
 				</td>
-		    <td class="text"><%= booking.food_preferences %></td>
-		    <td class="prewrap"><%= booking.suggested_activities %></td>
+				<td class="number">
+					<span class="nowrap"><%= number_to_currency(booking.total_price) %></span><br/>
+				</td>
+		    <td class="text"><%= booking.medical_constraints %></td>
 		
 		    <td class='link'>
 					<%= link_to 'Show details', booking %><br/>
