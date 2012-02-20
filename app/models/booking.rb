@@ -1,4 +1,5 @@
 class Booking < ActiveRecord::Base
+	MEAL_PLANS = ["EPAI", "CPAI", "MAPAI", "APAI"]
 
 	belongs_to :trip
 	belongs_to :room_type
@@ -66,6 +67,9 @@ class Booking < ActiveRecord::Base
 			if !room.number_of_children_between_5_and_12_years
 				room.number_of_children_between_5_and_12_years = 0 
 			end
+		end
+		if suggested_activities == ""
+			self.suggested_activities = room_type.property.suggested_activities
 		end
 	end
 

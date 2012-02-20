@@ -5,7 +5,7 @@
 		<th width="18%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Number of people</th>
 		<th width="16%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Rooms</th>
 		<th width="12%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Food Preferences</th>
-		<th width="20%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Notes</th>
+		<th width="20%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Remarks</th>
 		<th width="16%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Total Price</th>
 	</tr>
 	<tr>
@@ -40,7 +40,7 @@
 			<% end %>
 		</td>
 		<td align="left" style="font-size:10pt;padding:2px 4px"><%= trip.food_preferences %></td>
-		<td align="left" style="font-size:10pt;padding:2px 4px;white-space:pre-wrap"><%= trip.notes %></td>
+		<td align="left" style="font-size:10pt;padding:2px 4px;white-space:pre-wrap"><%= trip.remarks %></td>
 		<td align="left" style="font-size:10pt;padding:2px 4px">
 			<%= number_to_currency(trip.final_price) %><br/>
 			<% if trip.payment_status != Trip::FULLY_PAID %>

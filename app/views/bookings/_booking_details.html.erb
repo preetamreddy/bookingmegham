@@ -27,7 +27,7 @@
 					<% end %>
 				<% end %>
 			</td>
-			<td align="left" style="font-size:10pt;padding:2px 4px;white-space:pre-wrap"><%= booking.notes %></td>
+			<td align="left" style="font-size:10pt;padding:2px 4px;white-space:pre-wrap"><%= booking.proposed_activities %></td>
 			<td align="left" style="font-size:10pt;padding:2px 4px">
 				<% if booking.total_price != 0 %>
 					<%= number_to_currency(booking.total_price) %>

@@ -163,8 +163,8 @@
 <% end %>
 
 <p>
-  <b>Notes:</b>
-  <span class="saved_value"><%= @trip.notes %>
+  <b>Remarks:</b>
+  <span class="saved_value"><%= @trip.remarks %>
 </p>
 </div>
 
@@ -173,8 +173,6 @@
 	<%= link_to 'View Bookings', bookings_path(:trip_id => @trip.id) %>
 	<%= link_to 'Email Trip details', 
 				email_trip_path(:trip_id => @trip.id, :type => 'details') %>
-	<%= link_to 'Email Payment Receipt', 
-				email_trip_path(:trip_id => @trip.id, :type => 'receipt') %>
 </div>
 
 <%= link_to 'Back to Trip Listing', trips_path, :class => "back_link" %>

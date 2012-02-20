@@ -115,11 +115,6 @@ class BookingsController < ApplicationController
 		
 		@booking.initialize_attributes_when_nil
 
-#		if @booking.valid?
-#			@booking.update_room_rate
-#			@booking.update_total_price
-#		end
-
     respond_to do |format|
       if @booking.save
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
