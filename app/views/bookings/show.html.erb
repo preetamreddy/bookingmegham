@@ -64,6 +64,16 @@
 	</table>
 
 <p>
+  <b>Meal Plan:</b>
+  <span class="saved_value"><%= @booking.meal_plan %>
+</p>
+
+<p>
+  <b>Reservation Reference:</b>
+  <span class="saved_value"><%= @booking.reservation_reference %>
+</p>
+
+<p>
   <b>Drivers:</b>
   <span class="saved_value"><%= @booking.number_of_drivers %>
 </p>
@@ -76,6 +86,11 @@
 <%= hidden_p_unless(@booking.guests_arriving_from != "") do %>
   <b>Guests arriving from:</b>
   <span class="saved_value"><%= @booking.guests_arriving_from %>
+<% end %>
+
+<%= hidden_p_unless(@booking.departure_destination != "") do %>
+  <b>Departure to:</b>
+  <span class="saved_value"><%= @booking.departure_destination %>
 <% end %>
 
 <% if @booking.vas_bookings.any? %>
@@ -115,11 +130,31 @@
   <b>Suggested activities:</b>
   <span class="saved_value"><%= @booking.suggested_activities %>
 </p>
+
 <p>
-  <b>Notes:</b>
-  <span class="saved_value"><%= @booking.notes %>
+  <b>Remarks:</b>
+  <span class="saved_value"><%= @booking.remarks %>
 </p>
 
+<b>Billing instructions:</b>
+<table class="nested_table">
+	<tr>
+  	<td>Collect for all extras</td>
+		<td><%= @booking.collect_for_all_extras %></td>
+	</tr>
+	<tr>
+  	<td>Collect for children</td>
+		<td><%= @booking.collect_for_children %></td>
+	</tr>
+	<tr>
+  	<td>Collect for driver and help</td>
+		<td><%= @booking.collect_for_driver_and_help %></td>
+	</tr>
+	<tr>
+  	<td>Bill Banjara H.O. on chosen plan</td>
+		<td><%= @booking.bill_agent_on_chosen_plan %></td>
+	</tr>
+</table>
 
 <div class="action_container">
 	<%= link_to 'Edit', edit_booking_path(@booking) %>
