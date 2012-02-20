@@ -13,11 +13,6 @@
 </p>
 
 <p>
-  <b>Trip Name:</b>
-  <span class="saved_value"><%= @trip.name %>
-</p>
-
-<p>
   <b>Agency:</b>
 	<% if @trip.agency_id %>
   	<span class="saved_value"><%= @trip.agency.name %>
@@ -25,10 +20,8 @@
 </p>
 
 <p>
-  <b>Advisor:</b>
-	<% if @trip.advisor_id %>
-  	<span class="saved_value"><%= @trip.advisor.name %>
-	<% end %>
+  <b>Trip Name:</b>
+  <span class="saved_value"><%= @trip.name %>
 </p>
 
 <p>
@@ -68,41 +61,36 @@
 <% end %>
 
 <p>
-  <b>Number of children below 5 years:</b>
+  <b>Children below 5 years:</b>
   <span class="saved_value"><%= @trip.number_of_children_below_5_years %>
 </p>
 
 <p>
-  <b>Number of drivers:</b>
+  <b>Drivers:</b>
   <span class="saved_value"><%= @trip.number_of_drivers %>
 </p>
 
-<p>
-  <b>Number of trekkers:</b>
-  <span class="saved_value"><%= @trip.number_of_trekkers %>
-</p>
-
-<p>
+<%= hidden_p_unless(@trip.total_price > 0) do %>
   <b>Payment Status:</b>
   <span class="saved_value"><%= @trip.payment_status if @trip.payment_status %>
-</p>
+<% end %>
 
-<%= hidden_p_unless(@trip.total_price) do %>
+<%= hidden_p_unless(@trip.total_price > 0) do %>
   <b>Total price:</b>
   <span class="saved_value"><%= number_to_currency(@trip.total_price) if @trip.total_price %>
 <% end %>
 
-<%= hidden_p_unless(@trip.service_tax) do %>
-  <b>Service tax:</b>
-  <span class="saved_value"><%= number_to_currency(@trip.service_tax) if @trip.service_tax %>
-<% end %>
-
-<%= hidden_p_unless(@trip.discount) do %>
+<%= hidden_p_unless(@trip.total_price > 0) do %>
   <b>Discount:</b>
   <span class="saved_value"><%= number_to_currency(@trip.discount) if @trip.discount %>
 <% end %>
 
-<%= hidden_p_unless(@trip.final_price) do %>
+<%= hidden_p_unless(@trip.total_price > 0) do %>
+  <b>Service tax:</b>
+  <span class="saved_value"><%= number_to_currency(@trip.service_tax) if @trip.service_tax %>
+<% end %>
+
+<%= hidden_p_unless(@trip.total_price > 0) do %>
   <b>Final price:</b>
   <span class="saved_value"><%= number_to_currency(@trip.final_price) if @trip.final_price %>
 <% end %>
@@ -132,39 +120,44 @@
 	</table>
 <% end %>
 
-<%= hidden_p_unless(@trip.balance_payment) do %>
+<%= hidden_p_unless(@trip.total_price > 0) do %>
   <b>Balance:</b>
   <span class="saved_value"><%= number_to_currency(@trip.balance_payment) if @trip.balance_payment %>
 <% end %>
 
-<%= hidden_p_unless(@trip.pay_by_date) do %>
+<%= hidden_p_unless(@trip.total_price > 0) do %>
   <b>Pay by:</b>
   <span class="saved_value"><%= l @trip.pay_by_date if @trip.pay_by_date %>
 <% end %>
 
-<%= hidden_p_unless(@trip.payee_name != "") do %>
-  <b>Name for Receipts:</b>
-  <span class="saved_value"><%= @trip.payee_name %>
-<% end %>
-
-<%= hidden_p_unless(@trip.email_ids != "") do %>
-  <b>Email IDs:</b>
-  <span class="saved_value"><%= @trip.email_ids %>
-<% end %>
-
-<%= hidden_p_unless(@trip.food_preferences != "") do %>
+<p>
   <b>Food preferences:</b>
   <span class="saved_value"><%= @trip.food_preferences %>
-<% end %>
+</p>
 
-<%= hidden_p_unless(@trip.medical_constraints != "") do %>
+<p>
   <b>Medical constraints:</b>
   <span class="saved_value"><%= @trip.medical_constraints %>
-<% end %>
+</p>
+
+<p>
+  <b>Dist. email id(s):</b>
+  <span class="saved_value"><%= @trip.email_ids %>
+</p>
+
+<p>
+  <b>Payee name:</b>
+  <span class="saved_value"><%= @trip.payee_name %>
+</p>
 
 <p>
   <b>Remarks:</b>
   <span class="saved_value"><%= @trip.remarks %>
+</p>
+
+<p>
+  <b>Advisor:</b>
+  <span class="saved_value"><%= @trip.advisor.name %>
 </p>
 </div>
 

@@ -1,5 +1,5 @@
 class Trip < ActiveRecord::Base
-	NOT_PAID = 'Blocked'
+	NOT_PAID = 'Not Paid'
 	PARTIALLY_PAID = 'Partially Paid'
 	FULLY_PAID = 'Fully Paid'
 

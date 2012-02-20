@@ -10,8 +10,14 @@
     </div>
   <% end %>
 
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+    <%= f.label :id, "Trip ID" %><br />
+		<p><span class="highlight">
+			<%= @trip.id %>
+		</span></p>
+	<% end %>
  	<div class="field">
-   	<%= f.label :guest_id, "Guest Id" %><br />
+   	<%= f.label :guest_id, "Guest" %><br />
 		<% if @trip.guest_id %>
     	<%= f.collection_select(:guest_id, 
 						Guest.find_all_by_id(@trip.guest_id), :id, :name) %>
@@ -29,11 +35,6 @@
 						Agency.order('name').find_all_by_id(@trip.agency_id), :id, :name) %>
 		<% end %>
   </div>
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
-   	<%= f.label :advisor_id, "Advisor" %><br />
-    <%= f.collection_select(:advisor_id,
-					Advisor.order('name').find_all_by_agency_id(@trip.advisor.agency.id), :id, :name) %>
-	<% end %>
   <div class="field">
     <%= f.label :name, "Trip name" %><br />
     <%= f.text_field :name, size: 30 %>
@@ -57,10 +58,9 @@
 	<div class="field">
 		<%= f.label :rooms %>
 	</div>
-
 	<div class="nested_form">
 		<%= f.fields_for :rooms %>
-		<%= f.link_to_add "Add row", :rooms %><br/>
+		<%= f.link_to_add "Add new", :rooms %><br/>
 	</div>
 
 	<div class="field">
@@ -72,42 +72,50 @@
     <%= f.number_field :number_of_drivers, :min => 0 %>
 	</div>
 
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
+    <%= f.label :payment_status %><br />
+		<p><span class="highlight">
+    	<%= @trip.payment_status %>
+		</span></p>
+	<% end %>
+	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
     <%= f.label :total_price %><br />
 		<p><span class="highlight">
 			<%= number_to_currency(@trip.total_price) %>
 		</span></p>
 	<% end %>
-
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
+    <%= f.label :discount %><br />
+    <%= f.number_field :discount, :min => 0 %>
+	<% end %>
+	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
     <%= f.label :service_tax %><br />
 		<p><span class="highlight">
 			<%= number_to_currency(@trip.service_tax) %>
 		</span></p>
 	<% end %>
-
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
-    <%= f.label :discount %><br />
-    <%= f.number_field :discount, :min => 0 %>
-	<% end %>
-
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
     <%= f.label :final_price %><br />
 		<p><span class="highlight">
 			<%= number_to_currency(@trip.final_price) %>
 		</span></p>
 	<% end %>
-
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
-		<%= f.label :payments %>
+	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
+    <%= f.label :paid %><br />
+		<p><span class="highlight">
+			<%= number_to_currency(@trip.paid) %>
+		</span></p>
 	<% end %>
 
-	<%= hidden_div_if(@trip.new_record?, class: "nested_form") do %>
+	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
+		<%= f.label :payments %>
+	<% end %>
+	<%= hidden_div_if(@trip.total_price == 0, class: "nested_form") do %>
 		<%= f.fields_for :payments %>
 		<%= f.link_to_add "Add row", :payments %><br/>
 	<% end %>
 
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
 		<% if @trip.balance_payment > 0 %>
     	<%= f.label :balance_payment %><br />
 			<p><span class="highlight">
@@ -120,14 +128,6 @@
 	<% end %>
 
 	<div class="field">
-    <%= f.label :payee_name %><br />
-    <%= f.text_field :payee_name %>
-  </div>
-	<div class="field">
-    <%= f.label :email_ids %><br />
-    <%= f.text_field :email_ids %>
-  </div>
-	<div class="field">
     <%= f.label :food_preferences %><br />
     <%= f.text_field :food_preferences %>
   </div>
@@ -135,10 +135,23 @@
     <%= f.label :medical_constraints, "Medical issues" %><br />
     <%= f.text_field :medical_constraints %>
   </div>
+	<div class="field">
+    <%= f.label :email_ids, "Dist. email id(s)" %><br />
+    <%= f.text_field :email_ids %>
+  </div>
+	<div class="field">
+    <%= f.label :payee_name %><br />
+    <%= f.text_field :payee_name %>
+  </div>
   <div class="field">
     <%= f.label :remarks %><br />
     <%= f.text_area :remarks, rows: 6, cols: 50 %>
   </div>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+   	<%= f.label :advisor_id, "Advisor" %><br />
+    <%= f.collection_select(:advisor_id,
+					Advisor.order('name').find_all_by_agency_id(@trip.advisor.agency.id), :id, :name) %>
+	<% end %>
   <div class="action_container">
     <%= f.submit %>
   </div>
