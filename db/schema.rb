@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120219181451) do
+ActiveRecord::Schema.define(:version => 20120220080157) do
 
   create_table "advisors", :force => true do |t|
     t.integer  "agency_id"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20120219181451) do
     t.time     "guests_arrival_time"
     t.string   "guests_arriving_from"
     t.integer  "total_price"
-    t.text     "notes"
+    t.text     "remarks"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "room_type_id"
@@ -52,6 +52,13 @@ ActiveRecord::Schema.define(:version => 20120219181451) do
     t.integer  "number_of_nights"
     t.integer  "service_tax"
     t.text     "suggested_activities"
+    t.string   "departure_destination"
+    t.integer  "collect_for_all_extras",      :default => 1
+    t.integer  "collect_for_children",        :default => 1
+    t.integer  "collect_for_driver_and_help", :default => 1
+    t.integer  "bill_agent_on_chosen_plan",   :default => 1
+    t.string   "meal_plan"
+    t.string   "reservation_reference"
   end
 
   create_table "feedbacks", :force => true do |t|
@@ -147,7 +154,7 @@ ActiveRecord::Schema.define(:version => 20120219181451) do
     t.integer  "number_of_children_below_5_years"
     t.string   "food_preferences"
     t.date     "pay_by_date"
-    t.text     "notes"
+    t.text     "remarks"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
