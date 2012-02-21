@@ -5,7 +5,9 @@
 		<% @chart_date_range_short.each do |date| %>
 			<th><%= date %></th>
 		<% end %>
-		<th></th>
+		<% if session[:trip_id] %>
+			<th></th>
+		<% end %>
   </tr>
 
 	<% @properties.each do |property| %>
@@ -17,7 +19,9 @@
 					<%= @availability[[:property, property.id, date]] %>
 				<% end %>
 			<% end %>
-			<td></td>
+			<% if session[:trip_id] %>
+				<td></td>
+			<% end %>
 		</tr>
 
 		<% @room_types.each do |room_type| %>
@@ -32,9 +36,11 @@
 								<%= @availability[[:room_type, room_type.id, date]] %>
 						<% end %>
 					<% end %>
-					<td>
-						<%= link_to 'New Booking', new_booking_path(:room_type_id => room_type.id), :remote => true %>
-					</td>
+					<% if session[:trip_id] %>
+						<td>
+							<%= link_to 'Book', new_booking_path(:room_type_id => room_type.id), :remote => true %>
+						</td>
+					<% end %>
 				</tr>
 			<% end %>
 		<% end %>
