@@ -7,12 +7,7 @@
 <% end %>
 
 <% if notice %>
-	<div id="error_explanation">
-		<h2>Unable to destroy</h2>
-		<ul>
-			<li><%= notice %></li>
-		</ul>
-	</div>
+	<p id="error"><%= notice %></p>
 <% end %>
 
 <% if @room_types.count > 0 %>

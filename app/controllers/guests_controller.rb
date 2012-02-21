@@ -24,20 +24,25 @@ class GuestsController < ApplicationController
 
 		@records_returned = @guests.count
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @guests }
-    end
+   	respond_to do |format|
+     	format.html # index.html.erb
+     	format.json { render json: @guests }
+		end
   end
 
   # GET /guests/1
   # GET /guests/1.json
   def show
-    @guest = Guest.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @guest }
+		begin
+    	@guest = Guest.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid guest #{params[:id]}"
+			redirect_to guests_url, notice: 'Invalid Guest'
+		else
+    	respond_to do |format|
+      	format.html # show.html.erb
+      	format.json { render json: @guest }
+			end
     end
   end
 
@@ -54,7 +59,12 @@ class GuestsController < ApplicationController
 
   # GET /guests/1/edit
   def edit
-    @guest = Guest.find(params[:id])
+		begin
+    	@guest = Guest.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid guest #{params[:id]}"
+			redirect_to guests_url, notice: 'Invalid Guest'
+		end
   end
 
   # POST /guests

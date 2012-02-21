@@ -3,8 +3,11 @@ class TripsController < ApplicationController
   # GET /trips.json
   def index
 		if params[:guest_id]
-			session[:guest_id] = params[:guest_id].to_i
-			session[:trip_id] = nil
+			guest_id = params[:guest_id].to_i
+			if Guest.find_all_by_id(guest_id).any?
+				session[:guest_id] = guest_id
+				session[:trip_id] = nil
+			end
 		end
 
 		if session[:guest_id]
@@ -39,11 +42,16 @@ class TripsController < ApplicationController
   # GET /trips/1
   # GET /trips/1.json
   def show
-    @trip = Trip.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @trip }
+		begin
+    	@trip = Trip.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid trip #{params[:id]}"
+			redirect_to trips_url, notice: 'Invalid Trip'
+		else
+    	respond_to do |format|
+      	format.html # show.html.erb
+      	format.json { render json: @trip }
+			end
     end
   end
 
@@ -68,7 +76,12 @@ class TripsController < ApplicationController
 
   # GET /trips/1/edit
   def edit
-    @trip = Trip.find(params[:id])
+		begin
+    	@trip = Trip.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid trip #{params[:id]}"
+			redirect_to trips_url, notice: 'Invalid Trip'
+		end
   end
 
   # POST /trips

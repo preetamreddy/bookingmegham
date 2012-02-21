@@ -3,8 +3,11 @@ class BookingsController < ApplicationController
   # GET /bookings.json
   def index
 		if params[:trip_id]
-			session[:trip_id] = params[:trip_id].to_i
-			session[:guest_id] = Trip.find(session[:trip_id]).guest_id
+			trip_id = params[:trip_id].to_i
+			if Trip.find_all_by_id(trip_id).any?
+				session[:trip_id] = params[:trip_id].to_i
+				session[:guest_id] = Trip.find(session[:trip_id]).guest_id
+			end
 		end
 			
 		if params[:property_id]
@@ -68,11 +71,16 @@ class BookingsController < ApplicationController
   # GET /bookings/1
   # GET /bookings/1.json
   def show
-    @booking = Booking.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @booking }
+		begin
+    	@booking = Booking.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid booking #{params[:id]}"
+			redirect_to bookings_url, notice: 'Invalid Booking'
+		else
+    	respond_to do |format|
+      	format.html # show.html.erb
+      	format.json { render json: @booking }
+			end
     end
   end
 
@@ -103,7 +111,12 @@ class BookingsController < ApplicationController
 
   # GET /bookings/1/edit
   def edit
-    @booking = Booking.find(params[:id])
+		begin
+    	@booking = Booking.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid booking #{params[:id]}"
+			redirect_to bookings_url, notice: 'Invalid Booking'
+		end
   end
 
   # POST /bookings

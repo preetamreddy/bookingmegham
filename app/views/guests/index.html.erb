@@ -13,12 +13,7 @@
 	</div>
 <% else %>
 	<% if notice %>
-		<div id="error_explanation">
-			<h2>Unable to destroy</h2>
-			<ul>
-				<li><%= notice %></li>
-			</ul>
-		</div>
+		<p id="error"><%= notice %></p>
 	<% end %>
 
 	<table class="index_table" border="1">

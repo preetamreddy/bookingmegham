@@ -13,7 +13,7 @@ Bookingmegham::Application.routes.draw do
 		get 'booking_chart' => :index
 	end
 
-  resources :users
+  resources :users, :except => :show
 
   resources :advisors
 
@@ -23,7 +23,7 @@ Bookingmegham::Application.routes.draw do
 		get :email, :on => :member
 	end
 
-  resources :feedbacks
+  resources :feedbacks, :except => :destroy
 
   resources :value_added_services
 

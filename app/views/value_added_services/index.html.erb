@@ -1,12 +1,7 @@
 <h1>Listing Value Added Services</h1>
 
 <% if notice %>
-	<div id="error_explanation">
-		<h2>Unable to destroy</h2>
-		<ul>
-			<li><%= notice %></li>
-		</ul>
-	</div>
+	<p id="error"><%= notice %></p>
 <% end %>
 
 <% if @value_added_services.count > 0 %>

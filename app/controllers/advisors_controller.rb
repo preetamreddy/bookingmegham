@@ -5,7 +5,10 @@ class AdvisorsController < ApplicationController
 		if params[:agency_id] == 'All'
 			session[:agency_id] = nil
 		elsif params[:agency_id]
-			session[:agency_id] = params[:agency_id].to_i
+			agency_id = params[:agency_id].to_i
+			if Agency.find_all_by_id(agency_id).any?
+				session[:agency_id] = params[:agency_id].to_i
+			end
 		end
 
 		if session[:agency_id]
@@ -24,11 +27,16 @@ class AdvisorsController < ApplicationController
   # GET /advisors/1
   # GET /advisors/1.json
   def show
-    @advisor = Advisor.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @advisor }
+		begin
+    	@advisor = Advisor.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid advisor #{params[:id]}"
+			redirect_to advisors_url, notice: 'Invalid Advisor'
+		else
+    	respond_to do |format|
+      	format.html # show.html.erb
+      	format.json { render json: @advisor }
+			end
     end
   end
 
@@ -46,7 +54,12 @@ class AdvisorsController < ApplicationController
 
   # GET /advisors/1/edit
   def edit
-    @advisor = Advisor.find(params[:id])
+		begin
+    	@advisor = Advisor.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid advisor #{params[:id]}"
+			redirect_to advisors_url, notice: 'Invalid Advisor'
+		end
   end
 
   # POST /advisors

@@ -15,11 +15,16 @@ class AgenciesController < ApplicationController
   # GET /agencies/1
   # GET /agencies/1.json
   def show
-    @agency = Agency.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @agency }
+		begin
+    	@agency = Agency.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid agency #{params[:id]}"
+			redirect_to agencies_url, notice: 'Invalid Agency'
+		else
+    	respond_to do |format|
+      	format.html # show.html.erb
+      	format.json { render json: @agency }
+			end
     end
   end
 
@@ -36,7 +41,12 @@ class AgenciesController < ApplicationController
 
   # GET /agencies/1/edit
   def edit
-    @agency = Agency.find(params[:id])
+		begin
+    	@agency = Agency.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid agency #{params[:id]}"
+			redirect_to agencies_url, notice: 'Invalid Agency'
+		end
   end
 
   # POST /agencies

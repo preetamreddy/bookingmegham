@@ -5,7 +5,10 @@ class RoomTypesController < ApplicationController
 		if params[:property_id] == 'All'
 			session[:property_id] = nil
 		elsif params[:property_id]
-			session[:property_id] = params[:property_id].to_i
+			property_id = params[:property_id].to_i
+			if Property.find_all_by_id(property_id).any?
+				session[:property_id] = params[:property_id].to_i
+			end
 		end	
 
 		if session[:property_id]
@@ -25,11 +28,16 @@ class RoomTypesController < ApplicationController
   # GET /room_types/1
   # GET /room_types/1.json
   def show
-    @room_type = RoomType.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @room_type }
+		begin
+    	@room_type = RoomType.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid room type #{params[:id]}"
+			redirect_to room_types_url, notice: 'Invalid Room Type'
+		else
+    	respond_to do |format|
+      	format.html # show.html.erb
+      	format.json { render json: @room_type }
+			end
     end
   end
 
@@ -47,7 +55,12 @@ class RoomTypesController < ApplicationController
 
   # GET /room_types/1/edit
   def edit
-    @room_type = RoomType.find(params[:id])
+		begin
+    	@room_type = RoomType.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid room type #{params[:id]}"
+			redirect_to room_types_url, notice: 'Invalid Room Type'
+		end
   end
 
   # POST /room_types

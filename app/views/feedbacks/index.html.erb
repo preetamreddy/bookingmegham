@@ -1,6 +1,10 @@
 <h1>Listing feedbacks</h1>
 
 <% if @feedbacks.count > 0 %>
+	<% if notice %>
+		<p id="error"><%= notice %></p>
+	<% end %>
+
 	<table class="index_table" border="1">
 	  <tr>
 	    <th class="text">Model</th>

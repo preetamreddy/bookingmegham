@@ -5,7 +5,10 @@ class UsersController < ApplicationController
 		if params[:agency_id] == 'All'
 			session[:agency_id] = nil
 		elsif params[:agency_id]
-			session[:agency_id] = params[:agency_id].to_i
+			agency_id = params[:agency_id].to_i
+			if Agency.find_all_by_id(agency_id).any?
+				session[:agency_id] = params[:agency_id].to_i
+			end
 		end
 
 		if session[:agency_id]
@@ -36,7 +39,12 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id])
+		begin
+    	@user = User.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid user #{params[:id]}"
+			redirect_to users_url, notice: 'Invalid User'
+		end
   end
 
   # POST /users

@@ -15,11 +15,16 @@ class FeedbacksController < ApplicationController
   # GET /feedbacks/1
   # GET /feedbacks/1.json
   def show
-    @feedback = Feedback.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @feedback }
+		begin
+    	@feedback = Feedback.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid feedback #{params[:id]}"
+			redirect_to feedbacks_url, notice: 'Invalid Feedback'
+		else
+    	respond_to do |format|
+      	format.html # show.html.erb
+      	format.json { render json: @feedback }
+			end
     end
   end
 
@@ -36,7 +41,12 @@ class FeedbacksController < ApplicationController
 
   # GET /feedbacks/1/edit
   def edit
-    @feedback = Feedback.find(params[:id])
+		begin
+    	@feedback = Feedback.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid feedback #{params[:id]}"
+			redirect_to feedbacks_url, notice: 'Invalid Feedback'
+		end
   end
 
   # POST /feedbacks

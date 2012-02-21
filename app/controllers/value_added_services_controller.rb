@@ -13,11 +13,16 @@ class ValueAddedServicesController < ApplicationController
   # GET /value_added_services/1
   # GET /value_added_services/1.json
   def show
-    @value_added_service = ValueAddedService.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @value_added_service }
+		begin
+    	@value_added_service = ValueAddedService.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid value added service #{params[:id]}"
+			redirect_to value_added_services_url, notice: 'Invalid Value Added Service'
+		else
+    	respond_to do |format|
+      	format.html # show.html.erb
+      	format.json { render json: @value_added_service }
+			end
     end
   end
 
@@ -35,7 +40,12 @@ class ValueAddedServicesController < ApplicationController
 
   # GET /value_added_services/1/edit
   def edit
-    @value_added_service = ValueAddedService.find(params[:id])
+		begin
+    	@value_added_service = ValueAddedService.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid value added service #{params[:id]}"
+			redirect_to value_added_services_url, notice: 'Invalid Value Added Service'
+		end
   end
 
   # POST /value_added_services

@@ -15,12 +15,17 @@ class PropertiesController < ApplicationController
   # GET /properties/1
   # GET /properties/1.json
   def show
-    @property = Property.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @property }
-    end
+		begin
+    	@property = Property.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid property #{params[:id]}"
+			redirect_to properties_url, notice: 'Invalid Property'
+		else
+    	respond_to do |format|
+      	format.html # show.html.erb
+      	format.json { render json: @property }
+    	end
+		end
   end
 
   # GET /properties/new
@@ -37,12 +42,12 @@ class PropertiesController < ApplicationController
 
   # GET /properties/1/edit
   def edit
-    @property = Property.find(params[:id])
-
-		if @property.value_added_services.empty?
-			@property.value_added_services.build
+		begin
+    	@property = Property.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+			logger.error "Attempt to access invalid property #{params[:id]}"
+			redirect_to properties_url, notice: 'Invalid Property'
 		end
-
   end
 
   # POST /properties
