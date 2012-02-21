@@ -71,9 +71,6 @@
 					<% if trip.number_of_drivers != 0 %>
 						Drivers: <%= trip.number_of_drivers %>
 					<% end %>
-					<% if trip.rooms.empty? and trip.number_of_trekkers != 0 %>
-						Number of trekkers: <%= trip.number_of_trekkers %>
-					<% end %>
 				</td>
 		    <td class="number">
 					<%= trip.payment_status %><br/>

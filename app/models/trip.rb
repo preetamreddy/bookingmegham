@@ -26,8 +26,7 @@ class Trip < ActiveRecord::Base
 	before_validation :update_end_date
 
 	before_save :set_defaults_if_nil, :update_vas_unit_price,
-							:update_payment_status, :update_pay_by_date,
-							:update_number_of_trekkers
+							:update_payment_status, :update_pay_by_date
 
 	after_save :update_line_item_status
 
@@ -173,20 +172,6 @@ class Trip < ActiveRecord::Base
 				self.pay_by_date = nil
 			elsif payment_status == PARTIALLY_PAID
 				self.pay_by_date = start_date - 21
-			end
-		end
-
-		def update_number_of_trekkers
-			trekkers = 0
-			if vas_bookings.any?
-				vas_bookings.each do |vas_booking|
-					if vas_booking.value_added_service.is_trek?
-						trekkers = vas_booking.number_of_people
-					end
-				end
-			end
-			if trekkers != 0
-				self.number_of_trekkers = trekkers
 			end
 		end
 

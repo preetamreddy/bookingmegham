@@ -35,9 +35,6 @@
 			<% if trip.number_of_drivers != 0 %>
 				Drivers: <%= trip.number_of_drivers %>
 			<% end %>
-			<% if trip.rooms.empty? and trip.number_of_trekkers != 0 %>
-				Number of trekkers: <%= trip.number_of_trekkers %>
-			<% end %>
 		</td>
 		<td align="left" style="font-size:10pt;padding:2px 4px"><%= trip.food_preferences %></td>
 		<td align="left" style="font-size:10pt;padding:2px 4px;white-space:pre-wrap"><%= trip.remarks %></td>
