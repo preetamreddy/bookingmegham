@@ -17,17 +17,10 @@
   <span class="saved_value"><%= @feedback.criticality %></span>
 </p>
 
-<% if @feedback.defect %>
+<% if @feedback.description %>
 <p>
-  <b>Defect:</b>
-  <span class="saved_value"><%= @feedback.defect %></span>
-</p>
-<% end %>
-
-<% if @feedback.suggestion %>
-<p>
-  <b>Suggestion:</b>
-  <span class="saved_value"><%= @feedback.suggestion %></span>
+  <b>Description:</b>
+  <span class="saved_value"><%= @feedback.description %></span>
 </p>
 <% end %>
 

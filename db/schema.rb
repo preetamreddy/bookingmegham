@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120220114107) do
+ActiveRecord::Schema.define(:version => 20120221130342) do
 
   create_table "advisors", :force => true do |t|
     t.integer  "agency_id"
@@ -63,8 +63,7 @@ ActiveRecord::Schema.define(:version => 20120220114107) do
   create_table "feedbacks", :force => true do |t|
     t.string   "model"
     t.string   "view"
-    t.text     "defect"
-    t.text     "suggestion"
+    t.text     "description"
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"

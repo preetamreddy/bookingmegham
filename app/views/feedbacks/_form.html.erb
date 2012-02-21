@@ -12,16 +12,17 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :model %><br />
+    <%= f.label :model, "Menu option" %><br />
     <%= f.select(:model, options_for_select([['', ''],
 													['Availability Chart', 'Availability Chart'],
-													['Booking', 'Booking'],
+													['Booking Chart', 'Booking Chart'],
+													['Bookings', 'Bookings'],
 													['Feedback', 'Feedback'],
-													['Guest', 'Guest'],
-													['Property', 'Property'],
-													['Room Type', 'Room Type'],
-													['Trip', 'Trip'],
-													['Value Added Service', 'Value Added Service']],
+													['Guests', 'Guests'],
+													['Properties', 'Properties'],
+													['Room Types', 'Room Types'],
+													['Trips', 'Trips'],
+													['Value Added Services', 'Value Added Services']],
 													@feedback.model)) %>
   </div>
   <div class="field">
@@ -48,12 +49,8 @@
 													@feedback.criticality)) %>
   </div>
   <div class="field">
-    <%= f.label :defect %><br />
-    <%= f.text_area :defect, :rows => 6 %>
-  </div>
-  <div class="field">
-    <%= f.label :suggestion %><br />
-    <%= f.text_area :suggestion, :rows => 6 %>
+    <%= f.label :defect, "Description" %><br />
+    <%= f.text_area :description, :rows => 6 %>
   </div>
 
 	<% if !@feedback.new_record? %>
