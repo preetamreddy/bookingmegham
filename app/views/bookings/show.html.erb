@@ -28,18 +28,18 @@
 </p>
 
 <p>
-  <b>Check in date:</b>
+  <b>Check in:</b>
   <span class="saved_value"><%= l @booking.check_in_date %>
+</p>
+
+<p>
+  <b>Check out:</b>
+  <span class="saved_value"><%= l @booking.check_out_date %>
 </p>
 
 <p>
   <b>Nights:</b>
   <span class="saved_value"><%= @booking.number_of_nights %>
-</p>
-
-<p>
-  <b>Check out date:</b>
-  <span class="saved_value"><%= l @booking.check_out_date %>
 </p>
 
 	<b>Rooms:</b>
@@ -68,31 +68,6 @@
   <span class="saved_value"><%= @booking.meal_plan %>
 </p>
 
-<p>
-  <b>Reservation Reference:</b>
-  <span class="saved_value"><%= @booking.reservation_reference %>
-</p>
-
-<p>
-  <b>Drivers:</b>
-  <span class="saved_value"><%= @booking.number_of_drivers %>
-</p>
-
-<%= hidden_p_unless(@booking.guests_arrival_time) do %>
-  <b>Guests arrival time:</b>
-  <span class="saved_value"><%= l @booking.guests_arrival_time, :format => :short if @booking.guests_arrival_time %>
-<% end %>
-
-<%= hidden_p_unless(@booking.guests_arriving_from != "") do %>
-  <b>Guests arriving from:</b>
-  <span class="saved_value"><%= @booking.guests_arriving_from %>
-<% end %>
-
-<%= hidden_p_unless(@booking.departure_destination != "") do %>
-  <b>Departure to:</b>
-  <span class="saved_value"><%= @booking.departure_destination %>
-<% end %>
-
 <% if @booking.vas_bookings.any? %>
 	<b>Value Added Services:</b>
 	<table class="nested_table">
@@ -117,6 +92,11 @@
 <% end %>
 
 <p>
+  <b>Suggested activities:</b>
+  <span class="saved_value"><%= @booking.suggested_activities %>
+</p>
+
+<p>
   <b>Total price:</b>
   <span class="saved_value"><%= number_to_currency(@booking.total_price) if @booking.total_price %>
 </p>
@@ -124,16 +104,6 @@
 <p>
   <b>Service tax:</b>
   <span class="saved_value"><%= number_to_currency(@booking.service_tax) if @booking.service_tax %>
-</p>
-
-<p>
-  <b>Suggested activities:</b>
-  <span class="saved_value"><%= @booking.suggested_activities %>
-</p>
-
-<p>
-  <b>Remarks:</b>
-  <span class="saved_value"><%= @booking.remarks %>
 </p>
 
 <b>Billing instructions:</b>
@@ -155,6 +125,31 @@
 		<td><%= @booking.bill_agent_on_chosen_plan %></td>
 	</tr>
 </table>
+
+<p>
+  <b>Reservation Reference:</b>
+  <span class="saved_value"><%= @booking.reservation_reference %>
+</p>
+
+<%= hidden_p_unless(@booking.guests_arriving_from != "") do %>
+  <b>Arriving from:</b>
+  <span class="saved_value"><%= @booking.guests_arriving_from %>
+<% end %>
+
+<%= hidden_p_unless(@booking.guests_arrival_time) do %>
+  <b>Aarrival time:</b>
+  <span class="saved_value"><%= l @booking.guests_arrival_time, :format => :short if @booking.guests_arrival_time %>
+<% end %>
+
+<%= hidden_p_unless(@booking.departure_destination != "") do %>
+  <b>Departure to:</b>
+  <span class="saved_value"><%= @booking.departure_destination %>
+<% end %>
+
+<p>
+  <b>Remarks:</b>
+  <span class="saved_value"><%= @booking.remarks %>
+</p>
 
 <div class="action_container">
 	<%= link_to 'Edit', edit_booking_path(@booking) %>

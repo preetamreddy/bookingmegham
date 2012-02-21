@@ -45,7 +45,7 @@
 			:end_year => Time.now.year + 1, :prompt => true %>
   </div>
 	<div class="field">
-		<%= f.label :number_of_days, "Nights" %>
+		<%= f.label :number_of_nights, "Nights" %>
 		<%= f.number_field :number_of_nights, min: 1 %>
 	</div>
 
@@ -58,21 +58,11 @@
 	<div class="field">
 		<%= f.label :rooms %>
 	</div>
-	
 	<div class="nested_form">
 		<%= f.fields_for :rooms %>
-		<%= f.link_to_add "Add row", :rooms %><br/>
+		<%= f.link_to_add "Add new", :rooms %><br/>
 	</div>
 
-  <div class="field">
-    <%= f.label :number_of_drivers, "Drivers" %><br />
-    <%= f.number_field :number_of_drivers %>
-  </div>
-
-  <div class="field">
-    <%= f.label :suggested_activities, "Activities" %><br />
-    <%= f.text_area :suggested_activities, rows: 6 %>
-  </div>
   <div class="action_container">
     <%= f.submit %>
   </div>

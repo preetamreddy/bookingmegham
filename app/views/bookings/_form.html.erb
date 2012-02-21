@@ -11,6 +11,13 @@
     </div>
   <% end %>
 
+	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
+		<%= f.label :id, "Booking ID" %><br />
+		<p><span class="highlight">
+			<%= @booking.id %>
+		</span></p>
+	<% end %>
+
   <div class="field">
    	<%= f.label :trip_id %><br />
 		<% if @booking.trip_id %>
@@ -72,10 +79,9 @@
 	<div class="field">
 		<%= f.label :rooms %>
 	</div>
-	
 	<div class="nested_form">
 		<%= f.fields_for :rooms %>
-		<%= f.link_to_add "Add row", :rooms %><br/>
+		<%= f.link_to_add "Add new", :rooms %><br/>
 	</div>
 
 	<div class="field">
@@ -83,51 +89,34 @@
 		<%= f.select :meal_plan, Booking::MEAL_PLANS,
 					prompt: 'Select a meal plan' %>
 	</div>
-	<div class="field">
-    <%= f.label :reservation_reference, "Res Ref." %><br />
-    <%= f.text_field :reservation_reference %>
-	</div>
-	<div class="field">
-    <%= f.label :number_of_drivers, "Drivers" %><br />
-    <%= f.number_field :number_of_drivers, :min => 0 %>
-	</div>
-	<div class="field">
-    <%= f.label :guests_arrival_time, "Arrival time" %><br />
-    <%= f.time_select :guests_arrival_time, :prompt => true %>
-	</div>
-	<div class="field">
-    <%= f.label :guests_arriving_from, "Arr. from" %><br />
-    <%= f.text_field :guests_arriving_from %>
-	</div>
-	<div class="field">
-    <%= f.label :departure_destination, "Departure to" %><br />
-    <%= f.text_field :departure_destination %>
-	</div>
 
 	<% if @booking.room_type_id %>
 		<div class="field">
 			<%= f.label :value_added_services, "VAS" %>
 		</div>
-	
 		<div class="nested_form">
 			<%= f.fields_for :vas_bookings %>
-			<%= f.link_to_add "Add row", :vas_bookings %><br/>
+			<%= f.link_to_add "Add new", :vas_bookings %><br/>
 		</div>
-	<% end %>
-
-	<%= hidden_div_if(!@booking.total_price, class: "field") do %>
-    <%= f.label :total_price %><br />
-    <%= f.text_field :total_price, :readonly => true %>
 	<% end %>
 
   <div class="field">
     <%= f.label :suggested_activities %><br />
     <%= f.text_area :suggested_activities, rows: 6 %>
   </div>
-  <div class="field">
-    <%= f.label :remarks %><br />
-    <%= f.text_area :remarks, rows: 6 %>
-  </div>
+
+	<%= hidden_div_if(!@booking.total_price, class: "field") do %>
+    <%= f.label :total_price %><br />
+		<p><span class="highlight">
+    	<%= number_to_currency(@booking.total_price) %>
+		</span></p>
+	<% end %>
+	<%= hidden_div_if(!@booking.total_price, class: "field") do %>
+    <%= f.label :service_tax %><br />
+		<p><span class="highlight">
+    	<%= number_to_currency(@booking.service_tax) %>
+		</span></p>
+	<% end %>
 	<div class="field">
 		<%= f.label :billing_instructions, "Billing Instr." %><br />
 	</div>
@@ -141,6 +130,29 @@
 		<%= f.check_box :bill_agent_on_chosen_plan, default: 1 %>
 		<%= f.label :bill_agent_on_chosen_plan, "Bill Banjara H.O. on chosen plan" %><br/>
 	</div>
+	<div class="field">
+    <%= f.label :reservation_reference, "Res Ref." %><br />
+    <%= f.text_field :reservation_reference %>
+	</div>
+
+	<div class="field">
+    <%= f.label :guests_arriving_from, "Arr. from" %><br />
+    <%= f.text_field :guests_arriving_from %>
+	</div>
+	<div class="field">
+    <%= f.label :guests_arrival_time, "Arrival time" %><br />
+    <%= f.time_select :guests_arrival_time, :prompt => true %>
+	</div>
+	<div class="field">
+    <%= f.label :departure_destination, "Departure to" %><br />
+    <%= f.text_field :departure_destination %>
+	</div>
+
+  <div class="field">
+    <%= f.label :remarks %><br />
+    <%= f.text_area :remarks, rows: 6 %>
+  </div>
+
   <div class="action_container">
     <%= f.submit %>
   </div>

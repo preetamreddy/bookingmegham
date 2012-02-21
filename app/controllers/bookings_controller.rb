@@ -35,7 +35,7 @@ class BookingsController < ApplicationController
 										order("check_in_date, check_out_date").
 										find_all_by_trip_id(session[:trip_id])
 		elsif session[:guest_id]
-			trips = Trip.select("id").find_all_by_guest_id(session[:guest_id])
+			trips = Trip.find_all_by_guest_id(session[:guest_id])
 			@bookings = Booking.paginate(page: params[:page], per_page: 5).
 										order("check_in_date, check_out_date").
 										find_all_by_trip_id(trips)
@@ -91,8 +91,6 @@ class BookingsController < ApplicationController
 			trip = Trip.find(session[:trip_id])
 
 			@booking.trip_id = session[:trip_id]
-			@booking.number_of_drivers = trip.number_of_drivers
-
 			@booking.add_rooms_from_trip(trip)
 		end
 
