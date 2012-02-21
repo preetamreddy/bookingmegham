@@ -5,7 +5,7 @@
 		<th width="7%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">To</th>
 		<th width="21%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Destination</th>
 		<th width="15%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Value Added Services</th>
-		<th width="40%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Proposed activities</th>
+		<th width="40%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Suggested activities</th>
 		<th width="10%" align="left" style="font-size:10pt;background:#605C59;color:#FFF">Total Price</th>
 	</tr>
 	<% trip.bookings.order('check_in_date').each do |booking| %>
@@ -27,7 +27,7 @@
 					<% end %>
 				<% end %>
 			</td>
-			<td align="left" style="font-size:10pt;padding:2px 4px;white-space:pre-wrap"><%= booking.proposed_activities %></td>
+			<td align="left" style="font-size:10pt;padding:2px 4px;white-space:pre-wrap"><%= booking.suggested_activities %></td>
 			<td align="left" style="font-size:10pt;padding:2px 4px">
 				<% if booking.total_price != 0 %>
 					<%= number_to_currency(booking.total_price) %>
