@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  trip_id: 1
+  taxi_id: 1
+  number_of_vehicles: 1
+  unit_price: 1
+  remarks: MyText
+  reservation_reference: MyString
+  pickup_address: MyText
+  pickup_time: 2012-02-25 10:42:37
+  drop_off_city: MyString
+
+two:
+  trip_id: 1
+  taxi_id: 1
+  number_of_vehicles: 1
+  unit_price: 1
+  remarks: MyText
+  reservation_reference: MyString
+  pickup_address: MyText
+  pickup_time: 2012-02-25 10:42:37
+  drop_off_city: MyString

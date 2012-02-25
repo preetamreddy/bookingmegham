@@ -15,6 +15,8 @@ class Trip < ActiveRecord::Base
 
 	has_many :bookings
 
+	has_many :taxi_bookings
+
 	has_many :payments, dependent: :destroy
 	accepts_nested_attributes_for :payments, :reject_if => :all_blank,
 		:allow_destroy => true
@@ -96,7 +98,15 @@ class Trip < ActiveRecord::Base
 			price_for_vas = 0
 		end
 
-		ttl_price = price_for_bookings + price_for_vas
+		if taxi_bookings.any?
+			price_for_transport = taxi_bookings.to_a.sum { |taxi_booking|
+				taxi_booking.unit_price * taxi_booking.number_of_vehicles *
+					number_of_days }
+		else
+			price_for_transport = 0
+		end
+
+		ttl_price = price_for_bookings + price_for_vas + price_for_transport
 
 		return ttl_price
 	end

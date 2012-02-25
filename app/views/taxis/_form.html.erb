@@ -1,0 +1,43 @@
+<%= form_for(@taxi) do |f| %>
+  <% if @taxi.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@taxi.errors.count, "error") %> prohibited this taxi from being saved:</h2>
+
+      <ul>
+      <% @taxi.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :agency_id, "Operator" %><br />
+		<% if @taxi.new_record? %>
+			<%= f.collection_select(:agency_id,
+				Agency.order('name').find_all, :id, :name) %>
+		<% else %>
+			<%= f.collection_select(:agency_id,
+				Agency.order('name').find_all_by_id(@taxi.agency_id), :id, :name) %>
+		<% end %>
+  </div>
+  <div class="field">
+    <%= f.label :model %><br />
+    <%= f.text_field :model %>
+  </div>
+  <div class="field">
+    <%= f.label :max_passengers %><br />
+    <%= f.number_field :max_passengers %>
+  </div>
+  <div class="field">
+    <%= f.label :unit_price %><br />
+    <%= f.number_field :unit_price %>
+  </div>
+  <div class="field">
+    <%= f.label :terrain_limitations %><br />
+    <%= f.text_area :terrain_limitations, :rows => 6 %>
+  </div>
+  <div class="action_container">
+    <%= f.submit %>
+  </div>
+<% end %>

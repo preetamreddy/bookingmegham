@@ -1,0 +1,35 @@
+<p id="notice"><span class"saved_value"><%= notice %></span></p>
+<h1>Taxi details</h1>
+
+<div class="show_saved_record">
+<p>
+  <b>Operator:</b>
+  <span class="saved_value"><%= @taxi.agency.name %></span>
+</p>
+
+<p>
+  <b>Model:</b>
+  <span class="saved_value"><%= @taxi.model %></span>
+</p>
+
+<p>
+  <b>Max passengers:</b>
+  <span class="saved_value"><%= @taxi.max_passengers %></span>
+</p>
+
+<p>
+  <b>Unit price:</b>
+  <span class="saved_value"><%= number_to_currency(@taxi.unit_price) %></span>
+</p>
+
+<p>
+  <b>Terrain limitations:</b>
+  <span class="saved_value"><%= @taxi.terrain_limitations %></span>
+</p>
+</div>
+
+<div class="action_container">
+	<%= link_to 'Edit', edit_taxi_path(@taxi) %>
+</div>
+
+<%= link_to 'Back to Taxi Listing', taxis_path, :class => "back_link" %>

@@ -1,4 +1,8 @@
 Bookingmegham::Application.routes.draw do
+  resources :taxi_bookings
+
+  resources :taxis
+
 	controller :sessions do
 		get 'login' => :new
 		post 'login' => :create

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120221130342) do
+ActiveRecord::Schema.define(:version => 20120225093814) do
 
   create_table "advisors", :force => true do |t|
     t.integer  "agency_id"
@@ -143,6 +143,38 @@ ActiveRecord::Schema.define(:version => 20120221130342) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "room_rate"
+  end
+
+  create_table "taxi_bookings", :force => true do |t|
+    t.integer  "trip_id"
+    t.integer  "taxi_id"
+    t.integer  "number_of_vehicles"
+    t.integer  "unit_price"
+    t.string   "reservation_reference"
+    t.text     "pickup_address"
+    t.time     "pickup_time"
+    t.string   "drop_off_city"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "taxi_details", :force => true do |t|
+    t.integer  "taxi_booking_id"
+    t.string   "registration_number"
+    t.string   "driver_name"
+    t.string   "driver_phone_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "taxis", :force => true do |t|
+    t.integer  "agency_id"
+    t.string   "model"
+    t.integer  "max_passengers"
+    t.integer  "unit_price"
+    t.text     "terrain_limitations"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "trips", :force => true do |t|

@@ -1,0 +1,70 @@
+<%= nested_form_for(@taxi_booking) do |f| %>
+  <% if @taxi_booking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@taxi_booking.errors.count, "error") %> prohibited this taxi_booking from being saved:</h2>
+
+      <ul>
+      <% @taxi_booking.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<%= hidden_div_if(@taxi_booking.new_record?, class: "field") do %>
+		<%= f.label :id, "Taxi Booking ID" %><br />
+		<p><span class="highlight">
+			<%= @taxi_booking.id %>
+		</span></p>
+	<% end %>
+
+  <div class="field">
+    <%= f.label :trip_id, "Trip" %><br />
+    <% if @taxi_booking.trip_id %>
+			<%= f.collection_select(:trip_id,
+						Trip.find_all_by_id(@taxi_booking.trip_id), :id, :long_name) %>
+		<% else %>
+			<%= f.collection_select(:trip_id, Trip.
+						joins('JOIN guests ON guests.id = trips.guest_id').
+						order('guests.name, trips.name').all, :id, :long_name) %>
+		<% end %>
+  </div>
+  <div class="field">
+    <%= f.label :taxi_id, "Taxi" %><br />
+		<%= f.collection_select(:taxi_id, Taxi.
+					joins('JOIN agencies ON agencies.id = taxis.agency_id').
+					order('agencies.name, taxis.model').all, :id, :long_name) %>
+  </div>
+  <div class="field">
+    <%= f.label :number_of_vehicles %><br />
+    <%= f.number_field :number_of_vehicles %>
+  </div>
+  <div class="field">
+    <%= f.label :reservation_reference %><br />
+    <%= f.text_field :reservation_reference %>
+  </div>
+  <div class="field">
+    <%= f.label :pickup_time %><br />
+    <%= f.time_select :pickup_time, prompt: true %>
+  </div>
+  <div class="field">
+    <%= f.label :pickup_address %><br />
+    <%= f.text_area :pickup_address, rows: 6 %>
+  </div>
+  <div class="field">
+    <%= f.label :drop_off_city %><br />
+    <%= f.text_field :drop_off_city %>
+  </div>
+
+	<div class="field">
+		<%= f.label :taxi_details %><br />
+	</div>
+	<div class="nested_form">
+		<%= f.fields_for :taxi_details %>
+		<%= f.link_to_add "Add new", :taxi_details %><br/>
+	</div>
+
+  <div class="action_container">
+    <%= f.submit %>
+  </div>
+<% end %>

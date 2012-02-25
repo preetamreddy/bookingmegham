@@ -1,0 +1,55 @@
+<h1>Listing Taxi Bookings</h1>
+
+<% if notice %>
+	<p id="error"><%= notice %></p>
+<% end %>
+
+<% if @taxi_bookings.count > 0 %>
+<table class="index_table" border="1">
+  <tr>
+    <th class="text">Trip</th>
+    <th class="text">Taxi</th>
+    <th class="number">Vehicles</th>
+    <th class="number">Unit price</th>
+    <th class="text">Reservation reference</th>
+    <th class="text">Pickup time</th>
+    <th class="text">Pickup address</th>
+    <th class="text">Drop off city</th>
+    <th></th>
+  </tr>
+
+<% @taxi_bookings.each do |taxi_booking| %>
+  <tr>
+    <td class="text"><%= taxi_booking.trip.long_name %></td>
+    <td class="text"><%= taxi_booking.taxi.long_name %></td>
+    <td class="number"><%= taxi_booking.number_of_vehicles %></td>
+    <td class="nowrap"><%= number_to_currency(taxi_booking.unit_price) %></td>
+    <td class="text"><%= taxi_booking.reservation_reference %></td>
+		<td class="text">
+    <% if taxi_booking.pickup_time %>
+			<%= l taxi_booking.pickup_time, :format => :short %>
+		<% end %>
+		</td>
+    <td class="text"><%= taxi_booking.pickup_address %></td>
+    <td class="text"><%= taxi_booking.drop_off_city %></td>
+    <td>
+			<%= link_to 'Show details', taxi_booking %><br/>
+    	<%= link_to 'Edit', edit_taxi_booking_path(taxi_booking) %><br/>
+    	<%= link_to 'Destroy', taxi_booking, confirm: 'Are you sure?', 
+						method: :delete %>
+		</td>
+  </tr>
+<% end %>
+</table>
+<% else %>
+	<div id="error_explanation">
+		<h2>Taxi bookings have not yet been created</h2>
+		<ul>
+			<li>Create new taxi bookings by clicking the link below</li>
+		</ul>
+	</div>
+<% end %>
+
+<div class="action_container">
+	<%= link_to 'New Taxi booking', new_taxi_booking_path %>
+</div>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  taxi_booking_id: 1
+  registration_number: MyString
+  driver_name: MyString
+  driver_phone_number: MyString
+  remarks: MyText
+
+two:
+  taxi_booking_id: 1
+  registration_number: MyString
+  driver_name: MyString
+  driver_phone_number: MyString
+  remarks: MyText

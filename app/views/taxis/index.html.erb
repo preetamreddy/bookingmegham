@@ -1,0 +1,44 @@
+<h1>Listing Taxis</h1>
+
+<% if notice %>
+	<p id="error"><%= notice %></p>
+<% end %>
+
+<% if @taxis.count > 0 %>
+<table class="index_table" border="1">
+  <tr>
+    <th class="text">Operator</th>
+    <th class="text">Model</th>
+    <th class="number">Max passengers</th>
+    <th class="number">Unit price</th>
+    <th class="text">Terrain limitations</th>
+    <th></th>
+  </tr>
+
+<% @taxis.each do |taxi| %>
+  <tr>
+    <td class="text"><%= taxi.agency.name %></td>
+    <td class="text"><%= taxi.model %></td>
+    <td class="number"><%= taxi.max_passengers %></td>
+    <td class="number"><%= number_to_currency(taxi.unit_price) %></td>
+    <td class="prewrap"><%= taxi.terrain_limitations %></td>
+    <td>
+    	<%= link_to 'Edit', edit_taxi_path(taxi) %><br/>
+    	<%= link_to 'Destroy', taxi, confirm: 'Are you sure?', 
+						method: :delete %>
+		</td>
+  </tr>
+<% end %>
+</table>
+<% else %>
+	<div id="error_explanation">
+		<h2>Taxis have not yet been created</h2>
+		<ul>
+			<li>Please contact the administrator</li>
+		</ul>
+	</div>
+<% end %>
+
+<div class="action_container">
+	<%= link_to 'New Taxi', new_taxi_path %>
+</div>

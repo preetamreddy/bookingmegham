@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  agency_id: 1
+  model: MyString
+  max_passengers: 1
+  unit_price: 1
+  terrain_limitations: MyText
+
+two:
+  agency_id: 1
+  model: MyString
+  max_passengers: 1
+  unit_price: 1
+  terrain_limitations: MyText

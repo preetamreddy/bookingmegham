@@ -1,0 +1,76 @@
+<p id="notice"><span class"saved_value"><%= notice %></span></p>
+<h1>Taxi Booking details</h1>
+
+<div class="show_saved_record">
+<p>
+  <b>Trip:</b>
+  <span class"saved_value"><%= @taxi_booking.trip.long_name %></span>
+</p>
+
+<p>
+  <b>Taxi:</b>
+  <span class"saved_value"><%= @taxi_booking.taxi.long_name %></span>
+</p>
+
+<p>
+  <b>Vehicles:</b>
+  <span class"saved_value"><%= @taxi_booking.number_of_vehicles %></span>
+</p>
+
+<p>
+  <b>Unit price:</b>
+  <span class"saved_value">
+		<%= number_to_currency(@taxi_booking.unit_price) %>
+	</span>
+</p>
+
+<p>
+  <b>Reservation reference:</b>
+  <span class"saved_value"><%= @taxi_booking.reservation_reference %></span>
+</p>
+
+<p>
+  <b>Pickup time:</b>
+  <span class"saved_value">
+		<% if @taxi_booking.pickup_time %>
+			<%= l @taxi_booking.pickup_time, :format => :short %>
+		<% end %>
+	</span>
+</p>
+
+<p>
+  <b>Pickup address:</b>
+  <span class"saved_value"><%= @taxi_booking.pickup_address %></span>
+</p>
+
+<p>
+  <b>Drop off city:</b>
+  <span class"saved_value"><%= @taxi_booking.drop_off_city %></span>
+</p>
+
+<% if @taxi_booking.taxi_details.any? %>
+	<b>Taxi details:</b>
+	<table class="nested_table">
+		<tr>
+			<th class="text">Reg No.</th>
+			<th class="text">Driver</th>
+			<th class="text">Driver Phone</th>
+		</tr>
+		<% @taxi_booking.taxi_details.each do |taxi_details| %>
+			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+				<td class="text"><%= taxi_details.registration_number %></td>
+				<td class="text"><%= taxi_details.driver_name %></td>
+				<td class="text"><%= taxi_details.driver_phone_number %></td>
+			</tr>
+		<% end %>
+	</table>
+<% end %>
+
+</div>
+
+<div class="action_container">
+	<%= link_to 'Edit', edit_taxi_booking_path(@taxi_booking) %>
+</div>
+
+<%= link_to 'Back to Taxi Booking Listing', taxi_bookings_path,
+			:class => "back_link" %>
