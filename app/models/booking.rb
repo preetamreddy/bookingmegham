@@ -14,17 +14,17 @@ class Booking < ActiveRecord::Base
 
 	has_many :line_items, dependent: :destroy
 
-	before_validation :update_number_of_rooms, :update_check_out_date
+	before_validation :set_defaults_if_nil, 
+										:update_number_of_rooms, :update_check_out_date
+
+	before_save :update_room_rate, :update_vas_unit_price,
+							:update_total_price, :update_service_tax
 
 	before_create :update_guest_id, :update_property_id
 
-	before_save :initialize_attributes_when_nil,
-							:update_room_rate, :update_vas_unit_price,
-							:update_total_price, :update_service_tax
+	after_save :update_line_items
 
 	before_destroy :ensure_payments_are_not_made
-
-	after_save :update_line_items
 
 	validates :trip_id, :room_type_id, :check_in_date, :check_out_date,
 											presence: true
@@ -65,15 +65,8 @@ class Booking < ActiveRecord::Base
 		end
 	end
 
-	def initialize_attributes_when_nil
-		rooms.each do |room|
-			if !room.number_of_children_between_5_and_12_years
-				room.number_of_children_between_5_and_12_years = 0 
-			end
-		end
-		if suggested_activities == ""
-			self.suggested_activities = room_type.property.suggested_activities
-		end
+	def set_defaults_if_nil
+		self.suggested_activities ||= room_type.property.suggested_activities
 	end
 
 	def update_number_of_rooms

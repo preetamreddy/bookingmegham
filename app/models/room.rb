@@ -4,7 +4,7 @@ class Room < ActiveRecord::Base
 	belongs_to :trip
 	belongs_to :booking
 
-	before_save :set_defaults_if_nil
+	before_validation :set_defaults_if_nil
 
 	validates :occupancy, :number_of_adults, :number_of_rooms, presence: true
 
@@ -24,7 +24,6 @@ class Room < ActiveRecord::Base
 
 	def set_defaults_if_nil
 		self.number_of_children_between_5_and_12_years ||= 0
-		self.room_rate ||= 0
 	end
 
 end

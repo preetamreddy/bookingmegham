@@ -124,8 +124,6 @@ class BookingsController < ApplicationController
   def create
     @booking = Booking.new(params[:booking])
 		
-		@booking.initialize_attributes_when_nil
-
     respond_to do |format|
       if @booking.save
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
@@ -146,6 +144,8 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       if @booking.update_attributes(params[:booking])
+				@booking.save
+
         format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
         format.json { head :ok }
       else

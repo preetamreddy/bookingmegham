@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 	after_destroy :ensure_a_user_remains
 
 	validates :name, presence: true, uniqueness: true
+
 	has_secure_password
 
 	private

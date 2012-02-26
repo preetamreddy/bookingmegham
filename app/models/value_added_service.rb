@@ -8,6 +8,7 @@ class ValueAddedService < ActiveRecord::Base
 		:allow_destroy => true
 
 	before_destroy :ensure_not_referenced_by_vas_bookings
+
 	validates :name, presence: true
 
 	validates_numericality_of :property_id,

@@ -6,8 +6,6 @@ class RoomType < ActiveRecord::Base
 	has_many :bookings
 	has_many :line_items
 
-	before_save :ensure_property_exists
-
 	before_destroy :ensure_does_not_have_bookings
 
 	validates :property_id, :room_type, :number_of_rooms, presence: true
@@ -86,17 +84,6 @@ class RoomType < ActiveRecord::Base
 
 	private
 	
-		def ensure_property_exists
-			begin
-				property = Property.find(property_id)
-			rescue ActiveRecord::RecordNotFound
-				errors.add(:base, "Could not create Room Type as Property '#{property_id}' does not exist")
-				return false
-			else
-				return true
-			end
-		end
-
 		def ensure_does_not_have_bookings
 			if bookings.empty?
 				return true
