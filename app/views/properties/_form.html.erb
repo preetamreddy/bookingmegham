@@ -16,7 +16,7 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :agency, "Belongs to" %><br />
+    <%= f.label :agency, "Agency" %><br />
 		<% if @property.new_record? %>
 			<%= f.collection_select(:agency_id,
 						Agency.order('name').find_all, :id, :name) %>
