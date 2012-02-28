@@ -51,16 +51,6 @@ class Trip < ActiveRecord::Base
 
 	validate :ensure_guest_exists, :ensure_end_date_is_greater_than_start_date
 
-	attr_accessor :name_for_receipts
-
-	after_find do |trip|
-		if trip.payee_name != ""
-			@name_for_receipts = trip.payee_name
-		else
-			@name_for_receipts = trip.guest.name
-		end
-	end
-
 	def number_of_adults
 		if rooms.empty?
 			return 0
