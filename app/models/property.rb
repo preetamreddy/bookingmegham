@@ -7,6 +7,8 @@ class Property < ActiveRecord::Base
 	accepts_nested_attributes_for :value_added_services, :reject_if => :all_blank,
 		:allow_destroy => true
 
+	before_save :titleize
+
 	before_destroy :ensure_does_not_have_room_types
 	
 	validates :name, presence: true, :uniqueness => { :case_sensitive => false }
@@ -42,5 +44,9 @@ class Property < ActiveRecord::Base
 				errors.add(:base, "Destroy failed because the property '#{name}' has Room Types. Please destroy the Room Types first.")
 				return false
 			end
+		end
+
+		def titleize
+			self.name = name.titleize 
 		end
 end

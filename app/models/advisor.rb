@@ -5,6 +5,8 @@ class Advisor < ActiveRecord::Base
 
 	has_one :user
 
+	before_save :titleize
+
 	before_destroy :ensure_does_not_have_trips, :ensure_is_not_a_user
 
 	validates :phone_number_1, :phone_number_2, 
@@ -29,6 +31,10 @@ class Advisor < ActiveRecord::Base
 			else
 				return true
 			end
+		end
+
+		def titleize
+			self.name = name.titleize
 		end
 
 end

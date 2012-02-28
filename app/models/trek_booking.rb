@@ -4,7 +4,7 @@ class TrekBooking < ActiveRecord::Base
 
 	before_validation :update_end_date
 
-	before_save :update_unit_price
+	before_save :update_unit_price, :titleize
 
 	before_destroy :ensure_payments_are_not_made
 
@@ -56,5 +56,10 @@ class TrekBooking < ActiveRecord::Base
 				errors.add(:base, "Could not create booking as it is not within the trip dates")
 				return false
 			end
+		end
+
+		def titleize
+			self.origin = origin.titleize
+			self.final_destination = final_destination.titleize
 		end
 end

@@ -8,7 +8,7 @@ class TaxiBooking < ActiveRecord::Base
 
 	validates :trip_id, :taxi_id, :number_of_vehicles, presence: true
 
-	before_save :update_unit_price
+	before_save :update_unit_price, :titleize
 
 	before_destroy :ensure_payments_are_not_made
 
@@ -25,5 +25,9 @@ class TaxiBooking < ActiveRecord::Base
 				errors.add(:base, "Could not delete taxi booking as payments have been made for the trip")
 				return false
 			end
+		end
+
+		def titleize
+			self.drop_off_city = drop_off_city.titleize
 		end
 end

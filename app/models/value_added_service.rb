@@ -7,6 +7,8 @@ class ValueAddedService < ActiveRecord::Base
 		accepts_nested_attributes_for :vas_prices, :reject_if => :all_blank,
 		:allow_destroy => true
 
+	before_save :titleize
+
 	before_destroy :ensure_not_referenced_by_vas_bookings
 
 	validates :name, presence: true
@@ -42,5 +44,9 @@ class ValueAddedService < ActiveRecord::Base
 				errors.add(:base, "Destroy failed because Value Added Service '#{name}' has bookings.")
 				return false
 			end
+		end
+
+		def titleize
+			self.name = name.titleize
 		end
 end

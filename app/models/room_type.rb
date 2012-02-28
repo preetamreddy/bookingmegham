@@ -6,6 +6,8 @@ class RoomType < ActiveRecord::Base
 	has_many :bookings
 	has_many :line_items
 
+	before_save :capitalize
+
 	before_destroy :ensure_does_not_have_bookings
 
 	validates :property_id, :room_type, :number_of_rooms, presence: true
@@ -91,5 +93,9 @@ class RoomType < ActiveRecord::Base
 				errors.add(:base, "Destroy failed because Room Type '#{room_type}' has bookings. Please destroy the bookings first.")
 				return false
 			end
+		end
+
+		def capitalize
+			self.room_type = room_type.capitalize
 		end
 end

@@ -4,6 +4,8 @@ class Taxi < ActiveRecord::Base
 
 	validates :agency_id, :model, :max_passengers, :unit_price, presence: true
 
+	before_save :titleize
+
 	before_destroy :ensure_not_referenced_by_taxi_booking
 
 	def long_name
@@ -19,5 +21,9 @@ class Taxi < ActiveRecord::Base
 				errors.add(:base, "Destroy failed because taxi '#{long_name}' has bookings.")
 				return false
 			end
+		end
+
+		def titleize
+			self.model = model.titleize
 		end
 end

@@ -7,6 +7,8 @@ class Agency < ActiveRecord::Base
 
 	has_many :users
 
+	before_save :titleize
+
 	before_destroy :ensure_does_not_have_advisors, :ensure_does_not_have_trips
 
 	validates :phone_number, :format => { :with => /^[\+]?[\d\s]{8,}$/,
@@ -30,6 +32,11 @@ class Agency < ActiveRecord::Base
 				errors.add(:base, "Destroy failed because Agency '#{name}' has Trips.")
 				return false
 			end
+		end
+
+		def titleize
+			self.name = name.titleize
+			self.city = city.titleize
 		end
 	
 end
