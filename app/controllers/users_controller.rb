@@ -28,8 +28,12 @@ class UsersController < ApplicationController
   # GET /users/new.json
   def new
     @user = User.new
-		@user.agency_id = session[:agency_id]
+
+		advisor_id = params[:advisor_id].to_i
+		advisor = Advisor.find(advisor_id)
+
 		@user.advisor_id = params[:advisor_id]
+		@user.agency_id = advisor.agency.id
 
     respond_to do |format|
       format.html # new.html.erb

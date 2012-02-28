@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
 	belongs_to :agency
 
-	after_destroy :ensure_a_user_remains
+	after_destroy :ensure_ezbook_users_are_not_deleted
 
 	validates :name, presence: true, uniqueness: true
 
@@ -11,9 +11,9 @@ class User < ActiveRecord::Base
 
 	private
 
-		def ensure_a_user_remains
-			if User.count.zero?
-				raise "Can't delete last user"
+		def ensure_ezbook_users_are_not_deleted
+			if agency.name == 'EZBook'
+				raise "Can't delete EZBook user"
 			end
 		end
 end

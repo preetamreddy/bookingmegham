@@ -1,3 +1,5 @@
 <tr>
-	<td colspan=3><%= vas_booking.value_added_service.name %></td>
+	<td><%= l trek_booking.start_date, :format => :short %></td>
+	<td><%= l trek_booking.end_date, :format => :short %></td>
+	<td><%= trek_booking.trek.name[0, 15] %></td>
 </tr>

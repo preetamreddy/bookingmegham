@@ -41,11 +41,11 @@
 								</tr>
 								<%= render(trip.bookings.order('check_in_date')) %>
 							<% end %>
-							<% if trip.vas_bookings.any? %>
+							<% if trip.trek_bookings.any? %>
 								<tr>
-									<td colspan=3><b>Value Added Services</b></td>
+									<td colspan=3><b>Treks</b></td>
 								</tr>
-								<%= render(trip.vas_bookings) %>
+								<%= render(trip.trek_bookings) %>
 							<% end %>
 						<% end %>
 					</table>
@@ -55,9 +55,11 @@
 					<dd><%= link_to 'Guests', guests_path %></dd>
 					<dd><%= link_to 'Trips', trips_path %></dd>
 					<dd><%= link_to 'Bookings', bookings_path %></dd>
+					<dd><%= link_to 'Treks', trek_bookings_path %></dd>
+					<dd><%= link_to 'Transport', taxi_bookings_path %></dd>
 					<dd><%= link_to 'Availability Chart', availability_chart_path %></dd>
 					<dd><%= link_to 'Booking Chart', booking_chart_path %></dd>
-					<dt>Property Mgmt</dt>
+					<dt>Booking Admin</dt>
 					<dd><%= link_to 'Properties', properties_path %></dd>
 					<dd><%= link_to 'Room Types', 
 										room_types_path(:property_id => nil) %></dd>
@@ -65,14 +67,16 @@
 										value_added_services_path %></dd>
 					<dd><%= link_to 'Taxis', taxis_path %></dd>
 					<dd><%= link_to 'Treks', treks_path %></dd>
-					<dt>Feedback</dt>
-					<dd><%= link_to 'Give Feedback', new_feedback_path %></dd>
-					<dt>Admin</dt>
 					<dd><%= link_to 'New Property', new_property_path %></dd>
 					<dd><%= link_to 'Agencies', agencies_path %></dd>
-					<dd><%= link_to 'Advisors', advisors_path %></dd>
-					<dd><%= link_to 'Users', users_path %></dd>
-					<dd><%= link_to 'Feedback', feedbacks_path %></dd>
+					<dt>Feedback</dt>
+					<dd><%= link_to 'Give Feedback', new_feedback_path %></dd>
+					<% if user.agency.name == 'EZBook' %> 
+						<dt>System Admin</dt>
+						<dd><%= link_to 'Advisors', advisors_path %></dd>
+						<dd><%= link_to 'Users', users_path %></dd>
+						<dd><%= link_to 'Feedback', feedbacks_path %></dd>
+					<% end %>
 				</dl>
 			</div>
 		<% end %>
