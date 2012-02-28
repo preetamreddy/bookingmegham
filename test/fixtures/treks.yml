@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  itinerary: MyText
+  difficulty: MyString
+  number_of_days: 1
+
+two:
+  name: MyString
+  itinerary: MyText
+  difficulty: MyString
+  number_of_days: 1

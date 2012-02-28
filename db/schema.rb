@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120225093814) do
+ActiveRecord::Schema.define(:version => 20120227064658) do
 
   create_table "advisors", :force => true do |t|
     t.integer  "agency_id"
@@ -173,6 +173,37 @@ ActiveRecord::Schema.define(:version => 20120225093814) do
     t.integer  "max_passengers"
     t.integer  "unit_price"
     t.text     "terrain_limitations"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "trek_bookings", :force => true do |t|
+    t.integer  "trip_id"
+    t.integer  "trek_id"
+    t.integer  "unit_price"
+    t.date     "start_date"
+    t.string   "origin"
+    t.string   "final_destination"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "number_of_days"
+    t.date     "end_date"
+  end
+
+  create_table "trek_prices", :force => true do |t|
+    t.integer  "trek_id"
+    t.integer  "unit_price"
+    t.integer  "min_group_size"
+    t.integer  "max_group_size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "treks", :force => true do |t|
+    t.string   "name"
+    t.text     "itinerary"
+    t.string   "difficulty"
+    t.integer  "number_of_days"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

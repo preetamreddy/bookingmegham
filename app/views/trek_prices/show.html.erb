@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Trek:</b>
+  <%= @trek_price.trek_id %>
+</p>
+
+<p>
+  <b>Unit price:</b>
+  <%= @trek_price.unit_price %>
+</p>
+
+<p>
+  <b>Min group size:</b>
+  <%= @trek_price.min_group_size %>
+</p>
+
+<p>
+  <b>Max group size:</b>
+  <%= @trek_price.max_group_size %>
+</p>
+
+
+<%= link_to 'Edit', edit_trek_price_path(@trek_price) %> |
+<%= link_to 'Back', trek_prices_path %>

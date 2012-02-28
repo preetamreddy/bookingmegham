@@ -1,0 +1,29 @@
+<h1>Listing trek_prices</h1>
+
+<table>
+  <tr>
+    <th>Trek</th>
+    <th>Unit price</th>
+    <th>Min group size</th>
+    <th>Max group size</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @trek_prices.each do |trek_price| %>
+  <tr>
+    <td><%= trek_price.trek_id %></td>
+    <td><%= trek_price.unit_price %></td>
+    <td><%= trek_price.min_group_size %></td>
+    <td><%= trek_price.max_group_size %></td>
+    <td><%= link_to 'Show', trek_price %></td>
+    <td><%= link_to 'Edit', edit_trek_price_path(trek_price) %></td>
+    <td><%= link_to 'Destroy', trek_price, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Trek price', new_trek_price_path %>

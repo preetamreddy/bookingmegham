@@ -17,6 +17,8 @@ class Trip < ActiveRecord::Base
 
 	has_many :taxi_bookings
 
+	has_many :trek_bookings
+
 	has_many :payments, dependent: :destroy
 	accepts_nested_attributes_for :payments, :reject_if => :all_blank,
 		:allow_destroy => true
@@ -83,6 +85,13 @@ class Trip < ActiveRecord::Base
 		end
 	end
 
+	def number_of_guests
+		guests = number_of_adults + number_of_children_between_5_and_12_years +
+							number_of_children_below_5_years
+
+		return guests
+	end
+
 	def total_price
 		if bookings.any?
 			price_for_bookings = bookings.to_a.sum { |booking| booking.total_price }
@@ -106,7 +115,16 @@ class Trip < ActiveRecord::Base
 			price_for_transport = 0
 		end
 
-		ttl_price = price_for_bookings + price_for_vas + price_for_transport
+		if trek_bookings.any?
+			price_for_treks = trek_bookings.to_a.sum { |trek_booking|
+				trek_booking.unit_price * number_of_guests * 
+					trek_booking.number_of_days }
+		else
+			price_for_treks = 0
+		end
+
+		ttl_price = price_for_bookings + price_for_vas + price_for_transport +
+									price_for_treks
 
 		return ttl_price
 	end

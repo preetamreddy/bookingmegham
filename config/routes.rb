@@ -1,4 +1,10 @@
 Bookingmegham::Application.routes.draw do
+  resources :trek_prices
+
+  resources :trek_bookings
+
+  resources :treks
+
   resources :taxi_bookings
 
   resources :taxis

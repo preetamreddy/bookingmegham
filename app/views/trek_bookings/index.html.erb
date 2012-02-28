@@ -1,0 +1,49 @@
+<h1>Listing Trek Bookings</h1>
+
+<% if notice %>
+	<p id="error"><%= notice %></p>
+<% end %>
+
+<% if @trek_bookings.count > 0 %>
+<table class="index_table" border="1">
+  <tr>
+    <th class="text">Trip</th>
+    <th class="text">Trek</th>
+    <th class="text">Start date</th>
+    <th class="number">Number of days</th>
+    <th class="text">Origin</th>
+    <th class="text">Final destination</th>
+    <th class="number">Unit price</th>
+    <th></th>
+  </tr>
+
+<% @trek_bookings.each do |trek_booking| %>
+  <tr>
+    <td class="text"><%= trek_booking.trip.long_name %></td>
+    <td class="text"><%= trek_booking.trek.name %></td>
+    <td class="text"><%= l trek_booking.start_date, :format => :short %></td>
+    <td class="number"><%= trek_booking.number_of_days %></td>
+    <td class="text"><%= trek_booking.origin %></td>
+    <td class="text"><%= trek_booking.final_destination %></td>
+    <td class="number"><%= number_to_currency(trek_booking.unit_price) %></td>
+    <td>
+			<%= link_to 'Show details', trek_booking %><br />
+    	<%= link_to 'Edit', edit_trek_booking_path(trek_booking) %><br />
+    	<%= link_to 'Destroy', trek_booking, confirm: 'Are you sure?',
+						method: :delete %>
+		</td>
+  </tr>
+<% end %>
+</table>
+<% else %>
+	<div id="error_explanation">
+		<h2>Trek bookings have not yet been created</h2>
+		<ul>
+			<li>Create new trek bookings by clicking the link below</li>
+		</ul>
+	</div>
+<% end %>
+
+<div class="action_container">
+	<%= link_to 'New Trek booking', new_trek_booking_path %>
+</div>

@@ -57,7 +57,7 @@
 		<% end %>
   </div>
 	<div class="field">
-		<%= f.label :number_of_days, "Nights" %>
+		<%= f.label :number_of_nights, "Nights" %>
 		<% if @booking.new_record? %>
 			<%= f.number_field :number_of_nights, min: 1 %>
 		<% else %>

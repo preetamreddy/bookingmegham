@@ -1,0 +1,43 @@
+<h1>Listing Treks</h1>
+
+<% if notice %>
+	<p id="error"><%= notice %></p>
+<% end %>
+
+<% if @treks.count > 0 %>
+<table class="index_table" border="1">
+  <tr>
+    <th class="text">Name</th>
+    <th class="text">Difficulty</th>
+    <th class="number">Number of days</th>
+    <th class="text">Itinerary</th>
+    <th></th>
+  </tr>
+
+<% @treks.each do |trek| %>
+  <tr>
+    <td class="text"><%= trek.name %></td>
+    <td class="text"><%= trek.difficulty %></td>
+    <td class="number"><%= trek.number_of_days %></td>
+    <td class="prewrap"><%= trek.itinerary %></td>
+    <td>
+    	<%= link_to 'Show details', trek %><br />
+    	<%= link_to 'Edit', edit_trek_path(trek) %><br />
+    	<%= link_to 'Destroy', trek, confirm: 'Are you sure?',
+						method: :delete %>
+		</td>
+  </tr>
+<% end %>
+</table>
+<% else %>
+	<div id="error_explanation">
+		<h2>Treks have not yet been created</h2>
+		<ul>
+			<li>Create new treks by clicking the link below</li>
+		</ul>
+	</div>
+<% end %>
+
+<div class="action_container">
+	<%= link_to 'New Trek', new_trek_path %>
+</div>
