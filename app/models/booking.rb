@@ -111,8 +111,7 @@ class Booking < ActiveRecord::Base
 			price_per_night = 0
 		end
 
-		number_of_days = (check_out_date - check_in_date).to_i
-		price_for_rooms = price_per_night * number_of_days
+		price_for_rooms = price_per_night * number_of_nights
 
 		if vas_bookings.any?
 			price_for_vas = vas_bookings.to_a.sum { |vas_booking|
@@ -123,7 +122,7 @@ class Booking < ActiveRecord::Base
 		end
 
 		if number_of_drivers
-			price_for_drivers = number_of_drivers * number_of_days *
+			price_for_drivers = number_of_drivers * number_of_nights *
 														room_type.property.price_for_driver
 		else
 			price_for_drivers = 0
