@@ -129,13 +129,7 @@ class Trip < ActiveRecord::Base
 			service_tax = 0
 		end
 		
-		if service_tax != 0
-			service_tax_rounded = ((service_tax / 100).to_i + 1) * 100
-		else
-			service_tax_rounded = 0
-		end
-
-		return service_tax_rounded
+		return service_tax
 	end
 
 	def paid
@@ -157,10 +151,6 @@ class Trip < ActiveRecord::Base
 			final_price = total_price
 		end
 		
-		if service_tax != nil
-			final_price += service_tax
-		end
-
 		return final_price
 	end
 
