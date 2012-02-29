@@ -28,10 +28,10 @@
 	  </tr>
 		<% @guests.each do |guest| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-		    <td class="text"><%= guest.name %></td>
+		    <td class="nowrap"><%= guest.title + " " + guest.name %></td>
 		    <td class="number">
-					<%= guest.phone_number %><br/>
-					<%= guest.phone_number_2 %>
+					<span class="nowrap"><%= guest.phone_number %></span><br/>
+					<span class="nowrap"><%= guest.phone_number_2 %></span>
 				</td>
 		    <td class="text">
 					<%= guest.email_id %><br/>

@@ -1,4 +1,6 @@
 class Guest < ActiveRecord::Base
+	TITLE = [ "Mr", "Ms", "Mrs" ]
+
 	has_many :trips
 
 	before_save :titleize

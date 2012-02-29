@@ -12,6 +12,10 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :title %><br />
+    <%= f.select :title, Guest::TITLE, prompt: 'Title' %>
+  </div>
+  <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
