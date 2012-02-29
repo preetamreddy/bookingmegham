@@ -9,7 +9,8 @@ class Agency < ActiveRecord::Base
 
 	before_save :titleize
 
-	before_destroy :ensure_does_not_have_advisors, :ensure_does_not_have_trips
+	before_destroy 	:ensure_does_not_have_advisors, :ensure_does_not_have_trips,
+									:ensure_does_not_have_properties, :ensure_does_not_have_taxis	
 
 	validates :phone_number, :format => { :with => /^[\+]?[\d\s]{8,}$/,
 		:message => "is not valid" }
@@ -20,7 +21,7 @@ class Agency < ActiveRecord::Base
 			if advisors.empty?
 				return true
 			else
-				errors.add(:base, "Destroy failed because Agency '#{name}' has advisors.")
+				errors.add(:base, "Destroy failed because #{name} has advisors")
 				return false
 			end
 		end
@@ -29,7 +30,25 @@ class Agency < ActiveRecord::Base
 			if trips.empty?
 				return true
 			else
-				errors.add(:base, "Destroy failed because Agency '#{name}' has Trips.")
+				errors.add(:base, "Destroy failed because #{name} has Trips")
+				return false
+			end
+		end
+
+		def ensure_does_not_have_properties
+			if properties.empty?
+				return true
+			else
+				errors.add(:base, "Destroy failed because #{name} has properties")
+				return false
+			end
+		end
+
+		def ensure_does_not_have_taxis
+			if taxis.empty?
+				return true
+			else
+				errors.add(:base, "Destroy failed because #{name} has taxis")
 				return false
 			end
 		end

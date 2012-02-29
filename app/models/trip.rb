@@ -35,7 +35,9 @@ class Trip < ActiveRecord::Base
 
 	after_save :update_line_item_status
 
-	before_destroy :ensure_not_referenced_by_booking
+	before_destroy 	:ensure_not_referenced_by_booking,
+									:ensure_not_referenced_by_trek_booking,
+									:ensure_not_referenced_by_taxi_booking
 
 	validates :guest_id, :name, :start_date, :end_date, :number_of_days, 
 						presence: true
@@ -221,7 +223,25 @@ class Trip < ActiveRecord::Base
 			if bookings.empty?
 				return true
 			else
-				errors.add(:base, "Destroy failed because the trip '#{name}' has bookings. Please destroy the bookings first.")
+				errors.add(:base, "Destroy failed because #{name} has bookings")
+				return false
+			end
+		end
+
+		def ensure_not_referenced_by_taxi_booking
+			if taxi_bookings.empty?
+				return true
+			else
+				errors.add(:base, "Destroy failed because #{name} has taxi bookings")
+				return false
+			end
+		end
+
+		def ensure_not_referenced_by_trek_booking
+			if trek_bookings.empty?
+				return true
+			else
+				errors.add(:base, "Destroy failed because #{name} has trek bookings")
 				return false
 			end
 		end

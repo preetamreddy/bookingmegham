@@ -23,7 +23,7 @@ class Guest < ActiveRecord::Base
 			if trips.empty?
 				return true
 			else
-				errors.add(:base, "Destroy failed because guest '#{name}' has trips. Please destroy the trips first.")
+				errors.add(:base, "Destroy failed because #{name} has trips")
 				return false
 			end
 		end

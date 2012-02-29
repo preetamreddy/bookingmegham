@@ -41,7 +41,7 @@ class ValueAddedService < ActiveRecord::Base
 			if vas_bookings.empty?
 				return true
 			else
-				errors.add(:base, "Destroy failed because Value Added Service '#{name}' has bookings.")
+				errors.add(:base, "Destroy failed because #{name} has bookings")
 				return false
 			end
 		end

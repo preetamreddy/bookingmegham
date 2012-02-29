@@ -18,7 +18,7 @@ class Taxi < ActiveRecord::Base
 			if taxi_bookings.empty?
 				return true
 			else
-				errors.add(:base, "Destroy failed because taxi '#{long_name}' has bookings.")
+				errors.add(:base, "Destroy failed because #{long_name} has bookings")
 				return false
 			end
 		end

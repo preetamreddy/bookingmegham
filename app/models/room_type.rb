@@ -90,7 +90,7 @@ class RoomType < ActiveRecord::Base
 			if bookings.empty?
 				return true
 			else
-				errors.add(:base, "Destroy failed because Room Type '#{room_type}' has bookings. Please destroy the bookings first.")
+				errors.add(:base, "Destroy failed because #{room_type} has bookings")
 				return false
 			end
 		end

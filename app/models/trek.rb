@@ -37,7 +37,7 @@ class Trek < ActiveRecord::Base
 			if trek_bookings.empty?
 				return true
 			else
-				errors.add(:base, "Destroy failed because trek '#{name}' has bookings.")
+				errors.add(:base, "Destroy failed because #{name} has bookings")
 				return false
 			end
 		end

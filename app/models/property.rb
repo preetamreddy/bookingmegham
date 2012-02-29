@@ -9,7 +9,8 @@ class Property < ActiveRecord::Base
 
 	before_save :titleize
 
-	before_destroy :ensure_does_not_have_room_types
+	before_destroy 	:ensure_does_not_have_room_types,
+									:ensure_does_not_have_value_added_services
 	
 	validates :name, presence: true, :uniqueness => { :case_sensitive => false }
 
@@ -41,7 +42,16 @@ class Property < ActiveRecord::Base
 			if room_types.empty?
 				return true
 			else
-				errors.add(:base, "Destroy failed because the property '#{name}' has Room Types. Please destroy the Room Types first.")
+				errors.add(:base, "Destroy failed because #{name} has Room Types")
+				return false
+			end
+		end
+
+		def ensure_does_not_have_value_added_services
+			if value_added_services.empty?
+				return true
+			else
+				errors.add(:base, "Destroy failed because #{name} has Value Added Services")
 				return false
 			end
 		end

@@ -19,14 +19,14 @@ class Advisor < ActiveRecord::Base
 			if trips.empty?
 				return true
 			else
-				errors.add(:base, "Destroy failed because Advisor '#{name}' has trips.")
+				errors.add(:base, "Destroy failed because #{name} has trips")
 				return false
 			end
 		end
 
 		def ensure_is_not_a_user
 			if User.find_by_advisor_id(id)
-				errors.add(:base, "Destroy failed because Advisor '#{name}' is a user.")
+				errors.add(:base, "Destroy failed because #{name} is a user")
 				return false
 			else
 				return true
