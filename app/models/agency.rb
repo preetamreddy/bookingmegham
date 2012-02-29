@@ -7,6 +7,8 @@ class Agency < ActiveRecord::Base
 
 	has_many :users
 
+	has_many :taxis
+
 	before_save :titleize
 
 	before_destroy 	:ensure_does_not_have_advisors, :ensure_does_not_have_trips,
