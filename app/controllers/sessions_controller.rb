@@ -12,6 +12,8 @@ class SessionsController < ApplicationController
 		if user and user.authenticate(params[:password])
 			session[:user_id] = user.id
 			session[:agency] = user.agency.name
+			session[:guest_id] = nil
+			session[:trip_id] = nil
 			session[:last_request] = Time.now
 			redirect_to availability_chart_url
 		else
