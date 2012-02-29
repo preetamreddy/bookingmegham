@@ -6,7 +6,8 @@ class TaxiBooking < ActiveRecord::Base
 		accepts_nested_attributes_for :taxi_details, :reject_if => :all_blank,
 		:allow_destroy => true
 
-	validates :trip_id, :taxi_id, :number_of_vehicles, presence: true
+	validates :trip_id, :taxi_id, :number_of_vehicles, 
+						:start_date, :number_of_days, presence: true
 
 	before_save :update_end_date, :update_unit_price, :titleize
 

@@ -7,7 +7,7 @@ class Guest < ActiveRecord::Base
 
 	before_destroy :ensure_not_referenced_by_trip
 
-	validates :name, presence: true
+	validates :title, :name, presence: true
 
 	validates :phone_number, :email_id, 
 						:uniqueness => { :case_sensitive => false }
