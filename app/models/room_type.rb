@@ -6,11 +6,11 @@ class RoomType < ActiveRecord::Base
 	has_many :bookings
 	has_many :line_items
 
-	before_save :capitalize
+	before_save :capitalize, :set_defaults_if_nil
 
 	before_destroy :ensure_does_not_have_bookings
 
-	validates :property_id, :room_type, :number_of_rooms, presence: true
+	validates :property_id, :room_type, presence: true
 	
 	validates_numericality_of :number_of_rooms,
 														:price_for_single_occupancy,
@@ -86,6 +86,13 @@ class RoomType < ActiveRecord::Base
 
 	private
 	
+		def set_defaults_if_nil
+			self.price_for_single_occupancy ||= 0
+			self.price_for_double_occupancy ||= 0
+			self.price_for_room ||= 0
+			self.number_of_rooms ||= 99
+		end
+
 		def ensure_does_not_have_bookings
 			if bookings.empty?
 				return true

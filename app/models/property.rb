@@ -7,7 +7,7 @@ class Property < ActiveRecord::Base
 	accepts_nested_attributes_for :value_added_services, :reject_if => :all_blank,
 		:allow_destroy => true
 
-	before_save :titleize
+	before_save :titleize, :set_defaults_if_nil
 
 	before_destroy 	:ensure_does_not_have_room_types,
 									:ensure_does_not_have_value_added_services
@@ -37,6 +37,13 @@ class Property < ActiveRecord::Base
 	end
 
 	private
+	
+		def set_defaults_if_nil
+			self.price_for_children_below_5_years ||= 0	
+			self.price_for_children_between_5_and_12_years ||= 0	
+			self.price_for_triple_occupancy ||= 0	
+			self.price_for_driver ||= 0	
+		end
 	
 		def ensure_does_not_have_room_types
 			if room_types.empty?
