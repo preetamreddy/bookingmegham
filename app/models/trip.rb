@@ -101,7 +101,7 @@ class Trip < ActiveRecord::Base
 		if taxi_bookings.any?
 			price_for_transport = taxi_bookings.to_a.sum { |taxi_booking|
 				taxi_booking.unit_price * taxi_booking.number_of_vehicles *
-					number_of_days }
+					taxi_booking.number_of_days }
 		else
 			price_for_transport = 0
 		end

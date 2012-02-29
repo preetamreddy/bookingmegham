@@ -39,9 +39,19 @@
     <%= f.label :number_of_vehicles %><br />
     <%= f.number_field :number_of_vehicles %>
   </div>
+	<div class="field">
+		<%= f.label :start_date %><br />
+		<% if @taxi_booking.new_record? %>
+			<%= f.date_select :start_date, :start_year => Time.now.year,
+						:end_year => Time.now.year + 1, :prompt => true %>
+		<% else %>
+			<%= f.date_select :start_date, :start_year => Time.now.year,
+						:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
+		<% end %>
+	</div>
   <div class="field">
-    <%= f.label :reservation_reference %><br />
-    <%= f.text_field :reservation_reference %>
+    <%= f.label :number_of_days %><br />
+    <%= f.number_field :number_of_days %>
   </div>
   <div class="field">
     <%= f.label :pickup_time %><br />
@@ -54,6 +64,10 @@
   <div class="field">
     <%= f.label :drop_off_city %><br />
     <%= f.text_field :drop_off_city %>
+  </div>
+  <div class="field">
+    <%= f.label :reservation_reference %><br />
+    <%= f.text_field :reservation_reference %>
   </div>
 
 	<div class="field">

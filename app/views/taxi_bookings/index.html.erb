@@ -8,23 +8,24 @@
 <table class="index_table" border="1">
   <tr>
     <th class="text">Trip</th>
+    <th class="text">Operator</th>
     <th class="text">Taxi</th>
-    <th class="number">Vehicles</th>
-    <th class="number">Unit price</th>
-    <th class="text">Reservation reference</th>
     <th class="text">Pickup time</th>
     <th class="text">Pickup address</th>
     <th class="text">Drop off city</th>
+    <th class="number">Unit price</th>
+    <th class="text">Reservation reference</th>
     <th></th>
   </tr>
 
 <% @taxi_bookings.each do |taxi_booking| %>
   <tr>
     <td class="text"><%= taxi_booking.trip.long_name %></td>
-    <td class="text"><%= taxi_booking.taxi.long_name %></td>
-    <td class="number"><%= taxi_booking.number_of_vehicles %></td>
-    <td class="nowrap"><%= number_to_currency(taxi_booking.unit_price) %></td>
-    <td class="text"><%= taxi_booking.reservation_reference %></td>
+    <td class="text"><%= taxi_booking.taxi.agency.name %></td>
+    <td class="text">
+    	<span class="nowrap"><%= pluralize(taxi_booking.number_of_vehicles, taxi_booking.taxi.model) %></span><br/>
+			<span class="nowrap"><%= l taxi_booking.start_date, :format => :short %> to <%= l taxi_booking.end_date, :format => :short %></span>
+		</td>
 		<td class="text">
     <% if taxi_booking.pickup_time %>
 			<%= l taxi_booking.pickup_time, :format => :short %>
@@ -32,6 +33,8 @@
 		</td>
     <td class="text"><%= taxi_booking.pickup_address %></td>
     <td class="text"><%= taxi_booking.drop_off_city %></td>
+    <td class="nowrap"><%= number_to_currency(taxi_booking.unit_price) %></td>
+    <td class="text"><%= taxi_booking.reservation_reference %></td>
     <td>
 			<%= link_to 'Show details', taxi_booking %><br/>
     	<%= link_to 'Edit', edit_taxi_booking_path(taxi_booking) %><br/>

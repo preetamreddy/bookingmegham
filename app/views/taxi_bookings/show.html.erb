@@ -8,13 +8,28 @@
 </p>
 
 <p>
-  <b>Taxi:</b>
-  <span class"saved_value"><%= @taxi_booking.taxi.long_name %></span>
+  <b>Operator:</b>
+  <span class"saved_value"><%= @taxi_booking.taxi.agency.name %></span>
 </p>
 
 <p>
-  <b>Vehicles:</b>
-  <span class"saved_value"><%= @taxi_booking.number_of_vehicles %></span>
+  <b>Taxi:</b>
+  <span class"saved_value"><%= pluralize(@taxi_booking.number_of_vehicles, @taxi_booking.taxi.model) %></span>
+</p>
+
+<p>
+  <b>Start date:</b>
+  <span class"saved_value"><%= l @taxi_booking.start_date %></span>
+</p>
+
+<p>
+  <b>End date:</b>
+  <span class"saved_value"><%= l @taxi_booking.end_date %></span>
+</p>
+
+<p>
+  <b>Number of days:</b>
+  <span class"saved_value"><%= @taxi_booking.number_of_days %></span>
 </p>
 
 <p>

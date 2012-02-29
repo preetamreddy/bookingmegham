@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120229044851) do
+ActiveRecord::Schema.define(:version => 20120229045334) do
 
   create_table "advisors", :force => true do |t|
     t.integer  "agency_id"
@@ -158,6 +158,9 @@ ActiveRecord::Schema.define(:version => 20120229044851) do
     t.string   "drop_off_city"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "start_date"
+    t.integer  "number_of_days"
+    t.date     "end_date"
   end
 
   create_table "taxi_details", :force => true do |t|
