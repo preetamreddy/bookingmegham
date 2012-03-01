@@ -17,8 +17,7 @@ class Booking < ActiveRecord::Base
 	before_validation :set_defaults_if_nil, 
 										:update_number_of_rooms, :update_check_out_date
 
-	before_save :update_room_rate,
-							:update_total_price, :update_service_tax,
+	before_save :update_total_price, :update_service_tax,
 							:titleize
 
 	before_create :update_guest_id, :update_property_id
@@ -78,14 +77,6 @@ class Booking < ActiveRecord::Base
 		end
 
 		self.number_of_rooms = num_rooms
-	end
-
-	def update_room_rate
-		rooms.each do |room|
-			room.room_rate = RoomType.price(room_type_id, room.occupancy,
-													room.number_of_adults,
-													room.number_of_children_between_5_and_12_years)
-		end
 	end
 
 	def update_total_price
