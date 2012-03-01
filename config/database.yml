@@ -6,9 +6,11 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: ezbook_dev
-  username: preetam 
+  database: ezbook_prod
+  username: postgres 
+  password: bm
   pool: 5
+  host: localhost
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
