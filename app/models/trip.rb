@@ -29,7 +29,7 @@ class Trip < ActiveRecord::Base
 
 	before_validation :update_end_date
 
-	before_save :set_defaults_if_nil, :update_vas_unit_price,
+	before_save :set_defaults_if_nil,
 							:update_payment_status, :update_pay_by_date,
 							:titleize
 
@@ -94,8 +94,7 @@ class Trip < ActiveRecord::Base
 
 		if vas_bookings.any?
 			price_for_vas = vas_bookings.to_a.sum { |vas_booking|
-				vas_booking.unit_price * vas_booking.number_of_people *
-					vas_booking.number_of_days }
+				vas_booking.unit_price * vas_booking.number_of_people }
 		else
 			price_for_vas = 0
 		end
@@ -255,22 +254,6 @@ class Trip < ActiveRecord::Base
 					booking.line_items.each do |line_item|
 						line_item.blocked = blocked
 						line_item.save!
-					end
-				end
-			end
-		end
-
-		def update_vas_unit_price
-			if vas_bookings.any?
-				vas_bookings.each do |vas_booking|
-					vas_booking.unit_price = ValueAddedService.unit_price(
-																		vas_booking.value_added_service_id,
-																		vas_booking.number_of_people)
-					if !vas_booking.unit_price or vas_booking.unit_price == 0
-						errors.add(:base, "Could not create Trip as price for
-							'#{vas_booking.value_added_service.name}' and 
-							#{vas_booking.number_of_people} people was not found")
-						return false
 					end
 				end
 			end

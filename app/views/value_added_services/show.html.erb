@@ -13,28 +13,14 @@
 </p>
 
 <p>
-  <b>Is Trek?</b>
-  <span class="saved_value"><%= @value_added_service.is_trek %></span>
+  <b>Min people:</b>
+  <span class="saved_value"><%= @value_added_service.min_people %></span>
 </p>
 
-<% if @value_added_service.vas_prices.any? %>
-	<b>Pricing:</b>
-	<table class="nested_table">
-		<tr>
-			<th class="number">Unit Price</th>
-			<th class="number">Min group size</th>
-			<th class="number">Max group size</th>
-		</tr>
-
-		<% @value_added_service.vas_prices.each do |vas_price| %>
-			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-				<td class="number"><%= number_to_currency(vas_price.unit_price) %></td>
-				<td class="number"><%= vas_price.min_group_size %></td>
-				<td class="number"><%= vas_price.max_group_size %></td>
-			</tr>
-		<% end %>
-	</table>
-<% end %>
+<p>
+  <b>Unit price:</b>
+  <span class="saved_value"><%= number_to_currency(@value_added_service.unit_price) %></span>
+</p>
 
 <p>
   <b>Description:</b>

@@ -9,7 +9,8 @@
   <tr>
     <th class="text">Property</th>
     <th class="text">Name</th>
-    <th class="text">Is Trek?</th>
+    <th class="number">Min people</th>
+    <th class="number">Unit price</th>
     <th class="text">Description</th>
     <th></th>
   </tr>
@@ -20,16 +21,10 @@
 			<%= value_added_service.property.name if value_added_service.property_id %>
 		</td>
     <td class="text"><%= value_added_service.name %></td>
-    <td class="text">
-			<% if value_added_service.is_trek == 1 %>
-				Yes
-			<% else %>
-				No
-			<% end %>
-		</td>
+    <td class="number"><%= value_added_service.min_people %></td>
+    <td class="number"><%= number_to_currency(value_added_service.unit_price) %></td>
     <td class="text"><%= value_added_service.description %></td>
     <td>
-			<%= link_to 'Show details', value_added_service %></br>
 			<%= link_to 'Edit', edit_value_added_service_path(value_added_service) %></br>
     	<%= link_to 'Destroy', value_added_service, confirm: 'Are you sure?',
 						method: :delete %>

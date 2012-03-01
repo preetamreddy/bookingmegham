@@ -4,14 +4,8 @@
 				find_all_by_property_id(nil), :id, :name,
 				:prompt => "") %>
 
-	<%= f.label :number_of_people, "#" %>
+	<%= f.label :number_of_people, "Number of people" %>
 	<%= f.number_field :number_of_people, min: 0, max: 999 %>
-
-	<%= f.label :number_of_days, "Days" %>
-	<%= f.number_field :number_of_days, min: 0, max: 99 %>
-
-	<%= f.label :description %>
-	<%= f.text_field :description, size: 25 %>
 
 	<%= f.link_to_remove "x" %>
 </div>

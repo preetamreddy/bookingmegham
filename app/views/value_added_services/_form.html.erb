@@ -31,19 +31,13 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :is_trek, "Is trek?" %><br />
-		<%= f.check_box :is_trek %> 
+    <%= f.label :min_people %><br />
+    <%= f.number_field :min_people %>
   </div>
-
-	<div class="field">
-		<%= f.label :pricing %>
-	</div>
-
-	<div class="nested_form">
-		<%= f.fields_for :vas_prices %>
-		<%= f.link_to_add "Add new", :vas_prices %><br />
-	</div>
-
+  <div class="field">
+    <%= f.label :unit_price %><br />
+    <%= f.number_field :unit_price %>
+  </div>
   <div class="field">
     <%= f.label :description %><br />
     <%= f.text_area :description, rows: 6 %>

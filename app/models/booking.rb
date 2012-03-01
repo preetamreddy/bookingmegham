@@ -17,7 +17,7 @@ class Booking < ActiveRecord::Base
 	before_validation :set_defaults_if_nil, 
 										:update_number_of_rooms, :update_check_out_date
 
-	before_save :update_room_rate, :update_vas_unit_price,
+	before_save :update_room_rate,
 							:update_total_price, :update_service_tax,
 							:titleize
 
@@ -88,21 +88,6 @@ class Booking < ActiveRecord::Base
 		end
 	end
 
-	def update_vas_unit_price
-		if vas_bookings.any?
-			vas_bookings.each do |vas_booking|
-				vas_booking.unit_price = ValueAddedService.unit_price(
-																		vas_booking.value_added_service_id,
-																		vas_booking.number_of_people)
-				if vas_booking.unit_price == 0
-					errors.add(:base, "Could not create Trip as
-						'#{vas_booking.value_added_service.name}' requires more people")
-					return false
-				end
-			end
-		end
-	end
-
 	def update_total_price
 		if rooms.any?
 			price_per_night = rooms.to_a.sum { |room|
@@ -115,8 +100,7 @@ class Booking < ActiveRecord::Base
 
 		if vas_bookings.any?
 			price_for_vas = vas_bookings.to_a.sum { |vas_booking|
-				vas_booking.unit_price * vas_booking.number_of_people * 
-					vas_booking.number_of_days }
+				vas_booking.unit_price * vas_booking.number_of_people }
 		else
 			price_for_vas = 0
 		end
