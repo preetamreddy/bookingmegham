@@ -29,7 +29,7 @@ class Trip < ActiveRecord::Base
 
 	before_validation :update_end_date
 
-	before_save :set_defaults_if_nil,
+	before_save :set_defaults_if_nil, :update_vas_unit_price,
 							:update_payment_status, :update_pay_by_date,
 							:titleize
 
@@ -161,6 +161,12 @@ class Trip < ActiveRecord::Base
 
 		def update_end_date
 			self.end_date = start_date + number_of_days - 1
+		end
+
+		def update_vas_unit_price
+			vas_bookings.each do |vas_booking|
+				vas_booking.unit_price = vas_booking.value_added_service.unit_price
+			end
 		end
 
 		def update_payment_status

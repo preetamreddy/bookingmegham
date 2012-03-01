@@ -3,8 +3,6 @@ class VasBooking < ActiveRecord::Base
 	belongs_to :booking
 	belongs_to :value_added_service
 
-	before_create :update_unit_price
-
 	validate :has_min_people
 	
 	def total_price
@@ -14,10 +12,6 @@ class VasBooking < ActiveRecord::Base
 	end
 
 	private
-
-		def update_unit_price
-			self.unit_price = value_added_service.unit_price
-		end
 
 		def has_min_people
 			if number_of_people >= value_added_service.min_people
