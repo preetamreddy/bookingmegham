@@ -67,7 +67,9 @@ class Booking < ActiveRecord::Base
 	end
 
 	def set_defaults_if_nil
-		self.suggested_activities ||= room_type.property.suggested_activities
+		if suggested_activities == ""
+			self.suggested_activities = room_type.property.suggested_activities
+		end
 	end
 
 	def update_number_of_rooms

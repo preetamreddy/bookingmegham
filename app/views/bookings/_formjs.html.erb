@@ -63,6 +63,11 @@
 		<%= f.link_to_add "Add new", :rooms %><br/>
 	</div>
 
+	<div class="field">
+    <%= f.label :suggested_activities %><br />
+		<%= f.text_area :suggested_activities %>
+	</div>
+
   <div class="action_container">
     <%= f.submit %>
   </div>

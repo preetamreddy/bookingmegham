@@ -100,10 +100,10 @@
 		</div>
 	<% end %>
 
-  <div class="field">
+	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
     <%= f.label :suggested_activities %><br />
     <%= f.text_area :suggested_activities, rows: 6 %>
-  </div>
+	<% end %>
 
 	<%= hidden_div_if(!@booking.total_price, class: "field") do %>
     <%= f.label :total_price %><br />
