@@ -264,13 +264,4 @@ ActiveRecord::Schema.define(:version => 20120301090313) do
     t.datetime "updated_at"
   end
 
-  create_table "vas_prices", :force => true do |t|
-    t.integer  "value_added_service_id"
-    t.integer  "unit_price"
-    t.integer  "min_group_size"
-    t.integer  "max_group_size"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
 end
