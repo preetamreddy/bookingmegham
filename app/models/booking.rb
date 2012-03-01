@@ -255,7 +255,7 @@ class Booking < ActiveRecord::Base
 		end
 
 		def titleize
-			self.guests_arriving_from = guests_arriving_from.titleize
-			self.departure_destination = departure_destination.titleize
+			self.guests_arriving_from = guests_arriving_from.titleize if guests_arriving_from
+			self.departure_destination = departure_destination.titleize if departure_destination
 		end
 end
