@@ -4,9 +4,7 @@ class TrekBooking < ActiveRecord::Base
 
 	before_validation :update_end_date
 
-	before_save :titleize
-
-	before_create :update_unit_price
+	before_save :update_unit_price, :titleize
 
 	before_destroy :ensure_payments_are_not_made
 

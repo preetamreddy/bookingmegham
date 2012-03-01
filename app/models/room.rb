@@ -6,8 +6,6 @@ class Room < ActiveRecord::Base
 
 	before_validation :set_defaults_if_nil
 
-	before_create :update_room_rate
-
 	validates :occupancy, :number_of_adults, :number_of_rooms, presence: true
 
 	validates :occupancy, inclusion: ROOM_OCCUPANCY_TYPES
@@ -27,13 +25,5 @@ class Room < ActiveRecord::Base
 	def set_defaults_if_nil
 		self.number_of_children_between_5_and_12_years ||= 0
 	end
-
-	private
-	
-		def update_room_rate
-			room_rate = RoomType.price(booking.room_type_id,
-										occupancy, number_of_adults,
-										number_of_children_between_5_and_12_years)
-		end
 
 end
