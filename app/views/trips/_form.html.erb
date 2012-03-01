@@ -72,6 +72,14 @@
     <%= f.number_field :number_of_drivers, :min => 0 %>
 	</div>
 
+	<div class="field">
+		<%= f.label :VAS %>
+	</div>
+	<div class="nested_form">
+		<%= f.fields_for :vas_bookings %>
+		<%= f.link_to_add "Add new", :vas_bookings %><br/>
+	</div>
+
 	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
     <%= f.label :payment_status %><br />
 		<p><span class="highlight">
