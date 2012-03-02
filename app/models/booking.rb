@@ -18,7 +18,8 @@ class Booking < ActiveRecord::Base
 										:update_number_of_rooms, :update_check_out_date
 
 	before_save :update_room_rate, :update_vas_unit_price,
-							:update_total_price, :update_service_tax
+							:update_total_price, :update_service_tax,
+							:titleize
 
 	before_create :update_guest_id, :update_property_id
 
@@ -253,5 +254,10 @@ class Booking < ActiveRecord::Base
 
 		def update_property_id
 			self.property_id = room_type.property_id
+		end
+
+		def titleize
+			self.guests_arriving_from = guests_arriving_from.titleize if guests_arriving_from
+			self.departure_destination = departure_destination.titleize if departure_destination
 		end
 end
