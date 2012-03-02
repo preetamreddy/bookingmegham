@@ -50,3 +50,6 @@ end
 
 # Web server
 gem 'thin'
+
+# Converting HTMLs to PDF
+gem 'wicked_pdf'
