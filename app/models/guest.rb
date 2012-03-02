@@ -9,7 +9,8 @@ class Guest < ActiveRecord::Base
 
 	validates :title, :name, presence: true
 
-	validates :phone_number, :email_id, 
+	validates :phone_number, :email_id, :allow_nil => true,
+						:allow_blank => true,
 						:uniqueness => { :case_sensitive => false }
 
 	validates :phone_number, :phone_number_2, allow_nil: true,
