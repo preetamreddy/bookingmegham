@@ -2,6 +2,6 @@
 		<%= label_tag :chart_start_date %>
 		<%= select_date @chart_start_date, :prefix => 'chart_start_date_arr' %>
 		<%= label_tag :number_of_days, "Show Days" %>
-		<%= number_field_tag :number_of_days, @number_of_days %>
+		<%= number_field_tag :number_of_days, @number_of_days, min: 1, max: 99 %>
 		<%= submit_tag "Show", :name => nil %>
 <% end %>

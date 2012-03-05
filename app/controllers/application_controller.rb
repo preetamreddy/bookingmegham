@@ -29,4 +29,29 @@ class ApplicationController < ActionController::Base
 				redirect_to "http://#{APP_DOMAIN}", :status => 301
 			end
 		end
+
+  def sort_for_contiguous_rooms(available_rooms, rooms_required)
+    available_rooms = available_rooms.sort
+    first_room_number = 0
+    i = 0
+    while (available_rooms.length - rooms_required + 1 - i) > 0
+      (0..(rooms_required - 1)).each do |r|
+        n = available_rooms.first
+        if available_rooms.index(n + r)
+          first_room_number = n
+        else
+          first_room_number = 0
+          break
+        end
+      end
+      if first_room_number > 0
+        break
+      else
+        i += 1
+        available_rooms = available_rooms.rotate
+      end
+    end
+    return available_rooms
+  end
+
 end

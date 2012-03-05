@@ -1,10 +1,9 @@
 .line_items {
-
-	table th:nth-last-child(1) {
-		width: 30%;
+	table th:nth-last-child(2) {
+		width: auto;
 	}
 
-	table th:nth-last-child(2) {
-		width: 30%;
+	table td:nth-last-child(1) {
+		width: auto;
 	}
 }

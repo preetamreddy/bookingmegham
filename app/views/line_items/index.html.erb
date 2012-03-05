@@ -6,30 +6,24 @@
 
 <% if @line_items.count > 0 %>
 	<table class="index_table" border="1">
-	  <tr>
-	    <th>Date</th>
-	    <th>Room type</th>
-	    <th>Guest</th>
-	    <th>Food preferences</th>
-	    <th></th>
+		<tr>
+			<th class="text">Room Type</th>
+			<% @chart_date_range_short.each do |date| %>
+				<th><%= date %></th>
+			<% end %>
 	  </tr>
 	
-		<% @line_items.each do |line_item| %>
-	  	<tr>
-	    	<td class="nowrap"><%= line_item.date %></td>
-	    	<td class="nowrap"><%= line_item.room_type.long_name %></td>
-	    	<td>
-					<span class="nowrap"><%= line_item.booking.trip.guest.name %>, 
-					<%= line_item.booking.trip.guest.phone_number %></span><br/>
-					(<%= line_item.booking.number_of_adults %> + 
-					<%= line_item.booking.number_of_children_between_5_and_12_years %> + 
-					<%= line_item.booking.number_of_children_below_5_years %>)
-				</td>
-	    	<td><%= line_item.booking.food_preferences %></td>
-				<td>
-					<%= link_to "Show Booking", line_item.booking %>
-				</td>
-	  	</tr>
+		<% @room_types.each do |room_type| %>	
+			<% (1..room_type.number_of_rooms).each do |room_number| %>
+	  		<tr>
+	    		<td class="nowrap"><%= room_type.room_type %></td>
+					<% @chart_date_range.each do |date| %>
+	    			<td><span class="text">
+							<%= @line_items[[room_type.id, room_number, date]] %>
+						</span></td>
+					<% end %>
+				</tr>
+			<% end %>
 		<% end %>
 	</table>
 <% else %>
@@ -40,5 +34,3 @@
 		</ul>
 	</div>
 <% end %>
-
-<p><%= will_paginate @line_items %></p>
