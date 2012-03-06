@@ -6,7 +6,7 @@
       <ul>
       <% @booking.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
-      <% end %>
+     <% end %>
       </ul>
     </div>
   <% end %>
@@ -84,12 +84,6 @@
 		<%= f.link_to_add "Add new", :rooms %><br/>
 	</div>
 
-	<div class="field">
-    <%= f.label :meal_plan %><br />
-		<%= f.select :meal_plan, Booking::MEAL_PLANS,
-					prompt: 'Select a meal plan' %>
-	</div>
-
 	<% if @booking.room_type_id %>
 		<div class="field">
 			<%= f.label :value_added_services, "VAS" %>
@@ -101,8 +95,38 @@
 	<% end %>
 
 	<div class="field">
+    <%= f.label :meal_plan %><br />
+		<%= f.select :meal_plan, Booking::MEAL_PLANS,
+					prompt: 'Select a meal plan' %>
+	</div>
+
+	<div class="field">
     <%= f.label :suggested_activities %><br />
     <%= f.text_area :suggested_activities, rows: 6 %>
+	</div>
+	<div class="field">
+    <%= f.label :guests_arriving_from, "Arriving from" %><br />
+    <%= f.text_field :guests_arriving_from %>
+	</div>
+	<div class="field">
+    <%= f.label :distance_and_time, "Distance / time" %><br />
+    <%= f.text_field :distance_and_time %>
+	</div>
+	<div class="field">
+    <%= f.label :guests_arrival_time, "Arrival time" %><br />
+    <%= f.time_select :guests_arrival_time, :prompt => true %>
+	</div>
+	<div class="field">
+    <%= f.label :getting_there, "Journey details" %><br />
+    <%= f.text_area :getting_there, rows: 6 %>
+	</div>
+	<div class="field">
+    <%= f.label :departure_destination, "Departure to" %><br />
+    <%= f.text_field :departure_destination %>
+	</div>
+	<div class="field">
+    <%= f.label :getting_home, "Homeward journey" %><br />
+    <%= f.text_area :getting_home, rows: 6 %>
 	</div>
 
 	<%= hidden_div_if(!@booking.total_price, class: "field") do %>
@@ -134,20 +158,6 @@
     <%= f.label :reservation_reference, "Res Ref." %><br />
     <%= f.text_field :reservation_reference %>
 	</div>
-
-	<div class="field">
-    <%= f.label :guests_arriving_from, "Arr. from" %><br />
-    <%= f.text_field :guests_arriving_from %>
-	</div>
-	<div class="field">
-    <%= f.label :guests_arrival_time, "Arrival time" %><br />
-    <%= f.time_select :guests_arrival_time, :prompt => true %>
-	</div>
-	<div class="field">
-    <%= f.label :departure_destination, "Departure to" %><br />
-    <%= f.text_field :departure_destination %>
-	</div>
-
   <div class="field">
     <%= f.label :remarks %><br />
     <%= f.text_area :remarks, rows: 6 %>

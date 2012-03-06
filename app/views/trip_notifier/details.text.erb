@@ -1,0 +1,16 @@
+to: <%= @trip.guest.email_id %>
+cc: <%= @trip.email_ids + ", " + @trip.advisor.email_id %>
+
+Dear <%= @trip.guest.title + " " + @trip.guest.name.split.last %>
+
+Thank you for planning your holiday with Banjara Camps and Retreats.
+As discussed, below are the details of your trip '<%= @trip.name %>'.
+Please let us know if this meets your requirements.
+
+With warm regards,
+<%= @trip.advisor.name %>
+<%= @trip.advisor.email_id %>
+<%= @trip.advisor.phone_number_1 %>
+<%= @trip.advisor.agency.name %>
+<%= @trip.advisor.agency.postal_address %>
+<%= @trip.advisor.agency.url %>

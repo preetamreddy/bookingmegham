@@ -6,9 +6,17 @@ class TripNotifier < ActionMailer::Base
   def details(trip)
 		@trip = trip
 
-		mail to: "#{@trip.guest.name} <#{@trip.guest.email_id}>", 
-    	cc: "#{@trip.email_ids}, #{@trip.advisor.name} <#{@trip.advisor.email_id}>",
-			subject: 'Your holiday with Banjara Camps - Trip details'
+#		mail to: "#{@trip.guest.name} <#{@trip.guest.email_id}>", 
+#    	cc: "#{@trip.email_ids}, #{@trip.advisor.name} <#{@trip.advisor.email_id}>",
+   	mail(to: "#{@trip.advisor.name} <#{@trip.advisor.email_id}>",
+				subject: 'Your holiday with Banjara Camps - Trip details') do |format|
+			format.text
+			format.pdf do
+				attachments["trip_details.pdf"] = WickedPdf.new.pdf_from_string(
+					render_to_string(:pdf => "trip_details", 
+					:template 						=> 'trip_notifier/details.pdf.erb'))
+			end
+		end
   end
 
   def invoice(trip)
