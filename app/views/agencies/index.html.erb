@@ -7,24 +7,24 @@
 <% if @agencies.count > 0 %>
 <table class="index_table" border="1">
   <tr>
-    <th>Name</th>
-    <th>Phone number</th>
+    <th>Agency</th>
     <th>Email</th>
     <th>Url</th>
     <th>City</th>
-    <th>Postal address</th>
     <th></th>
   </tr>
 
 <% @agencies.each do |agency| %>
 	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-    <td><%= agency.name %></td>
-    <td><%= agency.phone_number %></td>
-    <td><%= agency.email_id %></td>
-    <td><%= agency.url %></td>
-    <td><%= agency.city %></td>
-    <td><%= agency.postal_address %></td>
     <td>
+			<span class="nowrap"><%= agency.name %></span><br />
+    	<span class="nowrap"><%= agency.phone_number %></span>
+		</td>
+    <td class="nowrap"><%= agency.email_id %></td>
+    <td class="nowrap"><%= agency.url %></td>
+    <td class="nowrap"><%= agency.city %></td>
+    <td>
+    	<%= link_to 'Show details', agency %><br />
     	<%= link_to 'Edit', edit_agency_path(agency) %><br />
 			<% if session[:agency] == 'EZBook' %>
     		<%= link_to 'Destroy', agency, confirm: 'Are you sure?',
