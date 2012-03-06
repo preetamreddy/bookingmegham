@@ -37,7 +37,7 @@ class LineItemsController < ApplicationController
 		@room_types.each do |room_type|
 			available_rooms = (1..room_type.number_of_rooms).to_a
 
-			in_camp = Booking.order("number_of_rooms, check_in_date").
+			in_camp = Booking.order("check_in_date, number_of_rooms desc").
 				find(:all, :conditions => 
 				[ 'room_type_id = ? and check_in_date <= ? and check_out_date > ?',
 				room_type.id, @chart_start_date, @chart_start_date ])
@@ -69,7 +69,7 @@ class LineItemsController < ApplicationController
 					end
 				end
 
-				check_ins = Booking.order("number_of_rooms, id").
+				check_ins = Booking.order("number_of_rooms desc").
 					find(:all, :conditions => [
 					'room_type_id = ? and check_in_date = ?', room_type.id, date ])
 				check_ins.each do |booking|

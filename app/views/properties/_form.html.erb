@@ -35,6 +35,10 @@
     <%= f.text_field :phone_number_2 %>
   </div>
   <div class="field">
+    <%= f.label :url, "URL" %><br />
+    <%= f.text_field :url %>
+  </div>
+  <div class="field">
     <%= f.label :price_for_children_below_5_years, 
 					"Price for children below 5" %><br />
     <%= f.number_field :price_for_children_below_5_years, :min => 0 %>
