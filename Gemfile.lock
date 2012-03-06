@@ -119,6 +119,7 @@ GEM
       multi_json (>= 1.0.2)
     wicked_pdf (0.7.5)
     will_paginate (3.0.2)
+    wkhtmltopdf-binary (0.9.5.3)
 
 PLATFORMS
   ruby
@@ -136,3 +137,4 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   wicked_pdf
   will_paginate (~> 3.0)
+  wkhtmltopdf-binary
