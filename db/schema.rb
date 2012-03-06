@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120301090313) do
+ActiveRecord::Schema.define(:version => 20120306033451) do
 
   create_table "advisors", :force => true do |t|
     t.integer  "agency_id"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20120301090313) do
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "logo_file_name"
   end
 
   create_table "bookings", :force => true do |t|
@@ -58,6 +59,9 @@ ActiveRecord::Schema.define(:version => 20120301090313) do
     t.integer  "bill_agent_on_chosen_plan",   :default => 1
     t.string   "meal_plan"
     t.string   "reservation_reference"
+    t.string   "distance_and_time"
+    t.text     "getting_there"
+    t.text     "getting_home"
   end
 
   create_table "feedbacks", :force => true do |t|
@@ -121,6 +125,7 @@ ActiveRecord::Schema.define(:version => 20120301090313) do
     t.string   "phone_number_2"
     t.text     "address"
     t.text     "suggested_activities"
+    t.string   "url"
   end
 
   create_table "room_types", :force => true do |t|
