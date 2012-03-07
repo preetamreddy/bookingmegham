@@ -14,7 +14,14 @@ class TripNotifier < ActionMailer::Base
 			format.pdf do
 				attachments["trip_details.pdf"] = WickedPdf.new.pdf_from_string(
 					render_to_string(:pdf => "trip_details", 
-					:template 						=> 'trip_notifier/details.pdf.erb'))
+					:template 						=> 'trip_notifier/details.pdf.erb',
+					:layout								=> 'layouts/default.html.erb',
+					:header => {:html => {:template => 'layouts/header.pdf.erb'}},
+					:footer => {:html => {:template => 'layouts/footer.pdf.erb'}},
+					:margin => {:top 		=> 25,
+											:bottom	=> 30,
+											:left		=> 20,
+											:right	=> 20}))
 			end
 		end
   end
