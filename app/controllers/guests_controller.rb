@@ -8,7 +8,7 @@ class GuestsController < ApplicationController
 		end
 
 		if (params[:name] or params[:phone_number] or params[:email_id])
-			@guests = Guest.paginate(page: params[:page], per_page: 5).
+			@guests = Guest.paginate(page: params[:page], per_page: 20).
 									order('name, resident_of').
 									find(:all, :conditions => [ 
 									'lower(name) like ? and
@@ -20,7 +20,7 @@ class GuestsController < ApplicationController
 									"%" + params[:email_id] + "%",
 									"%" + params[:email_id] + "%" ])
 		else
-			@guests = Guest.paginate(page: params[:page], per_page: 5).
+			@guests = Guest.paginate(page: params[:page], per_page: 20).
 									order('name, resident_of').find(:all)
 		end
 
