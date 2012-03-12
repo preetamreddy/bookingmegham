@@ -17,6 +17,7 @@ class AvailabilityChartController < ApplicationController
 			@rooms_required = trip.number_of_rooms
 			@chart_start_date = trip.start_date
 			@chart_end_date = trip.end_date
+			@number_of_days = trip.number_of_days - 1
 		else
 			if params[:chart_start_date_arr]
 				@chart_start_date = Date.civil(
