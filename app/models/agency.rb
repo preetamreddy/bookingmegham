@@ -56,7 +56,6 @@ class Agency < ActiveRecord::Base
 		end
 
 		def titleize
-			self.name = name.titleize
 			self.city = city.titleize
 		end
 	

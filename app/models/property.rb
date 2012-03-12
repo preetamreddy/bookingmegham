@@ -14,6 +14,8 @@ class Property < ActiveRecord::Base
 	
 	validates :name, presence: true, :uniqueness => { :case_sensitive => false }
 
+	validates :url, presence: true
+
 	validates_numericality_of :price_for_children_between_5_and_12_years,
 														:price_for_children_below_5_years,
 														:price_for_triple_occupancy,
