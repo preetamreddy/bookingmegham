@@ -61,6 +61,12 @@ class Trip < ActiveRecord::Base
 		end
 	end
 
+	def number_of_children
+		bachcha_party =  number_of_children_between_5_and_12_years + number_of_children_below_5_years
+
+		return bachcha_party
+	end
+
 	def number_of_children_between_5_and_12_years
 		if rooms.empty?
 			return 0

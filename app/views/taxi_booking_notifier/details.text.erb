@@ -1,0 +1,38 @@
+to: <%= @taxi_booking.taxi.agency.email_id %>
+cc: <%= @trip.advisor.email_id %>
+
+Greetings from Banjara Camps!
+
+We have a requirement to arrange transportation for a guest as below:
+
+<%= pluralize(@taxi_booking.number_of_vehicles, @taxi_booking.taxi.model) %> starting <%= l @taxi_booking.start_date %> for <%= pluralize(@taxi_booking.number_of_days, "day") %>, ending on <%= l @taxi_booking.end_date %>.
+
+Guest Name: <%= @trip.guest.title%> <%= @trip.guest.name.split.last %>
+Phone number: <%= @trip.guest.phone_number %>
+<% if @trip.number_of_children == 0 %>
+Number of people: <%= @trip.number_of_adults %>
+<% else %>
+Number of people: <%= @trip.number_of_adults %> + <%= @trip.number_of_children %>
+<% end %>
+
+Pickup address: <%= @taxi_booking.pickup_address %>
+Pickup time: <%= l @taxi_booking.pickup_time, :format => :short %>
+
+Itinerary:
+<% @trip.bookings.order(:check_in_date).each do |booking| %>
+<%= l booking.check_in_date, :format => :short %>: <%= booking.guests_arriving_from %> - <%= booking.room_type.property.name %>
+<% ((booking.check_in_date + 1)...booking.check_out_date).each do |date| %>
+<%= l date, :format => :short %>: <%= booking.room_type.property.name %>
+<% end %>
+<% if booking == @trip.bookings.order(:check_in_date).last %>
+<%= l booking.check_out_date, :format => :short %>: <%= booking.room_type.property.name %> - <%= @taxi_booking.drop_off_city %>
+<% end %>
+<% end %>		
+
+With warm regards,
+<%= @taxi_booking.trip.advisor.name %>
+<%= @taxi_booking.trip.advisor.email_id %>
+<%= @taxi_booking.trip.advisor.phone_number_1 %>
+<%= @taxi_booking.trip.advisor.agency.name %>
+<%= @taxi_booking.trip.advisor.agency.postal_address %>
+<%= @taxi_booking.trip.advisor.agency.url %>

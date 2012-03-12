@@ -85,6 +85,8 @@
 
 <div class="action_container">
 	<%= link_to 'Edit', edit_taxi_booking_path(@taxi_booking) %>
+	<%= link_to 'Notify Operator', 
+				email_taxi_booking_path(:taxi_booking_id => @taxi_booking.id) %> 
 </div>
 
 <%= link_to 'Back to Taxi Booking Listing', taxi_bookings_path,

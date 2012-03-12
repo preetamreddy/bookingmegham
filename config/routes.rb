@@ -1,4 +1,8 @@
 Bookingmegham::Application.routes.draw do
+	resources :taxi_bookings do
+		get :email, :on => :member
+	end
+
   resources :trek_prices
 
   resources :trek_bookings

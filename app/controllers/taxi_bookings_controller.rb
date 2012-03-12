@@ -107,4 +107,14 @@ class TaxiBookingsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+	def email
+		taxi_booking = TaxiBooking.find(params[:taxi_booking_id])
+		TaxiBookingNotifier.details(taxi_booking).deliver
+
+		respond_to do |format|
+			format.html { redirect_to taxi_booking, notice: 'Email was successfully sent.' }
+      format.json { render json: @taxi_booking, status: :sent, location: @taxi_booking }
+		end
+	end
 end
