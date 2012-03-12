@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120306033451) do
+ActiveRecord::Schema.define(:version => 20120312063838) do
 
   create_table "advisors", :force => true do |t|
     t.integer  "agency_id"
@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(:version => 20120306033451) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "room_rate"
+    t.integer  "service_tax_rate"
   end
 
   create_table "taxi_bookings", :force => true do |t|

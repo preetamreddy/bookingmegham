@@ -20,7 +20,9 @@ class TaxiBooking < ActiveRecord::Base
 		end
 
 		def update_unit_price
-			self.unit_price = taxi.unit_price
+			if unit_price == nil
+				self.unit_price = taxi.unit_price
+			end
 		end
 
 		def ensure_payments_are_not_made

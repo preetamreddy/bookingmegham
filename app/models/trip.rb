@@ -165,7 +165,9 @@ class Trip < ActiveRecord::Base
 
 		def update_vas_unit_price
 			vas_bookings.each do |vas_booking|
-				vas_booking.unit_price = vas_booking.value_added_service.unit_price
+				if vas_booking.unit_price == nil
+					vas_booking.unit_price = vas_booking.value_added_service.unit_price
+				end
 			end
 		end
 
