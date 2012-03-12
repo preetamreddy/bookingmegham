@@ -14,6 +14,12 @@ class Agency < ActiveRecord::Base
 	before_destroy 	:ensure_does_not_have_advisors, :ensure_does_not_have_trips,
 									:ensure_does_not_have_properties, :ensure_does_not_have_taxis	
 
+	validates :name, presence: true
+
+	validates :phone_number, :email_id, :allow_nil => true,
+		:allow_blank => true,
+		:uniqueness => { :case_sensitive => false }
+
 	validates :phone_number, :format => { :with => /^[\+]?[\d\s]*$/,
 		:message => "is not valid" }
 
