@@ -79,7 +79,7 @@
 			<th class="number">Unit price</th>
 		</tr>
 
-		<% @booking.vas_bookings.each do |vas_booking| %>
+		<% @trip.vas_bookings.each do |vas_booking| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 				<td class="text"><%= vas_booking.value_added_service.name %></td>
 				<td class="number"><%= vas_booking.number_of_people %></td>
@@ -182,6 +182,8 @@
 	<%= link_to 'View Bookings', bookings_path(:trip_id => @trip.id) %>
 	<%= link_to 'Email Trip Details', email_trip_path(:trip_id => @trip.id,
 				:type => 'details') %>
+	<%= link_to 'Email Trip Invoice', email_trip_path(:trip_id => @trip.id,
+				:type => 'invoice') %>
 </div>
 
 <%= link_to 'Back to Trip Listing', trips_path, :class => "back_link" %>
