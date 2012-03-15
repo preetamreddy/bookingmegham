@@ -14,8 +14,9 @@
 	  </tr>
 	
 		<% @room_types.each do |room_type| %>	
+			<% tr_class = cycle('list_line_odd', 'list_line_even') %>
 			<% (1..room_type.number_of_rooms).each do |room_number| %>
-	  		<tr>
+	  		<tr class=<%= tr_class %>>
 	    		<td class="nowrap"><%= room_type.room_type %></td>
 					<% @chart_date_range.each do |date| %>
 	    			<td><span class="text">
