@@ -188,7 +188,7 @@
 	<%= link_to 'Email Trip Details', email_trip_path(:trip_id => @trip.id,
 				:type => 'details') %>
 	<% if @trip.agency.name != @trip.advisor.agency.name %>
-		<%= link_to 'Send Invoice', email_trip_path(:trip_id => @trip.id,
+		<%= link_to 'Send Invoice to Agent', email_trip_path(:trip_id => @trip.id,
 					:type => 'invoice') %>
 	<% end %>
 </div>

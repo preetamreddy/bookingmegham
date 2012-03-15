@@ -1,5 +1,4 @@
 class TripNotifier < ActionMailer::Base
-	Linguistics::use( :en )
 	add_template_helper(ApplicationHelper)
 
 	ACCOUNTS_EMAIL_ID = "accounts@banjaracamps.com"
@@ -15,7 +14,7 @@ class TripNotifier < ActionMailer::Base
 				subject: 'Your holiday with Banjara Camps - Trip details') do |format|
 			format.text
 			format.pdf do
-				attachments["trip_details.pdf"] = WickedPdf.new.pdf_from_string(
+				attachments["Banjara Camps - Trip details.pdf"] = WickedPdf.new.pdf_from_string(
 					render_to_string(:pdf => "trip_details", 
 					:template 						=> 'trip_notifier/details.pdf.erb',
 					:layout								=> 'layouts/default.html.erb',
@@ -31,15 +30,15 @@ class TripNotifier < ActionMailer::Base
 
   def invoice(trip)
 		@trip = trip
+		@user = User.find_by_name('sanjeev')
 
 #		mail(to: "#{@trip.guest.name} <#{@trip.guest.email_id}>", 
 #			cc: "#{@trip.email_ids}, #{@trip.advisor.name} <#{@trip.advisor.email_id}>, #{ACCOUNTS_EMAIL_ID}",
-#		mail(to: "#{@trip.advisor.name} <#{@trip.advisor.email_id}>",
-		mail(to: "preetam@ezbook.in",
-				subject: 'Your holiday with Banjara Camps - Invoice') do |format|
+		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
+				subject: "Invoice for trip #{@trip.id}/#{@trip.guest.name}") do |format|
 			format.text
 			format.pdf do
-				attachments["trip_invoice.pdf"] = WickedPdf.new.pdf_from_string(
+				attachments["Invoice #{@trip.agency.name} (ref: #{@trip.id}/#{@trip.guest.name}).pdf"] = WickedPdf.new.pdf_from_string(
 					render_to_string(:pdf => "trip_invoice", 
 					:template 						=> 'trip_notifier/invoice.pdf.erb',
 					:layout								=> 'layouts/default.html.erb'))

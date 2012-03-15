@@ -1,14 +1,14 @@
-to: <%= @trip.guest.email_id %>
-cc: <%= @trip.email_ids + ", " + @trip.advisor.email_id + ", " + "accounts@banjaracamps.com" %>
+to: <%= @trip.agency.email_id %>
+cc: @trip.advisor.email_id + ", " + "accounts@banjaracamps.com" %>
 
 Greetings from Banjara Camps and Retreats!
 
-Attached is the invoice for your trip with id: <%= @trip.id %> and ref no: <%= @trip.guest.name %> (<%= @trip.number_of_adults %> + <%= @trip.number_of_children %>).
+Attached is the invoice for your trip with id: <%= @trip.id %> and ref: <%= @trip.guest.name %> (<%= @trip.number_of_adults %> + <%= @trip.number_of_children %>).
 
 With warm regards,
-<%= @trip.advisor.name %>
-<%= @trip.advisor.email_id %>
-<%= @trip.advisor.phone_number_1 %>
-<%= @trip.advisor.agency.name %>
-<%= @trip.advisor.agency.postal_address %>
-<%= @trip.advisor.agency.url %>
+<%= @user.advisor.name %>
+<%= @user.advisor.email_id %>
+<%= @user.advisor.phone_number_1 %>
+<%= @user.advisor.agency.name %>
+<%= @user.advisor.agency.postal_address %>
+<%= @user.advisor.agency.url %>
