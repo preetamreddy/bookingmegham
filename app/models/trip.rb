@@ -56,7 +56,7 @@ class Trip < ActiveRecord::Base
 
 	def tds
 		if agency.name != advisor.agency.name
-			tds = (discount * TDS_PERCENT / 100).to_i
+			tds = (discount * TDS_PERCENT / 100).round
 		else
 			tds = 0
 		end
