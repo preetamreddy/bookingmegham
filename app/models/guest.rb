@@ -1,5 +1,5 @@
 class Guest < ActiveRecord::Base
-	TITLE = [ "Mr", "Ms", "Mrs" ]
+	TITLE = [ "", "Mr", "Ms", "Mrs" ]
 
 	has_many :trips
 
@@ -7,7 +7,7 @@ class Guest < ActiveRecord::Base
 
 	before_destroy :ensure_not_referenced_by_trip
 
-	validates :title, :name, presence: true
+	validates :name, presence: true
 
 	validates :phone_number, :email_id, :allow_nil => true,
 						:allow_blank => true,
