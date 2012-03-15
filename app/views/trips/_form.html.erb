@@ -93,7 +93,7 @@
 		</span></p>
 	<% end %>
 	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
-    <%= f.label :discount %><br />
+    <%= f.label :discount, "TAC / Dicount" %><br />
     <%= f.number_field :discount, :min => 0 %>
 	<% end %>
 	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>

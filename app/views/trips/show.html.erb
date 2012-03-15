@@ -100,7 +100,7 @@
 <% end %>
 
 <%= hidden_p_unless(@trip.total_price > 0) do %>
-  <b>Commission / Discount:</b>
+  <b>TAC / Discount:</b>
   <span class="saved_value"><%= number_to_currency(@trip.discount) if @trip.discount %>
 <% end %>
 

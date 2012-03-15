@@ -59,9 +59,12 @@
 					vertical-align: top;
 				}
 			}
-			.currency {
+			.number {
 				text-align: right;
 				white-space: nowrap;
+			}
+			.text {
+				text-align: left;
 			}
 			.bold {
 				font-weight: bold;
@@ -71,7 +74,9 @@
 				color: red;
 			}
 			.sno {
+				text-align: left;
 				vertical-align: top;
+				white-space: nowrap;
 			}
 		</style>
 	</head>
@@ -103,99 +108,104 @@
 			</table>
 			<table class="table">
 				<tr>
-					<th>SNo</th>
-					<th>Particulars</th>
-					<th>Nights</th>
-					<th>Rooms</th>
-					<th class="currency">Unit cost</th>
-					<th class="currency">Amount</th>
+					<th class="text">S No</th>
+					<th class="text">Particulars</th>
+					<th class="number">Nights</th>
+					<th class="number">Rooms</th>
+					<th class="number">Unit cost</th>
+					<th class="number">Amount</th>
+				</tr>
+				<tr>
+					<td colspan=4></td>
+					<td class="number">(in INR)</td>
+					<td class="number">(in INR)</td>
 				</tr>
 				<% serial_number = 1 %>
 				<% @trip.bookings.order(:check_in_date).each do |booking| %>
 					<tr>
 						<td class="sno"><%= serial_number %></td>
-						<td colspan=5>Booking charges for <%= booking.room_type.room_type %> at <%= booking.room_type.property.name %><br/>(from <%= l booking.check_in_date %> to <%= l booking.check_out_date %>)</td>
+						<td colspan=5 class="text">Booking charges for <%= booking.room_type.room_type %> at <%= booking.room_type.property.name %><br/>(from <%= l booking.check_in_date %> to <%= l booking.check_out_date %>)</td>
 					</tr>
 					<% booking.rooms.each do |room| %>
 						<tr>
 							<td></td>
-							<td><%= room.occupancy %> occupancy @ <%= room.number_of_adults %> + <%= room.number_of_children_between_5_and_12_years %> / room</td>
-							<td><%= booking.number_of_nights %></td>
-							<td><%= room.number_of_rooms %></td>
-							<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(room.room_rate) %></td>
-							<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(room.total_price) %></td>
+							<td class="text"><li><%= room.occupancy %> occupancy @ <%= room.number_of_adults %> + <%= room.number_of_children_between_5_and_12_years %> / room</li></td>
+							<td class="number"><%= booking.number_of_nights %></td>
+							<td class="number"><%= room.number_of_rooms %></td>
+							<td class="number"> <%= number_to_currency_wo_symbol(room.room_rate) %></td>
+							<td class="number"> <%= number_to_currency_wo_symbol(room.total_price) %></td>
 						</tr>
 					<% end %>
 					<% booking.vas_bookings.each do |vas_booking| %>
 						<tr>
 							<td></td>
-							<td><%= vas_booking.value_added_service.name %> for <%= pluralize(vas_booking.number_of_people, "person") %></td>
+							<td class="text"><li><%= vas_booking.value_added_service.name %> for <%= pluralize(vas_booking.number_of_people, "person") %></li></td>
 							<td></td>
 							<td></td>
-							<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
-							<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(vas_booking.total_price) %></td>
+							<td class="number"> <%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
+							<td class="number"> <%= number_to_currency_wo_symbol(vas_booking.total_price) %></td>
 						</tr>
 					<% end %>
 					<% serial_number += 1 %>
 				<% end %>
 				<% @trip.vas_bookings.each do |vas_booking| %>
 					<tr>
-						<td><%= serial_number %></td>
-						<td><%= vas_booking.value_added_service.name %> for <%= pluralize(vas_booking.number_of_people, "person") %></td>
+						<td class="sno"><%= serial_number %></td>
+						<td class="text"><%= vas_booking.value_added_service.name %> for <%= pluralize(vas_booking.number_of_people, "person") %></td>
 						<td></td>
 						<td></td>
-						<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
-						<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(vas_booking.total_price) %></td>
+						<td class="number"> <%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
+						<td class="number"> <%= number_to_currency_wo_symbol(vas_booking.total_price) %></td>
 					</tr>
 					<% serial_number += 1 %>
 				<% end %>
 				<% @trip.taxi_bookings.each do |taxi_booking| %>
 					<tr>
-						<td><%= serial_number %></td>
-						<td>Taxi: <%= pluralize(taxi_booking.number_of_vehicles, taxi_booking.taxi.model) %> (<%= pluralize(taxi_booking.number_of_days, "day") %>)</td>
+						<td class="sno"><%= serial_number %></td>
+						<td class="text">Taxi: <%= pluralize(taxi_booking.number_of_vehicles, taxi_booking.taxi.model) %> (<%= pluralize(taxi_booking.number_of_days, "day") %>)</td>
 						<td></td>
 						<td></td>
-						<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(taxi_booking.unit_price) %></td>
-						<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(taxi_booking.total_price) %></td>
+						<td class="number"> <%= number_to_currency_wo_symbol(taxi_booking.unit_price) %></td>
+						<td class="number"> <%= number_to_currency_wo_symbol(taxi_booking.total_price) %></td>
 					</tr>
 					<% serial_number += 1 %>
 				<% end %>
 				<% @trip.trek_bookings.each do |trek_booking| %>
 					<tr>
-						<td><%= serial_number %></td>
-						<td>Trek: <%= trek_booking.trek.name %> (<%= pluralize(@trip.number_of_guests, "person") %>, <%= pluralize(trek_booking.number_of_days, "day") %>)</td>
+						<td class="sno"><%= serial_number %></td>
+						<td class="text">Trek: <%= trek_booking.trek.name %> (<%= pluralize(@trip.number_of_guests, "person") %>, <%= pluralize(trek_booking.number_of_days, "day") %>)</td>
 						<td></td>
 						<td></td>
-						<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(trek_booking.unit_price) %></td>
-						<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(trek_booking.total_price) %></td>
+						<td class="number"> <%= number_to_currency_wo_symbol(trek_booking.unit_price) %></td>
+						<td class="number"> <%= number_to_currency_wo_symbol(trek_booking.total_price) %></td>
 					</tr>
 					<% serial_number += 1 %>
 				<% end %>
 				<tr>
 					<td></td>
-					<td colspan=4>Less: TAC on Room Bookings</td>
-					<td class="currency">(&#x20B9;<%= number_to_currency_wo_symbol(@trip.discount) %>)</td>
+					<td colspan=4 class="text">Less: TAC on Room Bookings</td>
+					<td class="number">( <%= number_to_currency_wo_symbol(@trip.discount) %>)</td>
 				</tr>
 				<tr>
 					<td colspan=3></td>
-					<td>T.D.S.</td>
-					<td><%= Trip::TDS_PERCENT%>%</td>
-					<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(@trip.tds) %></td>
+					<td class="text">T.D.S.</td>
+					<td class="text"><%= Trip::TDS_PERCENT%>%</td>
+					<td class="number"> <%= number_to_currency_wo_symbol(@trip.tds) %></td>
 				</tr>
 				<tr>
 					<td colspan=3></td>
 					<td colspan=2 class="bold">Total Payable</td>
-					<td class="currency"><span class="bold">&#x20B9;<%= number_to_currency_wo_symbol(@trip.final_price) %></span></td>
+					<td class="number"><span class="bold"> <%= number_to_currency_wo_symbol(@trip.final_price) %></span></td>
 				</tr>
 				<tr>
 					<td colspan=3></td>
-					<td colspan=2>Advance / Credit</td>
-					<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(@trip.paid) %></td>
+					<td colspan=2 class="text">Advance / Credit</td>
+					<td class="number"> <%= number_to_currency_wo_symbol(@trip.paid) %></td>
 				</tr>
 				<tr>
 					<td colspan=3></td>
 					<td colspan=2 class="bold">Balance</td>
-					<td class="currency"><span class="bold">&#x20B9;<%= number_to_currency_wo_symbol(@trip.balance_payment) %></span></td>
+					<td class="number"><span class="bold"> <%= number_to_currency_wo_symbol(@trip.balance_payment) %></span></td>
 				</tr>
 			</table>
 			<br/>
