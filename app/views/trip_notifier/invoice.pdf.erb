@@ -95,13 +95,13 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan=3 class="agent">To,<br/><%= @trip.agency.name %><br/><%= @trip.agency.postal_address %><br/>Phone: <%= @trip.agency.phone_number %></td>
+					<td colspan=3 class="agent">To,<br/><%= @trip.agency.name %><br/><%= @trip.agency.postal_address %><br/>Phone: <%= @trip.agency.phone_number %><br/>PAN No: <%= @trip.agency.pan_number %></td>
 					<td colspan=3 class="other_info">
 						Date: <%= l Date.today %>
 						<% if @trip.payments.any? %>Receipt No: BCRPL/<%= @trip.id %>/<%= @trip.payments.order(:date_received).last.id %>/<%= l @trip.payments.order(:date_received).last.date_received %><% end %>
 						Ref: <%= @trip.guest.name %> (<%= @trip.number_of_adults %> + <%= @trip.number_of_children %>)
 						Invoice No: BCRPL/<%= l @trip.start_date, :format => "%y" %>/<%= @trip.id %>
-						PAN No: AACCB0246J
+						PAN No: <%= @trip.advisor.agency.pan_number %>
 						S Tax No: AACCB0246JST001
 					</td>
 				</tr>
