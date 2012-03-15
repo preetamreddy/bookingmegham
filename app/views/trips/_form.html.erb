@@ -136,6 +136,12 @@
 	<% end %>
 
 	<div class="field">
+   	<%= f.label :invoice_date %><br />
+   	<%= f.date_select :invoice_date, :start_year => Time.now.year,
+			:end_year => Time.now.year + 1, :prompt => true %>
+	</div>
+
+	<div class="field">
     <%= f.label :food_preferences %><br />
     <%= f.text_field :food_preferences %>
   </div>

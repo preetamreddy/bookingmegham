@@ -157,6 +157,11 @@
 <% end %>
 
 <p>
+  <b>Invoice date:</b>
+  <span class="saved_value"><%= l @trip.invoice_date if @trip.invoice_date %>
+</p>
+
+<p>
   <b>Food preferences:</b>
   <span class="saved_value"><%= @trip.food_preferences %>
 </p>
