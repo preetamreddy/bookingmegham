@@ -310,3 +310,17 @@
 #error {
 	color: red;
 }
+
+@font-face {
+	font-family: 'WebRupee';
+	src: 	local('WebRupee'),
+				url('http://cdn.webrupee.com/WebRupee.V2.0.ttf') format('truetype'),
+				url('http://cdn.webrupee.com/WebRupee.V2.0.woff') format('woff'),
+				url('http://cdn.webrupee.com/WebRupee.V2.0.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.WebRupee {
+	font-family: 'WebRupee';
+}

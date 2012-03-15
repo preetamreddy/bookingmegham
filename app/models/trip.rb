@@ -2,6 +2,7 @@ class Trip < ActiveRecord::Base
 	NOT_PAID = 'Not Paid'
 	PARTIALLY_PAID = 'Partially Paid'
 	FULLY_PAID = 'Fully Paid'
+	TDS_PERCENT = 10
 
 	belongs_to :guest
 
@@ -52,6 +53,16 @@ class Trip < ActiveRecord::Base
 						message: "should be a number greater than or equal to 0"
 
 	validate :ensure_guest_exists, :ensure_end_date_is_greater_than_start_date
+
+	def tds
+		if agency.name != advisor.agency.name
+			tds = (discount * TDS_PERCENT / 100).to_i
+		else
+			tds = 0
+		end
+
+		return tds
+	end
 
 	def number_of_adults
 		if rooms.empty?
@@ -151,7 +162,7 @@ class Trip < ActiveRecord::Base
 
 	def final_price
 		if discount != nil
-			final_price = total_price - discount
+			final_price = total_price - discount + tds
 		else
 			final_price = total_price
 		end

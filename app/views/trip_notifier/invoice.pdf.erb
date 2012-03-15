@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<style>
+			body {
+				font-family: helvetica, verdana, arial, sans-serif;
+				font-size: 16px;
+			  width: 100%;
+			}
+			.amount {
+				font-family: helvetica, verdana, arial, sans-serif;
+				font-size: 16px;
+				font-weight: bold;
+				text-align: left;
+			}	
+			.footnote {
+				font-family: helvetica, verdana, arial, sans-serif;
+				font-size: 12px;
+			}	
+			.signature {
+				font-family: helvetica, verdana, arial, sans-serif;
+				font-size: 12px;
+				text-align: right;
+			}	
+			img {
+				float: left;
+				height: 80px;
+				vertical-align: top;
+			}
+			.address {
+				text-align: right;
+				font-weight: bold;
+				white-space: pre-wrap;
+			}
+			.agent {
+				text-align: left;
+				white-space: pre-wrap;
+			}
+			.other_info {
+				text-align: right;
+				white-space: pre-wrap;
+			}
+			.table {
+				margin-top: 1em;
+				border-spacing: 0;
+				border-collapse: collapse;
+				border-color: #CFCCCA;
+				font-size: 16px;
+				width: 100%;
+				tr {
+					padding: 5px 5px;
+				}
+				th {
+					background: #605C59;
+					color: #FFF;
+				}
+				td {
+					vertical-align: top;
+				}
+			}
+			.currency {
+				text-align: right;
+				white-space: nowrap;
+			}
+			.bold {
+				font-weight: bold;
+			}
+			.red_text {
+				font-weight: bold;
+				color: red;
+			}
+			.sno {
+				vertical-align: top;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<table class="table">
+				<tr>
+					<td colspan=2>
+						<%= wicked_pdf_image_tag @trip.advisor.agency.logo_file_name	%>
+					</td>
+					<td colspan=4 class="address">
+						<%= @trip.advisor.agency.name %>
+						<%= @trip.advisor.agency.postal_address %>
+						Phone: <%= @trip.advisor.agency.phone_number %>
+						<%= @trip.advisor.agency.url %>
+					</td>
+				</tr>
+				<tr>
+					<td colspan=3 class="agent">To,<br/><%= @trip.agency.name %><br/><%= @trip.agency.postal_address %><br/>Phone: <%= @trip.agency.phone_number %></td>
+					<td colspan=3 class="other_info">
+						Date: <%= l Date.today %>
+						<% if @trip.payments.any? %>Receipt No: BCRPL/<%= @trip.id %>/<%= @trip.payments.order(:date_received).last.id %>/<%= l @trip.payments.order(:date_received).last.date_received %><% end %>
+						Ref: <%= @trip.guest.name %> (<%= @trip.number_of_adults %> + <%= @trip.number_of_children %>)
+						Invoice No: BCRPL/<%= l @trip.start_date, :format => "%y" %>/<%= @trip.id %>
+						PAN No: AACCB0246J
+						S Tax No: AACCB0246JST001
+					</td>
+				</tr>
+			</table>
+			<table class="table">
+				<tr>
+					<th>SNo</th>
+					<th>Particulars</th>
+					<th>Nights</th>
+					<th>Rooms</th>
+					<th class="currency">Unit cost</th>
+					<th class="currency">Amount</th>
+				</tr>
+				<% serial_number = 1 %>
+				<% @trip.bookings.order(:check_in_date).each do |booking| %>
+					<tr>
+						<td class="sno"><%= serial_number %></td>
+						<td colspan=5>Booking charges for <%= booking.room_type.room_type %> at <%= booking.room_type.property.name %><br/>(from <%= l booking.check_in_date %> to <%= l booking.check_out_date %>)</td>
+					</tr>
+					<% booking.rooms.each do |room| %>
+						<tr>
+							<td></td>
+							<td><%= room.occupancy %> occupancy @ <%= room.number_of_adults %> + <%= room.number_of_children_between_5_and_12_years %> / room</td>
+							<td><%= booking.number_of_nights %></td>
+							<td><%= room.number_of_rooms %></td>
+							<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(room.room_rate) %></td>
+							<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(room.total_price) %></td>
+						</tr>
+					<% end %>
+					<% booking.vas_bookings.each do |vas_booking| %>
+						<tr>
+							<td></td>
+							<td><%= vas_booking.value_added_service.name %> for <%= pluralize(vas_booking.number_of_people, "person") %></td>
+							<td></td>
+							<td></td>
+							<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
+							<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(vas_booking.total_price) %></td>
+						</tr>
+					<% end %>
+					<% serial_number += 1 %>
+				<% end %>
+				<% @trip.vas_bookings.each do |vas_booking| %>
+					<tr>
+						<td><%= serial_number %></td>
+						<td><%= vas_booking.value_added_service.name %> for <%= pluralize(vas_booking.number_of_people, "person") %></td>
+						<td></td>
+						<td></td>
+						<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
+						<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(vas_booking.total_price) %></td>
+					</tr>
+					<% serial_number += 1 %>
+				<% end %>
+				<% @trip.taxi_bookings.each do |taxi_booking| %>
+					<tr>
+						<td><%= serial_number %></td>
+						<td>Taxi: <%= pluralize(taxi_booking.number_of_vehicles, taxi_booking.taxi.model) %> (<%= pluralize(taxi_booking.number_of_days, "day") %>)</td>
+						<td></td>
+						<td></td>
+						<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(taxi_booking.unit_price) %></td>
+						<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(taxi_booking.total_price) %></td>
+					</tr>
+					<% serial_number += 1 %>
+				<% end %>
+				<% @trip.trek_bookings.each do |trek_booking| %>
+					<tr>
+						<td><%= serial_number %></td>
+						<td>Trek: <%= trek_booking.trek.name %> (<%= pluralize(@trip.number_of_guests, "person") %>, <%= pluralize(trek_booking.number_of_days, "day") %>)</td>
+						<td></td>
+						<td></td>
+						<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(trek_booking.unit_price) %></td>
+						<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(trek_booking.total_price) %></td>
+					</tr>
+					<% serial_number += 1 %>
+				<% end %>
+				<tr>
+					<td></td>
+					<td colspan=4>Less: TAC on Room Bookings</td>
+					<td class="currency">(&#x20B9;<%= number_to_currency_wo_symbol(@trip.discount) %>)</td>
+				</tr>
+				<tr>
+					<td colspan=3></td>
+					<td>T.D.S.</td>
+					<td><%= Trip::TDS_PERCENT%>%</td>
+					<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(@trip.tds) %></td>
+				</tr>
+				<tr>
+					<td colspan=3></td>
+					<td colspan=2 class="bold">Total Payable</td>
+					<td class="currency"><span class="bold">&#x20B9;<%= number_to_currency_wo_symbol(@trip.final_price) %></span></td>
+				</tr>
+				<tr>
+					<td colspan=3></td>
+					<td colspan=2>Advance / Credit</td>
+					<td class="currency">&#x20B9;<%= number_to_currency_wo_symbol(@trip.paid) %></td>
+				</tr>
+				<tr>
+					<td colspan=3></td>
+					<td colspan=2 class="bold">Balance</td>
+					<td class="currency"><span class="bold">&#x20B9;<%= number_to_currency_wo_symbol(@trip.balance_payment) %></span></td>
+				</tr>
+			</table>
+			<br/>
+			<p class="amount">
+				Amount in words: Rupees <%= @trip.final_price.to_words %> only.
+			</p>
+			<p class="footnote">
+				<span class="bold">PAN NUMBER is mandatory under section 139A (5B) of income tax Act 1961. It is obligatory for all persons responsible for deducting tax at source. </span><span class="red_text">If PAN has not provided by deductees, then TDS rate should be deducted at 20% or actual, whichever is higher.</span> 
+			</p>
+			<p class="footnote">
+				Therefore you are requested to please send us your PAN NUMBER along with Name & complete address of your company/agency at the earliest for depositing/ issuing of TDS certificate and fulfilling the statutory requirements.
+			</p>
+			<p class="signature">
+				** This is a computer generated invoice. No signature required **
+			</p>
+		</div>
+	</body>
+</html>

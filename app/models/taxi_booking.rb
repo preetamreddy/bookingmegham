@@ -13,6 +13,10 @@ class TaxiBooking < ActiveRecord::Base
 
 	before_destroy :ensure_payments_are_not_made
 
+	def total_price
+		unit_price * number_of_days * number_of_vehicles
+	end
+
 	private
 	
 		def update_end_date

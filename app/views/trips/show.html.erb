@@ -100,18 +100,23 @@
 <% end %>
 
 <%= hidden_p_unless(@trip.total_price > 0) do %>
-  <b>Discount:</b>
+  <b>Commission / Discount:</b>
   <span class="saved_value"><%= number_to_currency(@trip.discount) if @trip.discount %>
 <% end %>
 
 <%= hidden_p_unless(@trip.total_price > 0) do %>
-  <b>Service tax:</b>
-  <span class="saved_value"><%= number_to_currency(@trip.service_tax) if @trip.service_tax %>
+  <b>TDS on commission:</b>
+  <span class="saved_value"><%= number_to_currency(@trip.tds) if @trip.discount %>
 <% end %>
 
 <%= hidden_p_unless(@trip.total_price > 0) do %>
   <b>Final price:</b>
   <span class="saved_value"><%= number_to_currency(@trip.final_price) if @trip.final_price %>
+<% end %>
+
+<%= hidden_p_unless(@trip.total_price > 0) do %>
+  <b>Service tax:</b>
+  <span class="saved_value"><%= number_to_currency(@trip.service_tax) if @trip.service_tax %>
 <% end %>
 
 <% if @trip.payments.any? %>
@@ -182,8 +187,10 @@
 	<%= link_to 'View Bookings', bookings_path(:trip_id => @trip.id) %>
 	<%= link_to 'Email Trip Details', email_trip_path(:trip_id => @trip.id,
 				:type => 'details') %>
-	<%= link_to 'Email Trip Invoice', email_trip_path(:trip_id => @trip.id,
-				:type => 'invoice') %>
+	<% if @trip.agency.name != @trip.advisor.agency.name %>
+		<%= link_to 'Send Invoice', email_trip_path(:trip_id => @trip.id,
+					:type => 'invoice') %>
+	<% end %>
 </div>
 
 <%= link_to 'Back to Trip Listing', trips_path, :class => "back_link" %>

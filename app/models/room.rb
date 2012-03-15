@@ -26,4 +26,8 @@ class Room < ActiveRecord::Base
 		self.number_of_children_between_5_and_12_years ||= 0
 	end
 
+	def total_price
+		room_rate * number_of_rooms * booking.number_of_nights
+	end
+
 end
