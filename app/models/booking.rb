@@ -129,9 +129,7 @@ class Booking < ActiveRecord::Base
 
 	def update_service_tax_rate
 		rooms.each do |room|	
-			if room.service_tax_rate == nil
-				room.service_tax_rate = RoomType.find(room_type_id).price_for_room
-			end
+			room.service_tax_rate = RoomType.find(room_type_id).service_tax
 		end
 	end
 
@@ -143,8 +141,7 @@ class Booking < ActiveRecord::Base
 			service_tax_per_night = 0
 		end
 
-		self.service_tax = number_of_nights * service_tax_per_night * 
-			RoomType::SERVICE_TAX_PERCENT / 100
+		self.service_tax = number_of_nights * service_tax_per_night
 	end
 
 	def number_of_adults

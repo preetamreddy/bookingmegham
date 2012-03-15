@@ -18,8 +18,8 @@
     <th class="number">Single occupancy</th>
     <th class="number">Double occupancy</th>
     <th class="number">Room price</th>
+    <th class="number">Service tax</th>
 		<th class="number">Rooms</th>
-    <th class="text">Description</th>
 		<th></th>
   </tr>
 
@@ -30,8 +30,8 @@
     <td class="currency"><%= number_to_currency(room_type.price_for_single_occupancy) %></td>
     <td class="currency"><%= number_to_currency(room_type.price_for_double_occupancy) %></td>
     <td class="currency"><%= number_to_currency(room_type.price_for_room) %></td>
+    <td class="currency"><%= number_to_currency(room_type.service_tax) %></td>
     <td class="number"><%= room_type.number_of_rooms %></td>
-    <td class="prewrap"><%= room_type.description %></td>
 
     <td>
     	<%= link_to 'Edit', edit_room_type_path(room_type) %></br>
