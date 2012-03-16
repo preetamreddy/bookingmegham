@@ -99,7 +99,7 @@
 					<td colspan=3 class="other_info">
 						Date: <%= l @trip.invoice_date %>
 						<% if @trip.payments.any? %>Receipt No: BCRPL/<%= @trip.id %>/<%= @trip.payments.order(:date_received).last.id %>/<%= l @trip.payments.order(:date_received).last.date_received %><% end %>
-						Ref: <%= @trip.guest.name %> (<%= @trip.number_of_adults %> + <%= @trip.number_of_children %>)
+						Ref: <%= @trip.guest.name %>
 						Invoice No: BCRPL/<%= l @trip.start_date, :format => "%y" %>/<%= @trip.id %>
 						PAN No: <%= @trip.advisor.agency.pan_number %>
 						S Tax No: AACCB0246JST001
@@ -129,7 +129,11 @@
 					<% booking.rooms.each do |room| %>
 						<tr>
 							<td></td>
-							<td class="text"><li><%= room.occupancy %> occupancy @ <%= room.number_of_adults %> + <%= room.number_of_children_between_5_and_12_years %> / room</li></td>
+							<% if room.number_of_children_between_5_and_12_years == 0 %>
+								<td class="text"><li><%= room.occupancy %> occupancy @ <%= room.number_of_adults %> / room</li></td>
+							<% else %>
+								<td class="text"><li><%= room.occupancy %> occupancy @ <%= room.number_of_adults %> + <%= room.number_of_children_between_5_and_12_years %> / room</li></td>
+							<% end %>
 							<td class="number"><%= booking.number_of_nights %></td>
 							<td class="number"><%= room.number_of_rooms %></td>
 							<td class="number"> <%= number_to_currency_wo_symbol(room.room_rate) %></td>
