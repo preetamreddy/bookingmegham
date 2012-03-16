@@ -36,7 +36,12 @@ class AvailabilityChartController < ApplicationController
 				@number_of_days = 10
 			end
 
-			@rooms_required = 0
+			if params[:rooms_required]
+				@rooms_required = params[:rooms_required].to_i
+			else
+				@rooms_required = 1
+			end
+
 			@chart_end_date = @chart_start_date + @number_of_days
 		end
 

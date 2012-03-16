@@ -3,13 +3,10 @@ module AvailabilityChartHelper
 		if available_rooms == 0
 			attributes["class"] = "sold_out"
 		elsif available_rooms < required_rooms && row == :property
-			# attributes["style"] = "color: red"
-			attributes["class"] = "cannot_service"
+			attributes["class"] = "not_serviceble"
 		elsif available_rooms < required_rooms && row == :room_type
-			#attributes["style"] = "color: orange"
 			attributes["class"] = "partial"
 		elsif available_rooms >= required_rooms
-			#attributes["style"] = "color: green"
 			attributes["class"] = "available"
 		end
 		content_tag("td", attributes, &block)
