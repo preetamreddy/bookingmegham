@@ -2,6 +2,7 @@ class Trip < ActiveRecord::Base
 	NOT_PAID = 'Not Paid'
 	PARTIALLY_PAID = 'Partially Paid'
 	FULLY_PAID = 'Fully Paid'
+	CONFIRMED_NOT_PAID = "Confirmed Not Paid"
 	TDS_PERCENT = 10
 
 	belongs_to :guest
@@ -231,6 +232,7 @@ class Trip < ActiveRecord::Base
 			self.number_of_children_below_5_years ||= 0
 			self.number_of_drivers ||= 0
 			self.discount ||= 0
+			self.invoice_date ||= Date.today
 		end
 
 		def ensure_not_referenced_by_booking
