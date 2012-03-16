@@ -21,7 +21,7 @@ class RoomType < ActiveRecord::Base
 														message: "should be a number greater than or equal to 0"
 	
 	def service_tax
-		(price_for_room * SERVICE_TAX_PERCENT / 100).round
+		(price_for_room * SERVICE_TAX_PERCENT / 100.0).round
 	end
 
 	def RoomType.price(id, occupancy, number_of_adults, number_of_children)
