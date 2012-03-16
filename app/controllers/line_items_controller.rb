@@ -50,13 +50,13 @@ class LineItemsController < ApplicationController
 					in_camp_dates = @chart_start_date...booking.check_out_date
 					in_camp_dates.each do	|date|
 						@line_items.store([room_type.id, room_number, date], 
-							booking.trip.guest.name)
+							[booking.trip.guest.name, booking.trip.payment_status])
 					end
 				end
 			end
 
 			available_rooms.each do |room_number|
-				@line_items.store([room_type.id, room_number, @chart_start_date], "")
+				@line_items.store([room_type.id, room_number, @chart_start_date], ["", ""])
 			end
 
 			date_range = (@chart_start_date + 1)..@chart_end_date
@@ -82,13 +82,13 @@ class LineItemsController < ApplicationController
 						in_camp_dates = booking.check_in_date...booking.check_out_date
 						in_camp_dates.each do |date|
 							@line_items.store([room_type.id, room_number, date],
-								booking.trip.guest.name)
+								[booking.trip.guest.name, booking.trip.payment_status])
 						end
 					end
 				end
 
 				available_rooms.each do |room_number|
-					@line_items.store([room_type.id, room_number, date], "")
+					@line_items.store([room_type.id, room_number, date], ["", ""])
 				end
 			end
 		end

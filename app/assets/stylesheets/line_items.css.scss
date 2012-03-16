@@ -8,4 +8,21 @@
 		white-space: auto;
 		font-size: 1em;
 	}
+
+	.not_paid {
+		background-color: yellow;
+	}
+
+	.partially_paid {
+		background-color: orange;
+	}
+
+	.fully_paid {
+		background-color: green;
+	}
+
+	.confirmed_not_paid {
+		background-color: green;
+		color: red;
+	}
 }
