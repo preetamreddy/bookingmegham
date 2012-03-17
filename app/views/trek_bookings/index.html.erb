@@ -28,9 +28,11 @@
     <td class="number"><%= number_to_currency(trek_booking.unit_price) %></td>
     <td>
 			<%= link_to 'Show details', trek_booking %><br />
-    	<%= link_to 'Edit', edit_trek_booking_path(trek_booking) %><br />
-    	<%= link_to 'Destroy', trek_booking, confirm: 'Are you sure?',
-						method: :delete %>
+			<% if trek_booking.trip.payment_status == Trip.NOT_PAID %>
+    		<%= link_to 'Edit', edit_trek_booking_path(trek_booking) %><br />
+    		<%= link_to 'Destroy', trek_booking, confirm: 'Are you sure?',
+							method: :delete %>
+			<% end %>
 		</td>
   </tr>
 <% end %>

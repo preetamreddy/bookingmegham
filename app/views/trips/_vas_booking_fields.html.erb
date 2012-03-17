@@ -1,11 +1,15 @@
 <div class="nested_form_row">
-	<%= f.collection_select(:value_added_service_id, 
-				ValueAddedService.order("name").
-				find_all_by_property_id(nil), :id, :name,
-				:prompt => "") %>
+	<%= f.collection_select :value_added_service_id, 
+			ValueAddedService.order("name").
+			find_all_by_property_id(nil), :id, :name,
+			{ :prompt => "" }, 
+			{ :disabled => @trip.payment_status != Trip::NOT_PAID } %>
 
 	<%= f.label :number_of_people, "Number of people" %>
-	<%= f.number_field :number_of_people, min: 0, max: 999 %>
+	<%= f.number_field :number_of_people, min: 0, max: 999,
+			:disabled => @trip.payment_status != Trip::NOT_PAID %>
 
-	<%= f.link_to_remove "x" %>
+	<% if @trip.payment_status == Trip::NOT_PAID %>
+		<%= f.link_to_remove "x" %>
+	<% end %>
 </div>

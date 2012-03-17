@@ -75,9 +75,11 @@
 		
 		    <td class='link'>
 					<%= link_to 'Show details', booking %><br/>
-		    	<%= link_to 'Edit', edit_booking_path(booking) %><br/>
-		    	<%= link_to 'Destroy', booking, confirm: 'Are you sure?', 
-								method: :delete %>
+					<% if booking.trip.payment_status == Trip::NOT_PAID %>
+		    		<%= link_to 'Edit', edit_booking_path(booking) %><br/>
+		    		<%= link_to 'Destroy', booking, confirm: 'Are you sure?', 
+									method: :delete %>
+					<% end %>
 				</td>
 		  </tr>
 		<% end %>

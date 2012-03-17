@@ -38,7 +38,9 @@
 </p>
 
 <div class="action_container">
-	<%= link_to 'Edit', edit_trek_booking_path(@trek_booking) %>
+	<% if @trek_booking.trip.payment_status == Trip::NOT_PAID %>
+		<%= link_to 'Edit', edit_trek_booking_path(@trek_booking) %>
+	<% end %>
 </div>
 
 <%= link_to 'Back to Trek Booking Listing', trek_bookings_path,

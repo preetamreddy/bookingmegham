@@ -163,7 +163,9 @@
 </p>
 
 <div class="action_container">
-	<%= link_to 'Edit', edit_booking_path(@booking) %>
+	<% if @booking.trip.payment_status == Trip::NOT_PAID %>
+		<%= link_to 'Edit', edit_booking_path(@booking) %>
+	<% end %>
 	<%= link_to 'Check Availability', availability_chart_path %>
 </div>
 
