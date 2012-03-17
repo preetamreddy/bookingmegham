@@ -44,13 +44,15 @@ class LineItemsController < ApplicationController
 
 			in_camp.each do |booking|
 				alloted_rooms[booking.id] = []
-				booking.number_of_rooms.times do
-					room_number = available_rooms.shift
-					alloted_rooms[booking.id] << room_number
-					in_camp_dates = @chart_start_date...booking.check_out_date
-					in_camp_dates.each do	|date|
-						@line_items.store([room_type.id, room_number, date], 
-							[booking.trip.guest.name, booking.trip.payment_status])
+				booking.rooms.each do |room|
+					room.number_of_rooms.times do
+						room_number = available_rooms.shift
+						alloted_rooms[booking.id] << room_number
+						in_camp_dates = @chart_start_date...booking.check_out_date
+						in_camp_dates.each do	|date|
+							@line_items.store([room_type.id, room_number, date], [
+								booking.trip.guest.name + room.guests_per_room, booking.trip.payment_status])
+						end
 					end
 				end
 			end
@@ -76,13 +78,15 @@ class LineItemsController < ApplicationController
 					alloted_rooms[booking.id] = []
 					available_rooms = sort_for_contiguous_rooms(available_rooms,
 						booking.number_of_rooms)
-					booking.number_of_rooms.times do
-						room_number = available_rooms.shift
-						alloted_rooms[booking.id] << room_number
-						in_camp_dates = booking.check_in_date...booking.check_out_date
-						in_camp_dates.each do |date|
-							@line_items.store([room_type.id, room_number, date],
-								[booking.trip.guest.name, booking.trip.payment_status])
+					booking.rooms.each do |room|
+						room.number_of_rooms.times do
+							room_number = available_rooms.shift
+							alloted_rooms[booking.id] << room_number
+							in_camp_dates = booking.check_in_date...booking.check_out_date
+							in_camp_dates.each do |date|
+								@line_items.store([room_type.id, room_number, date],
+									[booking.trip.guest.name + room.guests_per_room, booking.trip.payment_status])
+							end
 						end
 					end
 				end

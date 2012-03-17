@@ -1,12 +1,25 @@
 .line_items {
-	table th:nth-last-child(2) {
-		width: auto;
-	}
+	.booking_chart {
+		margin-top: 1em;
+		border-spacing: 0;
+		border-collapse: collapse;
+		border-color: #CFCCCA;
+		width: 100%;
+		table-layout: fixed;
+		
+		th {
+			padding: 5px;
+			background: #605C59;
+			color: #FFF;
+			white-space: nowrap;
+			overflow: hidden;
+		}
 
-	table td:nth-last-child(1) {
-		width: auto;
-		white-space: auto;
-		font-size: 1em;
+		td {
+			padding: 2px 4px;
+			vertical-align: top;
+			white-space: wrap;
+		}
 	}
 
 	.not_paid {

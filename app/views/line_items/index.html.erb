@@ -5,14 +5,18 @@
 </div>
 
 <% if @line_items.count > 0 %>
-	<table class="index_table" border="1">
+	<table class="booking_chart" border="1">
+		<col width="130px" />
+		<% @chart_date_range_short.each do |date| %>
+			<col width="80px" />
+		<% end %>
 		<tr>
 			<th class="text">Room Type</th>
 			<% @chart_date_range_short.each do |date| %>
 				<th><%= date %></th>
 			<% end %>
 	  </tr>
-	
+
 		<% @room_types.each do |room_type| %>	
 			<% tr_class = cycle('list_line_odd', 'list_line_even') %>
 			<% (1..room_type.number_of_rooms).each do |room_number| %>

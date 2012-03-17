@@ -30,4 +30,12 @@ class Room < ActiveRecord::Base
 		room_rate * number_of_rooms * booking.number_of_nights
 	end
 
+	def guests_per_room
+		if number_of_children_between_5_and_12_years == 0
+			" " + number_of_adults.to_s + ""
+		else
+			" " + number_of_adults.to_s + "+" + number_of_children_between_5_and_12_years.to_s
+		end
+	end
+
 end
