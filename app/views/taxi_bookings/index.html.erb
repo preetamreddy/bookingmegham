@@ -37,7 +37,7 @@
     <td class="text"><%= taxi_booking.reservation_reference %></td>
     <td>
 			<%= link_to 'Show details', taxi_booking %><br/>
-			<% if taxi_booking.trip.payment_status == Trip.NOT_PAID %>
+			<% if taxi_booking.trip.payment_status == Trip::NOT_PAID %>
     		<%= link_to 'Edit', edit_taxi_booking_path(taxi_booking) %><br/>
     		<%= link_to 'Destroy', taxi_booking, confirm: 'Are you sure?', 
 							method: :delete %>
