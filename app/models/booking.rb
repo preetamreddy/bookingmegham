@@ -19,7 +19,8 @@ class Booking < ActiveRecord::Base
 
 	before_save :update_room_rate, :update_vas_unit_price,
 							:update_total_price, :update_service_tax_rate,
-							:update_service_tax, :titleize
+							:update_service_tax, :titleize,
+							:strip_whitespaces
 
 	before_create :update_guest_id, :update_property_id
 
@@ -84,7 +85,7 @@ class Booking < ActiveRecord::Base
 
 	def update_room_rate
 		rooms.each do |room|
-			if trip.payment_status == Trip.NOT_PAID
+			if trip.payment_status == Trip::NOT_PAID
 				room.room_rate = RoomType.price(room_type_id, room.occupancy,
 														room.number_of_adults,
 														room.number_of_children_between_5_and_12_years)
@@ -277,5 +278,12 @@ class Booking < ActiveRecord::Base
 		def titleize
 			self.guests_arriving_from = guests_arriving_from.titleize if guests_arriving_from
 			self.departure_destination = departure_destination.titleize if departure_destination
+		end
+
+		def strip_whitespaces
+			self.remarks = remarks.strip
+			self.suggested_activities = suggested_activities.strip
+			self.getting_there = getting_there.strip
+			self.getting_home = getting_home.strip
 		end
 end

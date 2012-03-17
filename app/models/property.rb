@@ -7,7 +7,8 @@ class Property < ActiveRecord::Base
 	accepts_nested_attributes_for :value_added_services, :reject_if => :all_blank,
 		:allow_destroy => true
 
-	before_save :titleize, :set_defaults_if_nil
+	before_save :titleize, :set_defaults_if_nil,
+							:strip_whitespaces
 
 	before_destroy 	:ensure_does_not_have_room_types,
 									:ensure_does_not_have_value_added_services
@@ -67,5 +68,11 @@ class Property < ActiveRecord::Base
 
 		def titleize
 			self.name = name.titleize 
+		end
+
+		def strip_whitespaces
+			self.description = description.strip
+			self.address = address.strip
+			self.suggested_activities = suggested_activities.strip
 		end
 end

@@ -3,7 +3,7 @@ class Guest < ActiveRecord::Base
 
 	has_many :trips
 
-	before_save :titleize
+	before_save :titleize, :strip_whitespaces
 
 	before_destroy :ensure_not_referenced_by_trip
 
@@ -30,5 +30,10 @@ class Guest < ActiveRecord::Base
 		def titleize
 			self.name = name.titleize
 			self.resident_of = resident_of.titleize
+		end
+
+		def strip_whitespaces
+			self.other_information = other_information.strip
+			self.address = address.strip
 		end
 end

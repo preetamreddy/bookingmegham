@@ -9,7 +9,7 @@ class Agency < ActiveRecord::Base
 
 	has_many :taxis
 
-	before_save :titleize
+	before_save :titleize, :strip_whitespaces
 
 	before_destroy 	:ensure_does_not_have_advisors, :ensure_does_not_have_trips,
 									:ensure_does_not_have_properties, :ensure_does_not_have_taxis	
@@ -63,6 +63,10 @@ class Agency < ActiveRecord::Base
 
 		def titleize
 			self.city = city.titleize
+		end
+
+		def strip_whitespaces
+			self.postal_address = postal_address.strip
 		end
 	
 end

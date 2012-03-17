@@ -6,7 +6,8 @@ class RoomType < ActiveRecord::Base
 	has_many :bookings
 	has_many :line_items
 
-	before_save :capitalize, :set_defaults_if_nil
+	before_save :capitalize, :set_defaults_if_nil,
+							:strip_whitespaces
 
 	before_destroy :ensure_does_not_have_bookings
 
@@ -108,5 +109,9 @@ class RoomType < ActiveRecord::Base
 
 		def capitalize
 			self.room_type = room_type.capitalize
+		end
+		
+		def strip_whitespaces
+			self.description = description.strip
 		end
 end

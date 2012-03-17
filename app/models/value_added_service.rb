@@ -3,7 +3,7 @@ class ValueAddedService < ActiveRecord::Base
 
 	has_many :vas_bookings
 
-	before_save :titleize
+	before_save :titleize, :strip_whitespaces
 
 	before_destroy :ensure_not_referenced_by_vas_bookings
 
@@ -26,5 +26,9 @@ class ValueAddedService < ActiveRecord::Base
 
 		def titleize
 			self.name = name.titleize
+		end
+
+		def strip_whitespaces
+			self.description = description.strip
 		end
 end
