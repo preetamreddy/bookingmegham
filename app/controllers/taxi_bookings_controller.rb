@@ -11,7 +11,8 @@ class TaxiBookingsController < ApplicationController
 		end
 
 		if session[:trip_id]
-			@taxi_bookings = TaxiBooking.find_all_by_trip_id(session[:trip_id])
+			@taxi_bookings = TaxiBooking.paginate(page: params[:page], per_page: 5).
+													find_all_by_trip_id(session[:trip_id])
 		else
     	@taxi_bookings = TaxiBooking.paginate(page: params[:page], per_page: 5).
 													all

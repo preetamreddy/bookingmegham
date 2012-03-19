@@ -1,4 +1,4 @@
-<h1>Listing Bookings</h1>
+<h1>Listing Room Bookings</h1>
 
 <% if !session[:guest_id] %>
 	<div id="search">
@@ -88,8 +88,11 @@
 
 <% if session[:trip_id] %>
 	<div class="action_container">
-		<%= link_to 'New Booking', new_booking_path %>
+		<%= link_to 'New Room Booking', new_booking_path %>
 		<%= link_to 'Availability Chart', availability_chart_path %>
+		<%= link_to 'Transport', taxi_bookings_path(:trip_id => session[:trip_id]) %>
+		<%= link_to 'Treks', 
+					trek_bookings_path(:trip_id => session[:trip_id]) %></br>
 	</div>
 <% end %>
 <p><%= will_paginate @bookings %></p>

@@ -11,7 +11,8 @@ class TrekBookingsController < ApplicationController
 		end
 
 		if session[:trip_id]
-			@trek_bookings = TrekBooking.find_all_by_trip_id(session[:trip_id])
+			@trek_bookings = TrekBooking.paginate(page: params[:page], per_page: 5).
+													find_all_by_trip_id(session[:trip_id])
 		else
 			@trek_bookings = TrekBooking.paginate(page: params[:page], per_page: 5).
 													all
