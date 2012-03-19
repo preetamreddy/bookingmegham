@@ -20,7 +20,7 @@ class LineItemsController < ApplicationController
 		if params[:number_of_days]
 			@number_of_days = params[:number_of_days].to_i
 		else
-			@number_of_days = 7
+			@number_of_days = 10 
 		end
 
 		@chart_end_date = @chart_start_date + @number_of_days - 1
