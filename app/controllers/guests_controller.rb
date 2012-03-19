@@ -8,17 +8,31 @@ class GuestsController < ApplicationController
 		end
 
 		if (params[:name] or params[:phone_number] or params[:email_id])
-			@guests = Guest.paginate(page: params[:page], per_page: 20).
-									order('name, resident_of').
-									find(:all, :conditions => [ 
-									'lower(name) like ? and
-									(phone_number like ? or phone_number_2 like ?) and
-									(email_id like ? or email_id_2 like ?)',
-									"%" + params[:name] + "%",
-									"%" + params[:phone_number] + "%",
-									"%" + params[:phone_number] + "%",
-									"%" + params[:email_id] + "%",
-									"%" + params[:email_id] + "%" ])
+			if params[:agency_id]
+				@guests = Guest.paginate(page: params[:page], per_page: 20).
+										order('name, resident_of').
+										find(:all, :conditions => [ 
+										'lower(name) like ? and
+										(phone_number like ? or phone_number_2 like ?) and
+										(email_id like ? or email_id_2 like ?) and agency_id = ?',
+										"%" + params[:name] + "%",
+										"%" + params[:phone_number] + "%",
+										"%" + params[:phone_number] + "%",
+										"%" + params[:email_id] + "%",
+										"%" + params[:email_id] + "%", params[:agency_id] ])
+			else
+				@guests = Guest.paginate(page: params[:page], per_page: 20).
+										order('name, resident_of').
+										find(:all, :conditions => [ 
+										'lower(name) like ? and
+										(phone_number like ? or phone_number_2 like ?) and
+										(email_id like ? or email_id_2 like ?)',
+										"%" + params[:name] + "%",
+										"%" + params[:phone_number] + "%",
+										"%" + params[:phone_number] + "%",
+										"%" + params[:email_id] + "%",
+										"%" + params[:email_id] + "%" ])
+			end
 		else
 			@guests = Guest.paginate(page: params[:page], per_page: 20).
 									order('name, resident_of').find(:all)

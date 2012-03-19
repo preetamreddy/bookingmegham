@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120315140513) do
+ActiveRecord::Schema.define(:version => 20120319095333) do
 
   create_table "advisors", :force => true do |t|
     t.integer  "agency_id"
@@ -34,6 +34,10 @@ ActiveRecord::Schema.define(:version => 20120315140513) do
     t.datetime "updated_at"
     t.string   "logo_file_name"
     t.string   "pan_number"
+    t.integer  "operates_properties", :default => 1
+    t.integer  "operates_taxis",      :default => 0
+    t.integer  "is_travel_agency",    :default => 1
+    t.string   "short_name"
   end
 
   create_table "bookings", :force => true do |t|
@@ -88,6 +92,7 @@ ActiveRecord::Schema.define(:version => 20120315140513) do
     t.string   "email_id_2"
     t.text     "address"
     t.string   "title"
+    t.integer  "agency_id"
   end
 
   create_table "line_items", :force => true do |t|

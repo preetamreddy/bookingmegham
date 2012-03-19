@@ -19,16 +19,17 @@
 	<table class="index_table" border="1">
 		<tr>
 	    <th class="text">Name</th>
+	    <th class="text">Agency</th>
 	    <th class="number">Phone number</th>
 	    <th class="text">Email</th>
 	    <th class="text">Resident of</th>
-	    <th class="text">Address</th>
 	    <th class="text">Other information</th>
 			<th></th>
 	  </tr>
 		<% @guests.each do |guest| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 		    <td class="nowrap"><%= guest.title + " " + guest.name %></td>
+		    <td class="text"><%= guest.agency.short_name if guest.agency_id %></td>
 		    <td class="number">
 					<span class="nowrap"><%= guest.phone_number %></span><br/>
 					<span class="nowrap"><%= guest.phone_number_2 %></span>
@@ -38,7 +39,6 @@
 					<%= guest.email_id_2 %>
 				</td>
 		    <td class="text"><%= guest.resident_of %></td>
-		    <td class="prewrap"><%= guest.address %></td>
 		    <td class="prewrap"><%= guest.other_information %></td>
 		    <td>
 					<%= link_to 'Edit', edit_guest_path(guest) %></br>

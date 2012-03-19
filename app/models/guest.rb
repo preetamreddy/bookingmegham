@@ -1,5 +1,7 @@
 class Guest < ActiveRecord::Base
-	TITLE = [ "", "Mr", "Ms", "Mrs" ]
+	TITLE = [ "Mr", "Ms", "Mrs" ]
+
+	belongs_to :agency
 
 	has_many :trips
 

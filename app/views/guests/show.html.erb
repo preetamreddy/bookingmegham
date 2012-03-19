@@ -8,6 +8,13 @@
 </p>
 
 <p>
+  <b>Agency:</b>
+	<% if @guest.agency_id %>
+  	<span class="saved_value"><%= @guest.agency.name %>
+	<% end %>
+</p>
+
+<p>
   <b>Phone number:</b>
   <span class="saved_value"><%= @guest.phone_number %>
 </p>

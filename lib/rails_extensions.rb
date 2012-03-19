@@ -14,6 +14,14 @@ class Fixnum
 	THOUSAND = ' thousand '
 	LAKH = ' lakh '
 
+	def to_english
+		if self == 1
+			return 'Yes'
+		elsif self == 0
+			return 'No'
+		end
+	end
+
 	def to_words
 		num = self
 		num_hash = {}
