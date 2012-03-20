@@ -8,7 +8,7 @@ class GuestsController < ApplicationController
 		end
 
 		if (params[:name] or params[:phone_number] or params[:email_id])
-			if params[:agency_id]
+			if params[:agency_id].to_i > 0
 				@guests = Guest.paginate(page: params[:page], per_page: 20).
 										order('name, resident_of').
 										find(:all, :conditions => [ 
