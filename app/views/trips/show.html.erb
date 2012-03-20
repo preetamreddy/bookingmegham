@@ -119,31 +119,9 @@
   <span class="saved_value"><%= number_to_currency(@trip.service_tax) if @trip.service_tax %>
 <% end %>
 
-<% if @trip.payments.any? %>
-	<b>Payments:</b>
-	<table class="nested_table">
-		<tr>
-			<th class="number">ID</th>
-			<th class="text">Date</th>
-			<th class="number">Amount</th>
-			<th class="text">Payee name</th>
-			<th class="text">Details</th>
-		</tr>
-
-		<% @trip.payments.each do |payment| %>
-			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">	
-				<td class="number">
-					<%= payment.id %>
-				</td>
-				<td class="text">
-					<%= l payment.date_received if payment.date_received %>
-				</td>
-				<td class="number"><%= number_to_currency(payment.amount) %></td>
-				<td class="text"><%= payment.payee_name %></td>
-				<td class="text"><%= payment.details %></td>
-			</tr>
-		<% end %>
-	</table>
+<%= hidden_p_unless(@trip.total_price > 0) do %>
+  <b>Paid:</b>
+  <span class="saved_value"><%= number_to_currency(@trip.paid) if @trip.paid %>
 <% end %>
 
 <%= hidden_p_unless(@trip.total_price > 0) do %>

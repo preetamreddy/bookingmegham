@@ -125,14 +125,6 @@
 	<% end %>
 
 	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
-		<%= f.label :payments %>
-	<% end %>
-	<%= hidden_div_if(@trip.total_price == 0, class: "nested_form") do %>
-		<%= f.fields_for :payments %>
-		<%= f.link_to_add "Add new", :payments %><br/>
-	<% end %>
-
-	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
 		<% if @trip.balance_payment > 0 %>
     	<%= f.label :balance_payment %><br />
 			<p><span class="highlight">

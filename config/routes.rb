@@ -3,6 +3,8 @@ Bookingmegham::Application.routes.draw do
 		get :email, :on => :member
 	end
 
+  resources :payments
+
   resources :trek_prices
 
   resources :trek_bookings

@@ -1,25 +1,40 @@
 <p id="notice"><%= notice %></p>
+<h1>Payment details</h1>
 
+<div class="show_saved_record">
 <p>
   <b>Trip:</b>
-  <%= @payment.trip_id %>
+  <span class="saved_value"><%= @payment.trip_id %></span>
+</p>
+
+<p>
+  <b>Payee name:</b>
+  <span class="saved_value"><%= @payment.payee_name %></span>
 </p>
 
 <p>
   <b>Date received:</b>
-  <%= @payment.date_received %>
+  <span class="saved_value"><%= l @payment.date_received %></span>
 </p>
 
 <p>
   <b>Amount:</b>
-  <%= @payment.amount %>
+  <span class="saved_value"><%= number_to_currency(@payment.amount) %></span>
+</p>
+
+<p>
+  <b>Payment mode:</b>
+  <span class="saved_value"><%= @payment.payment_mode %></span>
 </p>
 
 <p>
   <b>Details:</b>
-  <%= @payment.details %>
+  <span class="saved_value"><%= @payment.details %></span>
 </p>
+</div>
 
+<div class="action_container">
+	<%= link_to 'Edit', edit_payment_path(@payment) %>
+</div>
 
-<%= link_to 'Edit', edit_payment_path(@payment) %> |
-<%= link_to 'Back', payments_path %>
+<%= link_to 'Back to Payment Listing', payments_path, :class => "back_link" %>

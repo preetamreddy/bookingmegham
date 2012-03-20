@@ -92,6 +92,7 @@
 								method: :delete %></br>
 					<%= link_to 'View Bookings', 
 								bookings_path(:trip_id => trip.id) %></br>
+					<%= link_to 'View Payments', payments_path(:trip_id => trip.id) %>
 				</td>
 		  </tr>
 		<% end %>

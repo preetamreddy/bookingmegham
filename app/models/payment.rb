@@ -1,4 +1,6 @@
 class Payment < ActiveRecord::Base
+	PAYMENT_MODE = [ "Axis", "S.C.B.", "SCB(NEW)", "Cash" ]
+
 	belongs_to :trip
 
 	validate :date_received, :amount, presence: true
@@ -19,9 +21,20 @@ class Payment < ActiveRecord::Base
 		end
 	end
 
+	comma do
+		trip_id
+		trip.guest.name
+		"BCRPL/#{trip_id}/#{id}"
+		date_received
+		amount
+		details
+	end
+
 	private
 
 		def titleize
-			self.payee_name = payee_name.titleize
+			if payee_name != "" or payee_name != nil
+				self.payee_name = payee_name.titleize
+			end
 		end
 end

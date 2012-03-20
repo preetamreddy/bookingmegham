@@ -12,8 +12,24 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :trip_id %><br />
-    <%= f.number_field :trip_id %>
+   	<%= f.label :trip_id %><br />
+		<% if @payment.trip_id %>
+    	<%= f.collection_select(:trip_id, 
+						Trip.find_all_by_id(@payment.trip_id), :id, :long_name) %>
+		<% elsif session[:guest_id] %>
+			<%= f.collection_select(:trip_id, Trip.
+						joins('JOIN guests ON guests.id = trips.guest_id').
+						order('guests.name, trips.name').
+						find_all_by_guest_id(session[:guest_id]), :id, :long_name) %>
+		<% else %>
+    	<%= f.collection_select(:trip_id, Trip.
+						joins('JOIN guests ON guests.id = trips.guest_id').
+						order('guests.name, trips.name').all, :id, :long_name) %>
+		<% end %>
+  </div>
+  <div class="field">
+    <%= f.label :payee_name %><br />
+    <%= f.text_field :payee_name %>
   </div>
   <div class="field">
     <%= f.label :date_received %><br />
@@ -22,6 +38,10 @@
   <div class="field">
     <%= f.label :amount %><br />
     <%= f.number_field :amount %>
+  </div>
+  <div class="field">
+    <%= f.label :payment_mode %><br />
+		<%= f.select :payment_mode, Payment::PAYMENT_MODE, prompt: 'Payment mode' %>
   </div>
   <div class="field">
     <%= f.label :details %><br />

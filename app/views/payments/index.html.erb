@@ -1,29 +1,60 @@
-<h1>Listing payments</h1>
+<h1>Listing Payments</h1>
 
-<table>
-  <tr>
-    <th>Trip</th>
-    <th>Date received</th>
-    <th>Amount</th>
-    <th>Details</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div id="search">
+	<%= render 'search' %>
+</div>
 
-<% @payments.each do |payment| %>
-  <tr>
-    <td><%= payment.trip_id %></td>
-    <td><%= payment.date_received %></td>
-    <td><%= payment.amount %></td>
-    <td><%= payment.details %></td>
-    <td><%= link_to 'Show', payment %></td>
-    <td><%= link_to 'Edit', edit_payment_path(payment) %></td>
-    <td><%= link_to 'Destroy', payment, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+<% if @records_returned == 0 %>
+	<div id="error_explanation">
+		<h2>Payments not found</h2>
+		<ul>
+			<li>Change tour search or click below to create a new Payment</li>
+		</ul>
+	</div>
+<% else %>
+	<% if notice %>
+		<p id="error"><%= notice %></p>
+	<% end %>
+
+	<table class="index_table" border="1">
+	  <tr>
+	    <th class="number">Trip</th>
+	    <th class="text">Guest / Agency</th>
+	    <th class="text">Receipt No</th>
+	    <th class="text">Date received</th>
+	    <th class="currency">Amount</th>
+	    <th class="text">Payment Mode</th>
+	    <th class="text">Details</th>
+	    <th></th>
+	  </tr>
+
+		<% @payments.each do |payment| %>
+		  <tr>
+		    <td class="number"><%= payment.trip_id %></td>
+				<td class="text">
+					<% if payment.trip.guest.agency_id %>
+		    		<%= payment.trip.guest.name %> / <%= payment.trip.guest.agency.short_name %>
+					<% else %>
+		    		<%= payment.trip.guest.name %>
+					<% end %>
+				</td>
+		    <td class="text"><%= "BCRPL/#{payment.trip_id}/#{payment.id}" %></td>
+		    <td class="text"><%= l payment.date_received %></td>
+		    <td class="currency"><%= number_to_currency(payment.amount) %></td>
+		    <td class="text"><%= payment.payment_mode %></td>
+		    <td class="text"><%= payment.details %></td>
+		    <td>
+		    	<%= link_to 'Edit', edit_payment_path(payment) %><br />
+		    	<%= link_to 'Destroy', payment, confirm: 'Are you sure?', method: :delete %>
+				</td>
+		  </tr>
+		<% end %>
+	</table>
 <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Payment', new_payment_path %>
+<% if session[:trip_id] %>
+	<div class="action_container">
+		<%= link_to 'New Payment', new_payment_path %>
+	</div>
+<% end %>
+<p><%= will_paginate @payments %></p>
