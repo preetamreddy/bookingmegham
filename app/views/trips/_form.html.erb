@@ -43,12 +43,12 @@
     <%= f.label :start_date %><br />
    	<%= f.date_select :start_date, :start_year => Time.now.year,
 			:end_year => Time.now.year + 1, :prompt => true, 
-			:disabled => @trip.payment_status != Trip::NOT_PAID %>
+			:disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
   </div>
 	<div class="field">
     <%= f.label :number_of_days, "Days" %><br />
     <%= f.number_field :number_of_days, :min => 1, 
-			:disabled => @trip.payment_status != Trip::NOT_PAID %>
+			:disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
 	</div>
 
 	<%= hidden_div_if(true, class: "field") do %>
@@ -62,7 +62,7 @@
 	</div>
 	<div class="nested_form">
 		<%= f.fields_for :rooms %>
-		<% if @trip.payment_status == Trip::NOT_PAID %>
+		<% if (@trip.payment_status == Trip::NOT_PAID or @trip.new_record?) %>
 			<%= f.link_to_add "Add new", :rooms %><br/>
 		<% end %>
 	</div>
@@ -70,12 +70,12 @@
 	<div class="field">
     <%= f.label :number_of_children_below_5_years, "Children below 5" %><br />
    	<%= f.number_field :number_of_children_below_5_years, :min => 0, 
-			:disabled => @trip.payment_status != Trip::NOT_PAID %>
+			:disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
 	</div>
 	<div class="field">
     <%= f.label :number_of_drivers, "Drivers" %><br />
     <%= f.number_field :number_of_drivers, :min => 0, 
-			:disabled => @trip.payment_status != Trip::NOT_PAID %>
+			:disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
 	</div>
 
 	<div class="field">
@@ -83,7 +83,7 @@
 	</div>
 	<div class="nested_form">
 		<%= f.fields_for :vas_bookings %>
-		<% if @trip.payment_status == Trip::NOT_PAID %>
+		<% if (@trip.payment_status == Trip::NOT_PAID or @trip.new_record?) %>
 			<%= f.link_to_add "Add new", :vas_bookings %><br/>
 		<% end %>
 	</div>
@@ -103,7 +103,7 @@
 	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
     <%= f.label :discount, "TAC / Dicount" %><br />
    	<%= f.number_field :discount, :min => 0, 
-			:disabled => @trip.payment_status != Trip::NOT_PAID %>
+			:disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
 	<% end %>
 	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
     <%= f.label :service_tax %><br />
