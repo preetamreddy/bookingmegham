@@ -9,8 +9,7 @@ class TaxiBooking < ActiveRecord::Base
 	validates :trip_id, :taxi_id, :number_of_vehicles, 
 						:start_date, :number_of_days, presence: true
 
-	before_save :update_end_date, :update_unit_price, :titleize,
-							:strip_whitespaces
+	before_save :update_end_date, :update_unit_price, :titleize
 
 	before_destroy :ensure_payments_are_not_made
 

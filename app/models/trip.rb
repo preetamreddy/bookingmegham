@@ -33,7 +33,7 @@ class Trip < ActiveRecord::Base
 
 	before_save :set_defaults_if_nil, :update_vas_unit_price,
 							:update_payment_status, :update_pay_by_date,
-							:titleize, :strip_whitespaces
+							:titleize
 
 	after_save :update_line_item_status
 

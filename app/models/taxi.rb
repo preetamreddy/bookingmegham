@@ -4,7 +4,7 @@ class Taxi < ActiveRecord::Base
 
 	validates :agency_id, :model, :max_passengers, :unit_price, presence: true
 
-	before_save :titleize, :strip_whitespaces
+	before_save :titleize
 
 	before_destroy :ensure_not_referenced_by_taxi_booking
 

@@ -11,7 +11,7 @@ class Agency < ActiveRecord::Base
 
 	has_many :taxis
 
-	before_save :titleize, :strip_whitespaces,
+	before_save :titleize,
 							:set_defaults_if_nil
 
 	before_destroy 	:ensure_does_not_have_advisors, :ensure_does_not_have_trips,

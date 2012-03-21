@@ -19,8 +19,7 @@ class Booking < ActiveRecord::Base
 
 	before_save :update_room_rate, :update_vas_unit_price,
 							:update_total_price, :update_service_tax_rate,
-							:update_service_tax, :titleize,
-							:strip_whitespaces
+							:update_service_tax, :titleize
 
 	before_create :update_guest_id, :update_property_id
 
