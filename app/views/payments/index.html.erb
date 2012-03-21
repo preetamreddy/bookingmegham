@@ -4,11 +4,15 @@
 	<%= render 'search' %>
 </div>
 
+<div id="download">
+	<%= render 'download' %>
+</div>
+
 <% if @records_returned == 0 %>
 	<div id="error_explanation">
 		<h2>Payments not found</h2>
 		<ul>
-			<li>Change tour search or click below to create a new Payment</li>
+			<li>Change parameters and search again</li>
 		</ul>
 	</div>
 <% else %>
@@ -18,7 +22,6 @@
 
 	<table class="index_table" border="1">
 	  <tr>
-	    <th class="number">Trip</th>
 	    <th class="text">Guest / Agency</th>
 	    <th class="text">Receipt No</th>
 	    <th class="text">Date received</th>
@@ -30,7 +33,6 @@
 
 		<% @payments.each do |payment| %>
 		  <tr>
-		    <td class="number"><%= payment.trip_id %></td>
 				<td class="text">
 					<% if payment.trip.guest.agency_id %>
 		    		<%= payment.trip.guest.name %> / <%= payment.trip.guest.agency.short_name %>
@@ -57,4 +59,3 @@
 		<%= link_to 'New Payment', new_payment_path %>
 	</div>
 <% end %>
-<p><%= will_paginate @payments %></p>

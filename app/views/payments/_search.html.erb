@@ -2,6 +2,6 @@
 	<%= label_tag :from_date, "From" %>
 	<%= select_date @from_date, :prefix => 'from_date' %>
 	<%= label_tag :number_of_days, "For days" %>
-	<%= number_field_tag :number_of_days, @number_of_days, min: 1, max: 999 %>
+	<%= number_field_tag :number_of_days, @number_of_days, min: 1, max: 99 %>
 	<%= submit_tag "Search", :name => nil %>
 <% end %>

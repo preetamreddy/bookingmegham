@@ -28,13 +28,11 @@ class PaymentsController < ApplicationController
 		@to_date = @from_date + @number_of_days
 
 		if session[:trip_id]
-			@payments = Payment.paginate(page: params[:page], per_page: 20).
-										order("date_received").find(:all, :conditions => [
+			@payments = Payment.order("trip_id, date_received").find(:all, :conditions => [
 											'trip_id = ? and date_received >= ? and date_received <= ?',
 											session[:trip_id], @from_date, @to_date ])
 		else
-			@payments = Payment.paginate(page: params[:page], per_page: 20).
-										order("date_received").find(:all, :conditions => [
+			@payments = Payment.order("trip_id, date_received").find(:all, :conditions => [
 											'date_received >= ? and date_received <= ?',
 											@from_date, @to_date ])
 		end
@@ -44,7 +42,7 @@ class PaymentsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @payments }
-			format.csv { render :csv => @payments }
+			format.csv { render :csv => @payments, :filename => "payments" }
     end
   end
 

@@ -54,3 +54,7 @@ gem 'thin'
 # Converting HTMLs to PDF
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+
+# For CSV file generation
+gem 'fastercsv'
+gem "comma", "~> 3.0"

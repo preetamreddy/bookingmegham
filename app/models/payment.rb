@@ -21,13 +21,66 @@ class Payment < ActiveRecord::Base
 		end
 	end
 
-	comma do
-		trip_id
-		trip.guest.name
+	def receipt_number
 		"BCRPL/#{trip_id}/#{id}"
-		date_received
-		amount
-		details
+	end
+
+	def guest_name
+		return trip.guest.name
+	end
+
+	def agency
+		if trip.guest.agency_id
+			return trip.guest.agency.short_name
+		else
+			return ""
+		end
+	end
+
+	def date_final_payment
+		if trip.payment_status == Trip::FULLY_PAID
+			return trip.payments.order(:date_received).last.date_received
+		else
+			return ""
+		end
+	end
+
+	def agent_final_price
+		if trip.guest.agency_id
+			return trip.final_price
+		else
+			return 0
+		end
+	end
+
+	def direct_final_price
+		if trip.guest.agency_id
+			return 0
+		else
+			return trip.final_price
+		end
+	end
+
+	comma do
+		trip_id 'Trip ID'
+		trip :start_date => 'Trip Start Dt'
+		date_final_payment 'Date of Full Payment'
+		receipt_number 'Rcpt No.'
+		date_received 'Date of Payment'
+		guest_name
+		agency
+		amount 'Amount Recd.'
+		payment_mode
+		details 'Payment Details'
+		trip :booking_cost => 'Booking Cost Total'
+		trip :balance_payment => 'Balance'
+		trip :paid => 'Total Recd.'
+		trip :discount => 'TAC / Discount'
+		trip :tds => 'TDS'
+		trip :final_price => 'Net After TDS'
+		trip :service_tax
+		agent_final_price 'Agent Booking'
+		direct_final_price 'Direct Booking'
 	end
 
 	private
