@@ -65,7 +65,15 @@ class TripsController < ApplicationController
     @trip = Trip.new
 		@trip.rooms.build
 		@trip.guest_id = session[:guest_id]
-		@trip.agency_id = User.find_by_id(session[:user_id]).agency_id
+
+		if session[:guest_id]
+			@trip.agency_id = Guest.find(session[:guest_id]).agency_id
+		end
+
+		if !@trip.agency_id
+			@trip.agency_id = User.find_by_id(session[:user_id]).agency_id
+		end
+
 		@trip.advisor_id = User.find_by_id(session[:user_id]).advisor_id
 
     respond_to do |format|

@@ -99,7 +99,9 @@
 	</table>
 <% end %>
 
-<div class="action_container">
-	<%= link_to 'New Trip', new_trip_path %>
-</div>
+<% if session[:guest_id] %>
+	<div class="action_container">
+		<%= link_to 'New Trip', new_trip_path %>
+	</div>
+<% end %>
 <p><%= will_paginate @trips %></p>
