@@ -63,22 +63,22 @@ class Payment < ActiveRecord::Base
 
 	comma do
 		trip_id 'Trip ID'
+		guest_name
+		agency
 		trip :start_date => 'Trip Start Dt'
 		date_final_payment 'Date of Full Payment'
 		receipt_number 'Rcpt No.'
 		date_received 'Date of Payment'
-		guest_name
-		agency
 		amount 'Amount Recd.'
 		payment_mode
 		details 'Payment Details'
-		trip :booking_cost => 'Booking Cost Total'
-		trip :balance_payment => 'Balance'
+		trip :final_cost => 'Booking Cost Total'
 		trip :paid => 'Total Recd.'
+		trip :balance_payment => 'Balance'
 		trip :discount => 'TAC / Discount'
 		trip :tds => 'TDS'
-		trip :final_price => 'Net After TDS'
 		trip :service_tax
+		trip :net_after_tax => 'Net After Taxes'
 		agent_final_price 'Agent Booking'
 		direct_final_price 'Direct Booking'
 	end

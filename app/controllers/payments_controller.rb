@@ -28,11 +28,11 @@ class PaymentsController < ApplicationController
 		@to_date = @from_date + @number_of_days
 
 		if session[:trip_id]
-			@payments = Payment.order("trip_id, date_received").find(:all, :conditions => [
+			@payments = Payment.order("trip_id, date_received, id").find(:all, :conditions => [
 											'trip_id = ? and date_received >= ? and date_received <= ?',
 											session[:trip_id], @from_date, @to_date ])
 		else
-			@payments = Payment.order("trip_id, date_received").find(:all, :conditions => [
+			@payments = Payment.order("trip_id, date_received, id").find(:all, :conditions => [
 											'date_received >= ? and date_received <= ?',
 											@from_date, @to_date ])
 		end
