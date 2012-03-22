@@ -9,7 +9,8 @@ class TaxiBooking < ActiveRecord::Base
 	validates :trip_id, :taxi_id, :number_of_vehicles, 
 						:start_date, :number_of_days, presence: true
 
-	before_save :update_end_date, :update_unit_price, :titleize
+	before_save :update_end_date, :update_unit_price, :strip_whitespaces,
+							:titleize
 
 	before_destroy :ensure_payments_are_not_made
 
@@ -43,6 +44,6 @@ class TaxiBooking < ActiveRecord::Base
 		end
 		
 		def strip_whitespaces
-			self.pickup_address = pickup_address.strip
+			self.pickup_address = pickup_address.to_s.strip
 		end
 end

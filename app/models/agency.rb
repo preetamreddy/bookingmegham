@@ -11,7 +11,7 @@ class Agency < ActiveRecord::Base
 
 	has_many :taxis
 
-	before_save :titleize,
+	before_save :titleize, :strip_whitespaces,
 							:set_defaults_if_nil
 
 	before_destroy 	:ensure_does_not_have_advisors, :ensure_does_not_have_trips,
@@ -75,7 +75,7 @@ class Agency < ActiveRecord::Base
 		end
 
 		def strip_whitespaces
-			self.postal_address = postal_address.strip
+			self.postal_address = postal_address.to_s.strip
 		end
 	
 end

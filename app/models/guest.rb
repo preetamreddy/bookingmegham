@@ -35,7 +35,7 @@ class Guest < ActiveRecord::Base
 		end
 
 		def strip_whitespaces
-			self.other_information = other_information.strip
-			self.address = address.strip
+			self.other_information = other_information.to_s.strip
+			self.address = address.to_s.strip
 		end
 end

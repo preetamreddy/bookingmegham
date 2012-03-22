@@ -4,7 +4,7 @@ class Taxi < ActiveRecord::Base
 
 	validates :agency_id, :model, :max_passengers, :unit_price, presence: true
 
-	before_save :titleize
+	before_save :strip_whitespaces, :titleize
 
 	before_destroy :ensure_not_referenced_by_taxi_booking
 
@@ -28,6 +28,6 @@ class Taxi < ActiveRecord::Base
 		end
 		
 		def strip_whitespaces
-			self.terrain_limitations = terrain_limitations.strip
+			self.terrain_limitations = terrain_limitations.to_s.strip
 		end
 end

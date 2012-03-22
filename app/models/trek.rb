@@ -7,7 +7,7 @@ class Trek < ActiveRecord::Base
 	accepts_nested_attributes_for :trek_prices, :reject_if => :all_blank,
 		:allow_destroy => true
 
-	before_save :titleize
+	before_save :strip_whitespaces, :titleize
 
 	before_destroy :ensure_not_referenced_by_trek_bookings
 
@@ -47,6 +47,6 @@ class Trek < ActiveRecord::Base
 		end
 
 		def strip_whitespaces
-			self.itinerary = itinerary.strip
+			self.itinerary = itinerary.to_s.strip
 		end
 end

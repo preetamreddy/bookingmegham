@@ -112,6 +112,6 @@ class RoomType < ActiveRecord::Base
 		end
 		
 		def strip_whitespaces
-			self.description = description.strip
+			self.description = description.to_s.strip
 		end
 end

@@ -19,7 +19,7 @@ class Booking < ActiveRecord::Base
 
 	before_save :update_room_rate, :update_vas_unit_price,
 							:update_total_price, :update_service_tax_rate,
-							:update_service_tax, :titleize
+							:update_service_tax, :strip_whitespaces, :titleize
 
 	before_create :update_guest_id, :update_property_id
 
@@ -280,9 +280,9 @@ class Booking < ActiveRecord::Base
 		end
 
 		def strip_whitespaces
-			self.remarks = remarks.strip
-			self.suggested_activities = suggested_activities.strip
-			self.getting_there = getting_there.strip
-			self.getting_home = getting_home.strip
+			self.remarks = remarks.to_s.strip
+			self.suggested_activities = suggested_activities.to_s.strip
+			self.getting_there = getting_there.to_s.strip
+			self.getting_home = getting_home.to_s.strip
 		end
 end
