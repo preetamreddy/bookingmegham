@@ -168,12 +168,14 @@
 <div class="action_container">
 	<%= link_to 'Edit', edit_trip_path(@trip) %>
 	<%= link_to 'View Bookings', bookings_path(:trip_id => @trip.id) %>
-	<%= link_to 'Email Trip Details', email_trip_path(:trip_id => @trip.id,
-				:type => 'details') %>
+	<%= link_to 'Email Itinerary', email_trip_path(:trip_id => @trip.id,
+				:type => 'itinerary') %>
 	<% if @trip.agency.name != @trip.advisor.agency.name %>
-		<%= link_to 'Send Invoice to Agent', email_trip_path(:trip_id => @trip.id,
+		<%= link_to 'Generate Invoice', email_trip_path(:trip_id => @trip.id,
 					:type => 'invoice') %>
 	<% end %>
+	<%= link_to 'Generate Vouchers', email_trip_path(:trip_id => @trip.id,
+				:type => 'vouchers') %>
 </div>
 
 <%= link_to 'Back to Trip Listing', trips_path, :class => "back_link" %>

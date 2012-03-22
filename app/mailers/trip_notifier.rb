@@ -5,60 +5,53 @@ class TripNotifier < ActionMailer::Base
 
 	default from: "Banjara Camps <banjaracamps@ezbook.in>"
 
-  def details(trip)
+  def itinerary(trip, user_id)
 		@trip = trip
+		@user = User.find(user_id)
 
-#		mail to: "#{@trip.guest.name} <#{@trip.guest.email_id}>", 
-#    	cc: "#{@trip.email_ids}, #{@trip.advisor.name} <#{@trip.advisor.email_id}>",
-   	mail(to: "#{@trip.advisor.name} <#{@trip.advisor.email_id}>",
-				subject: 'Your holiday with Banjara Camps - Trip details') do |format|
+		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
+				subject: 'Banjara Camps - Itinerary for your holiday with us') do |format|
 			format.text
 			format.pdf do
-				attachments["Banjara Camps - Trip details.pdf"] = WickedPdf.new.pdf_from_string(
-					render_to_string(:pdf => "trip_details", 
-					:template 						=> 'trip_notifier/details.pdf.erb',
-					:layout								=> 'layouts/default.html.erb',
-					:header => {:html => {:template => 'layouts/header.pdf.erb'}},
-					:footer => {:html => {:template => 'layouts/footer.pdf.erb'}},
-					:margin => {:top 		=> 25,
-											:bottom	=> 30,
-											:left		=> 20,
-											:right	=> 20}))
+				attachments["Itinerary #{@trip.guest.name}.pdf"] = WickedPdf.new.pdf_from_string(
+					render_to_string(:pdf => "itinerary", 
+					:template 						=> 'trip_notifier/itinerary.pdf.erb',
+					:layout								=> 'layouts/default.html.erb'))
 			end
 		end
   end
 
-  def invoice(trip)
+  def invoice(trip, user_id)
 		@trip = trip
-		@user = User.find_by_name('sanjeev')
+		@user = User.find(user_id)
 
-#		mail(to: "#{@trip.guest.name} <#{@trip.guest.email_id}>", 
-#			cc: "#{@trip.email_ids}, #{@trip.advisor.name} <#{@trip.advisor.email_id}>, #{ACCOUNTS_EMAIL_ID}",
 		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
-				subject: "Invoice for trip #{@trip.id}/#{@trip.guest.name}") do |format|
+				subject: "Banjara Camps - Invoice for trip #{@trip.id}/#{@trip.guest.name}") do |format|
 			format.text
 			format.pdf do
-				attachments["Invoice #{@trip.agency.name} (ref: #{@trip.id}/#{@trip.guest.name}).pdf"] = WickedPdf.new.pdf_from_string(
-					render_to_string(:pdf => "trip_invoice", 
+				attachments["Invoice #{@trip.agency.name} (ref: #{@trip.id}/#{@trip.guest.name}).pdf"] = 
+					WickedPdf.new.pdf_from_string(
+					render_to_string(:pdf => "invoice", 
 					:template 						=> 'trip_notifier/invoice.pdf.erb',
 					:layout								=> 'layouts/default.html.erb'))
 			end
 		end
   end
 
-  def receipt(trip)
+  def vouchers(trip, user_id)
 		@trip = trip
+		@user = User.find(user_id)
 
-		mail to: "#{@trip.guest.name} <#{@trip.guest.email_id}>", 
-			cc: "#{@trip.email_ids}, #{@trip.advisor.name} <#{@trip.advisor.email_id}>, #{ACCOUNTS_EMAIL_ID}",
-			subject: 'Your holiday with Banjara Camps - Receipt'
-  end
-
-  def voucher(trip)
-		@trip = trip
-
-		mail to: "#{@trip.guest.name} <#{@trip.guest.email_id}>", 
-			cc: "#{@trip.email_ids}, #{@trip.advisor.name} <#{@trip.advisor.email_id}>",
-			subject: 'Your holiday with Banjara Camps - Voucher'
+		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
+				subject: "Banjara Camps - Vouchers for trip #{@trip.id}/#{@trip.guest.name}") do |format|
+			format.text
+#			format.pdf do
+#				attachments["Vouchers for Trip "#{@trip.id}/#{@trip.guest.name}).pdf"] = 
+#					WickedPdf.new.pdf_from_string(
+#					render_to_string(:pdf => "vouchers", 
+#					:template 						=> 'trip_notifier/vouchers.pdf.erb',
+#					:layout								=> 'layouts/default.html.erb'))
+#			end
+		end
   end
 end

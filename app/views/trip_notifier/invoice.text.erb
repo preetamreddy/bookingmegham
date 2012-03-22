@@ -1,9 +1,9 @@
 to: <%= @trip.agency.email_id %>
-cc: <%= @trip.advisor.email_id %>
+cc: <%= @trip.advisor.email_id %>, <%= TripNotifier::ACCOUNTS_EMAIL_ID %>
 
 Greetings from Banjara Camps and Retreats!
 
-Attached is the invoice for your trip with id: <%= @trip.id %> and ref: <%= @trip.guest.name %> (<%= @trip.number_of_adults %> + <%= @trip.number_of_children %>).
+Attached is the invoice for your trip with id: <%= @trip.id %> and ref: <%= @trip.guest.name %> <%= @trip.guests %>.
 
 With warm regards,
 <%= @user.advisor.name %>

@@ -103,6 +103,17 @@ class Trip < ActiveRecord::Base
 		return guests
 	end
 
+	def guests
+		guests = "(" + number_of_adults.to_s
+		if number_of_children_between_5_and_12_years == 0
+			guests = guests + " + " + number_of_children_between_5_and_12_years.to_s
+		end
+		if number_of_children_below_5_years == 0
+			guests = guests + " + " + number_of_children_below_5_years.to_s
+		end
+		guests = guests + ")"
+	end
+
 	def total_price
 		if bookings.any?
 			price_for_bookings = bookings.to_a.sum { |booking| booking.total_price }

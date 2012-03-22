@@ -144,14 +144,12 @@ class TripsController < ApplicationController
 
 	def email
 		trip = Trip.find(params[:trip_id])
-		if params[:type] == 'details'
-			TripNotifier.details(trip).deliver
+		if params[:type] == 'itinerary'
+			TripNotifier.itinerary(trip, session[:user_id]).deliver
 		elsif params[:type] == 'invoice'
-			TripNotifier.invoice(trip).deliver
-		elsif params[:type] == 'receipt'
-			TripNotifier.receipt(trip).deliver
-		elsif params[:type] == 'voucher'
-			TripNotifier.voucher(trip).deliver
+			TripNotifier.invoice(trip, session[:user_id]).deliver
+		elsif params[:type] == 'vouchers'
+			TripNotifier.vouchers(trip, session[:user_id]).deliver
 		end
 
 		respond_to do |format|

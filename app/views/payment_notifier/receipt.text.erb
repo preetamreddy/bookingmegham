@@ -1,0 +1,16 @@
+to: <%= @payment.trip.guest.email_id %>
+cc: <%= @payment.trip.email_ids %>, <%= @payment.trip.advisor.email_id %>, <%= PaymentNotifier::ACCOUNTS_EMAIL_ID %>
+
+Greetings from Banjara Camps and Retreats!
+
+Payment Receipt: <%= @payment.receipt_number %>
+
+We gratefully acknowledge the receipt of a payment of Rs. <%= number_to_currency_wo_symbol(@payment.amount) %> for the trip with id: <%= @payment.trip_id %> and ref: <%= @payment.trip.guest.name %> <%= @payment.trip.guests %>.
+
+With warm regards,
+<%= @user.advisor.name %>
+<%= @user.advisor.email_id %>
+<%= @user.agency.phone_number %>
+<%= @user.advisor.agency.name %>
+<%= @user.advisor.agency.postal_address %>
+<%= @user.advisor.agency.url %>
