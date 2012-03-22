@@ -10,9 +10,9 @@ Below is the voucher for your trip <%= @trip.name %>.
 We look forward to meeting you soon.
 
 With warm regards,
-<%= @trip.advisor.name %>
-<%= @trip.advisor.email_id %>
-<%= @trip.advisor.phone_number_1 %>
-<%= @trip.advisor.agency.name %>
-<%= @trip.advisor.agency.postal_address %>
-<%= @trip.advisor.agency.url %>
+<%= @user.advisor.name %>
+<%= @user.advisor.email_id %>
+<%= @user.agency.phone_number %>
+<%= @user.agency.name %>
+<%= @user.agency.postal_address %>
+<%= @user.agency.url %>

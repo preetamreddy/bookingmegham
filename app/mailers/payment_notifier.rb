@@ -10,7 +10,7 @@ class PaymentNotifier < ActionMailer::Base
 		@user = User.find(user_id)
 
 		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
-				subject: "Banjara Camps - Payment Receipt for trip #{@trip.id}/#{@trip.guest.name}") do |format|
+				subject: "Banjara Camps - Payment Receipt for trip #{@payment.trip_id}/#{@payment.trip.guest.name}") do |format|
 			format.text
 		end
   end
