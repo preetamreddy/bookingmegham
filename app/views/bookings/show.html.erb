@@ -136,19 +136,19 @@
 <table class="nested_table">
 	<tr>
   	<td>Collect for all extras</td>
-		<td><%= @booking.collect_for_all_extras %></td>
+		<td><%= @booking.collect_for_all_extras.to_english %></td>
 	</tr>
 	<tr>
   	<td>Collect for children</td>
-		<td><%= @booking.collect_for_children %></td>
+		<td><%= @booking.collect_for_children.to_english %></td>
 	</tr>
 	<tr>
   	<td>Collect for driver and help</td>
-		<td><%= @booking.collect_for_driver_and_help %></td>
+		<td><%= @booking.collect_for_driver_and_help.to_english %></td>
 	</tr>
 	<tr>
   	<td>Bill Banjara H.O. on chosen plan</td>
-		<td><%= @booking.bill_agent_on_chosen_plan %></td>
+		<td><%= @booking.bill_agent_on_chosen_plan.to_english %></td>
 	</tr>
 </table>
 
