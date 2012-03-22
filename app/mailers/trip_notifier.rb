@@ -45,13 +45,13 @@ class TripNotifier < ActionMailer::Base
 		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
 				subject: "Banjara Camps - Vouchers for trip #{@trip.id}/#{@trip.guest.name}") do |format|
 			format.text
-#			format.pdf do
-#				attachments["Vouchers for Trip "#{@trip.id}/#{@trip.guest.name}).pdf"] = 
-#					WickedPdf.new.pdf_from_string(
-#					render_to_string(:pdf => "vouchers", 
-#					:template 						=> 'trip_notifier/vouchers.pdf.erb',
-#					:layout								=> 'layouts/default.html.erb'))
-#			end
+			format.pdf do
+				attachments["Vouchers for Trip #{@trip.id}/#{@trip.guest.name}.pdf"] = 
+					WickedPdf.new.pdf_from_string(
+					render_to_string(:pdf => "vouchers", 
+					:template 						=> 'trip_notifier/vouchers.pdf.erb',
+					:layout								=> 'layouts/default.html.erb'))
+			end
 		end
   end
 end
