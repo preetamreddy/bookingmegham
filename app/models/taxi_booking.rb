@@ -25,7 +25,7 @@ class TaxiBooking < ActiveRecord::Base
 		end
 
 		def update_unit_price
-			if trip.payment_status == Trip::NOT_PAID
+			if trip.payment_status == Trip::NOT_PAID or unit_price == nil
 				self.unit_price = taxi.unit_price
 			end
 		end

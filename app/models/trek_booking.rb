@@ -31,7 +31,7 @@ class TrekBooking < ActiveRecord::Base
 		end
 
 	  def update_unit_price
-			if trip.payment_status == Trip::NOT_PAID
+			if trip.payment_status == Trip::NOT_PAID or unit_price == nil
 				unit_price = Trek.unit_price(trek_id, number_of_people)
 				if unit_price == 0
 					errors.add(:base, "Could not create Trek booking unit price for '#{trek.name}' trek could not be determined")

@@ -30,9 +30,9 @@ class Payment < ActiveRecord::Base
 	end
 
 	def agency
-		if trip.guest.agency_id
-			return trip.guest.agency.short_name
-		else
+		if trip.direct_booking == 0
+			return trip.agency.short_name
+		elsif trip.direct_booking == 1
 			return ""
 		end
 	end
@@ -46,17 +46,17 @@ class Payment < ActiveRecord::Base
 	end
 
 	def agent_final_price
-		if trip.guest.agency_id
+		if trip.direct_booking == 0
 			return trip.final_price
-		else
+		elsif trip.direct_booking == 1
 			return 0
 		end
 	end
 
 	def direct_final_price
-		if trip.guest.agency_id
+		if trip.direct_booking == 1
 			return 0
-		else
+		elsif trip.direct_booking == 0
 			return trip.final_price
 		end
 	end

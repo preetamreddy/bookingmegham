@@ -35,6 +35,10 @@
 						Agency.order('name').find_all, :id, :name) %>
 		<% end %>
   </div>
+	<%= hidden_div_if(false, class: "field") do %>
+    <%= f.label :direct_booking %><br />
+    <%= f.number_field :direct_booking %>
+	<% end %>
   <div class="field">
     <%= f.label :name, "Trip name" %><br />
     <%= f.text_field :name, size: 30 %>

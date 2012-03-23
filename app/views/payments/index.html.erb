@@ -34,8 +34,8 @@
 		<% @payments.each do |payment| %>
 		  <tr>
 				<td class="text">
-					<% if payment.trip.guest.agency_id %>
-		    		<%= payment.trip.guest.name %> / <%= payment.trip.guest.agency.short_name %>
+					<% if payment.trip.agency_id %>
+		    		<%= payment.trip.guest.name %> / <%= payment.trip.agency.short_name %>
 					<% else %>
 		    		<%= payment.trip.guest.name %>
 					<% end %>

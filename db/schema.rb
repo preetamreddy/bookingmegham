@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120320110522) do
+ActiveRecord::Schema.define(:version => 20120323112633) do
 
   create_table "advisors", :force => true do |t|
     t.integer  "agency_id"
@@ -247,6 +247,7 @@ ActiveRecord::Schema.define(:version => 20120320110522) do
     t.integer  "advisor_id"
     t.string   "email_ids"
     t.date     "invoice_date"
+    t.integer  "direct_booking",                   :default => 1
   end
 
   create_table "users", :force => true do |t|

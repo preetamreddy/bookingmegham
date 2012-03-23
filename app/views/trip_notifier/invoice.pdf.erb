@@ -33,7 +33,7 @@
 				font-weight: bold;
 				white-space: pre-wrap;
 			}
-			.agent {
+			.client {
 				text-align: left;
 				white-space: pre-wrap;
 			}
@@ -95,7 +95,11 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan=3 class="agent">To,<br/><%= @trip.agency.name %><br/><%= @trip.agency.postal_address %><br/>Phone: <%= @trip.agency.phone_number %><br/>PAN No: <%= @trip.agency.pan_number %></td>
+					<% if @trip.direct_booking %>
+						<td colspan=3 class="client">To,<br/><%= @trip.guest.name %><br/><%= @trip.guest.address %><br/>Phone: <%= @trip.guest.phone_number %></td>
+					<% else %>
+						<td colspan=3 class="client">To,<br/><%= @trip.agency.name %><br/><%= @trip.agency.postal_address %><br/>Phone: <%= @trip.agency.phone_number %><br/>PAN No: <%= @trip.agency.pan_number %></td>
+					<% end %>
 					<td colspan=3 class="other_info">
 						Date: <%= l @trip.invoice_date %>
 						<% if @trip.payments.any? %>Receipt No: BCRPL/<%= @trip.id %>/<%= @trip.payments.order(:date_received).last.id %>/<%= l @trip.payments.order(:date_received).last.date_received %><% end %>
@@ -187,15 +191,21 @@
 				<% end %>
 				<tr>
 					<td></td>
-					<td colspan=4 class="text">Less: TAC on Room Bookings</td>
+					<% if @trip.direct_booking %>
+						<td colspan=4 class="text">Less: Discount on Room Bookings</td>
+					<% else %>
+						<td colspan=4 class="text">Less: TAC on Room Bookings</td>
+					<% end %>
 					<td class="number">( <%= number_to_currency_wo_symbol(@trip.discount) %>)</td>
 				</tr>
-				<tr>
-					<td colspan=3></td>
-					<td class="text">T.D.S.</td>
-					<td class="text"><%= Trip::TDS_PERCENT%>%</td>
-					<td class="number"> <%= number_to_currency_wo_symbol(@trip.tds) %></td>
-				</tr>
+				<% if !@trip.direct_booking %>
+					<tr>
+						<td colspan=3></td>
+						<td class="text">T.D.S.</td>
+						<td class="text"><%= Trip::TDS_PERCENT%>%</td>
+						<td class="number"> <%= number_to_currency_wo_symbol(@trip.tds) %></td>
+					</tr>
+				<% end %>
 				<tr>
 					<td colspan=3></td>
 					<td colspan=2 class="bold">Total Payable</td>
@@ -216,12 +226,14 @@
 			<p class="amount">
 				Amount in words: Rupees <%= @trip.final_price.to_words %> only.
 			</p>
-			<p class="footnote">
-				<span class="bold">PAN NUMBER is mandatory under section 139A (5B) of income tax Act 1961. It is obligatory for all persons responsible for deducting tax at source. </span><span class="red_text">If PAN has not provided by deductees, then TDS rate should be deducted at 20% or actual, whichever is higher.</span> 
-			</p>
-			<p class="footnote">
-				Therefore you are requested to please send us your PAN NUMBER along with Name & complete address of your company/agency at the earliest for depositing/ issuing of TDS certificate and fulfilling the statutory requirements.
-			</p>
+			<% if !@trip.direct_booking %>
+				<p class="footnote">
+					<span class="bold">PAN NUMBER is mandatory under section 139A (5B) of income tax Act 1961. It is obligatory for all persons responsible for deducting tax at source. </span><span class="red_text">If PAN has not provided by deductees, then TDS rate should be deducted at 20% or actual, whichever is higher.</span> 
+				</p>
+				<p class="footnote">
+					Therefore you are requested to please send us your PAN NUMBER along with Name & complete address of your company/agency at the earliest for depositing/ issuing of TDS certificate and fulfilling the statutory requirements.
+				</p>
+			<% end %>	
 			<p class="signature">
 				** This is a computer generated invoice. No signature required **
 			</p>

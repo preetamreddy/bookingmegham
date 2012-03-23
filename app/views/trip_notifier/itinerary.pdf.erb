@@ -12,6 +12,19 @@
 			  border-collapse: collapse;
 			  width: 100%;
 			}
+			img {
+				float: left;
+				height: 80px;
+				vertical-align: top;
+			}
+			.address {
+				line-height: 21px;
+			  margin-top: 0;
+				text-align: right;
+				font-size: 16px;
+				font-weight: bold;
+				white-space: pre-wrap;
+			}
 			.title {
 				font-size: 28px;
 				font-weight: bold;
@@ -34,12 +47,44 @@
 			.pbi_avoid {
 				page-break-inside:avoid !important;
 			}	
+			.table {
+				margin-top: 1em;
+				border-spacing: 0;
+				border-collapse: collapse;
+				border-color: #CFCCCA;
+				font-size: 16px;
+				width: 100%;
+				tr {
+					padding: 5px 5px;
+				}
+				th {
+					background: #605C59;
+					color: #FFF;
+				}
+				td {
+					vertical-align: top;
+				}
+			}
 		</style>
 	</head>
 	<body>
 		<div id="content">
+			<table class="table">
+				<tr>
+					<td colspan=2>
+						<%= wicked_pdf_image_tag @trip.advisor.agency.logo_file_name	%>
+					</td>
+					<td colspan=4 class="address">
+						<%= @trip.advisor.agency.name %>
+						<%= @trip.advisor.agency.postal_address %>
+						Phone: <%= @trip.advisor.agency.phone_number %>
+						<%= @trip.advisor.agency.url %>
+					</td>
+				</tr>
+			</table>
 			<div>
-				<span class="title"><%= @trip.guest.name %></span>
+				<br />
+				<span class="title">Itinerary for <%= @trip.guest.name %></span>
 				<br />
 				<span class="description"><%= l @trip.start_date %> to <%= l @trip.end_date %></span>
 				<br />

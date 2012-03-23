@@ -71,7 +71,10 @@ class TripsController < ApplicationController
 		end
 
 		if !@trip.agency_id
+			@trip.direct_booking = 1
 			@trip.agency_id = User.find_by_id(session[:user_id]).agency_id
+		else
+			@trip.direct_booking = 0
 		end
 
 		@trip.advisor_id = User.find_by_id(session[:user_id]).advisor_id
