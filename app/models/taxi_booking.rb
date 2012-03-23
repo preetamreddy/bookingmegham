@@ -12,7 +12,7 @@ class TaxiBooking < ActiveRecord::Base
 	before_save :update_end_date, :update_unit_price, :strip_whitespaces,
 							:titleize
 
-	before_destroy :ensure_payments_are_not_made
+#	before_destroy :ensure_payments_are_not_made
 
 	def total_price
 		unit_price * number_of_days * number_of_vehicles
