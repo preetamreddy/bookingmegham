@@ -21,7 +21,7 @@
 
 <p>
   <b>Direct booking:</b>
-	<% if @trip.direct_booking %>
+	<% if @trip.direct_booking == 1 %>
   	<span class="saved_value"><%= @trip.direct_booking.to_english %>
 	<% end %>
 </p>

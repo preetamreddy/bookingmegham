@@ -95,7 +95,7 @@
 					</td>
 				</tr>
 				<tr>
-					<% if @trip.direct_booking %>
+					<% if @trip.direct_booking == 1 %>
 						<td colspan=3 class="client">To,<br/><%= @trip.guest.name %><br/><%= @trip.guest.address %><br/>Phone: <%= @trip.guest.phone_number %></td>
 					<% else %>
 						<td colspan=3 class="client">To,<br/><%= @trip.agency.name %><br/><%= @trip.agency.postal_address %><br/>Phone: <%= @trip.agency.phone_number %><br/>PAN No: <%= @trip.agency.pan_number %></td>
@@ -191,14 +191,14 @@
 				<% end %>
 				<tr>
 					<td></td>
-					<% if @trip.direct_booking %>
+					<% if @trip.direct_booking == 1 %>
 						<td colspan=4 class="text">Less: Discount on Room Bookings</td>
 					<% else %>
 						<td colspan=4 class="text">Less: TAC on Room Bookings</td>
 					<% end %>
 					<td class="number">( <%= number_to_currency_wo_symbol(@trip.discount) %>)</td>
 				</tr>
-				<% if !@trip.direct_booking %>
+				<% if @trip.direct_booking == 0 %>
 					<tr>
 						<td colspan=3></td>
 						<td class="text">T.D.S.</td>
@@ -226,7 +226,7 @@
 			<p class="amount">
 				Amount in words: Rupees <%= @trip.final_price.to_words %> only.
 			</p>
-			<% if !@trip.direct_booking %>
+			<% if @trip.direct_booking == 0 %>
 				<p class="footnote">
 					<span class="bold">PAN NUMBER is mandatory under section 139A (5B) of income tax Act 1961. It is obligatory for all persons responsible for deducting tax at source. </span><span class="red_text">If PAN has not provided by deductees, then TDS rate should be deducted at 20% or actual, whichever is higher.</span> 
 				</p>
