@@ -84,7 +84,7 @@ class Booking < ActiveRecord::Base
 
 	def update_room_rate
 		rooms.each do |room|
-			if trip.payment_status == Trip::NOT_PAID
+			if trip.payment_status == Trip::NOT_PAID or room.room_rate == nil
 				room.room_rate = RoomType.price(room_type_id, room.occupancy,
 														room.number_of_adults,
 														room.number_of_children_between_5_and_12_years)
@@ -129,7 +129,7 @@ class Booking < ActiveRecord::Base
 
 	def update_service_tax_rate
 		rooms.each do |room|	
-			if trip.payment_status == Trip::NOT_PAID
+			if trip.payment_status == Trip::NOT_PAID or room.service_tax_rate == nil
 				room.service_tax_rate = RoomType.find(room_type_id).service_tax
 			end
 		end
