@@ -11,11 +11,11 @@ class Agency < ActiveRecord::Base
 
 	has_many :taxis
 
-	before_save :titleize, :strip_whitespaces,
-							:set_defaults_if_nil
+	before_save :set_defaults_if_nil, :titleize, :strip_whitespaces
 
 	before_destroy 	:ensure_does_not_have_advisors, :ensure_does_not_have_trips,
-									:ensure_does_not_have_properties, :ensure_does_not_have_taxis	
+									:ensure_does_not_have_properties, :ensure_does_not_have_taxis,
+									:ensure_does_not_have_guests
 
 	validates :name, presence: true
 
@@ -29,7 +29,7 @@ class Agency < ActiveRecord::Base
 	private
 
 		def set_defaults_if_nil
-			if read_attribute(:short_name) == "" or read_attribute(:short_name) == nil
+			if read_attribute(:short_name) == ""
 				write_attribute(:short_name, read_attribute(:name))
 			end
 		end
@@ -70,8 +70,18 @@ class Agency < ActiveRecord::Base
 			end
 		end
 
+		def ensure_does_not_have_guests
+			if guests.empty?
+				return true
+			else
+				errors.add(:base, "Destroy failed because #{name} has guests")
+				return false
+			end
+		end
+
 		def titleize
 			self.city = city.titleize
+			self.short_name = short_name.titleize
 		end
 
 		def strip_whitespaces
