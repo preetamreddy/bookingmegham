@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<style>
+			body {
+				font-family: helvetica, verdana, arial, sans-serif;
+				font-size: 18px;
+			  width: 100%;
+			}
+			.amount {
+				font-family: helvetica, verdana, arial, sans-serif;
+				font-size: 20px;
+				font-weight: bold;
+				text-align: left;
+			}	
+			.signature {
+				font-family: helvetica, verdana, arial, sans-serif;
+				font-size: 16px;
+				text-align: right;
+			}	
+			img {
+				float: left;
+				height: 100px;
+				vertical-align: top;
+			}
+			.table {
+				margin-top: 1em;
+				border-spacing: 0;
+				border-collapse: collapse;
+				border-color: #CFCCCA;
+				width: 100%;
+				tr {
+					padding: 5px 5px;
+				}
+				th {
+					background: #605C59;
+					color: #FFF;
+				}
+				td {
+					vertical-align: top;
+				}
+			}
+			.bold {
+				font-weight: 20px;
+				font-weight: bold;
+			}
+			.left {
+				text-align: left;
+				height: 30px;
+			}
+			.right {
+				text-align: right;
+				height: 30px;
+			}
+			.italics {
+				font-style: italic;
+			}
+			.address {
+				text-align: right;
+				white-space: pre-wrap;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<table class="table">
+				<tr>
+					<td colspan=2>
+						<%= wicked_pdf_image_tag @trip.advisor.agency.logo_file_name	%>
+					</td>
+					<td colspan=4 class="address">
+						<span class="bold">
+							<%= @trip.advisor.agency.name %>
+							<%= @trip.advisor.agency.postal_address %>
+							Phone: <%= @trip.advisor.agency.phone_number %>
+						</span>
+						PAN No. : <%= @trip.advisor.agency.pan_number %>
+						S. Tax No. : AACCB0246JST001
+					</td>
+				</tr>
+			</table>
+			<table class="table">
+				<tr>
+					<td class="left">Receipt No: <span class="bold">BCRPL/<%= @trip.id%>/<%= @payment.id %></span></td>
+					<td class="right">Date: <%= l @payment.date_received %></td>
+				</tr>
+			</table>
+			<hr>
+			<p>
+				<% if @trip.direct_booking %>
+					<span class="italics">Received</span> with thanks from <%= @trip.guest.title + " " + @trip.guest.name %> a sum of Rupees <%= @payment.amount.to_words %> vide <%= @payment.details %> towards the trip, <%= @trip.name %>.</td>
+				<% else %>
+					<span class="italics">Received</span> with thanks from <%= @trip.agency.name %> the sum of Rupees <%= @payment.amount.to_words %> vide <%= @payment.details %> towards the trip with id: <%= @trip.id %> and ref: <%= @trip.guest.name %> <%= @trip.guests %>.</td>
+				<% end %>
+			</p>
+			<% if @trip.balance_payment > 0 %>
+				<% if @trip.pay_by_date > Date.today %>
+					<p>
+						You are requested to make the balance payment of Rs. <%= number_to_currency_wo_symbol(@trip.balance_payment) %> by <%= l @trip.pay_by_date %> for issue of vouchers.
+					</p>
+				<% else %>
+					<p>
+						You are requested to make the balance payment of Rs. <%= number_to_currency_wo_symbol(@trip.balance_payment) %> for issue of vouchers.
+				<% end %>
+			<% end %>
+			<p>
+				<span class="amount">Rs. <%= number_to_currency_wo_symbol(@payment.amount) %></span>
+			</p>
+			<p class="signature">
+				** This is a computer generated receipt. No signature required **
+			</p>
+		</div>
+	</body>
+</html>

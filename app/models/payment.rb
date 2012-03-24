@@ -1,5 +1,5 @@
 class Payment < ActiveRecord::Base
-	PAYMENT_MODE = [ "Axis", "S.C.B.", "SCB(NEW)", "Cash" ]
+	PAYMENT_MODE = [ "Axis", "S.C.B.", "Cheque / DD", "Cash" ]
 
 	belongs_to :trip
 
@@ -55,9 +55,9 @@ class Payment < ActiveRecord::Base
 
 	def direct_final_price
 		if trip.direct_booking == 1
-			return 0
-		elsif trip.direct_booking == 0
 			return trip.final_price
+		elsif trip.direct_booking == 0
+			return 0
 		end
 	end
 

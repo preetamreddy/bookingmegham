@@ -34,10 +34,10 @@
 		<% @payments.each do |payment| %>
 		  <tr>
 				<td class="text">
-					<% if payment.trip.agency_id %>
-		    		<%= payment.trip.guest.name %> / <%= payment.trip.agency.short_name %>
+					<% if payment.trip.direct_booking == 1 %>
+						<%= payment.trip.guest.name %>
 					<% else %>
-		    		<%= payment.trip.guest.name %>
+						<%= payment.trip.guest.name %> / <%= payment.trip.agency.short_name %>
 					<% end %>
 				</td>
 		    <td class="text"><%= "BCRPL/#{payment.trip_id}/#{payment.id}" %></td>
@@ -46,6 +46,7 @@
 		    <td class="text"><%= payment.payment_mode %></td>
 		    <td class="text"><%= payment.details %></td>
 		    <td>
+					<%= link_to 'Show details', payment %></br>
 		    	<%= link_to 'Edit', edit_payment_path(payment) %><br />
 		    	<%= link_to 'Destroy', payment, confirm: 'Are you sure?', method: :delete %>
 				</td>

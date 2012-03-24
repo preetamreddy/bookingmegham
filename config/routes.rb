@@ -1,4 +1,8 @@
 Bookingmegham::Application.routes.draw do
+	resources :payments do
+		get :email, :on => :member
+	end
+
 	resources :taxi_bookings do
 		get :email, :on => :member
 	end
@@ -38,6 +42,8 @@ Bookingmegham::Application.routes.draw do
 	resources :trips do
 		get :email, :on => :member
 	end
+
+  resources :feedbacks, :except => :destroy
 
   resources :value_added_services
 

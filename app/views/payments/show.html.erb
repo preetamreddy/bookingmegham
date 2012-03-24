@@ -35,6 +35,7 @@
 
 <div class="action_container">
 	<%= link_to 'Edit', edit_payment_path(@payment) %>
+	<%= link_to 'Generate Receipt', email_payment_path(:payment_id => @payment.id) %>
 </div>
 
 <%= link_to 'Back to Payment Listing', payments_path, :class => "back_link" %>

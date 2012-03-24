@@ -157,7 +157,7 @@ class TripsController < ApplicationController
 
 		respond_to do |format|
 			format.html { redirect_to trip, notice: 'Email was successfully sent.' }
-      format.json { render json: @trip, status: :sent, location: @trip }
+      format.json { render json: trip, status: :sent, location: trip }
 		end
 	end
 end

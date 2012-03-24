@@ -143,4 +143,14 @@ class PaymentsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+	def email
+		payment = Payment.find(params[:payment_id])
+		PaymentNotifier.receipt(payment, session[:user_id]).deliver
+
+		respond_to do |format|
+			format.html { redirect_to payment, notice: 'Email was successfully sent.' }
+			format.json { render json: payment, status: :sent, location: payment }
+		end
+	end
 end
