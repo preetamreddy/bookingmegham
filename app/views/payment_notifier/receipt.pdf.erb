@@ -88,10 +88,10 @@
 			</table>
 			<hr>
 			<p>
-				<% if @trip.direct_booking %>
+				<% if @trip.direct_booking == 1 %>
 					<span class="italics">Received</span> with thanks from <%= @trip.guest.title + " " + @trip.guest.name %> a sum of Rupees <%= @payment.amount.to_words %> vide <%= @payment.details %> towards the trip, <%= @trip.name %>.</td>
 				<% else %>
-					<span class="italics">Received</span> with thanks from <%= @trip.agency.name %> the sum of Rupees <%= @payment.amount.to_words %> vide <%= @payment.details %> towards the trip with id: <%= @trip.id %> and ref: <%= @trip.guest.name %> <%= @trip.guests %>.</td>
+					<span class="italics">Received</span> with thanks from <%= @trip.agency.name %> a sum of Rupees <%= @payment.amount.to_words %> vide <%= @payment.details %> towards the trip with id: <%= @trip.id %> and ref: <%= @trip.guest.name %> <%= @trip.guests %>.</td>
 				<% end %>
 			</p>
 			<% if @trip.balance_payment > 0 %>
