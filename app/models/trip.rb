@@ -105,10 +105,10 @@ class Trip < ActiveRecord::Base
 
 	def guests
 		guests = "(" + number_of_adults.to_s
-		if number_of_children_between_5_and_12_years == 0
+		if number_of_children_between_5_and_12_years != 0
 			guests = guests + " + " + number_of_children_between_5_and_12_years.to_s
 		end
-		if number_of_children_below_5_years == 0
+		if number_of_children_below_5_years != 0
 			guests = guests + " + " + number_of_children_below_5_years.to_s
 		end
 		guests = guests + ")"
