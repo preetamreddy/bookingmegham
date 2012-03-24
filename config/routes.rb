@@ -39,8 +39,6 @@ Bookingmegham::Application.routes.draw do
 		get :email, :on => :member
 	end
 
-  resources :feedbacks, :except => :destroy
-
   resources :value_added_services
 
   resources :trips
