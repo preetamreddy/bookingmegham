@@ -69,9 +69,12 @@ class TrekBookingsController < ApplicationController
   # POST /trek_bookings.json
   def create
     @trek_booking = TrekBooking.new(params[:trek_booking])
+		trip = Trip.find(@trek_booking.trip_id)
 
     respond_to do |format|
       if @trek_booking.save
+				trip.save
+
         format.html { redirect_to @trek_booking, notice: 'Trek booking was successfully created.' }
         format.json { render json: @trek_booking, status: :created, location: @trek_booking }
       else

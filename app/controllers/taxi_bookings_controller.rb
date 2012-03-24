@@ -69,9 +69,12 @@ class TaxiBookingsController < ApplicationController
   # POST /taxi_bookings.json
   def create
     @taxi_booking = TaxiBooking.new(params[:taxi_booking])
+		trip = Trip.find(@taxi_booking.trip_id)
 
     respond_to do |format|
       if @taxi_booking.save
+				trip.save
+
         format.html { redirect_to @taxi_booking, notice: 'Taxi booking was successfully created.' }
         format.json { render json: @taxi_booking, status: :created, location: @taxi_booking }
       else
