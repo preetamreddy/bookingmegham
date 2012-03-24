@@ -107,7 +107,7 @@
 	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
     <%= f.label :discount, "TAC / Dicount" %><br />
    	<%= f.number_field :discount, :min => 0, 
-			:disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
+			:disabled => (@trip.payment_status == Trip::FULLY_PAID and !@trip.new_record?) %>
 	<% end %>
 	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
     <%= f.label :service_tax %><br />
