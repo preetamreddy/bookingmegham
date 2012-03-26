@@ -56,8 +56,8 @@ class Trip < ActiveRecord::Base
 	validate :ensure_guest_exists, :ensure_end_date_is_greater_than_start_date
 
 	def tds
-		if agency.name != advisor.agency.name
-			tds = (discount * TDS_PERCENT / 100.0).round
+		if direct_booking == 0
+			tds = (tac * TDS_PERCENT / 100.0).round
 		else
 			tds = 0
 		end
@@ -150,6 +150,26 @@ class Trip < ActiveRecord::Base
 		return ttl_price
 	end
 
+	def cancellation_charge
+		if bookings.any?
+			cancellation_charge = bookings.to_a.sum { |booking| booking.cancellation_charge }
+		else
+			cancellation_charge = 0
+		end
+
+		return cancellation_charge
+	end
+
+	def refund_amount
+		if bookings.any?
+			refund_amount = bookings.to_a.sum { |booking| booking.refund_amount }
+		else
+			refund_amount = 0
+		end
+
+		return refund_amount
+	end
+
 	def service_tax
 		if bookings.any?
 			service_tax = bookings.to_a.sum { |booking| booking.service_tax }
@@ -169,7 +189,7 @@ class Trip < ActiveRecord::Base
 	end
 
 	def balance_payment
-		final_price - paid
+		final_price - paid - refund_amount
 	end
 
 	def net_after_taxes
@@ -177,13 +197,7 @@ class Trip < ActiveRecord::Base
 	end
 
 	def final_price
-		if discount != nil
-			final_price = total_price - discount + tds
-		else
-			final_price = total_price
-		end
-		
-		return final_price
+		total_price - discount - tac + tds
 	end
 
 	def long_name
@@ -247,6 +261,7 @@ class Trip < ActiveRecord::Base
 			self.number_of_children_below_5_years ||= 0
 			self.number_of_drivers ||= 0
 			self.discount ||= 0
+			self.tac ||= 0
 			self.invoice_date ||= Date.today
 		end
 

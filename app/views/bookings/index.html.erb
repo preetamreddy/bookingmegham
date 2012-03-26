@@ -68,8 +68,14 @@
 						@ <%= l booking.guests_arrival_time, :format => :short %>
 					<% end %>
 				</td>
-				<td class="number">
-					<span class="nowrap"><%= number_to_currency(booking.total_price) %></span><br/>
+				<td>
+					<span class="text"><%= booking.booking_status %></span><br/>
+					<% if booking.booking_status == Booking::BOOKED %>
+						<span class="nowrap">Price: <%= number_to_currency(booking.total_price) %></span>
+					<% elsif booking.booking_status == Booking::CANCELLED %>
+						<span class="nowrap">Price: <%= number_to_currency(booking.total_price) %></span><br/>
+						<span class="nowrap">Refund: <%= number_to_currency(booking.refund_amount) %></span>
+					<% end %>
 				</td>
 		    <td class="text"><%= booking.medical_constraints %></td>
 		
@@ -79,6 +85,10 @@
 		    		<%= link_to 'Edit', edit_booking_path(booking) %><br/>
 		    		<%= link_to 'Destroy', booking, confirm: 'Are you sure?', 
 									method: :delete %>
+					<% else %>
+						<% if booking.booking_status == Booking::BOOKED %>
+							<%= link_to 'Cancel booking', edit_booking_path(booking, :cancel_booking => 1) %>
+						<% end %>
 					<% end %>
 				</td>
 		  </tr>

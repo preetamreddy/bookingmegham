@@ -75,7 +75,8 @@ class Payment < ActiveRecord::Base
 		trip :final_price => 'Booking Cost Total'
 		trip :paid => 'Total Recd.'
 		trip :balance_payment => 'Balance'
-		trip :discount => 'TAC / Discount'
+		trip :discount => 'Discount'
+		trip :tac => 'TAC'
 		trip :tds => 'TDS'
 		trip :service_tax
 		trip :net_after_taxes => 'Net After Taxes'

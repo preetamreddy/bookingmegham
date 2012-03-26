@@ -35,7 +35,7 @@
 						Agency.order('name').find_all, :id, :name) %>
 		<% end %>
   </div>
-	<%= hidden_div_if(false, class: "field") do %>
+	<%= hidden_div_if(true, class: "field") do %>
     <%= f.label :direct_booking %><br />
     <%= f.number_field :direct_booking %>
 	<% end %>
@@ -83,7 +83,9 @@
 	</div>
 
 	<div class="field">
-		<%= f.label :VAS %>
+		<% if (@trip.payment_status == Trip::NOT_PAID or @trip.new_record?) %>
+			<%= f.label :VAS %>
+		<% end %>
 	</div>
 	<div class="nested_form">
 		<%= f.fields_for :vas_bookings %>
@@ -105,14 +107,19 @@
 		</span></p>
 	<% end %>
 	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
-    <%= f.label :discount, "TAC / Dicount" %><br />
+    <%= f.label :discount, "Discount" %><br />
    	<%= f.number_field :discount, :min => 0, 
 			:disabled => (@trip.payment_status == Trip::FULLY_PAID and !@trip.new_record?) %>
 	<% end %>
 	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
-    <%= f.label :service_tax %><br />
+    <%= f.label :tac, "TAC" %><br />
+   	<%= f.number_field :tac, :min => 0, 
+			:disabled => (@trip.payment_status == Trip::FULLY_PAID and !@trip.new_record?) %>
+	<% end %>
+	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
+    <%= f.label :tds, "TDS" %><br />
 		<p><span class="highlight">
-			<%= number_to_currency(@trip.service_tax) %>
+			<%= number_to_currency(@trip.tds) %>
 		</span></p>
 	<% end %>
 	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
@@ -125,6 +132,12 @@
     <%= f.label :paid %><br />
 		<p><span class="highlight">
 			<%= number_to_currency(@trip.paid) %>
+		</span></p>
+	<% end %>
+	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
+    <%= f.label :refund_amount %><br />
+		<p><span class="highlight">
+			<%= number_to_currency(@trip.refund_amount) %>
 		</span></p>
 	<% end %>
 
@@ -145,6 +158,13 @@
    	<%= f.date_select :invoice_date, :start_year => Time.now.year,
 			:end_year => Time.now.year + 1, :prompt => true %>
 	</div>
+
+	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
+    <%= f.label :service_tax %><br />
+		<p><span class="highlight">
+			<%= number_to_currency(@trip.service_tax) %>
+		</span></p>
+	<% end %>
 
 	<div class="field">
     <%= f.label :food_preferences %><br />

@@ -191,12 +191,17 @@
 				<% end %>
 				<tr>
 					<td></td>
-					<% if @trip.direct_booking == 1 %>
+					<% if @trip.discount != 0 %>
 						<td colspan=4 class="text">Less: Discount on Room Bookings</td>
-					<% else %>
-						<td colspan=4 class="text">Less: TAC on Room Bookings</td>
+						<td class="number">( <%= number_to_currency_wo_symbol(@trip.discount) %>)</td>
 					<% end %>
-					<td class="number">( <%= number_to_currency_wo_symbol(@trip.discount) %>)</td>
+				</tr>
+				<tr>
+					<td></td>
+					<% if @trip.tac != 0 %>
+						<td colspan=4 class="text">Less: TAC on Room Bookings</td>
+						<td class="number">( <%= number_to_currency_wo_symbol(@trip.tac) %>)</td>
+					<% end %>
 				</tr>
 				<% if @trip.direct_booking == 0 %>
 					<tr>

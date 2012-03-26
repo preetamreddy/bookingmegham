@@ -107,13 +107,18 @@
 <% end %>
 
 <%= hidden_p_unless(@trip.total_price > 0) do %>
-  <b>TAC / Discount:</b>
+  <b>Discount:</b>
   <span class="saved_value"><%= number_to_currency(@trip.discount) if @trip.discount %>
 <% end %>
 
-<%= hidden_p_unless(@trip.total_price > 0) do %>
+<%= hidden_p_unless(@trip.total_price > 0 && @trip.direct_booking == 0) do %>
+  <b>TAC:</b>
+  <span class="saved_value"><%= number_to_currency(@trip.tac) if @trip.tac %>
+<% end %>
+
+<%= hidden_p_unless(@trip.total_price > 0 && @trip.direct_booking == 0) do %>
   <b>TDS on commission:</b>
-  <span class="saved_value"><%= number_to_currency(@trip.tds) if @trip.discount %>
+  <span class="saved_value"><%= number_to_currency(@trip.tds) if @trip.tac %>
 <% end %>
 
 <%= hidden_p_unless(@trip.total_price > 0) do %>
@@ -122,13 +127,13 @@
 <% end %>
 
 <%= hidden_p_unless(@trip.total_price > 0) do %>
-  <b>Service tax:</b>
-  <span class="saved_value"><%= number_to_currency(@trip.service_tax) if @trip.service_tax %>
+  <b>Paid:</b>
+  <span class="saved_value"><%= number_to_currency(@trip.paid) if @trip.paid %>
 <% end %>
 
 <%= hidden_p_unless(@trip.total_price > 0) do %>
-  <b>Paid:</b>
-  <span class="saved_value"><%= number_to_currency(@trip.paid) if @trip.paid %>
+  <b>Refund amount:</b>
+  <span class="saved_value"><%= number_to_currency(@trip.refund_amount) if @trip.refund_amount %>
 <% end %>
 
 <%= hidden_p_unless(@trip.total_price > 0) do %>
@@ -145,6 +150,11 @@
   <b>Invoice date:</b>
   <span class="saved_value"><%= l @trip.invoice_date if @trip.invoice_date %>
 </p>
+
+<%= hidden_p_unless(@trip.total_price > 0) do %>
+  <b>Service tax:</b>
+  <span class="saved_value"><%= number_to_currency(@trip.service_tax) if @trip.service_tax %>
+<% end %>
 
 <p>
   <b>Food preferences:</b>

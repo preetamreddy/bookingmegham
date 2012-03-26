@@ -1,5 +1,7 @@
 class Booking < ActiveRecord::Base
 	MEAL_PLANS = ["EPAI", "CPAI", "MAPAI", "APAI"]
+	BOOKED = 'Booked'
+	CANCELLED = 'Cancelled'
 
 	belongs_to :trip
 	belongs_to :room_type
@@ -17,7 +19,7 @@ class Booking < ActiveRecord::Base
 	before_validation :set_defaults_if_nil, 
 										:update_number_of_rooms, :update_check_out_date
 
-	before_save :update_room_rate, :update_vas_unit_price,
+	before_save :update_room_rate, :update_vas_unit_price, :update_booking_status,
 							:update_total_price, :update_service_tax_rate,
 							:update_service_tax, :strip_whitespaces, :titleize
 
@@ -39,6 +41,14 @@ class Booking < ActiveRecord::Base
 						:ensure_check_out_date_is_greater_than_check_in_date,
 						:ensure_booking_is_within_trip_dates,
 						:ensure_room_availability
+
+	def refund_amount
+		if booking_status == Booking::CANCELLED
+			total_price - cancellation_charge
+		else
+			0
+		end
+	end
 
 	def number_of_children_below_5_years
 		return trip.number_of_children_below_5_years
@@ -97,6 +107,14 @@ class Booking < ActiveRecord::Base
 			if trip.payment_status == Trip::NOT_PAID
 				vas_booking.unit_price = vas_booking.value_added_service.unit_price
 			end
+		end
+	end
+
+	def update_booking_status
+		if cancellation_charge == "" or cancellation_charge == nil
+			self.booking_status = BOOKED
+		else
+			self.booking_status = CANCELLED
 		end
 	end
 
@@ -242,7 +260,7 @@ class Booking < ActiveRecord::Base
 				delete_line_items
 			end
 
-			if rooms.any?
+			if booking_status == BOOKED and rooms.any?
 				add_line_items
 			end	
 		end

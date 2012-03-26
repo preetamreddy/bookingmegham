@@ -113,6 +113,11 @@ class BookingsController < ApplicationController
   def edit
 		begin
     	@booking = Booking.find(params[:id])
+			if params[:cancel_booking].to_i == 1
+				@cancel_booking = params[:cancel_booking].to_i
+			else
+				@cancel_booking = 0
+			end
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid booking #{params[:id]}"
 			redirect_to bookings_url, notice: 'Invalid Booking'

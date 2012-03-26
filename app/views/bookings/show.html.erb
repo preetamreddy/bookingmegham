@@ -132,6 +132,16 @@
   <span class="saved_value"><%= number_to_currency(@booking.service_tax) if @booking.service_tax %>
 </p>
 
+<%= hidden_p_unless(@booking.booking_status == Booking::CANCELLED) do %>
+  <b>Cancellation charge:</b>
+  <span class="saved_value"><%= number_to_currency(@booking.cancellation_charge) %>
+<% end %>
+
+<%= hidden_p_unless(@booking.booking_status == Booking::CANCELLED) do %>
+  <b>Refund amount:</b>
+  <span class="saved_value"><%= number_to_currency(@booking.refund_amount) %>
+<% end %>
+
 <b>Billing instructions:</b>
 <table class="nested_table">
 	<tr>

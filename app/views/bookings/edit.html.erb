@@ -2,7 +2,11 @@
 	<fieldset>
 		<legend>Edit Booking</legend>
 
-		<%= render 'form' %>
+		<% if @cancel_booking == 1 %>
+			<%= render 'cancel_booking' %>
+		<% else %>
+			<%= render 'form' %>
+		<% end %>
 
 		<%= link_to 'Cancel', bookings_path, :class => "cancel_link" %>
 	</fieldset>
