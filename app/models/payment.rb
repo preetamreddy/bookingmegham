@@ -11,14 +11,14 @@ class Payment < ActiveRecord::Base
 		only_integer: true, greater_than: 0, allow_nil: true,
 		message: "should be a number greater than 0"
 
-	attr_accessor :name_for_receipts
-
-	after_find do |payment|
-		if payment.payee_name != ""
-			@name_for_receipts = payment.payee_name
+	def name_for_receipts
+		if payee_name == ""
+			name_for_receipts = payment.trip.guest.name_with_title
 		else
-			@name_for_receipts = payment.trip.guest.name_with_title
+			name_for_receipts = payee_name
 		end
+
+		return name_for_receipts
 	end
 
 	def receipt_number
