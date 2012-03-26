@@ -141,10 +141,6 @@
     	<%= number_to_currency(@booking.service_tax) %>
 		</span></p>
 	<% end %>
-	<%= hidden_div_if(@cancel_booking == 0, class: "field") do %>
-    <%= f.label :cancellation_charge, "Cancellation chg." %><br />
-   	<%= f.number_field :cancellation_charge %>
-	<% end %>
 	<div class="field">
 		<%= f.label :billing_instructions, "Billing Instr." %><br />
 	</div>

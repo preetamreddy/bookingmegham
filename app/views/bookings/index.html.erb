@@ -69,10 +69,10 @@
 					<% end %>
 				</td>
 				<td>
-					<span class="text"><%= booking.booking_status %></span><br/>
-					<% if booking.booking_status == Booking::BOOKED %>
+					<% if booking.cancelled == 0 %>
 						<span class="nowrap">Price: <%= number_to_currency(booking.total_price) %></span>
-					<% elsif booking.booking_status == Booking::CANCELLED %>
+					<% elsif booking.cancelled == 1 %>
+						<span class="text">Cancelled</span><br/>
 						<span class="nowrap">Price: <%= number_to_currency(booking.total_price) %></span><br/>
 						<span class="nowrap">Refund: <%= number_to_currency(booking.refund_amount) %></span>
 					<% end %>
@@ -86,7 +86,7 @@
 		    		<%= link_to 'Destroy', booking, confirm: 'Are you sure?', 
 									method: :delete %>
 					<% else %>
-						<% if booking.booking_status == Booking::BOOKED %>
+						<% if booking.cancelled == 0 %>
 							<%= link_to 'Cancel booking', edit_booking_path(booking, :cancel_booking => 1) %>
 						<% end %>
 					<% end %>

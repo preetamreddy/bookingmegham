@@ -4,6 +4,7 @@ class Trip < ActiveRecord::Base
 	FULLY_PAID = 'Fully Paid'
 	CONFIRMED_NOT_PAID = "Confirmed Not Paid"
 	TDS_PERCENT = 10
+	DRIVER_UNIT_COST = 500
 
 	belongs_to :guest
 
@@ -146,8 +147,12 @@ class Trip < ActiveRecord::Base
 			price_for_treks = 0
 		end
 
+		if number_of_drivers > 0
+			price_for_drivers = number_of_drivers * (number_of_days - 1) * DRIVER_UNIT_COST
+		end
+
 		ttl_price = price_for_bookings + price_for_vas + price_for_transport +
-									price_for_treks
+									price_for_treks + price_for_drivers
 
 		return ttl_price
 	end
