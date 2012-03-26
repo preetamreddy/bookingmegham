@@ -32,7 +32,6 @@ class PropertiesController < ApplicationController
   # GET /properties/new.json
   def new
     @property = Property.new
-		@property.value_added_services.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -54,6 +53,7 @@ class PropertiesController < ApplicationController
   # POST /properties.json
   def create
     @property = Property.new(params[:property])
+		@property.ensure_availability_before_booking = 0
 
     respond_to do |format|
       if @property.save

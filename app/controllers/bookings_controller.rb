@@ -99,6 +99,7 @@ class BookingsController < ApplicationController
 			trip = Trip.find(session[:trip_id])
 
 			@booking.trip_id = session[:trip_id]
+			@booking.remarks = trip.remarks
 			@booking.add_rooms_from_trip(trip)
 		end
 

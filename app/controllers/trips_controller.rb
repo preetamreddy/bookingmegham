@@ -67,7 +67,9 @@ class TripsController < ApplicationController
 		@trip.guest_id = session[:guest_id]
 
 		if session[:guest_id]
-			@trip.agency_id = Guest.find(session[:guest_id]).agency_id
+			guest = Guest.find(session[:guest_id])
+			@trip.agency_id = guest.agency_id
+			@trip.remarks = guest.other_information
 		end
 
 		if !@trip.agency_id

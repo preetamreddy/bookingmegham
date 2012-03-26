@@ -29,6 +29,8 @@ class Trip < ActiveRecord::Base
 	accepts_nested_attributes_for :vas_bookings, :reject_if => :all_blank,
 		:allow_destroy => true
 
+	after_initialize :init
+
 	before_validation :update_end_date
 
 	before_save :set_defaults_if_nil, :update_vas_unit_price,
@@ -206,6 +208,11 @@ class Trip < ActiveRecord::Base
 
 	private
 
+		def init
+			self.discount ||= 0
+			self.tac ||= 0
+		end
+
 		def update_end_date
 			self.end_date = start_date + number_of_days - 1
 		end
@@ -260,8 +267,6 @@ class Trip < ActiveRecord::Base
 		def set_defaults_if_nil
 			self.number_of_children_below_5_years ||= 0
 			self.number_of_drivers ||= 0
-			self.discount ||= 0
-			self.tac ||= 0
 			self.invoice_date ||= Date.today
 		end
 
