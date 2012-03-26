@@ -149,6 +149,8 @@ class Trip < ActiveRecord::Base
 
 		if number_of_drivers > 0
 			price_for_drivers = number_of_drivers * (number_of_days - 1) * DRIVER_UNIT_COST
+		else
+			price_for_drivers = 0
 		end
 
 		ttl_price = price_for_bookings + price_for_vas + price_for_transport +
