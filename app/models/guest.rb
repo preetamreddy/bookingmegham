@@ -18,6 +18,10 @@ class Guest < ActiveRecord::Base
 	validates :phone_number, :phone_number_2, allow_nil: true,
 		:format => { :with => /^[\+]?[\d\s]*$/, :message => "is not valid" }
 
+	def name_with_title
+		title + " " + name
+	end
+
 	private
 
 		def ensure_not_referenced_by_trip

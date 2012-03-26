@@ -7,7 +7,7 @@
 <% end %>
 
 <% if @trip.direct_booking == 1 %>
-Dear <%= @trip.guest.title + " " + @trip.guest.name.split.last %>
+Dear <%= @payment.name_for_receipts %>
 
 Thank you for planning your holiday with Banjara Camps and Retreats.
 

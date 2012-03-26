@@ -17,7 +17,7 @@ class Payment < ActiveRecord::Base
 		if payment.payee_name != ""
 			@name_for_receipts = payment.payee_name
 		else
-			@name_for_receipts = payment.trip.guest.name
+			@name_for_receipts = payment.trip.guest.name_with_title
 		end
 	end
 

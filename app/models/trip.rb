@@ -268,6 +268,8 @@ class Trip < ActiveRecord::Base
 			self.number_of_children_below_5_years ||= 0
 			self.number_of_drivers ||= 0
 			self.invoice_date ||= Date.today
+			self.discount ||= 0
+			self.tac ||= 0
 		end
 
 		def ensure_not_referenced_by_booking
