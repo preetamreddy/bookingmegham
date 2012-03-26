@@ -13,7 +13,7 @@ class Payment < ActiveRecord::Base
 
 	def name_for_receipts
 		if payee_name == ""
-			name_for_receipts = payment.trip.guest.name_with_title
+			name_for_receipts = trip.guest.name_with_title
 		else
 			name_for_receipts = payee_name
 		end

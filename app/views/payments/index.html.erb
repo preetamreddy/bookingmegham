@@ -1,12 +1,14 @@
 <h1>Listing Payments</h1>
 
-<div id="search">
-	<%= render 'search' %>
-</div>
+<% if !session[:trip_id] %>
+	<div id="search">
+		<%= render 'search' %>
+	</div>
 
-<div id="download">
-	<%= render 'download' %>
-</div>
+	<div id="download">
+		<%= render 'download' %>
+	</div>
+<% end %>
 
 <% if @records_returned == 0 %>
 	<div id="error_explanation">

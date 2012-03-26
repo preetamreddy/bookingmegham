@@ -29,8 +29,8 @@ class PaymentsController < ApplicationController
 
 		if session[:trip_id]
 			@payments = Payment.order("trip_id, date_received, id").find(:all, :conditions => [
-											'trip_id = ? and date_received >= ? and date_received <= ?',
-											session[:trip_id], @from_date, @to_date ])
+											'trip_id = ?',
+											session[:trip_id] ])
 		else
 			@payments = Payment.order("trip_id, date_received, id").find(:all, :conditions => [
 											'date_received >= ? and date_received <= ?',
