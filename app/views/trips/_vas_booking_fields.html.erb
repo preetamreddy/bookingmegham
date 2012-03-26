@@ -2,14 +2,10 @@
 	<%= f.collection_select :value_added_service_id, 
 			ValueAddedService.order("name").
 			find_all_by_property_id(nil), :id, :name,
-			{ :prompt => "" }, 
-			{ :disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) } %>
+			{ :prompt => "" } %>
 
 	<%= f.label :number_of_people, "Number of people" %>
-	<%= f.number_field :number_of_people, min: 0, max: 999,
-			:disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
+	<%= f.number_field :number_of_people, min: 0, max: 999 %>
 
-	<% if (@trip.payment_status == Trip::NOT_PAID or @trip.new_record?) %>
-		<%= f.link_to_remove "x" %>
-	<% end %>
+	<%= f.link_to_remove "x" %>
 </div>

@@ -84,9 +84,7 @@
 </div>
 
 <div class="action_container">
-	<% if @taxi_booking.trip.payment_status == Trip::NOT_PAID %>
-		<%= link_to 'Edit', edit_taxi_booking_path(@taxi_booking) %>
-	<% end %>
+	<%= link_to 'Edit', edit_taxi_booking_path(@taxi_booking) %>
 	<%= link_to 'Notify Operator', 
 				email_taxi_booking_path(:taxi_booking_id => @taxi_booking.id) %> 
 </div>

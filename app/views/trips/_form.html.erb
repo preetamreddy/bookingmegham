@@ -83,15 +83,11 @@
 	</div>
 
 	<div class="field">
-		<% if (@trip.payment_status == Trip::NOT_PAID or @trip.new_record?) %>
-			<%= f.label :VAS %>
-		<% end %>
+		<%= f.label :VAS %>
 	</div>
 	<div class="nested_form">
 		<%= f.fields_for :vas_bookings %>
-		<% if (@trip.payment_status == Trip::NOT_PAID or @trip.new_record?) %>
-			<%= f.link_to_add "Add new", :vas_bookings %><br/>
-		<% end %>
+		<%= f.link_to_add "Add new", :vas_bookings %><br/>
 	</div>
 
 	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
@@ -111,12 +107,12 @@
    	<%= f.number_field :discount, :min => 0, 
 			:disabled => (@trip.payment_status == Trip::FULLY_PAID and !@trip.new_record?) %>
 	<% end %>
-	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
+	<%= hidden_div_if((@trip.total_price == 0 or @trip.direct_booking == 1), class: "field") do %>
     <%= f.label :tac, "TAC" %><br />
    	<%= f.number_field :tac, :min => 0, 
 			:disabled => (@trip.payment_status == Trip::FULLY_PAID and !@trip.new_record?) %>
 	<% end %>
-	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
+	<%= hidden_div_if((@trip.total_price == 0 or @trip.direct_booking == 1), class: "field") do %>
     <%= f.label :tds, "TDS" %><br />
 		<p><span class="highlight">
 			<%= number_to_currency(@trip.tds) %>
