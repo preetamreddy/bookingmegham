@@ -104,13 +104,11 @@
 	<% end %>
 	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
     <%= f.label :discount, "Discount" %><br />
-   	<%= f.number_field :discount, :min => 0, 
-			:disabled => (@trip.payment_status == Trip::FULLY_PAID and !@trip.new_record?) %>
+   	<%= f.number_field :discount, :min => 0 %>
 	<% end %>
 	<%= hidden_div_if((@trip.total_price == 0 or @trip.direct_booking == 1), class: "field") do %>
     <%= f.label :tac, "TAC" %><br />
-   	<%= f.number_field :tac, :min => 0, 
-			:disabled => (@trip.payment_status == Trip::FULLY_PAID and !@trip.new_record?) %>
+   	<%= f.number_field :tac, :min => 0 %>
 	<% end %>
 	<%= hidden_div_if((@trip.total_price == 0 or @trip.direct_booking == 1), class: "field") do %>
     <%= f.label :tds, "TDS" %><br />
