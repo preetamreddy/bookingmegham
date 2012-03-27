@@ -147,8 +147,8 @@ class Trip < ActiveRecord::Base
 			price_for_treks = 0
 		end
 
-		if number_of_drivers > 0
-			price_for_drivers = number_of_drivers * (number_of_days - 1) * DRIVER_UNIT_COST
+		if number_of_drivers
+			price_for_drivers = number_of_drivers * number_of_driver_nights * DRIVER_UNIT_COST
 		else
 			price_for_drivers = 0
 		end
@@ -157,6 +157,20 @@ class Trip < ActiveRecord::Base
 									price_for_treks + price_for_drivers
 
 		return ttl_price
+	end
+
+	def number_of_driver_nights
+		days_booked = []
+		num_nights = 0
+		if bookings.any?
+			bookings.each do |booking|
+				days_booked << (booking.check_in_date...booking.check_out_date).to_a
+			end
+		end
+
+		num_nights = days_booked.flatten.uniq.count
+
+		return num_nights
 	end
 
 	def cancellation_charge
