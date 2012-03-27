@@ -46,7 +46,7 @@ class TripNotifier < ActionMailer::Base
 				subject: "Banjara Camps - Vouchers for trip #{@trip.id}/#{@trip.guest.name}") do |format|
 			format.text
 			format.pdf do
-				attachments["Vouchers for Trip #{@trip.id}/#{@trip.guest.name}.pdf"] = 
+				attachments["Vouchers #{@trip.id}/#{@trip.guest.name}.pdf"] = 
 					WickedPdf.new.pdf_from_string(
 					render_to_string(:pdf => "vouchers", 
 					:template 						=> 'trip_notifier/vouchers.pdf.erb',
