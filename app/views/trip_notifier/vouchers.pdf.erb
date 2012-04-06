@@ -152,7 +152,7 @@
 						<td class="left" colspan=4>Food preferences: <%= @trip.food_preferences %></td>
 					</tr>
 					<tr>
-						<td class="left" colspan=2>Arriving from: <%= booking.guests_arriving_from %> @ <%= l booking.guests_arrival_time, :format => :short if booking.guests_arrival_time %></td>
+						<td class="left" colspan=2>Arriving from: <%= booking.guests_arriving_from %><%= " @ #{l booking.guests_arrival_time, :format => :short}" if booking.guests_arrival_time %></td>
 						<td colspan=2>Departure to: <%= booking.departure_destination %></td>
 					</tr>
 					<tr>

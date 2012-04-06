@@ -36,6 +36,7 @@ class Trip < ActiveRecord::Base
 
 	before_save :set_defaults_if_nil, :update_vas_unit_price,
 							:update_payment_status, :update_pay_by_date,
+							:update_number_of_children_below_5_years,
 							:strip_whitespaces, :titleize
 
 	after_save :update_line_item_status
@@ -271,6 +272,19 @@ class Trip < ActiveRecord::Base
 				else
 					self.pay_by_date = created_at.to_date + 2
 				end
+			end
+		end
+
+		def update_number_of_children_below_5_years
+			if payment_status == NOT_PAID
+				if rooms.any?
+					children_below_5 = rooms.to_a.sum { |room| 
+						room.number_of_children_below_5_years * room.number_of_rooms }
+				else
+					children_below_5 = 0
+				end
+
+				self.number_of_children_below_5_years = children_below_5
 			end
 		end
 

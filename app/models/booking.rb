@@ -51,7 +51,12 @@ class Booking < ActiveRecord::Base
 	end
 
 	def number_of_children_below_5_years
-		return trip.number_of_children_below_5_years
+		if rooms.empty?
+			return 0
+		else
+			rooms.to_a.sum { |room| 
+				room.number_of_children_below_5_years * room.number_of_rooms }
+		end 
 	end
 
 	def number_of_drivers
@@ -72,6 +77,8 @@ class Booking < ActiveRecord::Base
 									number_of_adults: trip_room.number_of_adults,
 									number_of_children_between_5_and_12_years: 
 										trip_room.number_of_children_between_5_and_12_years,
+									number_of_children_below_5_years: 
+										trip_room.number_of_children_below_5_years,
 									number_of_rooms: trip_room.number_of_rooms)
 		end
 	end

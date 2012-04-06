@@ -66,7 +66,7 @@
 						<%= (" + " + room.number_of_children_between_5_and_12_years.to_s) if room.number_of_children_between_5_and_12_years != 0 %> / room<br/></span>
 					<% end %>
 					<% if trip.number_of_children_below_5_years != 0 %>
-						<span class="nowrap">Children below 5: <%= trip.number_of_children_below_5_years %><br/></span>
+						<span class="nowrap">Infants: <%= trip.number_of_children_below_5_years %><br/></span>
 					<% end %>
 					<% if trip.number_of_drivers != 0 %>
 						Drivers: <%= trip.number_of_drivers %>

@@ -18,12 +18,14 @@ class Room < ActiveRecord::Base
 		allow_nil: true, only_integer: true, greater_than: 0,
 		message: "%{value} should be a number greater than 0"
 
-	validates :number_of_children_between_5_and_12_years, allow_nil: true,
+	validates :number_of_children_between_5_and_12_years, 
+		:number_of_children_below_5_years, allow_nil: true,
 		:inclusion => { :in => [0, 1, 2, 3],
 		:message => "%{value} is not a valid option for number of children / room" }
 
 	def set_defaults_if_nil
 		self.number_of_children_between_5_and_12_years ||= 0
+		self.number_of_children_below_5_years ||= 0
 	end
 
 	def total_price
