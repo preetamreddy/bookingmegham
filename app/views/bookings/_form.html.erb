@@ -84,6 +84,11 @@
 		<%= f.link_to_add "Add new", :rooms %><br/>
 	</div>
 
+	<div class="field">
+		<%= f.label :number_of_drivers, "Drivers" %>
+		<%= f.number_field :number_of_drivers, min: 0 %>
+	</div>
+
 	<% if @booking.room_type_id %>
 		<div class="field">
 			<%= f.label :value_added_services, "VAS" %>

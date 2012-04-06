@@ -77,11 +77,11 @@
 			:disabled => true %>
 	<% end %>
 
-	<div class="field">
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :number_of_drivers, "Drivers" %><br />
     <%= f.number_field :number_of_drivers, :min => 0, 
-			:disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
-	</div>
+			:disabled => true %>
+	<% end %>
 
 	<div class="field">
 		<%= f.label :VAS %>
