@@ -5,10 +5,10 @@ class Payment < ActiveRecord::Base
 
 	validate :date_received, :amount, presence: true
 
-	before_save :titleize
+	before_save :set_defaults_if_nil, :titleize
 
 	validates_numericality_of :amount,
-		only_integer: true, greater_than: 0, allow_nil: true,
+		only_integer: true, greater_than_or_equal_to: 0, allow_nil: true,
 		message: "should be a number greater than 0"
 
 	def name_for_receipts
@@ -85,6 +85,10 @@ class Payment < ActiveRecord::Base
 	end
 
 	private
+
+		def set_defaults_if_nil
+			self.amount ||= 0
+		end
 
 		def titleize
 			if payee_name != "" or payee_name != nil

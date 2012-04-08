@@ -79,8 +79,7 @@
 
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :number_of_drivers, "Drivers" %><br />
-    <%= f.number_field :number_of_drivers, :min => 0, 
-			:disabled => true %>
+    <%= f.number_field :number_of_drivers, :min => 0 %>
 	<% end %>
 
 	<div class="field">
