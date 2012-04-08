@@ -131,13 +131,15 @@ class Booking < ActiveRecord::Base
 			price_for_vas = 0
 		end
 
+		self.total_price = price_for_rooms + price_for_vas + price_for_drivers
+	end
+
+	def price_for_drivers
 		if number_of_drivers > 0
 			price_for_drivers = number_of_drivers * number_of_nights * room_type.property.price_for_driver
 		else
 			price_for_drivers = 0
 		end
-
-		self.total_price = price_for_rooms + price_for_vas + price_for_drivers
 	end
 
 	def update_service_tax_rate
