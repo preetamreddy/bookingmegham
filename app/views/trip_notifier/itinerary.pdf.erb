@@ -91,52 +91,71 @@
 				<br />
 				<br />
 			</div>
+			<% prev_property_id = nil %>
+			<% prev_check_in_date = nil %>
+			<% prev_check_out_date = nil %>
 			<% @trip.bookings.order(:check_in_date).each do |booking| %>
-				<div>
-					<span class="heading"><%= l booking.check_in_date %></span>
-					<span class="heading">:</span>
-					<% if !(booking.guests_arriving_from == "" or booking.guests_arriving_from == nil) %>
-						<span class="heading"><%= booking.guests_arriving_from %></span>
-						<span class="heading">-</span>
-					<% end %>
-					<span class="heading"><%= booking.room_type.property.name %></span>
-					<% if !(booking.distance_and_time == "" or booking.distance_and_time == nil) %>
-						<span class="text"><%= "(" + booking.distance_and_time + ")" %></span>
-					<% end %>
-					<br />
-					<% if !(booking.getting_there == "" or booking.getting_there == nil) %>
-						<span colspan=6 class="description"><%= booking.getting_there %></span>
-						<br />
-					<% end %>
-					<br />
-				</div>
-				<div>
-					<% if booking.number_of_nights > 1 %>
-						<span class="heading"><%= l (booking.check_in_date + 1) %></span>
-						<% if booking.number_of_nights > 2 %>
-							<span class="heading">-</span>
-							<span class="heading"><%= l (booking.check_out_date - 1) %></span>
-						<% end %>
+				<% if booking.property_id != prev_property_id or
+							booking.check_in_date != prev_check_in_date or
+							booking.check_out_date != prev_check_out_date %>
+					<div>
+						<span class="heading"><%= l booking.check_in_date, :format => :short %></span>
 						<span class="heading">:</span>
+						<% if !(booking.guests_arriving_from == "" or booking.guests_arriving_from == nil) %>
+							<span class="heading"><%= booking.guests_arriving_from %></span>
+							<span class="heading">-</span>
+						<% end %>
 						<span class="heading"><%= booking.room_type.property.name %></span>
+						<% if !(booking.distance_and_time == "" or booking.distance_and_time == nil) %>
+							<span class="text"><%= "(" + booking.distance_and_time + ")" %></span>
+						<% end %>
 						<br />
-						<% if !(booking.suggested_activities == "" or booking.suggested_activities == nil) %>
-							<span colspan=6 class="description"><%= booking.suggested_activities %></span>
+						<% if !(booking.getting_there == "" or booking.getting_there == nil) %>
+							<span colspan=6 class="description"><%= booking.getting_there %></span>
 							<br />
 						<% end %>
+						<br />
+					</div>
+					<div>
+						<% if booking.number_of_nights > 1 %>
+							<span class="heading"><%= l (booking.check_in_date + 1), :format => :short %></span>
+							<% if booking.number_of_nights > 2 %>
+								<span class="heading">to</span>
+								<span class="heading"><%= l (booking.check_out_date - 1), :format => :short %></span>
+							<% end %>
+							<span class="heading">:</span>
+							<span class="heading"><%= booking.room_type.property.name %></span>
+							<br />
+							<% if !(booking.suggested_activities == "" or booking.suggested_activities == nil) %>
+								<span colspan=6 class="description"><%= booking.suggested_activities %></span>
+								<br />
+							<% end %>
+							<br />
+						<% end %>
+					</div>
+					<div>
 						<span class="description">Read more about </span><span class="text"><%= link_to booking.room_type.property.name, booking.room_type.property.url %></span>
 						<br />
 						<br />
-					<% end %>
-				</div>
-				<div>
-					<% if !(booking.getting_home == "" or booking.getting_home == nil) %>
-						<span class="heading"><%= l (booking.check_out_date) %></span>
-						<br />
-						<span colspan=6 class="description"><%= booking.getting_home %></span>
-						<br />
-					<% end %>
-				</div>
+					</div>
+					<div>
+						<% if !(booking.getting_home == "" or booking.getting_home == nil) %>
+							<span class="heading"><%= l (booking.check_out_date), :format => :short %></span>
+							<% if !(booking.departure_destination == "" or booking.departure_destination == nil) %>
+								<span class="heading">:</span>
+								<span class="heading"><%= booking.room_type.property.name %></span>
+								<span class="heading">-</span>
+								<span class="heading"><%= booking.departure_destination %></span>
+							<% end %>
+							<br />
+							<span colspan=6 class="description"><%= booking.getting_home %></span>
+							<br />
+						<% end %>
+					</div>
+				<% end %>
+				<% prev_property_id = booking.property_id %>
+				<% prev_check_in_date = booking.check_in_date %>
+				<% prev_check_out_date = booking.check_out_date %>
 			<% end %>
 		</div>
 	</body>
