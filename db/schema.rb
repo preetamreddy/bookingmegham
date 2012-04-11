@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120406105651) do
+ActiveRecord::Schema.define(:version => 20120410181711) do
 
   create_table "advisors", :force => true do |t|
     t.integer  "agency_id"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20120406105651) do
     t.integer  "operates_taxis",      :default => 0
     t.integer  "is_travel_agency",    :default => 1
     t.string   "short_name"
+    t.text     "service_tax",         :default => "0"
   end
 
   create_table "bookings", :force => true do |t|
