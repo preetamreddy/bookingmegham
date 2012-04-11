@@ -17,14 +17,8 @@
   </div>
   <div class="field">
     <%= f.label :agency, "Agency" %><br />
-		<% if @property.new_record? %>
-			<%= f.collection_select(:agency_id,
-						Agency.order('name').find_all, :id, :name) %>
-		<% else %>
-			<%= f.collection_select(:agency_id,
-						Agency.order('name').find_all_by_id(@property.agency_id),
-						:id, :name) %>
-		<% end %>
+		<%= f.collection_select(:agency_id,
+					Agency.order('name').find_all, :id, :name) %>
   </div>
   <div class="field">
     <%= f.label :phone_number %><br />
