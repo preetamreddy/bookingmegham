@@ -47,10 +47,10 @@
     <%= f.label :pan_number, "PAN number" %><br />
     <%= f.text_field :pan_number %>
   </div>
-  <div class="field">
+	<%= hidden_div_if(true, class: "field") do %>
     <%= f.label :service_tax %><br />
     <%= f.text_field :service_tax %>
-  </div>
+	<% end %>
   <div class="field">
     <%= f.label :logo_file_name, "Logo Filename" %><br />
     <%= f.text_field :logo_file_name %>
