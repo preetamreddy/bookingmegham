@@ -27,7 +27,7 @@ class Booking < ActiveRecord::Base
 
 	before_destroy :ensure_payments_are_not_made
 
-	validates :trip_id, :room_type_id, :check_in_date, :check_out_date,
+	validates :trip_id, :room_type_id, :check_in_date, :check_out_date, :meal_plan,
 											presence: true
 
 	validates_numericality_of :trip_id, :room_type_id,
