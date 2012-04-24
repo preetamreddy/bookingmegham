@@ -60,3 +60,6 @@ gem "comma", "~> 3.0"
 
 # For creating test data
 gem 'factory_girl_rails'
+
+# For creating fake data
+gem "faker", :git => "git://github.com/stympy/faker.git"
