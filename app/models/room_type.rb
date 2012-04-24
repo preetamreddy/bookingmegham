@@ -23,7 +23,8 @@ class RoomType < ActiveRecord::Base
 		(price_for_room * property.agency.service_tax.to_f / 100.0).round
 	end
 
-	def RoomType.price(id, occupancy, number_of_adults, number_of_children)
+	def RoomType.price(id, occupancy, number_of_adults, number_of_children_between_5_and_12_years,
+											number_of_children_below_5_years)
 		room_type = RoomType.find(id)
 
 		room_rate = 0
@@ -40,12 +41,17 @@ class RoomType < ActiveRecord::Base
 		end
 
 		if extra_adults
-			room_rate += extra_adults * room_type.property.price_for_triple_occupancy
+			room_rate += extra_adults * room_type.price_for_triple_occupancy
 		end
 
-		if number_of_children > 0
-			room_rate += number_of_children *
-				room_type.property.price_for_children_between_5_and_12_years
+		if number_of_children_between_5_and_12_years > 0
+			room_rate += number_of_children_between_5_and_12_years *
+				room_type.price_for_children_between_5_and_12_years
+		end	
+
+		if number_of_children_below_5_years > 0
+			room_rate += number_of_children_below_5_years *
+				room_type.price_for_children_below_5_years
 		end	
 
 		return room_rate

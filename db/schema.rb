@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120411073940) do
+ActiveRecord::Schema.define(:version => 20120424090245) do
 
   create_table "advisors", :force => true do |t|
     t.integer  "agency_id"
@@ -150,6 +150,9 @@ ActiveRecord::Schema.define(:version => 20120411073940) do
     t.datetime "updated_at"
     t.integer  "number_of_rooms"
     t.integer  "price_for_room"
+    t.integer  "price_for_triple_occupancy",                :default => 0
+    t.integer  "price_for_children_between_5_and_12_years", :default => 0
+    t.integer  "price_for_children_below_5_years",          :default => 0
   end
 
   create_table "rooms", :force => true do |t|

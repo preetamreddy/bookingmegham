@@ -101,7 +101,8 @@ class Booking < ActiveRecord::Base
 			if trip.payment_status == Trip::NOT_PAID or room.room_rate == nil
 				room.room_rate = RoomType.price(room_type_id, room.occupancy,
 														room.number_of_adults,
-														room.number_of_children_between_5_and_12_years)
+														room.number_of_children_between_5_and_12_years,
+														room.number_of_children_below_5_years)
 			end
 		end
 	end

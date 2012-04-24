@@ -17,6 +17,9 @@
     <th class="text">Room type</th>
     <th class="number">Single occupancy</th>
     <th class="number">Double occupancy</th>
+    <th class="number">Third adult</th>
+    <th class="number">Children btw 5 & 12</th>
+    <th class="number">Children below 5</th>
     <th class="number">Room price</th>
     <th class="number">Service tax</th>
 		<th class="number">Rooms</th>
@@ -29,6 +32,9 @@
     <td class="text"><%= room_type.room_type %></td>
     <td class="currency"><%= number_to_currency(room_type.price_for_single_occupancy) %></td>
     <td class="currency"><%= number_to_currency(room_type.price_for_double_occupancy) %></td>
+    <td class="currency"><%= number_to_currency(room_type.price_for_triple_occupancy) %></td>
+    <td class="currency"><%= number_to_currency(room_type.price_for_children_between_5_and_12_years) %></td>
+    <td class="currency"><%= number_to_currency(room_type.price_for_children_below_5_years) %></td>
     <td class="currency"><%= number_to_currency(room_type.price_for_room) %></td>
     <td class="currency"><%= number_to_currency(room_type.service_tax) %></td>
     <td class="number"><%= room_type.number_of_rooms %></td>

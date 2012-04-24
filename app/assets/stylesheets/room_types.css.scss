@@ -1,7 +1,16 @@
 .room_types {
+	.new_form, .edit_form {
+		form {
+			.field {
+				label {
+					width: 16em;
+				}
+			}
+		}
+	}
 
 	table th:nth-last-child(2) {
-		width: 20%;
+		width: auto;
 	}
 
 	table td:nth-child(2) {
