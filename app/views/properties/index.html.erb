@@ -10,9 +10,6 @@
    	<th class="text">Name</th>
    	<th class="text">Agency</th>
    	<th class="text">Phone Numbers</th>
-   	<th class="number">Children below 5</th>
-   	<th class="number">Children btw 5 & 12</th>
-   	<th class="number">Third adult</th>
    	<th class="number">Driver</th>
 		<th class="number">Ensure availability</th>
 		<th></th>
@@ -26,15 +23,6 @@
 			<%= property.phone_number %><br/>
 			<%= property.phone_number_2 %>
 		</td>
-    <td class="currency">
-			<% if property.price_for_children_below_5_years && property.price_for_children_below_5_years != 0 %>
-				<%= number_to_currency(property.price_for_children_below_5_years) %>
-			<% else %>
-				<%= "Complimentary" %>
-			<% end %>
-		</td>
-    <td class="currency"><%= number_to_currency(property.price_for_children_between_5_and_12_years) %></td>
-    <td class="currency"><%= number_to_currency(property.price_for_triple_occupancy) %></td>
     <td class="currency"><%= number_to_currency(property.price_for_driver) %></td>
     <td class="text">
 			<% if property.ensure_availability_before_booking == 1 %>
