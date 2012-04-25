@@ -6,7 +6,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: ezbook_prod
+  database: ezbook_dev
   username: postgres 
   password: bm
   pool: 5
