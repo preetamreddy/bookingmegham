@@ -7,34 +7,37 @@ class PropertyTest < ActiveSupport::TestCase
   end
 
 	test "property should have a name" do
-		thanedar = Property.new
-		assert thanedar.invalid?
-		thanedar.name = "Thanedar"
-		assert thanedar.valid?
+		darjeeling = FactoryGirl.build(:property, :name => "")
+		assert darjeeling.invalid?
+		assert darjeeling.errors[:name].any?
+		darjeeling.name = "Darjeeling"
+		assert darjeeling.save
 	end
 
 	test "property name should be unique" do
-		sangla = Property.new(name: "sangla")
-		assert sangla.invalid?
-		assert sangla.errors[:name].any?
+		darjeeling = FactoryGirl.create(:property, :name => "Darjeeling")
+		darjeeling_2 = FactoryGirl.build(:property, :name => "Darjeeling")
+		assert darjeeling_2.invalid?
+		assert darjeeling_2.errors[:name].any?
+		darjeeling_2.name = "Darjeeling 2"
+		assert darjeeling_2.save
 	end
 
 	test "price should be an integer greater than or equal to 0" do
-		thanedar = Property.new(name: "Thanedar",
-								price_for_children_between_5_and_12_years: -1,
-								price_for_children_below_5_years: "abc",
-								price_for_triple_occupancy: 2000.5,
-								price_for_driver: nil)
-		assert thanedar.invalid?
-		assert thanedar.errors[:price_for_children_between_5_and_12_years].any?
-		assert thanedar.errors[:price_for_children_below_5_years].any?
-		assert thanedar.errors[:price_for_triple_occupancy].any?
-		assert !thanedar.errors[:price_for_driver].any?
-		sojha = Property.new(name: "Sojha",
-								price_for_children_between_5_and_12_years: 1200,
-								price_for_children_below_5_years: 0,
-								price_for_triple_occupancy: 2000,
-								price_for_driver: 500)
-		assert sojha.valid?
+		new_property = FactoryGirl.build(:property,
+									:price_for_children_between_5_and_12_years => -1,
+									:price_for_children_below_5_years => "abc",
+									:price_for_triple_occupancy => 2000.5,
+									:price_for_driver => nil)
+		assert new_property.invalid?
+		assert new_property.errors[:price_for_children_between_5_and_12_years].any?
+		assert new_property.errors[:price_for_children_below_5_years].any?
+		assert new_property.errors[:price_for_triple_occupancy].any?
+		assert !new_property.errors[:price_for_driver].any?
+		new_property.price_for_children_between_5_and_12_years = 1200
+		new_property.price_for_children_below_5_years = 1200
+		new_property.price_for_triple_occupancy = 1200
+		new_property.price_for_driver = 1200
+		assert new_property.valid?
 	end
 end

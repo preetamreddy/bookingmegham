@@ -1,11 +1,5 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-one:
-  name: MyString
-  password_digest: MyString
-  advisor_id: 1
-
-two:
-  name: MyString
-  password_digest: MyString
-  advisor_id: 1
+kavita:
+  agency: banjara
+  advisor: kavita
+  name: kavita
+  password_digest: "$2a$10$vKXXPpwDDp3P9yBRAVRJx.SrfaLFbekuEUC1C2C65hrjV/OybXXaq"

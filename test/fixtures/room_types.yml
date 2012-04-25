@@ -1,17 +1,99 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
 sangla_deluxe_tent:
   property: sangla
   room_type: Deluxe tent
-  price_for_single_occupancy: 5600
-  price_for_double_occupancy: 6500
+  price_for_single_occupancy: 4700
+  price_for_double_occupancy: 5600
   description: At ground level
   number_of_rooms: 8
+  price_for_room: 1500
 
 sangla_super_deluxe_tent:
   property: sangla
   room_type: Super deluxe tent
-  price_for_single_occupancy: 6100
-  price_for_double_occupancy: 7000
+  price_for_single_occupancy: 6200
+  price_for_double_occupancy: 7100
   description: On a raised platform
   number_of_rooms: 5
+  price_for_room: 1500
+
+sangla_retreat_deluxe:
+  property: sangla
+  room_type: Retreat deluxe
+  price_for_single_occupancy: 6450
+  price_for_double_occupancy: 7350
+  description: Ground floor of retreat
+  number_of_rooms: 6
+  price_for_room: 2500
+
+sangla_retreat_super_deluxe:
+  property: sangla
+  room_type: Retreat super deluxe
+  price_for_single_occupancy: 7400
+  price_for_double_occupancy: 8300
+  description: First floor of retreat
+  number_of_rooms: 6
+  price_for_room: 3000
+
+sojha_retreat_deluxe:
+  property: sojha
+  room_type: Retreat deluxe
+  price_for_single_occupancy: 4700
+  price_for_double_occupancy: 5600
+  number_of_rooms: 2
+  price_for_room: 1900
+
+sojha_suite:
+  property: sojha
+  room_type: Suite
+  price_for_single_occupancy: 5250
+  price_for_double_occupancy: 6150
+  number_of_rooms: 2
+  price_for_room: 2400
+
+sojha_cottage_deluxe:
+  property: sojha
+  room_type: Cottage deluxe
+  price_for_single_occupancy: 6450
+  price_for_double_occupancy: 7350
+  number_of_rooms: 6
+  price_for_room: 2200
+
+thanedar_standard:
+  property: thanedar
+  room_type: Standard
+  price_for_single_occupancy: 3600
+  price_for_double_occupancy: 4700
+  number_of_rooms: 1
+  price_for_room: 1000
+
+thanedar_deluxe:
+  property: thanedar
+  room_type: Deluxe
+  price_for_single_occupancy: 4700
+  price_for_double_occupancy: 5600
+  number_of_rooms: 5
+  price_for_room: 1200
+
+thanedar_suite:
+  property: thanedar
+  room_type: Suite
+  price_for_single_occupancy: 5250
+  price_for_double_occupancy: 6150
+  number_of_rooms: 2
+  price_for_room: 2000
+
+thanedar_log_cabin:
+  property: thanedar
+  room_type: Log cabin
+  price_for_single_occupancy: 5450
+  price_for_double_occupancy: 6350
+  number_of_rooms: 2
+  price_for_room: 2000
+
+kaza_standard:
+  property: kaza
+  room_type: Standard
+  price_for_single_occupancy: 4250
+  price_for_double_occupancy: 5150
+  number_of_rooms: 11
+  price_for_room: 800

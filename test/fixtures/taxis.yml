@@ -1,15 +1,29 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+indica:
+  agency: great_escape
+  model: Indica
+  max_passengers: 4
+  unit_price: 2300
 
-one:
-  agency_id: 1
-  model: MyString
-  max_passengers: 1
-  unit_price: 1
-  terrain_limitations: MyText
+innova:
+  agency: great_escape
+  model: Innova
+  max_passengers: 7
+  unit_price: 3500
 
-two:
-  agency_id: 1
-  model: MyString
-  max_passengers: 1
-  unit_price: 1
-  terrain_limitations: MyText
+tavera:
+  agency: great_escape
+  model: Tavera
+  max_passengers: 8
+  unit_price: 3500
+
+tempo_traveller:
+  agency: great_escape
+  model: Tempo Traveller 12 Seater
+  max_passengers: 12
+  unit_price: 4300
+
+indigo:
+  agency: great_escape
+  model: Indigo
+  max_passengers: 5
+  unit_price: 2900

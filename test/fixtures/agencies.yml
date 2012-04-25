@@ -1,19 +1,27 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+banjara:
+  name: Banjara Camps And Retreats Pvt. Ltd.
+  phone_number: +91 11 2685 5152
+  email_id: info@banjaracamps.com
+  postal_address: |
+    1A, Hauz Khas Village,
+    New Delhi-110 016 India
+  city: New Delhi
+  url: www.banjaracamps.com
+  logo_file_name: Banjara.jpg
+  pan_number: AACCB0246J
+  operates_properties: 1
+  operates_taxis: 0
+  is_travel_agency: 0
+  short_name: Banjara Camps
+  service_tax: 6.18
 
-one:
-  name: MyString
-  phone_number: 1
-  email_id: MyString
-  postal_address: MyText
-  city: MyString
-  url: MyString
-  other_information: MyText
-
-two:
-  name: MyString
-  phone_number: 1
-  email_id: MyString
-  postal_address: MyText
-  city: MyString
-  url: MyString
-  other_information: MyText
+great_escape:
+  name: Great Escape Routes
+  phone_number: + 91 9418012500
+  email_id: greatescaperoutes@gmail.com 
+  city: Shimla
+  operates_properties: 0
+  operates_taxis: 0
+  is_travel_agency: 1
+  short_name: Great Escape
+  service_tax: 0

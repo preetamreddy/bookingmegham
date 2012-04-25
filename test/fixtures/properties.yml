@@ -1,17 +1,116 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
 sangla:
+  agency: banjara
   name: Sangla
   price_for_children_below_5_years: 0
   price_for_triple_occupancy: 2000
   price_for_driver: 500
-  description: In Kinnaur, HP
   price_for_children_between_5_and_12_years: 1200
+  ensure_availability_before_booking: 1
+  consider_blocked_rooms_as_booked: 1
+  phone_number: +91 98169 59904
+  phone_number_2: +91 98168 81936
+  address: |
+    Banjara Camp & Retreat,
+    VPO Batseri,
+    Sangla,
+    Dist. Kinnaur,
+    Himachal Pradesh.
+    172 106
+  suggested_activities: |
+    1. Drive to Chitkul; last border village. Optional hike to Nagasthi; the
+    last border outpost
+    2. Rakcham hike; the signature walk of the valley
+    3. Sangla village walk
+    4. Sangla village sightseeing with hike to Kamru fort
+    5. Sangla meadows hike
+    6. Adventure sports activities- river crossing/ rappelling/ rock climbing/\r+
+    Burma bridge
+    7. Day trip to Kalpa- 4 hrs drive and 2-3 hrs at kalpa
+    8. Early morning hike around camp
+    9. Walk to Batseri village
+    10. Glacier point hike
+    11. Angling on Baspa river
+    12. Overnight camping in forest
+  url: "http://www.banjaracamps.com/sangla_banjara_camp_&_retreat.html"
 
 kaza:
+  agency: banjara
   name: Kaza
   price_for_children_below_5_years: 0
   price_for_triple_occupancy: 2000
   price_for_driver: 500
-  description: In Lahual, HP
   price_for_children_between_5_and_12_years: 1200
+  ensure_availability_before_booking: 1
+  consider_blocked_rooms_as_booked: 1
+  phone_number: +91 94187 18123
+  phone_number_2: +91 94595 20640
+  address: |
+    Banjara Retreat,
+    Near Police Station,
+    Kaza,
+    Dist. Lahaul & Spiti,
+    Himachal Pradesh.
+    172 114
+  suggested_activities: |
+    1. Tabo and Dhankar monastery drive
+    2. Ki, Kibber, Gete villages visit
+    3. Pin valley National park
+    4. Day drive to Chandratal lake
+    5. Komik, Langza and Demul village drive
+    6. Homestay trek
+    7. Hike/ drive to Chandratal and camp overnight at Chandratal
+  url: "http://www.banjaracamps.com/kaza_spiti_banjara_retreat.html"
+
+sojha:
+  agency: banjara
+  name: Sojha
+  price_for_children_below_5_years: 0
+  price_for_triple_occupancy: 2000
+  price_for_driver: 500
+  price_for_children_between_5_and_12_years: 1200
+  ensure_availability_before_booking: 1
+  consider_blocked_rooms_as_booked: 1
+  phone_number: +91 94183 46973
+  phone_number_2: +91 1903 200070 
+  address: |
+    Banjara Retreat,
+    V.P.O. Sojha,
+    P.S. Banjar,
+    Dist. Kullu,
+    Himachal Pradesh.
+    175 123
+  suggested_activities: |
+    1. Raghupur fort hike
+    2. Serolser lake hike
+    3. Waterfall/ Jungle walk
+    4. Day in Tirthan valley/ Great Himalayan National Park
+    5. Walk in Sojha hamlet
+    6. Angling on Tirthan river
+  url: "http://www.banjaracamps.com/sojha_banjara_retreat_&_cottage.html"
+
+thanedar:
+  agency: banjara
+  name: Thanedar
+  price_for_children_below_5_years: 0
+  price_for_triple_occupancy: 2000
+  price_for_driver: 500
+  price_for_children_between_5_and_12_years: 1200
+  ensure_availability_before_booking: 1
+  consider_blocked_rooms_as_booked: 1
+  phone_number: +91 94180 77180 
+  phone_number_2: +91 1782 222265 
+  address: |
+    Banjara Orchard Retreat,
+    P. O. Thanedar,
+    Dist. Shimla,
+    Himachal Pradesh.
+    172 030
+  suggested_activities: |
+    1. Drive/ hike to Hatu peak
+    2. Walk around the Thanedar hamlet
+    3. Early morning Saroga forest walk
+    4. St. Mary's church walk
+    5. Drive/ Hike to Tani Jubbar lake
+    6. Hike to Shilla Jan ridge
+    7. Day trip to Sarahan- full day
+  url: "http://www.banjaracamps.com/thanedar_banjara_orchard_retreat.html"
