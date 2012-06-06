@@ -38,7 +38,7 @@ module Bookingmegham
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]
+    config.filter_parameters += [:password, :password_confirmation]
 
     # Enable the asset pipeline
     config.assets.enabled = true
@@ -48,6 +48,9 @@ module Bookingmegham
 
 		# Format of the schema dump. The value can be :ruby or :sql
 		config.active_record.schema_format = :ruby
+
+		# Forcing the application to not access the DB or load models when precompiling assets
+		config.assets.initialize_on_precompile = false
 
   end
 end
