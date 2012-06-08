@@ -11,7 +11,7 @@
 		<%= image_tag("EZBook.jpg") %>
 		<% if user_signed_in? %>
 			<div id="user_info">
-				<%= current_user.email %>
+				<%= current_user.email %><br />
 				<%= render 'devise/menu/login_items' %>
 			</div>
 		<% end %>

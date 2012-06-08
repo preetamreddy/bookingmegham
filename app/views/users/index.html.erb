@@ -29,8 +29,10 @@
 		    <td><%= user.name %></td>
 		    <td>
 		    	<%= link_to 'Edit', edit_user_path(user) %><br />
-		    	<%= link_to 'Deactivate', user, confirm: 'Are you sure?',
-								method: :delete %>
+					<% if user != current_user %>
+		    		<%= link_to 'Deactivate', user, confirm: 'Are you sure?',
+									method: :delete %>
+					<% end %>
 				</td>
 		  </tr>
 		<% end %>

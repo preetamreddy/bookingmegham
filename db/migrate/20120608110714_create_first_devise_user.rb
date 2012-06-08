@@ -1,7 +1,6 @@
 class CreateFirstDeviseUser < ActiveRecord::Migration
   def up
 		user = User.new
-		user.id = 1
 		user.email = 'preetam@ezbook.in'
 		user.password = 'testing'
 		user.created_at = '2012-06-08 09:23:40.363486'
