@@ -1,0 +1,16 @@
+<p>Lo and behold, we are on the homepage!</p>
+<%= form_for("user", :url => user_session_path) do |f| %>
+  <div>
+		<%= f.label :email %><br />
+  	<%= f.email_field :email %>
+	</div>
+
+  <div>
+		<%= f.label :password %><br />
+  	<%= f.password_field :password %>
+	</div>
+
+  <%= f.submit 'Sign in' %>
+<% end %>
+
+<%= link_to "Forgot your password?", new_user_password_path %><br />

@@ -74,12 +74,12 @@ class TripsController < ApplicationController
 
 		if !@trip.agency_id
 			@trip.direct_booking = 1
-			@trip.agency_id = User.find_by_id(session[:user_id]).agency_id
+			@trip.agency_id = current_user.agency_id
 		else
 			@trip.direct_booking = 0
 		end
 
-		@trip.advisor_id = User.find_by_id(session[:user_id]).advisor_id
+		@trip.advisor_id = current_user.advisor_id
 
     respond_to do |format|
       format.html # new.html.erb
@@ -150,11 +150,11 @@ class TripsController < ApplicationController
 	def email
 		trip = Trip.find(params[:trip_id])
 		if params[:type] == 'itinerary'
-			TripNotifier.itinerary(trip, session[:user_id]).deliver
+			TripNotifier.itinerary(trip, current_user.id).deliver
 		elsif params[:type] == 'invoice'
-			TripNotifier.invoice(trip, session[:user_id]).deliver
+			TripNotifier.invoice(trip, current_user.id).deliver
 		elsif params[:type] == 'vouchers'
-			TripNotifier.vouchers(trip, session[:user_id]).deliver
+			TripNotifier.vouchers(trip, current_user.id).deliver
 		end
 
 		respond_to do |format|

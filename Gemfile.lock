@@ -70,6 +70,7 @@ GEM
       factory_girl (~> 3.1.0)
       railties (>= 3.0.0)
     fastercsv (1.5.4)
+    high_voltage (1.1.1)
     hike (1.2.1)
     i18n (0.6.0)
     jquery-rails (1.0.19)
@@ -153,6 +154,7 @@ DEPENDENCIES
   factory_girl_rails
   faker!
   fastercsv
+  high_voltage
   jquery-rails
   nested_form!
   pg

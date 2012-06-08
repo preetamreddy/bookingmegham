@@ -34,7 +34,7 @@
     <td>
     	<%= link_to 'Show details', property %></br>
     	<%= link_to 'Edit', edit_property_path(property) %></br>
-			<% if session[:agency] == 'EZBook' %>
+			<% if current_user.agency.name == 'EZBook' %>
     		<%= link_to 'Destroy', property, confirm: 'Are you sure?', 
 							method: :delete %></br>
 			<% end %>

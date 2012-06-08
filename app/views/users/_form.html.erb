@@ -32,6 +32,10 @@
 		<% end %>
   </div>
   <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email %>
+  </div>
+  <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name, size: 40 %>
   </div>

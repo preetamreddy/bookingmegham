@@ -1,4 +1,18 @@
 Bookingmegham::Application.routes.draw do
+
+	authenticated :user do
+		root :to => 'availability_chart#index'
+	end
+
+	root :to => 'pages#show', :id => 'home'
+
+	devise_for :users, :path_prefix => 'd', :skip => [:sessions]
+	as :user do
+		get 'login' => 'devise/sessions#new', :as => :new_user_session
+		post 'login' => 'devise/sessions#create', :as => :user_session
+		delete 'logout' => 'devise/sessions#destroy', :as => :destroy_user_session
+	end
+
 	resources :payments do
 		get :email, :on => :member
 	end
@@ -33,8 +47,6 @@ Bookingmegham::Application.routes.draw do
 		get 'booking_chart' => :index
 	end
 
-  resources :users, :except => :show
-
   resources :advisors
 
   resources :agencies
@@ -56,6 +68,10 @@ Bookingmegham::Application.routes.draw do
   resources :properties
 
   resources :bookings
+
+	resources :users, :except => :show
+
+	match "/pages/*id" => 'pages#show', :as => :page, :format => false
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

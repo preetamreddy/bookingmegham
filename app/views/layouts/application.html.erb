@@ -9,16 +9,16 @@
 <body class='<%= controller.controller_name %>'>
 	<div id="banner">
 		<%= image_tag("EZBook.jpg") %>
-		<% if session[:user_id] %>
-			<% user = User.find(session[:user_id]) %>
+		<% if user_signed_in? %>
 			<div id="user_info">
-				<%= user.advisor.name %><br/>
-				<%= link_to 'Logout', logout_path, method: :delete %>
+				<%= current_user.email %>
+				<%= render 'devise/menu/login_items' %>
 			</div>
 		<% end %>
 	</div>
+
 	<div id="columns">
-		<% if session[:user_id] %>
+		<% if user_signed_in? %>
 			<div id="side">
 				<%= hidden_div_if(!session[:guest_id], id: 'session_info') do %>
 					<table>
@@ -72,7 +72,7 @@
 					<dd><%= link_to 'Agencies', agencies_path %></dd>
 					<dt>Feedback</dt>
 					<dd><%= link_to 'Give Feedback', new_feedback_path %></dd>
-					<% if user.agency.name == 'EZBook' %> 
+					<% if current_user.agency.name == 'EZBook' %>
 						<dt>System Admin</dt>
 						<dd><%= link_to 'Advisors', advisors_path %></dd>
 						<dd><%= link_to 'Users', users_path %></dd>

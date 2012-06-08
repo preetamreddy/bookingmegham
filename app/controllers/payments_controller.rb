@@ -97,7 +97,7 @@ class PaymentsController < ApplicationController
       if @payment.save
 				trip.save
 
-				PaymentNotifier.receipt(@payment, session[:user_id]).deliver
+				PaymentNotifier.receipt(@payment, current_user.id).deliver
 
         format.html { redirect_to @payment, notice: 'Payment was successfully created.' }
         format.json { render json: @payment, status: :created, location: @payment }
@@ -118,7 +118,7 @@ class PaymentsController < ApplicationController
       if @payment.update_attributes(params[:payment])
 				trip.save
 
-				PaymentNotifier.receipt(@payment, session[:user_id]).deliver
+				PaymentNotifier.receipt(@payment, current_user.id).deliver
 
         format.html { redirect_to @payment, notice: 'Payment was successfully updated.' }
         format.json { head :ok }
@@ -146,7 +146,7 @@ class PaymentsController < ApplicationController
 
 	def email
 		payment = Payment.find(params[:payment_id])
-		PaymentNotifier.receipt(payment, session[:user_id]).deliver
+		PaymentNotifier.receipt(payment, current_user.id).deliver
 
 		respond_to do |format|
 			format.html { redirect_to payment, notice: 'Email was successfully sent.' }

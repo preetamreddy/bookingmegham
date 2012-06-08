@@ -66,3 +66,6 @@ gem "faker", :git => "git://github.com/stympy/faker.git"
 
 # For authentication
 gem 'devise'
+
+# For static pages
+gem "high_voltage"
