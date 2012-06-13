@@ -1,8 +1,8 @@
 ActionMailer::Base.smtp_settings = {
 	:address							=> "smtp.gmail.com",
 	:port									=> 587,
-	:user_name						=> "banjaracamps@ezbook.in",
-	:password							=> "batseri1993",
+	:user_name						=> "info@ezbook.in",
+	:password							=> "delhinov2011",
 	:authentication				=> "plain",
 	:enable_starttls_auto	=> true
 }
