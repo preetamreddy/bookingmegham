@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
 	belongs_to :advisor
 	belongs_to :agency
 
+	validates :email, :password, :password_confirmation, :presence => :true
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :rememberable
   # :omniauthable, ;registerable

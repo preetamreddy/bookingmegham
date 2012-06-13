@@ -100,4 +100,20 @@ class UsersController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  # GET /users/1/change_password
+  def change_password
+   	@user = current_user
+  end
+
+  def update_password
+    @user = current_user
+    if @user.update_with_password(params[:user])
+			sign_in @user, :bypass => true
+      redirect_to root_path, notice: 'Password was successfully changed.'
+    else
+      render "change_password"
+    end
+  end
+
 end

@@ -33,12 +33,6 @@ Bookingmegham::Application.routes.draw do
 
   resources :taxis
 
-	controller :sessions do
-		get 'login' => :new
-		post 'login' => :create
-		delete 'logout' => :destroy
-	end
-
 	controller :availability_chart do
   	get 'availability_chart' => :index
 	end
@@ -70,6 +64,11 @@ Bookingmegham::Application.routes.draw do
   resources :bookings
 
 	resources :users, :except => :show
+
+	resources :users do
+		get :change_password, :on => :member
+		put :update_password, :on => :member
+	end
 
 	match "/pages/*id" => 'pages#show', :as => :page, :format => false
 
@@ -119,10 +118,6 @@ Bookingmegham::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  root :to => 'sessions#new', as: 'login'
 
   # See how all your routes lay out with "rake routes"
 
