@@ -63,9 +63,7 @@ Bookingmegham::Application.routes.draw do
 
   resources :bookings
 
-	resources :users, :except => :show
-
-	resources :users do
+	resources :users, :except => [:show, :edit, :update] do
 		get :change_password, :on => :member
 		put :update_password, :on => :member
 	end

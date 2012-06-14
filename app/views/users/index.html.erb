@@ -26,7 +26,6 @@
 		    <td><%= user.agency.name if user.agency_id %></td>
 		    <td><%= user.email %></td>
 		    <td>
-		    	<%= link_to 'Edit', edit_user_path(user) %><br />
 					<% if user != current_user %>
 		    		<%= link_to 'Deactivate', user, confirm: 'Are you sure?',
 									method: :delete %>
