@@ -34,7 +34,7 @@ class UsersController < ApplicationController
 
 		@user.advisor_id = params[:advisor_id]
 		@user.agency_id = advisor.agency.id
-		@user.email = advisor.email
+		@user.email = advisor.email_id
 
     respond_to do |format|
       format.html # new.html.erb
