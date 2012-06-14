@@ -12,10 +12,10 @@ class UsersController < ApplicationController
 		end
 
 		if session[:agency_id]
-			@users = User.order(:name).
+			@users = User.order(:email).
 								find_all_by_agency_id(session[:agency_id])
 		else
-    	@users = User.order('agency_id, name').all
+    	@users = User.order('agency_id, email').all
 		end
 
     respond_to do |format|
@@ -34,6 +34,7 @@ class UsersController < ApplicationController
 
 		@user.advisor_id = params[:advisor_id]
 		@user.agency_id = advisor.agency.id
+		@user.email = advisor.email
 
     respond_to do |format|
       format.html # new.html.erb
@@ -93,7 +94,7 @@ class UsersController < ApplicationController
 
 		begin
     	@user.destroy
-			flash[:notice] = "User #{@user.name} deactivated"
+			flash[:notice] = "User #{@user.email} deactivated"
 		rescue Exception => e
 			flash[:notice] = e.message
 		end

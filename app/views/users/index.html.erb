@@ -17,7 +17,6 @@
 	    <th>Advisor</th>
 	    <th>Agency</th>
 	    <th>Email</th>
-	    <th>Username</th>
 	    <th></th>
 	  </tr>
 	
@@ -26,7 +25,6 @@
 		    <td><%= user.advisor.name if user.advisor_id %></td>
 		    <td><%= user.agency.name if user.agency_id %></td>
 		    <td><%= user.email %></td>
-		    <td><%= user.name %></td>
 		    <td>
 		    	<%= link_to 'Edit', edit_user_path(user) %><br />
 					<% if user != current_user %>

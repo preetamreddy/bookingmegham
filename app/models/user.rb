@@ -12,5 +12,5 @@ class User < ActiveRecord::Base
   				:lockable, :timeoutable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :agency_id, :advisor_id, :name
+  attr_accessible :email, :password, :password_confirmation, :agency_id, :advisor_id
 end
