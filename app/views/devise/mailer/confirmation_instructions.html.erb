@@ -1,5 +1,11 @@
-<p>Welcome <%= @resource.email %>!</p>
+<p>Welcome <%= @resource.advisor.name %>!</p>
+
+You have an invitation to join EZBook. EZbook allows you to manage your bookings and associated workflow electronically.
 
 <p>You can confirm your account email through the link below:</p>
 
 <p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+
+We hope you will enjoy using EZBook. If you have any feedback, please <a href="mailto:preetam@ezbook.in?subject=Feedback">send us an E-mail</a>.<br /><br />
+
+Happy and easy bookings!
