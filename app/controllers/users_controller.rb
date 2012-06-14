@@ -55,6 +55,9 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(params[:user])
+		generated_password = Devise.friendly_token.first(8)
+		@user.password = generated_password
+		@user.password_confirmation = generated_password
 
     respond_to do |format|
       if @user.save
