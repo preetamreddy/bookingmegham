@@ -69,3 +69,6 @@ gem 'devise'
 
 # For static pages
 gem "high_voltage"
+
+# For authorization
+gem "cancan"
