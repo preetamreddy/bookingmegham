@@ -48,7 +48,7 @@ class UsersController < ApplicationController
     	@user = User.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid user #{params[:id]}"
-			redirect_to users_url, notice: 'Invalid User'
+			redirect_to users_url, alert: 'Invalid user'
 		end
   end
 
@@ -91,16 +91,10 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user = User.find(params[:id])
-
-		begin
-    	@user.destroy
-			flash[:notice] = "User #{@user.email} deactivated"
-		rescue Exception => e
-			flash[:notice] = e.message
-		end
+    @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to users_url }
+      format.html { redirect_to users_url, alert: @user.errors[:base][0] }
       format.json { head :ok }
     end
   end

@@ -75,7 +75,7 @@ class BookingsController < ApplicationController
     	@booking = Booking.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid booking #{params[:id]}"
-			redirect_to bookings_url, notice: 'Invalid Booking'
+			redirect_to bookings_url, alert: 'Invalid booking'
 		else
     	respond_to do |format|
       	format.html # show.html.erb
@@ -121,7 +121,7 @@ class BookingsController < ApplicationController
 			end
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid booking #{params[:id]}"
-			redirect_to bookings_url, notice: 'Invalid Booking'
+			redirect_to bookings_url, alert: 'Invalid booking'
 		end
   end
 
@@ -171,7 +171,7 @@ class BookingsController < ApplicationController
     @booking.destroy
 
     respond_to do |format|
-      format.html { redirect_to bookings_url, notice: @booking.errors[:base][0] }
+      format.html { redirect_to bookings_url, alert: @booking.errors[:base][0] }
       format.json { head :ok }
     end
   end

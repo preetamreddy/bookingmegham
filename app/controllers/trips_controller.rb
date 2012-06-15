@@ -46,7 +46,7 @@ class TripsController < ApplicationController
     	@trip = Trip.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid trip #{params[:id]}"
-			redirect_to trips_url, notice: 'Invalid Trip'
+			redirect_to trips_url, alert: 'Invalid trip'
 		else
     	respond_to do |format|
       	format.html # show.html.erb
@@ -93,7 +93,7 @@ class TripsController < ApplicationController
     	@trip = Trip.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid trip #{params[:id]}"
-			redirect_to trips_url, notice: 'Invalid Trip'
+			redirect_to trips_url, alert: 'Invalid trip'
 		end
   end
 
@@ -142,7 +142,7 @@ class TripsController < ApplicationController
 		end
 
     respond_to do |format|
-      format.html { redirect_to trips_url, notice: @trip.errors[:base][0] }
+      format.html { redirect_to trips_url, alert: @trip.errors[:base][0] }
       format.json { head :ok }
     end
   end

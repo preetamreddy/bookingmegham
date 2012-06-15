@@ -31,7 +31,7 @@ class TrekBookingsController < ApplicationController
 			@trek_booking = TrekBooking.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid trek booking #{params[:id]}"
-			redirect_to trek_bookings_url, notice: 'Invalid Trek Booking'
+			redirect_to trek_bookings_url, alert: 'Invalid trek booking'
 		else
     	respond_to do |format|
       	format.html # show.html.erb
@@ -61,7 +61,7 @@ class TrekBookingsController < ApplicationController
     	@trek_booking = TrekBooking.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid trek booking #{params[:id]}"
-			redirect_to trek_bookings_url, notice: 'Invalid Trek Booking'
+			redirect_to trek_bookings_url, alert: 'Invalid trek booking'
 		end
   end
 
@@ -107,7 +107,7 @@ class TrekBookingsController < ApplicationController
     @trek_booking.destroy
 
     respond_to do |format|
-      format.html { redirect_to trek_bookings_url, notice: @trek_booking.errors[:base][0] }
+      format.html { redirect_to trek_bookings_url, alert: @trek_booking.errors[:base][0] }
       format.json { head :ok }
     end
   end

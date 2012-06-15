@@ -53,7 +53,7 @@ class GuestsController < ApplicationController
     	@guest = Guest.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid guest #{params[:id]}"
-			redirect_to guests_url, notice: 'Invalid Guest'
+			redirect_to guests_url, alert: 'Invalid guest'
 		else
     	respond_to do |format|
       	format.html # show.html.erb
@@ -79,7 +79,7 @@ class GuestsController < ApplicationController
     	@guest = Guest.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid guest #{params[:id]}"
-			redirect_to guests_url, notice: 'Invalid Guest'
+			redirect_to guests_url, alert: 'Invalid guest'
 		end
   end
 
@@ -126,7 +126,7 @@ class GuestsController < ApplicationController
 		end
 
     respond_to do |format|
-      format.html { redirect_to guests_url, notice: @guest.errors[:base][0] }
+      format.html { redirect_to guests_url, alert: @guest.errors[:base][0] }
       format.json { head :ok }
     end
   end

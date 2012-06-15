@@ -17,7 +17,7 @@ class TaxisController < ApplicationController
     	@taxi = Taxi.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid taxi #{params[:id]}"
-			redirect_to taxis_url, notice: 'Invalid Taxi'
+			redirect_to taxis_url, alert: 'Invalid taxi'
 		else
     	respond_to do |format|
       	format.html # show.html.erb
@@ -43,7 +43,7 @@ class TaxisController < ApplicationController
     	@taxi = Taxi.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid taxi #{params[:id]}"
-			redirect_to taxis_url, notice: 'Invalid Taxi'
+			redirect_to taxis_url, alert: 'Invalid taxi'
 		end
   end
 
@@ -86,7 +86,7 @@ class TaxisController < ApplicationController
     @taxi.destroy
 
     respond_to do |format|
-      format.html { redirect_to taxis_url, notice: @taxi.errors[:base][0] }
+      format.html { redirect_to taxis_url, alert: @taxi.errors[:base][0] }
       format.json { head :ok }
     end
   end

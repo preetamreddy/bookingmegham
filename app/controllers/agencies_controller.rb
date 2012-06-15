@@ -19,7 +19,7 @@ class AgenciesController < ApplicationController
     	@agency = Agency.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid agency #{params[:id]}"
-			redirect_to agencies_url, notice: 'Invalid Agency'
+			redirect_to agencies_url, alert: 'Invalid agency'
 		else
     	respond_to do |format|
       	format.html # show.html.erb
@@ -45,7 +45,7 @@ class AgenciesController < ApplicationController
     	@agency = Agency.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid agency #{params[:id]}"
-			redirect_to agencies_url, notice: 'Invalid Agency'
+			redirect_to agencies_url, alert: 'Invalid agency'
 		end
   end
 
@@ -88,7 +88,7 @@ class AgenciesController < ApplicationController
     @agency.destroy
 
     respond_to do |format|
-      format.html { redirect_to agencies_url, notice: @agency.errors[:base][0] }
+      format.html { redirect_to agencies_url, alert: @agency.errors[:base][0] }
       format.json { head :ok }
     end
   end

@@ -53,7 +53,7 @@ class PaymentsController < ApplicationController
     	@payment = Payment.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid Payment #{params[:id]}"
-			redirect_to payments_url, notice: 'Invalid Payment'
+			redirect_to payments_url, alert: 'Invalid payment'
 		else
     	respond_to do |format|
       	format.html # show.html.erb
@@ -83,7 +83,7 @@ class PaymentsController < ApplicationController
     	@payment = Payment.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid Payment #{params[:id]}"
-			redirect_to payments_url, notice: 'Invalid Payment'
+			redirect_to payments_url, alert: 'Invalid payment'
 		end
   end
 

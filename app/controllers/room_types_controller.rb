@@ -32,7 +32,7 @@ class RoomTypesController < ApplicationController
     	@room_type = RoomType.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid room type #{params[:id]}"
-			redirect_to room_types_url, notice: 'Invalid Room Type'
+			redirect_to room_types_url, alert: 'Invalid room type'
 		else
     	respond_to do |format|
       	format.html # show.html.erb
@@ -59,7 +59,7 @@ class RoomTypesController < ApplicationController
     	@room_type = RoomType.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid room type #{params[:id]}"
-			redirect_to room_types_url, notice: 'Invalid Room Type'
+			redirect_to room_types_url, alert: 'Invalid room type'
 		end
   end
 
@@ -102,7 +102,7 @@ class RoomTypesController < ApplicationController
     @room_type.destroy
 
     respond_to do |format|
-      format.html { redirect_to room_types_url, notice: @room_type.errors[:base][0] }
+      format.html { redirect_to room_types_url, alert: @room_type.errors[:base][0] }
       format.json { head :ok }
     end
   end

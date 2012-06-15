@@ -19,7 +19,7 @@ class PropertiesController < ApplicationController
     	@property = Property.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid property #{params[:id]}"
-			redirect_to properties_url, notice: 'Invalid Property'
+			redirect_to properties_url, alert: 'Invalid property'
 		else
     	respond_to do |format|
       	format.html # show.html.erb
@@ -45,7 +45,7 @@ class PropertiesController < ApplicationController
     	@property = Property.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid property #{params[:id]}"
-			redirect_to properties_url, notice: 'Invalid Property'
+			redirect_to properties_url, alert: 'Invalid property'
 		end
   end
 
@@ -89,7 +89,7 @@ class PropertiesController < ApplicationController
     @property.destroy
 
     respond_to do |format|
-      format.html { redirect_to properties_url, notice: @property.errors[:base][0] }
+      format.html { redirect_to properties_url, alert: @property.errors[:base][0] }
       format.json { head :ok }
     end
   end

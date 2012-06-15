@@ -17,7 +17,7 @@ class ValueAddedServicesController < ApplicationController
     	@value_added_service = ValueAddedService.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid value added service #{params[:id]}"
-			redirect_to value_added_services_url, notice: 'Invalid Value Added Service'
+			redirect_to value_added_services_url, alert: 'Invalid value added service'
 		else
     	respond_to do |format|
       	format.html # show.html.erb
@@ -43,7 +43,7 @@ class ValueAddedServicesController < ApplicationController
     	@value_added_service = ValueAddedService.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid value added service #{params[:id]}"
-			redirect_to value_added_services_url, notice: 'Invalid Value Added Service'
+			redirect_to value_added_services_url, alert: 'Invalid value added service'
 		end
   end
 
@@ -86,7 +86,7 @@ class ValueAddedServicesController < ApplicationController
     @value_added_service.destroy
 
     respond_to do |format|
-      format.html { redirect_to value_added_services_url, notice: @value_added_service.errors[:base][0] }
+      format.html { redirect_to value_added_services_url, alert: @value_added_service.errors[:base][0] }
       format.json { head :ok }
     end
   end

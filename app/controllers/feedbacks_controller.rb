@@ -19,7 +19,7 @@ class FeedbacksController < ApplicationController
     	@feedback = Feedback.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid feedback #{params[:id]}"
-			redirect_to feedbacks_url, notice: 'Invalid Feedback'
+			redirect_to feedbacks_url, alert: 'Invalid feedback'
 		else
     	respond_to do |format|
       	format.html # show.html.erb
@@ -45,7 +45,7 @@ class FeedbacksController < ApplicationController
     	@feedback = Feedback.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid feedback #{params[:id]}"
-			redirect_to feedbacks_url, notice: 'Invalid Feedback'
+			redirect_to feedbacks_url, alert: 'Invalid feedback'
 		end
   end
 

@@ -31,7 +31,7 @@ class AdvisorsController < ApplicationController
     	@advisor = Advisor.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid advisor #{params[:id]}"
-			redirect_to advisors_url, notice: 'Invalid Advisor'
+			redirect_to advisors_url, alert: 'Invalid advisor'
 		else
     	respond_to do |format|
       	format.html # show.html.erb
@@ -58,7 +58,7 @@ class AdvisorsController < ApplicationController
     	@advisor = Advisor.find(params[:id])
 		rescue ActiveRecord::RecordNotFound
 			logger.error "Attempt to access invalid advisor #{params[:id]}"
-			redirect_to advisors_url, notice: 'Invalid Advisor'
+			redirect_to advisors_url, alert: 'Invalid advisor'
 		end
   end
 
@@ -101,7 +101,7 @@ class AdvisorsController < ApplicationController
     @advisor.destroy
 
     respond_to do |format|
-      format.html { redirect_to advisors_url, notice: @advisor.errors[:base][0] }
+      format.html { redirect_to advisors_url, alert: @advisor.errors[:base][0] }
       format.json { head :ok }
     end
   end
