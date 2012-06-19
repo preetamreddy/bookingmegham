@@ -1,10 +1,12 @@
 <h1>Advisor details</h1>
 
 <div class="show_saved_record">
+<% if current_user.is? "Super admin" %>
 <p>
-  <b>Agency:</b>
-  <span class="saved_value"><%= @advisor.agency.name %></span>
+  <b>Account:</b>
+  <span class="saved_value"><%= @advisor.account.subdomain if @advisor.account_id %></span>
 </p>
+<% end %>
 
 <p>
   <b>Name:</b>

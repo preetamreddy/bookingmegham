@@ -1,0 +1,35 @@
+<h1>Listing Accounts</h1>
+
+<% if @accounts.count > 0 %>
+	<table class="index_table" border="1">
+  	<tr>
+			<th class="text">Name</th>
+    	<th class="text">Subdomain</th>
+    	<th class="text">Phone number</th>
+    	<th class="text">Email</th>
+    	<th class="text">Postal address</th>
+    	<th class="text">Url</th>
+    	<th></th>
+  	</tr>
+
+		<% @accounts.each do |account| %>
+  		<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+    		<td class="text"><%= account.name %></td>
+    		<td class="text"><%= account.subdomain %></td>
+    		<td class="text"><%= account.phone_number_1 %></td>
+    		<td class="text"><%= account.email %></td>
+    		<td class="text"><%= account.postal_address %></td>
+    		<td class="text"><%= account.url %></td>
+    		<td>
+					<%= link_to 'Show details', account %></br>
+    			<%= link_to 'Edit', edit_account_path(account) %></br>
+    			<%= link_to 'Destroy', account, confirm: 'Are you sure?', method: :delete %>
+				</td>
+  		</tr>
+		<% end %>
+	</table>
+<% end %>
+<div class="action_container">
+  <%= link_to 'New Account', new_account_path %>
+</div>
+

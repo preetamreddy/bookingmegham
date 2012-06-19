@@ -1,22 +1,9 @@
 class AdvisorsController < ApplicationController
+	load_and_authorize_resource
   # GET /advisors
   # GET /advisors.json
   def index
-		if params[:agency_id] == 'All'
-			session[:agency_id] = nil
-		elsif params[:agency_id]
-			agency_id = params[:agency_id].to_i
-			if Agency.find_all_by_id(agency_id).any?
-				session[:agency_id] = params[:agency_id].to_i
-			end
-		end
-
-		if session[:agency_id]
-    	@advisors = Advisor.order(:name).
-										find_all_by_agency_id(session[:agency_id])
-		else
-    	@advisors = Advisor.order('agency_id, name').all
-		end
+    @advisors = @advisors.order('name')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -27,24 +14,16 @@ class AdvisorsController < ApplicationController
   # GET /advisors/1
   # GET /advisors/1.json
   def show
-		begin
-    	@advisor = Advisor.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid advisor #{params[:id]}"
-			redirect_to advisors_url, alert: 'Invalid advisor'
-		else
-    	respond_to do |format|
-      	format.html # show.html.erb
-      	format.json { render json: @advisor }
-			end
-    end
+
+   	respond_to do |format|
+     	format.html # show.html.erb
+     	format.json { render json: @advisor }
+		end
   end
 
   # GET /advisors/new
   # GET /advisors/new.json
   def new
-    @advisor = Advisor.new
-		@advisor.agency_id = session[:agency_id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -54,18 +33,11 @@ class AdvisorsController < ApplicationController
 
   # GET /advisors/1/edit
   def edit
-		begin
-    	@advisor = Advisor.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid advisor #{params[:id]}"
-			redirect_to advisors_url, alert: 'Invalid advisor'
-		end
   end
 
   # POST /advisors
   # POST /advisors.json
   def create
-    @advisor = Advisor.new(params[:advisor])
 
     respond_to do |format|
       if @advisor.save
@@ -81,7 +53,6 @@ class AdvisorsController < ApplicationController
   # PUT /advisors/1
   # PUT /advisors/1.json
   def update
-    @advisor = Advisor.find(params[:id])
 
     respond_to do |format|
       if @advisor.update_attributes(params[:advisor])
@@ -97,7 +68,6 @@ class AdvisorsController < ApplicationController
   # DELETE /advisors/1
   # DELETE /advisors/1.json
   def destroy
-    @advisor = Advisor.find(params[:id])
     @advisor.destroy
 
     respond_to do |format|

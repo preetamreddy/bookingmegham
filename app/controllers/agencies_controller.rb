@@ -2,8 +2,6 @@ class AgenciesController < ApplicationController
   # GET /agencies
   # GET /agencies.json
   def index
-		session[:agency_id] = nil
-
     @agencies = Agency.order(:name).all
 
     respond_to do |format|

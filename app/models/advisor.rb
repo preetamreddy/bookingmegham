@@ -1,5 +1,5 @@
 class Advisor < ActiveRecord::Base
-	belongs_to :agency
+	belongs_to :account
 
 	has_many :trips
 
@@ -9,7 +9,7 @@ class Advisor < ActiveRecord::Base
 
 	before_destroy :ensure_does_not_have_trips, :ensure_is_not_a_user
 
-	validate :agency_id, :name, :email_id, presence: true
+	validate :name, :email_id, presence: true
 
 	validates :phone_number_1, :phone_number_2, 
 		:format => { :with => /^[\+]?[\d\s]*$/,

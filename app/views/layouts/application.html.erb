@@ -70,13 +70,18 @@
 					<dd><%= link_to 'Treks', treks_path %></dd>
 					<dd><%= link_to 'New Property', new_property_path %></dd>
 					<dd><%= link_to 'Agencies', agencies_path %></dd>
-					<dt>Feedback</dt>
-					<dd><%= link_to 'Give Feedback', new_feedback_path %></dd>
-					<% if current_user.agency.name == 'EZBook' %>
-						<dt>System Admin</dt>
-						<dd><%= link_to 'Advisors', advisors_path %></dd>
-						<dd><%= link_to 'Users', users_path %></dd>
-						<dd><%= link_to 'Feedback', feedbacks_path %></dd>
+					<% if can? :manage, Advisor or can? :manage, User %>
+						<dt>Account Admin</dt>
+						<% if can? :manage, Advisor %>
+							<dd><%= link_to 'Advisors', advisors_path %></dd>
+						<% end %>
+						<% if can? :manage, User %>
+							<dd><%= link_to 'Users', users_path %></dd>
+						<% end %>
+					<% end %>
+					<% if can? :manage, Account %>
+						<dt>Site Admin</dt>
+						<dd><%= link_to 'Accounts', accounts_path %></dd>
 					<% end %>
 				</dl>
 			</div>

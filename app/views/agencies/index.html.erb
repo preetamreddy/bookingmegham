@@ -26,10 +26,6 @@
     	<%= link_to 'Edit', edit_agency_path(agency) %><br />
     	<%= link_to 'Destroy', agency, confirm: 'Are you sure?',
 						method: :delete %><br />
-			<% if current_user.agency.name == 'EZBook' %>
-				<%= link_to 'Advisors', advisors_path(:agency_id => agency.id) %><br />
-				<%= link_to 'Users', users_path(:agency_id => agency.id) %>
-			<% end %>
 		</td>
   </tr>
 <% end %>

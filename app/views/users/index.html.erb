@@ -1,26 +1,25 @@
-<% if session[:agency_id] %>
-	<h1>
-		Listing Users for '<%= Agency.find(session[:agency_id]).name %>'
-	</h1>
-	<%= link_to 'Show all Users', users_path(:agency_id => 'All') %>
-<% else %>
-	<h1>Listing all Users</h1>
-<% end %>
+<h1>Listing Users</h1>
 
 <% if @users.count > 0 %>
 	<table class="index_table" border="1">
 	  <tr>
+		<% if current_user.is? "Super admin" %>
+			<th>Account</th>
+		<% end %>
 	    <th>Advisor</th>
-	    <th>Agency</th>
 	    <th>Email</th>
+	    <th>Role</th>
 	    <th></th>
 	  </tr>
 	
 		<% @users.each do |user| %>
 		  <tr>
+				<% if current_user.is? "Super admin" %>
+    			<td><%= user.account.subdomain if user.account_id %></td>
+				<% end %>
 		    <td><%= user.advisor.name if user.advisor_id %></td>
-		    <td><%= user.agency.name if user.agency_id %></td>
 		    <td><%= user.email %></td>
+		    <td><%= user.role.humanize if user.role %></td>
 		    <td>
 					<% if user != current_user %>
 		    		<%= link_to 'Deactivate', user, confirm: 'Are you sure?',

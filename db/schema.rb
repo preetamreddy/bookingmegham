@@ -11,17 +11,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614150848) do
+ActiveRecord::Schema.define(:version => 20120619065432) do
+
+  create_table "accounts", :force => true do |t|
+    t.string   "name"
+    t.string   "subdomain"
+    t.string   "phone_number_1"
+    t.string   "email"
+    t.text     "postal_address"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "advisors", :force => true do |t|
-    t.integer  "agency_id"
     t.string   "name"
     t.string   "phone_number_1"
     t.string   "phone_number_2"
     t.string   "email_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "account_id"
   end
+
+  add_index "advisors", ["account_id"], :name => "index_advisors_on_account_id"
 
   create_table "agencies", :force => true do |t|
     t.string   "name"
@@ -39,7 +52,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.integer  "is_travel_agency",    :default => 1
     t.string   "short_name"
     t.text     "service_tax",         :default => "0"
+    t.integer  "account_id"
   end
+
+  add_index "agencies", ["account_id"], :name => "index_agencies_on_account_id"
 
   create_table "bookings", :force => true do |t|
     t.time     "guests_arrival_time"
@@ -72,7 +88,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.integer  "cancellation_charge",         :default => 0
     t.integer  "cancelled",                   :default => 0
     t.integer  "number_of_drivers",           :default => 0
+    t.integer  "account_id"
   end
+
+  add_index "bookings", ["account_id"], :name => "index_bookings_on_account_id"
 
   create_table "feedbacks", :force => true do |t|
     t.string   "model"
@@ -83,7 +102,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.datetime "updated_at"
     t.string   "priority"
     t.string   "criticality"
+    t.integer  "account_id"
   end
+
+  add_index "feedbacks", ["account_id"], :name => "index_feedbacks_on_account_id"
 
   create_table "guests", :force => true do |t|
     t.string   "name"
@@ -98,7 +120,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.text     "address"
     t.string   "title"
     t.integer  "agency_id"
+    t.integer  "account_id"
   end
+
+  add_index "guests", ["account_id"], :name => "index_guests_on_account_id"
 
   create_table "line_items", :force => true do |t|
     t.integer  "booking_id"
@@ -108,7 +133,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.datetime "updated_at"
     t.integer  "booked_rooms"
     t.integer  "blocked",      :default => 1
+    t.integer  "account_id"
   end
+
+  add_index "line_items", ["account_id"], :name => "index_line_items_on_account_id"
 
   create_table "payments", :force => true do |t|
     t.integer  "trip_id"
@@ -119,7 +147,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.datetime "updated_at"
     t.string   "payee_name"
     t.string   "payment_mode"
+    t.integer  "account_id"
   end
+
+  add_index "payments", ["account_id"], :name => "index_payments_on_account_id"
 
   create_table "properties", :force => true do |t|
     t.string   "name"
@@ -138,7 +169,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.text     "address"
     t.text     "suggested_activities"
     t.string   "url"
+    t.integer  "account_id"
   end
+
+  add_index "properties", ["account_id"], :name => "index_properties_on_account_id"
 
   create_table "room_types", :force => true do |t|
     t.integer  "property_id"
@@ -153,7 +187,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.integer  "price_for_triple_occupancy",                :default => 0
     t.integer  "price_for_children_between_5_and_12_years", :default => 0
     t.integer  "price_for_children_below_5_years",          :default => 0
+    t.integer  "account_id"
   end
+
+  add_index "room_types", ["account_id"], :name => "index_room_types_on_account_id"
 
   create_table "rooms", :force => true do |t|
     t.string   "occupancy"
@@ -167,7 +204,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.integer  "room_rate"
     t.integer  "service_tax_rate"
     t.integer  "number_of_children_below_5_years",          :default => 0
+    t.integer  "account_id"
   end
+
+  add_index "rooms", ["account_id"], :name => "index_rooms_on_account_id"
 
   create_table "taxi_bookings", :force => true do |t|
     t.integer  "trip_id"
@@ -183,7 +223,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.date     "start_date"
     t.integer  "number_of_days"
     t.date     "end_date"
+    t.integer  "account_id"
   end
+
+  add_index "taxi_bookings", ["account_id"], :name => "index_taxi_bookings_on_account_id"
 
   create_table "taxi_details", :force => true do |t|
     t.integer  "taxi_booking_id"
@@ -192,7 +235,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.string   "driver_phone_number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "account_id"
   end
+
+  add_index "taxi_details", ["account_id"], :name => "index_taxi_details_on_account_id"
 
   create_table "taxis", :force => true do |t|
     t.integer  "agency_id"
@@ -202,7 +248,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.text     "terrain_limitations"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "account_id"
   end
+
+  add_index "taxis", ["account_id"], :name => "index_taxis_on_account_id"
 
   create_table "trek_bookings", :force => true do |t|
     t.integer  "trip_id"
@@ -215,7 +264,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.datetime "updated_at"
     t.integer  "number_of_days"
     t.date     "end_date"
+    t.integer  "account_id"
   end
+
+  add_index "trek_bookings", ["account_id"], :name => "index_trek_bookings_on_account_id"
 
   create_table "trek_prices", :force => true do |t|
     t.integer  "trek_id"
@@ -224,7 +276,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.integer  "max_group_size"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "account_id"
   end
+
+  add_index "trek_prices", ["account_id"], :name => "index_trek_prices_on_account_id"
 
   create_table "treks", :force => true do |t|
     t.string   "name"
@@ -233,7 +288,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.integer  "number_of_days"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "account_id"
   end
+
+  add_index "treks", ["account_id"], :name => "index_treks_on_account_id"
 
   create_table "trips", :force => true do |t|
     t.integer  "guest_id"
@@ -258,11 +316,14 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.date     "invoice_date"
     t.integer  "direct_booking",                   :default => 1
     t.integer  "tac",                              :default => 0
+    t.integer  "account_id"
   end
 
+  add_index "trips", ["account_id"], :name => "index_trips_on_account_id"
+
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                  :default => "",        :null => false
+    t.string   "encrypted_password",     :default => "",        :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.integer  "sign_in_count",          :default => 0
@@ -275,13 +336,15 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.datetime "locked_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "agency_id"
     t.integer  "advisor_id"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.string   "role",                   :default => "advisor"
+    t.integer  "account_id"
   end
 
+  add_index "users", ["account_id"], :name => "index_users_on_account_id"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
@@ -294,7 +357,10 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.datetime "updated_at"
     t.integer  "unit_price",  :default => 0
     t.integer  "min_people",  :default => 1
+    t.integer  "account_id"
   end
+
+  add_index "value_added_services", ["account_id"], :name => "index_value_added_services_on_account_id"
 
   create_table "vas_bookings", :force => true do |t|
     t.integer  "trip_id"
@@ -304,6 +370,9 @@ ActiveRecord::Schema.define(:version => 20120614150848) do
     t.integer  "number_of_people"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "account_id"
   end
+
+  add_index "vas_bookings", ["account_id"], :name => "index_vas_bookings_on_account_id"
 
 end

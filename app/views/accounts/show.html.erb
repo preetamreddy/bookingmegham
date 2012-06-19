@@ -1,0 +1,40 @@
+<h1>Account details</h1>
+
+<div class="show_saved_record">
+<p>
+  <b>Name:</b>
+  <span class="saved_value"><%= @account.name %></span>
+</p>
+
+<p>
+  <b>Subdomain:</b>
+  <span class="saved_value"><%= @account.subdomain %></span>
+</p>
+
+<p>
+  <b>Phone number 1:</b>
+  <span class="saved_value"><%= @account.phone_number_1 %></span>
+</p>
+
+<p>
+  <b>Email:</b>
+  <span class="saved_value"><%= @account.email %></span>
+</p>
+
+<p>
+  <b>Postal address:</b>
+  <span class="saved_value"><%= @account.postal_address %></span>
+</p>
+
+<p>
+  <b>Url:</b>
+  <span class="saved_value"><%= @account.url %>
+</p>
+</div>
+
+<div class="action_container">
+  <%= link_to 'Edit', edit_account_path(@account) %>
+</div>
+
+<%= link_to 'Back to Account Listing', accounts_path,
+      :class => "back_link" %>

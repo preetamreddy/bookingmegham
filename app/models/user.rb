@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
+	ROLES = %w[super_admin account_admin advisor]
+
+	belongs_to :account
 	belongs_to :advisor
-	belongs_to :agency
 
 	validates :email, :password, :password_confirmation, :presence => :true
 
@@ -12,5 +14,9 @@ class User < ActiveRecord::Base
   				:lockable, :timeoutable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :agency_id, :advisor_id
+  attr_accessible :email, :password, :password_confirmation, :account_id, :advisor_id, :role
+
+	def is?(user_role)
+		role.humanize == user_role
+	end
 end

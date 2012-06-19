@@ -1,5 +1,7 @@
 Bookingmegham::Application.routes.draw do
 
+  resources :accounts
+
 	authenticated :user do
 		root :to => 'availability_chart#index'
 	end
@@ -48,8 +50,6 @@ Bookingmegham::Application.routes.draw do
 	resources :trips do
 		get :email, :on => :member
 	end
-
-  resources :feedbacks, :except => :destroy
 
   resources :value_added_services
 

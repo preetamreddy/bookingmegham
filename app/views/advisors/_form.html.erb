@@ -11,16 +11,18 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :agency %><br />
-		<% if @advisor.agency_id %>
-			<%= f.collection_select(:agency_id,
-						Agency.find_all_by_id(@advisor.agency_id), :id, :name) %>
-		<% else %>
-    	<%= f.collection_select(:agency_id,
-						Agency.order('name').find_all, :id, :name) %>
-		<% end %>
-  </div>
+	<% if current_user.is? "Super admin" %>
+		<div class="field">
+		  <%= f.label :account %><br />
+			<% if @advisor.account_id %>
+				<%= f.collection_select(:account_id,
+							Account.find_all_by_id(@advisor.account_id), :id, :subdomain, :include_blank => true) %>
+			<% else %>
+		   	<%= f.collection_select(:account_id,
+							Account.order('subdomain').find_all, :id, :subdomain, :include_blank => true) %>
+			<% end %>
+		</div>
+	<% end %>
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
