@@ -34,9 +34,12 @@ class UsersController < ApplicationController
 		generated_password = Devise.friendly_token.first(8)
 		@user.password = generated_password
 		@user.password_confirmation = generated_password
+		@user.reset_password_token = User.reset_password_token
+		@user.reset_password_sent_at = Time.now
 
     respond_to do |format|
       if @user.save
+				UserNotifier.welcome(@user, current_user).deliver
         format.html { redirect_to users_url, notice: 'User was successfully activated.' }
         format.json { render json: @user, status: :created, location: @user }
       else
