@@ -1,8 +1,9 @@
 class FeedbacksController < ApplicationController
+	load_and_authorize_resource
   # GET /feedbacks
   # GET /feedbacks.json
   def index
-    @feedbacks = Feedback.paginate(page: params[:page], per_page: 5).
+    @feedbacks = @feedbacks.paginate(page: params[:page], per_page: 5).
 									order('criticality, priority, status, model, view').
 									all
 
@@ -15,23 +16,16 @@ class FeedbacksController < ApplicationController
   # GET /feedbacks/1
   # GET /feedbacks/1.json
   def show
-		begin
-    	@feedback = Feedback.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid feedback #{params[:id]}"
-			redirect_to feedbacks_url, alert: 'Invalid feedback'
-		else
-    	respond_to do |format|
-      	format.html # show.html.erb
-      	format.json { render json: @feedback }
-			end
-    end
+
+    respond_to do |format|
+     	format.html # show.html.erb
+     	format.json { render json: @feedback }
+		end
   end
 
   # GET /feedbacks/new
   # GET /feedbacks/new.json
   def new
-    @feedback = Feedback.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,18 +35,11 @@ class FeedbacksController < ApplicationController
 
   # GET /feedbacks/1/edit
   def edit
-		begin
-    	@feedback = Feedback.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid feedback #{params[:id]}"
-			redirect_to feedbacks_url, alert: 'Invalid feedback'
-		end
   end
 
   # POST /feedbacks
   # POST /feedbacks.json
   def create
-    @feedback = Feedback.new(params[:feedback])
 
     respond_to do |format|
       if @feedback.save
@@ -68,7 +55,6 @@ class FeedbacksController < ApplicationController
   # PUT /feedbacks/1
   # PUT /feedbacks/1.json
   def update
-    @feedback = Feedback.find(params[:id])
 
     respond_to do |format|
       if @feedback.update_attributes(params[:feedback])
@@ -84,7 +70,6 @@ class FeedbacksController < ApplicationController
   # DELETE /feedbacks/1
   # DELETE /feedbacks/1.json
   def destroy
-    @feedback = Feedback.find(params[:id])
     @feedback.destroy
 
     respond_to do |format|
