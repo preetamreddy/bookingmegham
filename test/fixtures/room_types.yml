@@ -1,4 +1,5 @@
 sangla_deluxe_tent:
+  account_id: 1
   property: sangla
   room_type: Deluxe tent
   price_for_single_occupancy: 4700
@@ -8,6 +9,7 @@ sangla_deluxe_tent:
   price_for_room: 1500
 
 sangla_super_deluxe_tent:
+  account_id: 1
   property: sangla
   room_type: Super deluxe tent
   price_for_single_occupancy: 6200
@@ -17,6 +19,7 @@ sangla_super_deluxe_tent:
   price_for_room: 1500
 
 sangla_retreat_deluxe:
+  account_id: 1
   property: sangla
   room_type: Retreat deluxe
   price_for_single_occupancy: 6450
@@ -26,6 +29,7 @@ sangla_retreat_deluxe:
   price_for_room: 2500
 
 sangla_retreat_super_deluxe:
+  account_id: 1
   property: sangla
   room_type: Retreat super deluxe
   price_for_single_occupancy: 7400
@@ -35,6 +39,7 @@ sangla_retreat_super_deluxe:
   price_for_room: 3000
 
 sojha_retreat_deluxe:
+  account_id: 1
   property: sojha
   room_type: Retreat deluxe
   price_for_single_occupancy: 4700
@@ -43,6 +48,7 @@ sojha_retreat_deluxe:
   price_for_room: 1900
 
 sojha_suite:
+  account_id: 1
   property: sojha
   room_type: Suite
   price_for_single_occupancy: 5250
@@ -51,6 +57,7 @@ sojha_suite:
   price_for_room: 2400
 
 sojha_cottage_deluxe:
+  account_id: 1
   property: sojha
   room_type: Cottage deluxe
   price_for_single_occupancy: 6450
@@ -59,6 +66,7 @@ sojha_cottage_deluxe:
   price_for_room: 2200
 
 thanedar_standard:
+  account_id: 1
   property: thanedar
   room_type: Standard
   price_for_single_occupancy: 3600
@@ -67,6 +75,7 @@ thanedar_standard:
   price_for_room: 1000
 
 thanedar_deluxe:
+  account_id: 1
   property: thanedar
   room_type: Deluxe
   price_for_single_occupancy: 4700
@@ -75,6 +84,7 @@ thanedar_deluxe:
   price_for_room: 1200
 
 thanedar_suite:
+  account_id: 1
   property: thanedar
   room_type: Suite
   price_for_single_occupancy: 5250
@@ -83,6 +93,7 @@ thanedar_suite:
   price_for_room: 2000
 
 thanedar_log_cabin:
+  account_id: 1
   property: thanedar
   room_type: Log cabin
   price_for_single_occupancy: 5450
@@ -91,9 +102,28 @@ thanedar_log_cabin:
   price_for_room: 2000
 
 kaza_standard:
+  account_id: 1
   property: kaza
   room_type: Standard
   price_for_single_occupancy: 4250
   price_for_double_occupancy: 5150
   number_of_rooms: 11
+  price_for_room: 800
+
+sonapani_standard:
+  account_id: 2
+  property: sonapani
+  room_type: Standard
+  price_for_single_occupancy: 3500
+  price_for_double_occupancy: 4200
+  number_of_rooms: 10
+  price_for_room: 800
+
+sonapani_family_cottage:
+  account_id: 2
+  property: sonapani
+  room_type: Family cottage
+  price_for_single_occupancy: 3500
+  price_for_double_occupancy: 4500
+  number_of_rooms: 2
   price_for_room: 800

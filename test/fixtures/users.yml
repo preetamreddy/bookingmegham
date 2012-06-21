@@ -1,5 +1,13 @@
 kavita:
-  agency: banjara
+  account_id: 1
   advisor: kavita
-  name: kavita
-  password_digest: "$2a$10$vKXXPpwDDp3P9yBRAVRJx.SrfaLFbekuEUC1C2C65hrjV/OybXXaq"
+  email: preetamreddy@yahoo.com
+  encrypted_password: "$2a$10$FWaHqSAR7XVsJLllll6TPOVHuXi9RgKdlrvD3v/BRNgXjC.r8.6E6"
+  role: "account_admin"
+
+ashish:
+  account_id: 2
+  advisor: ashish
+  email: info@ezbook.in
+  encrypted_password: "$2a$10$aGtYQ.0u5inPa/j3So5P.ulerUX9Cu1ZA0hqjhUt2Kt1rbaw8hdyS"
+  role: "account_admin"

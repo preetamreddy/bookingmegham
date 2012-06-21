@@ -1,6 +1,13 @@
 kavita:
-  agency: banjara
+  account_id: 1
   name: Kavita Goel
   phone_number_1: +91 99103 45220
   phone_number_2: +91 11 2685 5152
-  email_id: +91 11 2685 5152
+  email_id: preetamreddy@yahoo.com
+
+ashish:
+  account_id: 2
+  name: Ashish Arora 
+  phone_number_1: +91 80063 00100
+  phone_number_2: +91 80063 00100
+  email_id: info@ezbook.in

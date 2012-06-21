@@ -1,4 +1,5 @@
 banjara:
+  account_id: 1
   name: Banjara Camps And Retreats Pvt. Ltd.
   phone_number: +91 11 2685 5152
   email_id: info@banjaracamps.com
@@ -16,6 +17,7 @@ banjara:
   service_tax: 6.18
 
 great_escape:
+  account_id: 1
   name: Great Escape Routes
   phone_number: + 91 9418012500
   email_id: greatescaperoutes@gmail.com 
@@ -25,3 +27,21 @@ great_escape:
   is_travel_agency: 1
   short_name: Great Escape
   service_tax: 0
+
+himalayanvillage:
+  account_id: 2
+  name: Himalayan Village
+  phone_number: +91 80063 00100
+  email_id: ashish@himalayanvillage.com
+  postal_address: |
+    Sonapani,
+    Uttarakhan, India
+  city: Sonapani
+  url: www.himalayanvillage.com
+  logo_file_name: Himalayanvillage.jpg
+  pan_number: AACCH0123J
+  operates_properties: 1
+  operates_taxis: 0
+  is_travel_agency: 0
+  short_name: Himalayan Village
+  service_tax: 6.18

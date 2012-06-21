@@ -1,4 +1,5 @@
 sangla:
+  account_id: 1
   agency: banjara
   name: Sangla
   price_for_children_below_5_years: 0
@@ -34,6 +35,7 @@ sangla:
   url: "http://www.banjaracamps.com/sangla_banjara_camp_&_retreat.html"
 
 kaza:
+  account_id: 1
   agency: banjara
   name: Kaza
   price_for_children_below_5_years: 0
@@ -62,6 +64,7 @@ kaza:
   url: "http://www.banjaracamps.com/kaza_spiti_banjara_retreat.html"
 
 sojha:
+  account_id: 1
   agency: banjara
   name: Sojha
   price_for_children_below_5_years: 0
@@ -89,6 +92,7 @@ sojha:
   url: "http://www.banjaracamps.com/sojha_banjara_retreat_&_cottage.html"
 
 thanedar:
+  account_id: 1
   agency: banjara
   name: Thanedar
   price_for_children_below_5_years: 0
@@ -114,3 +118,26 @@ thanedar:
     6. Hike to Shilla Jan ridge
     7. Day trip to Sarahan- full day
   url: "http://www.banjaracamps.com/thanedar_banjara_orchard_retreat.html"
+
+sonapani:
+  account_id: 2
+  agency: himalayanvillage
+  name: Sonapani
+  price_for_children_below_5_years: 0
+  price_for_triple_occupancy: 1600
+  price_for_driver: 400
+  price_for_children_between_5_and_12_years: 900
+  ensure_availability_before_booking: 1
+  consider_blocked_rooms_as_booked: 1
+  phone_number: +91 80063 00100
+  phone_number_2: +91 80063 00100
+  address: |
+    Sonapani,
+    Uttarakhand, India
+  suggested_activities: |
+    1. Rock climbing, rappelling, simulated river crossing
+    2. Jungle walks
+    3. Village  walks
+    4. Trek to Kapileshwar
+    5. Games
+  url: "http://www.himalayanvillage.com/activities.shtml"

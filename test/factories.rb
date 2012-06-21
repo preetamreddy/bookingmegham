@@ -1,5 +1,16 @@
 FactoryGirl.define do
+	factory :account do
+		id 3
+		name { Faker::Company.name }
+		subdomain { name.gsub(/[^a-zA-Z]/, '') }
+	  phone_number_1 { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
+	  email { Faker::Internet.email }
+		postal_address { "#{Faker::Address.secondary_address}, #{Faker::Address.street_name}" }
+		url { Faker::Internet.url }
+	end
+
 	factory :agency do
+		account_id 3
 	  name { Faker::Company.name }
 	  phone_number { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
 	  email_id { Faker::Internet.email }
@@ -15,6 +26,7 @@ FactoryGirl.define do
 	end
 
 	factory :property do
+		account_id 3
 	  agency
 	  name { Faker::Address.city }
 	  price_for_children_below_5_years 0
@@ -31,6 +43,7 @@ FactoryGirl.define do
 	end
 
 	factory :room_type do
+		account_id 3
 		property
 		room_type { Faker::Lorem.words(1).first }
 		price_for_single_occupancy 4700
@@ -43,6 +56,7 @@ FactoryGirl.define do
 	end
 
 	factory :guest do
+		account_id 3
 		name { Faker::Name.name }
 	  phone_number { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
 		email_id { Faker::Internet.email }
@@ -52,6 +66,7 @@ FactoryGirl.define do
 	end
 
 	factory :trip do
+		account_id 3
 		guest
 		name { Faker::Lorem.words(1).first }
 		start_date { Date.today + 30.days }
@@ -62,6 +77,7 @@ FactoryGirl.define do
 	end
 
 	factory :booking do
+		account_id 3
 		trip
 		room_type
 		check_in_date { trip.start_date }
@@ -69,6 +85,7 @@ FactoryGirl.define do
 	end
 
 	factory :room do
+		account_id 3
 		booking
 		occupancy "Double"
 		number_of_adults 2

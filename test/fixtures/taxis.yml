@@ -1,28 +1,33 @@
 indica:
+  account_id: 1
   agency: great_escape
   model: Indica
   max_passengers: 4
   unit_price: 2300
 
 innova:
+  account_id: 1
   agency: great_escape
   model: Innova
   max_passengers: 7
   unit_price: 3500
 
 tavera:
+  account_id: 1
   agency: great_escape
   model: Tavera
   max_passengers: 8
   unit_price: 3500
 
 tempo_traveller:
+  account_id: 1
   agency: great_escape
   model: Tempo Traveller 12 Seater
   max_passengers: 12
   unit_price: 4300
 
 indigo:
+  account_id: 1
   agency: great_escape
   model: Indigo
   max_passengers: 5
