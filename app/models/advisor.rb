@@ -9,7 +9,9 @@ class Advisor < ActiveRecord::Base
 
 	before_destroy :ensure_does_not_have_trips, :ensure_is_not_a_user
 
-	validate :name, :email_id, presence: true
+	validates :name, presence: true
+
+	validates :email_id, presence: true, :uniqueness => { :case_sensitive => false }
 
 	validates :phone_number_1, :phone_number_2, 
 		:format => { :with => /^[\+]?[\d\s]*$/,
