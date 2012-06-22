@@ -180,7 +180,7 @@
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
    	<%= f.label :advisor_id, "Advisor" %><br />
     <%= f.collection_select(:advisor_id,
-					Advisor.order('name').find_all_by_agency_id(@trip.advisor.agency.id), :id, :name) %>
+					Advisor.order('name').find_all, :id, :name) %>
 	<% end %>
   <div class="action_container">
     <%= f.submit %>

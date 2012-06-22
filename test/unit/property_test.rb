@@ -14,7 +14,13 @@ class PropertyTest < ActiveSupport::TestCase
 		assert darjeeling.save
 	end
 
-	test "property name should be unique" do
+	test "property name can be duplicated across accounts" do
+		darjeeling = FactoryGirl.create(:property, :account_id => 1, :name => "Darjeeling")
+		darjeeling_2 = FactoryGirl.build(:property, :account_id => 2, :name => "Darjeeling")
+		assert darjeeling_2.valid?
+	end
+
+	test "property name should be unique within an account" do
 		darjeeling = FactoryGirl.create(:property, :name => "Darjeeling")
 		darjeeling_2 = FactoryGirl.build(:property, :name => "Darjeeling")
 		assert darjeeling_2.invalid?

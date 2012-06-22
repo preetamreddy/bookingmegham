@@ -10,6 +10,14 @@
   <span class="saved_value"><%= @property.agency.name %></span>
 </p>
 <p>
+  <b>Ensure availability before booking:</b>
+  <span class="saved_value"><%= @property.ensure_availability_before_booking.to_english %></span>
+</p>
+<p>
+  <b>Consider blocked rooms as booked:</b>
+  <span class="saved_value"><%= @property.consider_blocked_rooms_as_booked.to_english %></span>
+</p>
+<p>
   <b>Phone number:</b>
   <span class="saved_value"><%= @property.phone_number %></span>
 </p>
@@ -25,16 +33,6 @@
 <p>
   <b>Price for driver:</b>
   <span class="saved_value"><%= number_to_currency(@property.price_for_driver) %></span>
-</p>
-
-<p>
-  <b>Ensure availability before booking:</b>
-  <span class="saved_value"><%= @property.ensure_availability_before_booking %></span>
-</p>
-
-<p>
-  <b>Consider blocked rooms as booked:</b>
-  <span class="saved_value"><%= @property.consider_blocked_rooms_as_booked %></span>
 </p>
 
 <p>

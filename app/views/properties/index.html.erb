@@ -20,20 +20,12 @@
 			<%= property.phone_number_2 %>
 		</td>
     <td class="currency"><%= number_to_currency(property.price_for_driver) %></td>
-    <td class="text">
-			<% if property.ensure_availability_before_booking == 1 %>
-				Yes
-			<% else %>
-				No
-			<% end %>
-		</td>
+    <td class="text"><%= property.ensure_availability_before_booking.to_english %></td>
     <td>
     	<%= link_to 'Show details', property %></br>
     	<%= link_to 'Edit', edit_property_path(property) %></br>
-			<% if current_user.agency.name == 'EZBook' %>
-    		<%= link_to 'Destroy', property, confirm: 'Are you sure?', 
-							method: :delete %></br>
-			<% end %>
+    	<%= link_to 'Destroy', property, confirm: 'Are you sure?', 
+						method: :delete %></br>
 			<%= link_to 'Room Types', room_types_path(:property_id => property.id) %>
 		</td>
   </tr>

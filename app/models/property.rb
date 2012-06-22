@@ -12,11 +12,11 @@ class Property < ActiveRecord::Base
 
 	before_destroy 	:ensure_does_not_have_room_types,
 									:ensure_does_not_have_value_added_services
+
+	validates_uniqueness_of :name, :scope => :account_id, :case_sensitive => false
+
+	validates :url, :name, presence: true
 	
-	validates :name, presence: true, :uniqueness => { :case_sensitive => false }
-
-	validates :url, presence: true
-
 	validates_numericality_of :price_for_children_between_5_and_12_years,
 														:price_for_children_below_5_years,
 														:price_for_triple_occupancy,

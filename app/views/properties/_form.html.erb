@@ -18,8 +18,12 @@
   <div class="field">
     <%= f.label :agency, "Agency" %><br />
 		<%= f.collection_select(:agency_id,
-					Agency.order('name').find_all, :id, :name) %>
+					Agency.scoped_by_account_id(current_user.account_id).order('name').find_all, :id, :name) %>
   </div>
+	<div class="field">
+		<%= f.label :ensure_availability_before_booking %>
+		<%= f.check_box :ensure_availability_before_booking, default: 1 %>
+	</div>
   <div class="field">
     <%= f.label :phone_number %><br />
     <%= f.text_field :phone_number %>

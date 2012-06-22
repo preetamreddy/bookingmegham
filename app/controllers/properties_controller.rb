@@ -1,10 +1,11 @@
 class PropertiesController < ApplicationController
+	load_and_authorize_resource
   # GET /properties
   # GET /properties.json
   def index
 		session[:property_id] = nil
 
-    @properties = Property.order(:name).all
+    @properties = @properties.order(:name)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,24 +16,15 @@ class PropertiesController < ApplicationController
   # GET /properties/1
   # GET /properties/1.json
   def show
-		begin
-    	@property = Property.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid property #{params[:id]}"
-			redirect_to properties_url, alert: 'Invalid property'
-		else
-    	respond_to do |format|
-      	format.html # show.html.erb
-      	format.json { render json: @property }
-    	end
-		end
+    respond_to do |format|
+     	format.html # show.html.erb
+     	format.json { render json: @property }
+    end
   end
 
   # GET /properties/new
   # GET /properties/new.json
   def new
-    @property = Property.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @property }
@@ -41,20 +33,11 @@ class PropertiesController < ApplicationController
 
   # GET /properties/1/edit
   def edit
-		begin
-    	@property = Property.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid property #{params[:id]}"
-			redirect_to properties_url, alert: 'Invalid property'
-		end
   end
 
   # POST /properties
   # POST /properties.json
   def create
-    @property = Property.new(params[:property])
-		@property.ensure_availability_before_booking = 0
-
     respond_to do |format|
       if @property.save
         format.html { redirect_to @property, notice: 'Property was successfully created.' }
@@ -69,8 +52,6 @@ class PropertiesController < ApplicationController
   # PUT /properties/1
   # PUT /properties/1.json
   def update
-    @property = Property.find(params[:id])
-
     respond_to do |format|
       if @property.update_attributes(params[:property])
         format.html { redirect_to @property, notice: 'Property was successfully updated.' }
@@ -85,7 +66,6 @@ class PropertiesController < ApplicationController
   # DELETE /properties/1
   # DELETE /properties/1.json
   def destroy
-    @property = Property.find(params[:id])
     @property.destroy
 
     respond_to do |format|
