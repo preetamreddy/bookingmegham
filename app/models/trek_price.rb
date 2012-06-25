@@ -13,10 +13,16 @@ class TrekPrice < ActiveRecord::Base
 
 	before_validation :set_defaults_if_nil
 
+	before_create :set_account_id
+
 	private
 
 		def set_defaults_if_nil
 			self.min_group_size ||= 1
 			self.max_group_size ||= 99
+		end
+
+		def set_account_id
+			self.account_id = trek.account_id
 		end
 end
