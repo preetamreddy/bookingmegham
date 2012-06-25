@@ -14,12 +14,14 @@
   <div class="field">
     <%= f.label :property_id %><br />
 		<% if @value_added_service.new_record? %>
-    	<%= f.collection_select(:property_id, Property.order("name").find_all,
-																:id, :name, { :include_blank => true } ) %>
+    	<%= f.collection_select(:property_id,
+						Property.scoped_by_account_id(current_user.account_id).order("name").find_all,
+						:id, :name, { :include_blank => true } ) %>
 		<% else %>
 			<% if @value_added_service.property_id %>
 				<%= f.collection_select(:property_id, 
-							Property.find_all_by_id(@value_added_service.property_id),
+							Property.scoped_by_account_id(current_user.account_id).
+							find_all_by_id(@value_added_service.property_id),
 							:id, :name) %>
 			<% else %>
 				<%= f.number_field :property_id, readonly: true %>
