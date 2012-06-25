@@ -1,9 +1,8 @@
 class TaxisController < ApplicationController
+	load_and_authorize_resource
   # GET /taxis
   # GET /taxis.json
   def index
-    @taxis = Taxi.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @taxis }
@@ -13,24 +12,15 @@ class TaxisController < ApplicationController
   # GET /taxis/1
   # GET /taxis/1.json
   def show
-		begin
-    	@taxi = Taxi.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid taxi #{params[:id]}"
-			redirect_to taxis_url, alert: 'Invalid taxi'
-		else
-    	respond_to do |format|
-      	format.html # show.html.erb
-      	format.json { render json: @taxi }
-			end
+    respond_to do |format|
+     	format.html # show.html.erb
+     	format.json { render json: @taxi }
     end
   end
 
   # GET /taxis/new
   # GET /taxis/new.json
   def new
-    @taxi = Taxi.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @taxi }
@@ -39,19 +29,11 @@ class TaxisController < ApplicationController
 
   # GET /taxis/1/edit
   def edit
-		begin
-    	@taxi = Taxi.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid taxi #{params[:id]}"
-			redirect_to taxis_url, alert: 'Invalid taxi'
-		end
   end
 
   # POST /taxis
   # POST /taxis.json
   def create
-    @taxi = Taxi.new(params[:taxi])
-
     respond_to do |format|
       if @taxi.save
         format.html { redirect_to @taxi, notice: 'Taxi was successfully created.' }
@@ -66,8 +48,6 @@ class TaxisController < ApplicationController
   # PUT /taxis/1
   # PUT /taxis/1.json
   def update
-    @taxi = Taxi.find(params[:id])
-
     respond_to do |format|
       if @taxi.update_attributes(params[:taxi])
         format.html { redirect_to @taxi, notice: 'Taxi was successfully updated.' }
@@ -82,7 +62,6 @@ class TaxisController < ApplicationController
   # DELETE /taxis/1
   # DELETE /taxis/1.json
   def destroy
-    @taxi = Taxi.find(params[:id])
     @taxi.destroy
 
     respond_to do |format|
