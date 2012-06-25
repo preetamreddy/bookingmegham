@@ -25,8 +25,6 @@ Bookingmegham::Application.routes.draw do
 
   resources :payments
 
-  resources :trek_prices
-
   resources :trek_bookings
 
   resources :treks
