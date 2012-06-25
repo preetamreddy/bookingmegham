@@ -15,10 +15,12 @@
     <%= f.label :property_id %><br />
 		<% if @room_type.property_id %>
     	<%= f.collection_select(:property_id,
-						Property.find_all_by_id(@room_type.property_id), :id, :name) %>
+						Property.scoped_by_account_id(current_user.account_id).
+							find_all_by_id(@room_type.property_id), :id, :name) %>
 		<% else %>
     	<%= f.collection_select(:property_id,
-						Property.order('name').find_all, :id, :name) %>
+						Property.scoped_by_account_id(current_user.account_id).
+							order('name').find_all, :id, :name) %>
 		<% end %>
   </div>
   <div class="field">

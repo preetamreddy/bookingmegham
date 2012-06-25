@@ -1,4 +1,5 @@
 class RoomTypesController < ApplicationController
+	load_and_authorize_resource
   # GET /room_types
   # GET /room_types.json
   def index
@@ -6,17 +7,16 @@ class RoomTypesController < ApplicationController
 			session[:property_id] = nil
 		elsif params[:property_id]
 			property_id = params[:property_id].to_i
-			if Property.find_all_by_id(property_id).any?
-				session[:property_id] = params[:property_id].to_i
+			if Property.scoped_by_account_id(current_user.account_id).find_all_by_id(property_id).any?
+				session[:property_id] = property_id
 			end
 		end	
 
 		if session[:property_id]
-			@room_types = RoomType.order(:price_for_double_occupancy).
+			@room_types = @room_types.order(:price_for_double_occupancy).
 											find_all_by_property_id(session[:property_id])
 		else
-    	@room_types = RoomType.order('property_id, price_for_double_occupancy').
-											all
+    	@room_types = @room_types.order('property_id, price_for_double_occupancy')
 		end
 
     respond_to do |format|
@@ -28,23 +28,15 @@ class RoomTypesController < ApplicationController
   # GET /room_types/1
   # GET /room_types/1.json
   def show
-		begin
-    	@room_type = RoomType.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid room type #{params[:id]}"
-			redirect_to room_types_url, alert: 'Invalid room type'
-		else
-    	respond_to do |format|
-      	format.html # show.html.erb
-      	format.json { render json: @room_type }
-			end
-    end
+   	respond_to do |format|
+     	format.html # show.html.erb
+     	format.json { render json: @room_type }
+		end
   end
 
   # GET /room_types/new
   # GET /room_types/new.json
   def new
-    @room_type = RoomType.new
 		@room_type.property_id = session[:property_id]
 
     respond_to do |format|
@@ -55,19 +47,11 @@ class RoomTypesController < ApplicationController
 
   # GET /room_types/1/edit
   def edit
-		begin
-    	@room_type = RoomType.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid room type #{params[:id]}"
-			redirect_to room_types_url, alert: 'Invalid room type'
-		end
   end
 
   # POST /room_types
   # POST /room_types.json
   def create
-    @room_type = RoomType.new(params[:room_type])
-
     respond_to do |format|
       if @room_type.save
         format.html { redirect_to @room_type, notice: 'Room type was successfully created.' }
@@ -82,8 +66,6 @@ class RoomTypesController < ApplicationController
   # PUT /room_types/1
   # PUT /room_types/1.json
   def update
-    @room_type = RoomType.find(params[:id])
-
     respond_to do |format|
       if @room_type.update_attributes(params[:room_type])
         format.html { redirect_to @room_type, notice: 'Room type was successfully updated.' }
@@ -98,7 +80,6 @@ class RoomTypesController < ApplicationController
   # DELETE /room_types/1
   # DELETE /room_types/1.json
   def destroy
-    @room_type = RoomType.find(params[:id])
     @room_type.destroy
 
     respond_to do |format|
