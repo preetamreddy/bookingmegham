@@ -29,10 +29,7 @@ FactoryGirl.define do
 		account_id 3
 	  agency
 	  name { Faker::Address.city }
-	  price_for_children_below_5_years 0
-	  price_for_triple_occupancy 2000
 	  price_for_driver 500
-	  price_for_children_between_5_and_12_years 1200
 	  ensure_availability_before_booking 1
 	  consider_blocked_rooms_as_booked 1
 	  phone_number { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }

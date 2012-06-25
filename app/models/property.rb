@@ -17,10 +17,7 @@ class Property < ActiveRecord::Base
 
 	validates :url, :name, presence: true
 	
-	validates_numericality_of :price_for_children_between_5_and_12_years,
-														:price_for_children_below_5_years,
-														:price_for_triple_occupancy,
-														:price_for_driver,
+	validates_numericality_of :price_for_driver,
 														allow_nil: true, only_integer: true,
 														greater_than_or_equal_to: 0,
 														message: "should be a number greater than or equal to 0"
@@ -42,9 +39,6 @@ class Property < ActiveRecord::Base
 	private
 	
 		def set_defaults_if_nil
-			self.price_for_children_below_5_years ||= 0	
-			self.price_for_children_between_5_and_12_years ||= 0	
-			self.price_for_triple_occupancy ||= 0	
 			self.price_for_driver ||= 0	
 		end
 	

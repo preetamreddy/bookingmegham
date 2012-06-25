@@ -31,18 +31,9 @@ class PropertyTest < ActiveSupport::TestCase
 
 	test "price should be an integer greater than or equal to 0" do
 		new_property = FactoryGirl.build(:property,
-									:price_for_children_between_5_and_12_years => -1,
-									:price_for_children_below_5_years => "abc",
-									:price_for_triple_occupancy => 2000.5,
 									:price_for_driver => nil)
 		assert new_property.invalid?
-		assert new_property.errors[:price_for_children_between_5_and_12_years].any?
-		assert new_property.errors[:price_for_children_below_5_years].any?
-		assert new_property.errors[:price_for_triple_occupancy].any?
 		assert !new_property.errors[:price_for_driver].any?
-		new_property.price_for_children_between_5_and_12_years = 1200
-		new_property.price_for_children_below_5_years = 1200
-		new_property.price_for_triple_occupancy = 1200
 		new_property.price_for_driver = 1200
 		assert new_property.valid?
 	end

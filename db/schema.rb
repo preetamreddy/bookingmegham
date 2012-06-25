@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120622112721) do
+ActiveRecord::Schema.define(:version => 20120625090616) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -155,15 +155,12 @@ ActiveRecord::Schema.define(:version => 20120622112721) do
 
   create_table "properties", :force => true do |t|
     t.string   "name"
-    t.integer  "price_for_children_below_5_years"
-    t.integer  "price_for_triple_occupancy"
     t.integer  "price_for_driver"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "price_for_children_between_5_and_12_years"
-    t.integer  "ensure_availability_before_booking",        :default => 1
-    t.integer  "consider_blocked_rooms_as_booked",          :default => 1
+    t.integer  "ensure_availability_before_booking", :default => 1
+    t.integer  "consider_blocked_rooms_as_booked",   :default => 1
     t.integer  "agency_id"
     t.string   "phone_number"
     t.string   "phone_number_2"

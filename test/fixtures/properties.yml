@@ -2,10 +2,7 @@ sangla:
   account_id: 1
   agency: banjara
   name: Sangla
-  price_for_children_below_5_years: 0
-  price_for_triple_occupancy: 2000
   price_for_driver: 500
-  price_for_children_between_5_and_12_years: 1200
   ensure_availability_before_booking: 1
   consider_blocked_rooms_as_booked: 1
   phone_number: +91 98169 59904
@@ -38,10 +35,7 @@ kaza:
   account_id: 1
   agency: banjara
   name: Kaza
-  price_for_children_below_5_years: 0
-  price_for_triple_occupancy: 2000
   price_for_driver: 500
-  price_for_children_between_5_and_12_years: 1200
   ensure_availability_before_booking: 1
   consider_blocked_rooms_as_booked: 1
   phone_number: +91 94187 18123
@@ -67,10 +61,7 @@ sojha:
   account_id: 1
   agency: banjara
   name: Sojha
-  price_for_children_below_5_years: 0
-  price_for_triple_occupancy: 2000
   price_for_driver: 500
-  price_for_children_between_5_and_12_years: 1200
   ensure_availability_before_booking: 1
   consider_blocked_rooms_as_booked: 1
   phone_number: +91 94183 46973
@@ -95,10 +86,7 @@ thanedar:
   account_id: 1
   agency: banjara
   name: Thanedar
-  price_for_children_below_5_years: 0
-  price_for_triple_occupancy: 2000
   price_for_driver: 500
-  price_for_children_between_5_and_12_years: 1200
   ensure_availability_before_booking: 1
   consider_blocked_rooms_as_booked: 1
   phone_number: +91 94180 77180 
@@ -123,10 +111,7 @@ sonapani:
   account_id: 2
   agency: himalayanvillage
   name: Sonapani
-  price_for_children_below_5_years: 0
-  price_for_triple_occupancy: 1600
   price_for_driver: 400
-  price_for_children_between_5_and_12_years: 900
   ensure_availability_before_booking: 1
   consider_blocked_rooms_as_booked: 1
   phone_number: +91 80063 00100
