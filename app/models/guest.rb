@@ -11,9 +11,8 @@ class Guest < ActiveRecord::Base
 
 	validates :name, :title, presence: true
 
-	validates :phone_number, :email_id, :allow_nil => true,
-						:allow_blank => true,
-						:uniqueness => { :case_sensitive => false }
+	validates_uniqueness_of :phone_number, :email_id, :scope => :account_id,
+		:allow_nil => true, :allow_blank => true, :case_sensitive => false
 
 	validates :phone_number, :phone_number_2, allow_nil: true,
 		:format => { :with => /^[\+]?[\d\s]*$/, :message => "is not valid" }

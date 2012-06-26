@@ -1,4 +1,5 @@
 class GuestsController < ApplicationController
+	load_and_authorize_resource
   # GET /guests
   # GET /guests.json
   def index
@@ -9,7 +10,7 @@ class GuestsController < ApplicationController
 
 		if (params[:name] or params[:phone_number] or params[:email_id])
 			if params[:agency_id].to_i > 0
-				@guests = Guest.paginate(page: params[:page], per_page: 20).
+				@guests = @guests.paginate(page: params[:page], per_page: 20).
 										order('name, resident_of').
 										find(:all, :conditions => [ 
 										'lower(name) like ? and
@@ -21,7 +22,7 @@ class GuestsController < ApplicationController
 										"%" + params[:email_id] + "%",
 										"%" + params[:email_id] + "%", params[:agency_id] ])
 			else
-				@guests = Guest.paginate(page: params[:page], per_page: 20).
+				@guests = @guests.paginate(page: params[:page], per_page: 20).
 										order('name, resident_of').
 										find(:all, :conditions => [ 
 										'lower(name) like ? and
@@ -34,8 +35,8 @@ class GuestsController < ApplicationController
 										"%" + params[:email_id] + "%" ])
 			end
 		else
-			@guests = Guest.paginate(page: params[:page], per_page: 20).
-									order('name, resident_of').find(:all)
+			@guests = @guests.paginate(page: params[:page], per_page: 20).
+									order('name, resident_of')
 		end
 
 		@records_returned = @guests.count
@@ -49,24 +50,15 @@ class GuestsController < ApplicationController
   # GET /guests/1
   # GET /guests/1.json
   def show
-		begin
-    	@guest = Guest.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid guest #{params[:id]}"
-			redirect_to guests_url, alert: 'Invalid guest'
-		else
-    	respond_to do |format|
-      	format.html # show.html.erb
-      	format.json { render json: @guest }
-			end
+    respond_to do |format|
+     	format.html # show.html.erb
+     	format.json { render json: @guest }
     end
   end
 
   # GET /guests/new
   # GET /guests/new.json
   def new
-    @guest = Guest.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @guest }
@@ -75,19 +67,11 @@ class GuestsController < ApplicationController
 
   # GET /guests/1/edit
   def edit
-		begin
-    	@guest = Guest.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid guest #{params[:id]}"
-			redirect_to guests_url, alert: 'Invalid guest'
-		end
   end
 
   # POST /guests
   # POST /guests.json
   def create
-    @guest = Guest.new(params[:guest])
-
     respond_to do |format|
       if @guest.save
         format.html { redirect_to @guest, notice: 'Guest was successfully created.' }
@@ -102,8 +86,6 @@ class GuestsController < ApplicationController
   # PUT /guests/1
   # PUT /guests/1.json
   def update
-    @guest = Guest.find(params[:id])
-
     respond_to do |format|
       if @guest.update_attributes(params[:guest])
         format.html { redirect_to @guest, notice: 'Guest was successfully updated.' }
@@ -118,7 +100,6 @@ class GuestsController < ApplicationController
   # DELETE /guests/1
   # DELETE /guests/1.json
   def destroy
-    @guest = Guest.find(params[:id])
     @guest.destroy
 
 		if session[:guest_id] == params[:id].to_i

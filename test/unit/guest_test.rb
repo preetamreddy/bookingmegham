@@ -16,7 +16,7 @@ class GuestTest < ActiveSupport::TestCase
 		assert srini.save
 	end
 
-	test "guest phone number should be unique" do
+	test "guest phone number should be unique within an account" do
 		preetam = FactoryGirl.create(:guest,
 							:phone_number => "+91 99020 12405")
 		pallavi = FactoryGirl.build(:guest,
@@ -27,7 +27,18 @@ class GuestTest < ActiveSupport::TestCase
 		assert pallavi.save
 	end
 
-	test "guest email id should be unique" do
+	test "duplicate entries for guest phone number can exist under different accounts" do
+		preetam = FactoryGirl.create(:guest,
+							:account_id => 1,
+							:phone_number => "+91 99020 12405")
+		pallavi = FactoryGirl.build(:guest,
+							:account_id => 2,
+							:phone_number => "+91 99020 12405")
+		assert pallavi.valid?
+		assert pallavi.save
+	end
+
+	test "guest email id should be unique within an account" do
 		preetam = FactoryGirl.create(:guest,
 							:email_id => "preetam@ezbook.in")
 		pallavi = FactoryGirl.build(:guest,
@@ -35,6 +46,17 @@ class GuestTest < ActiveSupport::TestCase
 		assert pallavi.invalid?
 		assert pallavi.errors[:email_id].any?
 		pallavi.email_id = "pallavi@ezbook.in"
+		assert pallavi.save
+	end
+
+	test "duplicate entries for guest email id can exist under different accounts" do
+		preetam = FactoryGirl.create(:guest,
+							:account_id => 1,
+							:email_id => "preetam@ezbook.in")
+		pallavi = FactoryGirl.build(:guest,
+							:account_id => 2,
+							:email_id => "preetam@ezbook.in")
+		assert pallavi.valid?
 		assert pallavi.save
 	end
 

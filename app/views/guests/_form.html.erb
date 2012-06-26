@@ -22,8 +22,9 @@
  	<div class="field">
    	<%= f.label :agency_id, "Agency" %><br />
     <%= f.collection_select(:agency_id, 
-					Agency.order('short_name').find(:all, :conditions => [
-					'is_travel_agency = ?', 1 ]), :id, :short_name, :include_blank => true) %>
+					Agency.scoped_by_account_id(current_user.account_id).
+						order('short_name').find(:all, :conditions => [
+						'is_travel_agency = ?', 1 ]), :id, :short_name, :include_blank => true) %>
   </div>
   <div class="field">
     <%= f.label :phone_number %><br />
