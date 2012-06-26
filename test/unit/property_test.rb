@@ -29,11 +29,11 @@ class PropertyTest < ActiveSupport::TestCase
 		assert darjeeling_2.save
 	end
 
-	test "price should be an integer greater than or equal to 0" do
+	test "price if set should be an integer greater than or equal to 0" do
 		new_property = FactoryGirl.build(:property,
-									:price_for_driver => nil)
+									:price_for_driver => -1000)
 		assert new_property.invalid?
-		assert !new_property.errors[:price_for_driver].any?
+		assert new_property.errors[:price_for_driver].any?
 		new_property.price_for_driver = 1200
 		assert new_property.valid?
 	end
