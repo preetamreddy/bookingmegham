@@ -20,19 +20,24 @@
    	<%= f.label :guest_id, "Guest" %><br />
 		<% if @trip.guest_id %>
     	<%= f.collection_select(:guest_id, 
-						Guest.find_all_by_id(@trip.guest_id), :id, :name) %>
+						Guest.scoped_by_account_id(current_user.account_id).
+							find_all_by_id(@trip.guest_id), :id, :name) %>
 		<% else %>
-    	<%= f.collection_select(:guest_id, Guest.order("name").all, :id, :name) %>
+    	<%= f.collection_select(:guest_id, 
+						Guest.scoped_by_account_id(current_user.account_id).
+							order("name"), :id, :name) %>
 		<% end %>
   </div>
  	<div class="field">
    	<%= f.label :agency_id, "Agency" %><br />
 		<% if @trip.agency_id %>
     	<%= f.collection_select(:agency_id, 
-						Agency.order('name').find_all_by_id(@trip.agency_id), :id, :name) %>
+						Agency.scoped_by_account_id(current_user.account_id).
+							order('name').find_all_by_id(@trip.agency_id), :id, :name) %>
 		<% else %>
     	<%= f.collection_select(:agency_id, 
-						Agency.order('name').find_all, :id, :name) %>
+						Agency.scoped_by_account_id(current_user.account_id).
+							order('name'), :id, :name) %>
 		<% end %>
   </div>
 	<%= hidden_div_if(true, class: "field") do %>
@@ -180,7 +185,8 @@
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
    	<%= f.label :advisor_id, "Advisor" %><br />
     <%= f.collection_select(:advisor_id,
-					Advisor.order('name').find_all, :id, :name) %>
+					Advisor.scoped_by_account_id(current_user.account_id).
+						order('name'), :id, :name) %>
 	<% end %>
   <div class="action_container">
     <%= f.submit %>

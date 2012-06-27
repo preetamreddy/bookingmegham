@@ -6,6 +6,8 @@ class Room < ActiveRecord::Base
 
 	before_validation :set_defaults_if_nil
 
+	before_create :set_account_id
+
 	validates :occupancy, :number_of_adults, :number_of_rooms, presence: true
 
 	validates :occupancy, inclusion: ROOM_OCCUPANCY_TYPES
@@ -23,11 +25,6 @@ class Room < ActiveRecord::Base
 		:inclusion => { :in => [0, 1, 2, 3],
 		:message => "%{value} is not a valid option for number of children / room" }
 
-	def set_defaults_if_nil
-		self.number_of_children_between_5_and_12_years ||= 0
-		self.number_of_children_below_5_years ||= 0
-	end
-
 	def total_price
 		room_rate * number_of_rooms * booking.number_of_nights
 	end
@@ -40,4 +37,17 @@ class Room < ActiveRecord::Base
 		end
 	end
 
+	private
+		def set_defaults_if_nil
+			self.number_of_children_between_5_and_12_years ||= 0
+			self.number_of_children_below_5_years ||= 0
+		end
+
+		def set_account_id
+			if trip != nil
+				self.account_id = trip.account_id
+			elsif booking != nil
+				self.account_id = booking.account_id
+			end
+		end
 end

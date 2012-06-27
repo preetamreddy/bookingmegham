@@ -1,7 +1,7 @@
 <div class="nested_form_row">
 	<%= f.collection_select :value_added_service_id, 
-			ValueAddedService.order("name").
-			find_all_by_property_id(nil), :id, :name,
+			ValueAddedService.scoped_by_account_id(current_user.account_id).
+				order("name").find_all_by_property_id(nil), :id, :name,
 			{ :prompt => "" } %>
 
 	<%= f.label :number_of_people, "Number of people" %>

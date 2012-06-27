@@ -1,5 +1,6 @@
 <% if session[:guest_id] %>
-	<h1>Listing Trips for <%= Guest.find(session[:guest_id]).name %></h1>
+	<h1>Listing Trips for <%= Guest.scoped_by_account_id(current_user.account_id).
+				find(session[:guest_id]).name %></h1>
 <% else %>
 	<% if params[:payment_status] %>
 		<h1>Listing <%= params[:payment_status] %> Trips</h1>
