@@ -4,8 +4,8 @@
 	<%= render 'search' %>
 </div>
 
-<% if @line_items.count > 0 %>
-	<table class="booking_chart" border="1">
+<% if @booking_chart.count > 0 %>
+	<table class="chart" border="1">
 		<col width="130px" />
 		<% @chart_date_range_short.each do |date| %>
 			<col width="80px" />
@@ -23,8 +23,8 @@
 	  		<tr class=<%= tr_class %>>
 	    		<td class="nowrap"><%= room_type.room_type %></td>
 					<% @chart_date_range.each do |date| %>
-						<%= show_allocation_with_color_code(@line_items[[room_type.id, room_number, date]][1], class: "text") do %>
-							<% @line_items[[room_type.id, room_number, date]][0] %>
+						<%= show_allocation_with_color_code(@booking_chart[[room_type.id, room_number, date]][1], class: "text") do %>
+							<% @booking_chart[[room_type.id, room_number, date]][0] %>
 						<% end %>
 					<% end %>
 				</tr>

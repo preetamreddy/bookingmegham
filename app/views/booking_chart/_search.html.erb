@@ -1,7 +1,7 @@
 <%= form_tag booking_chart_path, :method => "get" do %>
 	<%= label_tag :property_id, "For property" %>
 	<%= select_tag(:property_id, options_for_select(
-		Property.find(:all, :conditions => [
+		Property.scoped_by_account_id(current_user.account_id).order("name").find(:all, :conditions => [
 		'ensure_availability_before_booking = ?', 1 ]).
 		collect { |p| [p.name, p.id] }, @property_id)) %>
 	<%= label_tag :chart_start_date, "Starting from" %>
@@ -10,4 +10,3 @@
 	<%= number_field_tag :number_of_days, @number_of_days, min: 1, max: 99 %>
 	<%= submit_tag "Search", :name => nil %>
 <% end %>
-

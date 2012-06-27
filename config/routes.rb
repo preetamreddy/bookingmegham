@@ -37,8 +37,8 @@ Bookingmegham::Application.routes.draw do
   	get 'availability_chart' => :index
 	end
 
-  controller :line_items do
-		get 'booking_chart' => :index
+	controller :booking_chart do
+  	get 'booking_chart' => :index
 	end
 
   resources :advisors
