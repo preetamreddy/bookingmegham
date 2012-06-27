@@ -9,11 +9,11 @@ class AvailabilityChartController < ApplicationController
 
 		if params[:trip_id]
 			session[:trip_id] = params[:trip_id].to_i
-			session[:guest_id] = Trip.find(session[:trip_id]).guest_id
+			session[:guest_id] = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id]).guest_id
 		end
 
 		if session[:trip_id]
-			trip = Trip.find(session[:trip_id])
+			trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
 			@rooms_required = trip.number_of_rooms
 			@chart_start_date = trip.start_date
 			@chart_end_date = trip.end_date
@@ -52,7 +52,8 @@ class AvailabilityChartController < ApplicationController
 
 		@availability = {}
 
-		@properties = Property.order(:id).find_all_by_ensure_availability_before_booking(1)
+		@properties = Property.scoped_by_account_id(current_user.account_id).
+										order(:name).find_all_by_ensure_availability_before_booking(1)
 		@properties.each do |property|
 			@chart_date_range.each do |date|
 				@availability.store([:property, property.id, date], 
@@ -60,7 +61,9 @@ class AvailabilityChartController < ApplicationController
 			end
 		end
 
-		@room_types = RoomType.order(:property_id, :price_for_double_occupancy).find_all_by_property_id(@properties)
+		@room_types = RoomType.scoped_by_account_id(current_user.account_id).
+										order(:property_id, :price_for_double_occupancy).
+										find_all_by_property_id(@properties)
 		@room_types.each do |room_type|
 			@chart_date_range.each do |date|
 				@availability.store([:room_type, room_type.id, date], 
