@@ -1,12 +1,14 @@
 class PaymentsController < ApplicationController
+	load_and_authorize_resource
+
   # GET /payments
   # GET /payments.json
   def index
 		if params[:trip_id]
 			trip_id = params[:trip_id].to_i
-			if Trip.find_all_by_id(trip_id).any?
+			if Trip.scoped_by_account_id(current_user.account_id).find_all_by_id(trip_id).any?
 				session[:trip_id] = trip_id
-				session[:guest_id] = Trip.find(session[:trip_id]).guest_id
+				session[:guest_id] = Trip.scoped_by_account_id(current_user.account_id).find(trip_id).guest_id
 			end
 		end
 
@@ -28,11 +30,10 @@ class PaymentsController < ApplicationController
 		@to_date = @from_date + @number_of_days
 
 		if session[:trip_id]
-			@payments = Payment.order("trip_id, date_received, id").find(:all, :conditions => [
-											'trip_id = ?',
-											session[:trip_id] ])
+			@payments = @payments.order("trip_id, date_received, id").find(:all, :conditions => [
+											'trip_id = ?', session[:trip_id] ])
 		else
-			@payments = Payment.order("trip_id, date_received, id").find(:all, :conditions => [
+			@payments = @payments.order("trip_id, date_received, id").find(:all, :conditions => [
 											'date_received >= ? and date_received <= ?',
 											@from_date, @to_date ])
 		end
@@ -49,24 +50,15 @@ class PaymentsController < ApplicationController
   # GET /payments/1
   # GET /payments/1.json
   def show
-		begin
-    	@payment = Payment.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid Payment #{params[:id]}"
-			redirect_to payments_url, alert: 'Invalid payment'
-		else
-    	respond_to do |format|
-      	format.html # show.html.erb
-      	format.json { render json: @payment }
-			end
-    end
+   	respond_to do |format|
+     	format.html # show.html.erb
+     	format.json { render json: @payment }
+		end
   end
 
   # GET /payments/new
   # GET /payments/new.json
   def new
-    @payment = Payment.new
-
 		if session[:trip_id]
 			@payment.trip_id = session[:trip_id]
 		end
@@ -79,19 +71,12 @@ class PaymentsController < ApplicationController
 
   # GET /payments/1/edit
   def edit
-		begin
-    	@payment = Payment.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid Payment #{params[:id]}"
-			redirect_to payments_url, alert: 'Invalid payment'
-		end
   end
 
   # POST /payments
   # POST /payments.json
   def create
-    @payment = Payment.new(params[:payment])
-		trip = Trip.find(@payment.trip_id)
+		trip = Trip.scoped_by_account_id(current_user.account_id).find(@payment.trip_id)
 
     respond_to do |format|
       if @payment.save
@@ -111,8 +96,7 @@ class PaymentsController < ApplicationController
   # PUT /payments/1
   # PUT /payments/1.json
   def update
-    @payment = Payment.find(params[:id])
-		trip = Trip.find(@payment.trip_id)
+		trip = Trip.scoped_by_account_id(current_user.account_id).find(@payment.trip_id)
 
     respond_to do |format|
       if @payment.update_attributes(params[:payment])
@@ -132,8 +116,7 @@ class PaymentsController < ApplicationController
   # DELETE /payments/1
   # DELETE /payments/1.json
   def destroy
-    @payment = Payment.find(params[:id])
-		trip = Trip.find(@payment.trip_id)
+		trip = Trip.scoped_by_account_id(current_user.account_id).find(@payment.trip_id)
 
     @payment.destroy
 		trip.save	
@@ -145,7 +128,7 @@ class PaymentsController < ApplicationController
   end
 
 	def email
-		payment = Payment.find(params[:payment_id])
+		payment = Payment.scoped_by_account_id(current_user.account_id).find(params[:payment_id])
 		PaymentNotifier.receipt(payment, current_user.id).deliver
 
 		respond_to do |format|
