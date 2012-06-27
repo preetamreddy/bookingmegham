@@ -1,10 +1,10 @@
 class LineItem < ActiveRecord::Base
-
 	belongs_to :booking
-	
 	belongs_to :room_type
 
 	validates :booking_id, :room_type_id, :date, :booked_rooms, :presence => true
+
+	before_create :set_account_id
 
 	def LineItem.booked_rooms(id, date, consider_blocked_rooms_as_booked)
 		if consider_blocked_rooms_as_booked == 1
@@ -23,5 +23,11 @@ class LineItem < ActiveRecord::Base
 
 		return bookings[[id, date]]
 	end
+
+	private
+
+		def set_account_id
+			self.account_id = booking.account_id
+		end
 
 end

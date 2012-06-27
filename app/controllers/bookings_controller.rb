@@ -1,12 +1,14 @@
 class BookingsController < ApplicationController
+	load_and_authorize_resource
+
   # GET /bookings
   # GET /bookings.json
   def index
 		if params[:trip_id]
 			trip_id = params[:trip_id].to_i
-			if Trip.find_all_by_id(trip_id).any?
-				session[:trip_id] = params[:trip_id].to_i
-				session[:guest_id] = Trip.find(session[:trip_id]).guest_id
+			if Trip.scoped_by_account_id(current_user.account_id).find_all_by_id(trip_id).any?
+				session[:trip_id] = trip_id
+				session[:guest_id] = Trip.scoped_by_account_id(current_user.account_id).find(trip_id).guest_id
 			end
 		end
 			
@@ -34,17 +36,17 @@ class BookingsController < ApplicationController
 		@check_in_date_last = @check_in_date_first + @number_of_days
 
 		if session[:trip_id]
-			@bookings = Booking.paginate(page: params[:page], per_page: 5).
+			@bookings = @bookings.paginate(page: params[:page], per_page: 5).
 										order("check_in_date, check_out_date").
 										find_all_by_trip_id(session[:trip_id])
 		elsif session[:guest_id]
-			trips = Trip.find_all_by_guest_id(session[:guest_id])
-			@bookings = Booking.paginate(page: params[:page], per_page: 5).
+			trips = Trip.scoped_by_account_id(current_user.account_id).find_all_by_guest_id(session[:guest_id])
+			@bookings = @bookings.paginate(page: params[:page], per_page: 5).
 										order("check_in_date, check_out_date").
 										find_all_by_trip_id(trips)
 		else
 			if @property_id > 0
-				@bookings = Booking.paginate(page: params[:page], per_page: 5).
+				@bookings = @bookings.paginate(page: params[:page], per_page: 5).
 											order("check_in_date, check_out_date").
 											find(:all, :conditions => [
 												'property_id = ? and check_in_date >= ? and
@@ -52,7 +54,7 @@ class BookingsController < ApplicationController
 												@property_id, @check_in_date_first,
 												@check_in_date_last ])
 			else
-				@bookings = Booking.paginate(page: params[:page], per_page: 5).
+				@bookings = @bookings.paginate(page: params[:page], per_page: 5).
 											order("check_in_date, check_out_date").
 											find(:all, :conditions => [
 												'check_in_date >= ? and check_in_date < ?',
@@ -71,32 +73,24 @@ class BookingsController < ApplicationController
   # GET /bookings/1
   # GET /bookings/1.json
   def show
-		begin
-    	@booking = Booking.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid booking #{params[:id]}"
-			redirect_to bookings_url, alert: 'Invalid booking'
-		else
-    	respond_to do |format|
-      	format.html # show.html.erb
-      	format.json { render json: @booking }
-			end
+    respond_to do |format|
+     	format.html # show.html.erb
+     	format.json { render json: @booking }
     end
   end
 
   # GET /bookings/new
   # GET /bookings/new.json
   def new
-    @booking = Booking.new
 		if params[:room_type_id]
-			property = RoomType.find(params[:room_type_id]).property
+			property = RoomType.scoped_by_account_id(current_user.account_id).find(params[:room_type_id]).property
 
 			@booking.room_type_id = params[:room_type_id]
 			@booking.suggested_activities = property.suggested_activities
 		end
 		
 		if session[:trip_id]	
-			trip = Trip.find(session[:trip_id])
+			trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
 
 			@booking.trip_id = session[:trip_id]
 			@booking.remarks = trip.remarks
@@ -112,24 +106,17 @@ class BookingsController < ApplicationController
 
   # GET /bookings/1/edit
   def edit
-		begin
-    	@booking = Booking.find(params[:id])
-			if params[:cancel_booking].to_i == 1
-				@cancel_booking = params[:cancel_booking].to_i
-			else
-				@cancel_booking = 0
-			end
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid booking #{params[:id]}"
-			redirect_to bookings_url, alert: 'Invalid booking'
+		if params[:cancel_booking].to_i == 1
+			@cancel_booking = params[:cancel_booking].to_i
+		else
+			@cancel_booking = 0
 		end
   end
 
   # POST /bookings
   # POST /bookings.json
   def create
-    @booking = Booking.new(params[:booking])
-		trip = Trip.find(@booking.trip_id)
+		trip = Trip.scoped_by_account_id(current_user.account_id).find(@booking.trip_id)
 		
     respond_to do |format|
       if @booking.save
@@ -149,8 +136,6 @@ class BookingsController < ApplicationController
   # PUT /bookings/1
   # PUT /bookings/1.json
   def update
-    @booking = Booking.find(params[:id])
-
     respond_to do |format|
       if @booking.update_attributes(params[:booking])
 				@booking.save
@@ -167,7 +152,6 @@ class BookingsController < ApplicationController
   # DELETE /bookings/1
   # DELETE /bookings/1.json
   def destroy
-    @booking = Booking.find(params[:id])
     @booking.destroy
 
     respond_to do |format|

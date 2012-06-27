@@ -1,8 +1,8 @@
 <%= form_tag bookings_path, :method => "get" do %>
 	<%= label_tag :property_id, "For property" %>
 	<%= select_tag(:property_id, options_for_select(
-				Property.all.collect { |p| [p.name, p.id] }.insert(0, 'All'), 
-				@property_id)) %>
+				Property.scoped_by_account_id(current_user.account_id).order('name').collect { |p| [p.name, p.id] }.insert(0, 'All'), 
+					@property_id)) %>
 	<%= label_tag :check_in_date_first, "Starting from" %>
 	<%= select_date @check_in_date_first, :prefix => 'check_in_date_first' %>
 	<%= label_tag :number_of_days, "For days" %>
