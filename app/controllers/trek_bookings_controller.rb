@@ -1,21 +1,22 @@
 class TrekBookingsController < ApplicationController
+	load_and_authorize_resource
+
   # GET /trek_bookings
   # GET /trek_bookings.json
   def index
 		if params[:trip_id]
 			trip_id = params[:trip_id].to_i
-			if Trip.find_all_by_id(trip_id).any?
+			if Trip.scoped_by_account_id(current_user.account_id).find_all_by_id(trip_id).any?
 				session[:trip_id] = trip_id
-				session[:guest_id] = Trip.find(session[:trip_id]).guest_id
+				session[:guest_id] = Trip.scoped_by_account_id(current_user.account_id).find(trip_id).guest_id
 			end
 		end
 
 		if session[:trip_id]
-			@trek_bookings = TrekBooking.paginate(page: params[:page], per_page: 5).
+			@trek_bookings = @trek_bookings.paginate(page: params[:page], per_page: 5).
 													find_all_by_trip_id(session[:trip_id])
 		else
-			@trek_bookings = TrekBooking.paginate(page: params[:page], per_page: 5).
-													all
+			@trek_bookings = @trek_bookings.paginate(page: params[:page], per_page: 5)
 		end
 
     respond_to do |format|
@@ -27,24 +28,15 @@ class TrekBookingsController < ApplicationController
   # GET /trek_bookings/1
   # GET /trek_bookings/1.json
   def show
-		begin
-			@trek_booking = TrekBooking.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid trek booking #{params[:id]}"
-			redirect_to trek_bookings_url, alert: 'Invalid trek booking'
-		else
-    	respond_to do |format|
-      	format.html # show.html.erb
-      	format.json { render json: @trek_booking }
-			end
+    respond_to do |format|
+     	format.html # show.html.erb
+     	format.json { render json: @trek_booking }
     end
   end
 
   # GET /trek_bookings/new
   # GET /trek_bookings/new.json
   def new
-		@trek_booking = TrekBooking.new
-
 		if session[:trip_id]
 			@trek_booking.trip_id = session[:trip_id]
 		end
@@ -57,19 +49,12 @@ class TrekBookingsController < ApplicationController
 
   # GET /trek_bookings/1/edit
   def edit
-		begin
-    	@trek_booking = TrekBooking.find(params[:id])
-		rescue ActiveRecord::RecordNotFound
-			logger.error "Attempt to access invalid trek booking #{params[:id]}"
-			redirect_to trek_bookings_url, alert: 'Invalid trek booking'
-		end
   end
 
   # POST /trek_bookings
   # POST /trek_bookings.json
   def create
-    @trek_booking = TrekBooking.new(params[:trek_booking])
-		trip = Trip.find(@trek_booking.trip_id)
+		trip = Trip.scoped_by_account_id(current_user.account_id).find(@trek_booking.trip_id)
 
     respond_to do |format|
       if @trek_booking.save
@@ -87,8 +72,6 @@ class TrekBookingsController < ApplicationController
   # PUT /trek_bookings/1
   # PUT /trek_bookings/1.json
   def update
-    @trek_booking = TrekBooking.find(params[:id])
-
     respond_to do |format|
       if @trek_booking.update_attributes(params[:trek_booking])
         format.html { redirect_to @trek_booking, notice: 'Trek booking was successfully updated.' }
@@ -103,7 +86,6 @@ class TrekBookingsController < ApplicationController
   # DELETE /trek_bookings/1
   # DELETE /trek_bookings/1.json
   def destroy
-    @trek_booking = TrekBooking.find(params[:id])
     @trek_booking.destroy
 
     respond_to do |format|
