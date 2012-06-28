@@ -19,4 +19,8 @@ class User < ActiveRecord::Base
 	def is?(user_role)
 		role.humanize == user_role
 	end
+
+	def agency
+		Agency.find_by_account_id_and_is_account(account_id, 1)
+	end
 end

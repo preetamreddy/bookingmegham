@@ -17,6 +17,10 @@ class Advisor < ActiveRecord::Base
 		:format => { :with => /^[\+]?[\d\s]*$/,
 		:message => "is not valid" }
 
+	def agency
+		Agency.find_by_account_id_and_is_account(account_id, 1)
+	end
+
 	private
 		
 		def ensure_does_not_have_trips

@@ -68,7 +68,7 @@ class TripsController < ApplicationController
 
 		if !@trip.agency_id
 			@trip.direct_booking = 1
-			@trip.agency_id = Agency.scoped_by_account_id(current_user.account_id).find_by_is_account(1).id
+			@trip.agency_id = current_user.agency.id
 		else
 			@trip.direct_booking = 0
 		end
