@@ -71,7 +71,7 @@
 					<dd><%= link_to 'New Property', new_property_path %></dd>
 					<dd><%= link_to 'Agencies', agencies_path %></dd>
 					<dt>Feedback</dt>
-					<dd><%= link_to 'Give Feedback', new_feedback_path %></dd>
+					<dd><a href="mailto:preetam@ezbook.in?subject=Feedback">Give Feedback</a></dd>
 					<% if can? :manage, Advisor or can? :manage, User %>
 						<dt>Account Admin</dt>
 						<% if can? :manage, Advisor %>
