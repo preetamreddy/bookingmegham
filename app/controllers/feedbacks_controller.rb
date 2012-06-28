@@ -3,7 +3,7 @@ class FeedbacksController < ApplicationController
   # GET /feedbacks
   # GET /feedbacks.json
   def index
-    @feedbacks = @feedbacks.paginate(page: params[:page], per_page: 5).
+    @feedbacks = @feedbacks.paginate(page: params[:page], per_page: 10).
 									order('criticality, priority, status, model, view').
 									all
 

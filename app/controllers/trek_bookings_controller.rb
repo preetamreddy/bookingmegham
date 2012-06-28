@@ -13,10 +13,10 @@ class TrekBookingsController < ApplicationController
 		end
 
 		if session[:trip_id]
-			@trek_bookings = @trek_bookings.paginate(page: params[:page], per_page: 5).
+			@trek_bookings = @trek_bookings.paginate(page: params[:page], per_page: 10).
 													find_all_by_trip_id(session[:trip_id])
 		else
-			@trek_bookings = @trek_bookings.paginate(page: params[:page], per_page: 5)
+			@trek_bookings = @trek_bookings.paginate(page: params[:page], per_page: 10)
 		end
 
     respond_to do |format|

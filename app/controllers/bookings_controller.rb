@@ -36,17 +36,17 @@ class BookingsController < ApplicationController
 		@check_in_date_last = @check_in_date_first + @number_of_days
 
 		if session[:trip_id]
-			@bookings = @bookings.paginate(page: params[:page], per_page: 5).
+			@bookings = @bookings.paginate(page: params[:page], per_page: 10).
 										order("check_in_date, check_out_date").
 										find_all_by_trip_id(session[:trip_id])
 		elsif session[:guest_id]
 			trips = Trip.scoped_by_account_id(current_user.account_id).find_all_by_guest_id(session[:guest_id])
-			@bookings = @bookings.paginate(page: params[:page], per_page: 5).
+			@bookings = @bookings.paginate(page: params[:page], per_page: 10).
 										order("check_in_date, check_out_date").
 										find_all_by_trip_id(trips)
 		else
 			if @property_id > 0
-				@bookings = @bookings.paginate(page: params[:page], per_page: 5).
+				@bookings = @bookings.paginate(page: params[:page], per_page: 10).
 											order("check_in_date, check_out_date").
 											find(:all, :conditions => [
 												'property_id = ? and check_in_date >= ? and
@@ -54,7 +54,7 @@ class BookingsController < ApplicationController
 												@property_id, @check_in_date_first,
 												@check_in_date_last ])
 			else
-				@bookings = @bookings.paginate(page: params[:page], per_page: 5).
+				@bookings = @bookings.paginate(page: params[:page], per_page: 10).
 											order("check_in_date, check_out_date").
 											find(:all, :conditions => [
 												'check_in_date >= ? and check_in_date < ?',

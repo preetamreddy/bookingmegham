@@ -13,10 +13,10 @@ class TaxiBookingsController < ApplicationController
 		end
 
 		if session[:trip_id]
-			@taxi_bookings = @taxi_bookings.paginate(page: params[:page], per_page: 5).
+			@taxi_bookings = @taxi_bookings.paginate(page: params[:page], per_page: 10).
 													find_all_by_trip_id(session[:trip_id])
 		else
-    	@taxi_bookings = @taxi_bookings.paginate(page: params[:page], per_page: 5)
+    	@taxi_bookings = @taxi_bookings.paginate(page: params[:page], per_page: 10)
 		end
 
     respond_to do |format|
