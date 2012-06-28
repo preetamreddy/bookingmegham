@@ -3,7 +3,7 @@ class AgenciesController < ApplicationController
   # GET /agencies
   # GET /agencies.json
   def index
-    @agencies = @agencies.order(:name)
+    @agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name)
 
     respond_to do |format|
       format.html # index.html.erb

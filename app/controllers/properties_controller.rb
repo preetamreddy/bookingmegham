@@ -5,7 +5,7 @@ class PropertiesController < ApplicationController
   def index
 		session[:property_id] = nil
 
-    @properties = @properties.order(:name)
+    @properties = @properties.paginate(page: params[:page], per_page: 10).order(:name)
 
     respond_to do |format|
       format.html # index.html.erb
