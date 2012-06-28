@@ -17,6 +17,7 @@ class Ability
 			cannot :manage, Account
 			cannot [:update, :destroy], Feedback
 			cannot :destroy, Advisor, :id => user.advisor_id
+			cannot :become, User
 			cannot :destroy, User, :id => user.id
 		end
 

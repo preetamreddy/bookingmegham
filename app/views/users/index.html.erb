@@ -21,7 +21,10 @@
 		    <td><%= user.email %></td>
 		    <td><%= user.role.humanize if user.role %></td>
 		    <td>
-					<% if user != current_user %>
+					<% if can? :become, user %>
+						<%= link_to 'Become', become_user_path(:id => user.id) %><br />
+					<% end %>
+					<% if can? :destroy, user %>
 		    		<%= link_to 'Deactivate', user, confirm: 'Are you sure?',
 									method: :delete %>
 					<% end %>

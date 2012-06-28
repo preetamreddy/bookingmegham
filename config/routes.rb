@@ -66,6 +66,7 @@ Bookingmegham::Application.routes.draw do
 	resources :users, :except => [:show, :edit, :update] do
 		get :change_password, :on => :member
 		put :update_password, :on => :member
+		get :become, :on => :member
 	end
 
 	match "/pages/*id" => 'pages#show', :as => :page, :format => false

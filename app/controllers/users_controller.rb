@@ -78,4 +78,9 @@ class UsersController < ApplicationController
     end
   end
 
+	def become
+		sign_in User.find(params[:id]), :bypass => true
+		redirect_to root_url
+	end
+
 end
