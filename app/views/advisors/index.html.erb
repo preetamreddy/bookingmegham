@@ -24,7 +24,7 @@
     <td><%= advisor.email_id %></td>
     <td>
     	<%= link_to 'Edit', edit_advisor_path(advisor) %><br />
-			<% if advisor != current_user.advisor %>
+			<% if can? :destroy, advisor %>
     		<%= link_to 'Destroy', advisor, confirm: 'Are you sure?',
 							method: :delete %><br />
 			<% end %>
