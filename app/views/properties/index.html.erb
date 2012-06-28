@@ -35,7 +35,11 @@
   <div id="error_explanation">
 		<h2>Properties have not yet been created</h2>
 		<ul>
-			<li>Please contact the administrator</li>
+			<li>Click below to create a new property</li>
 		</ul>
   </div>
 <% end %>
+
+<div class="action_container">
+	<%= link_to 'New Property', new_property_path %>
+</div>
