@@ -39,8 +39,8 @@ class LineItemsController < ApplicationController
 
 			in_camp = Booking.order("check_in_date, number_of_rooms desc").
 				find(:all, :conditions => 
-				[ 'room_type_id = ? and check_in_date <= ? and check_out_date > ?',
-				room_type.id, @chart_start_date, @chart_start_date ])
+				[ 'room_type_id = ? and check_in_date <= ? and check_out_date > ? and cancelled = ?',
+				room_type.id, @chart_start_date, @chart_start_date, 0 ])
 
 			in_camp.each do |booking|
 				alloted_rooms[booking.id] = []
@@ -64,7 +64,7 @@ class LineItemsController < ApplicationController
 			date_range = (@chart_start_date + 1)..@chart_end_date
 			date_range.each do |date|
 				check_outs = Booking.find(:all, :conditions => [
-					'room_type_id = ? and check_out_date = ?', room_type.id, date ])
+					'room_type_id = ? and check_out_date = ? and cancelled = ?', room_type.id, date, 0 ])
 				check_outs.each do |booking|
 					alloted_rooms[booking.id].each do |room_number|
 						available_rooms.push(room_number)	
@@ -73,7 +73,7 @@ class LineItemsController < ApplicationController
 
 				check_ins = Booking.order("number_of_rooms desc").
 					find(:all, :conditions => [
-					'room_type_id = ? and check_in_date = ?', room_type.id, date ])
+					'room_type_id = ? and check_in_date = ? and cancelled = ?', room_type.id, date, 0 ])
 				check_ins.each do |booking|
 					alloted_rooms[booking.id] = []
 					available_rooms = sort_for_contiguous_rooms(available_rooms,
