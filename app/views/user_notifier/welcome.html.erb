@@ -1,11 +1,11 @@
 <p>Welcome <%= @invitee.advisor.name %>!</p>
 
-<%= @inviter.advisor.name %> has invited you to join EZBook (www.ezbook.in). EZbook allows you to manage your bookings and associated workflow electronically.
+<p><%= @inviter.advisor.name %> has invited you to join EZBook (www.ezbook.in). EZbook allows you to manage your bookings and associated workflow electronically.</p>
 
 <p>To start using EZBook, set the password for your email account by clicking the link below:</p>
 
 <p><%= link_to 'Set my password', edit_password_url(@invitee, :reset_password_token => @invitee.reset_password_token, :new_user => true) %></p>
 
-We hope you will enjoy using EZBook. If you have any feedback, please <a href="mailto:preetam@ezbook.in?subject=Feedback">send us an E-mail</a>.<br /><br />
+<p>We hope you will enjoy using EZBook. If you have any feedback, please <a href="mailto:preetam@ezbook.in?subject=Feedback">send us an E-mail</a>.</p>
 
-Happy and easy bookings!
+<p>Happy and easy bookings!</p>

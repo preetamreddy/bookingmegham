@@ -12,8 +12,8 @@ class Account < ActiveRecord::Base
 		def create_agency_for_account
 			Agency.create(:account_id => id,
 				:name => name,
-				:phone_number => phone_number,
-				:email_id => email_id,
+				:phone_number => phone_number_1,
+				:email_id => email,
 				:postal_address => postal_address,
 				:url => url,
 				:is_account => 1)
