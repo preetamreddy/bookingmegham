@@ -40,7 +40,7 @@ class TaxiBooking < ActiveRecord::Base
 		end
 
 		def titleize
-			self.drop_off_city = drop_off_city.titleize
+			self.drop_off_city = drop_off_city.titleize if drop_off_city
 		end
 		
 		def strip_whitespaces

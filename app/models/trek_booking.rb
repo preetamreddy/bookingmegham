@@ -61,7 +61,7 @@ class TrekBooking < ActiveRecord::Base
 		end
 
 		def titleize
-			self.origin = origin.titleize
-			self.final_destination = final_destination.titleize
+			self.origin = origin.titleize if origin
+			self.final_destination = final_destination.titleize if final_destination
 		end
 end

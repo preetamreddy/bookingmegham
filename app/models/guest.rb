@@ -34,7 +34,7 @@ class Guest < ActiveRecord::Base
 
 		def titleize
 			self.name = name.titleize
-			self.resident_of = resident_of.titleize
+			self.resident_of = resident_of.titleize if resident_of
 		end
 
 		def strip_whitespaces

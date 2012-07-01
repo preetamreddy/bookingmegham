@@ -74,8 +74,8 @@ class Agency < ActiveRecord::Base
 		end
 
 		def titleize
-			self.city = city.titleize
-			self.short_name = short_name.titleize
+			self.city = city.titleize if city
+			self.short_name = short_name.titleize if short_name
 		end
 
 		def strip_whitespaces
