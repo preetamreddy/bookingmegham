@@ -14,7 +14,11 @@
 	<div id="error_explanation">
 		<h2>Payments not found</h2>
 		<ul>
-			<li>Change your search conditions</li>
+			<% if session[:trip_id]
+				<li>Click below to create a new payment</li>
+			<% else %>
+				<li>Change your search conditions</li>
+			<% end %>
 		</ul>
 	</div>
 <% else %>
