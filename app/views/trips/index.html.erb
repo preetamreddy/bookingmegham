@@ -27,7 +27,11 @@
 	<div id="error_explanation">
 		<h2>Trips not found</h2>
 		<ul>
-			<li>Change your search or click below to create a new trip</li>
+			<% if session[:guest_id] %>
+				<li>Click below to create a new trip</li>
+			<% else %>
+				<li>Choose another payment status or create a new trip after first selecting a guest</li>
+			<% end %>
 		</ul>
 	</div>
 <% else %>

@@ -42,9 +42,13 @@
 </table>
 <% else %>
 	<div id="error_explanation">
-		<h2>Taxi bookings have not yet been created</h2>
+		<h2>Taxi bookings not found</h2>
 		<ul>
-			<li>Create new taxi bookings by clicking the link below</li>
+			<% if session[:trip_id] %>
+				<li>Click below to create a new taxi booking</li>
+			<% else %>
+				<li>Create a new taxi booking after first selecting a trip</li>
+			<% end %>
 		</ul>
 	</div>
 <% end %>

@@ -11,7 +11,9 @@
 		<h2>Bookings not found</h2>
 		<ul>
 			<% if session[:trip_id] %>
-				<li>Click below to create a new Booking</li>
+				<li>Click below to create a new booking</li>
+			<% elsif session[:guest_id] %>
+				<li>Create a new booking after first selecting a trip</li>
 			<% else %>
 				<li>Change your search conditions</li>
 			<% end %>

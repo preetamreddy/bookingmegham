@@ -33,9 +33,13 @@
 </table>
 <% else %>
 	<div id="error_explanation">
-		<h2>Trek bookings have not yet been created</h2>
+		<h2>Trek bookings not found</h2>
 		<ul>
-			<li>Create new trek bookings by clicking the link below</li>
+			<% if session[:trip_id] %>
+				<li>Click below to create a new trek booking</li>
+			<% else %>
+				<li>Create a new trek booking after first selecting a trip</li>
+			<% end %>
 		</ul>
 	</div>
 <% end %>
