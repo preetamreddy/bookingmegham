@@ -3,8 +3,9 @@ class BookingChartController < ApplicationController
 		if params[:property_id]
 			@property_id = params[:property_id].to_i
 		else
-			@property_id = Property.scoped_by_account_id(current_user.account_id).order("name").
-				find_by_ensure_availability_before_booking(1).id
+			properties = Property.scoped_by_account_id(current_user.account_id).order("name").
+				find_all_by_ensure_availability_before_booking(1)
+			@property_id = properties.first.id if properties.count > 0
 		end
 
 		if params[:chart_start_date]
