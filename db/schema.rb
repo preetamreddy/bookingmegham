@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120625090616) do
+ActiveRecord::Schema.define(:version => 20120707141810) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -93,20 +93,6 @@ ActiveRecord::Schema.define(:version => 20120625090616) do
   end
 
   add_index "bookings", ["account_id"], :name => "index_bookings_on_account_id"
-
-  create_table "feedbacks", :force => true do |t|
-    t.string   "model"
-    t.string   "view"
-    t.text     "description"
-    t.string   "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "priority"
-    t.string   "criticality"
-    t.integer  "account_id"
-  end
-
-  add_index "feedbacks", ["account_id"], :name => "index_feedbacks_on_account_id"
 
   create_table "guests", :force => true do |t|
     t.string   "name"

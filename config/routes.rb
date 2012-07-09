@@ -61,8 +61,6 @@ Bookingmegham::Application.routes.draw do
 
   resources :bookings
 
-  resources :feedbacks
-
 	resources :users, :except => [:show, :edit, :update] do
 		get :change_password, :on => :member
 		put :update_password, :on => :member
