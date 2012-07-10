@@ -25,10 +25,6 @@ Bookingmegham::Application.routes.draw do
 
   resources :payments
 
-  resources :trek_bookings
-
-  resources :treks
-
   resources :taxi_bookings
 
   resources :taxis

@@ -56,9 +56,7 @@
 <% if session[:trip_id] %>
 	<div class="action_container">
 		<%= link_to 'New Transport Booking', new_taxi_booking_path %>
-		<%= link_to 'Room Bookings', bookings_path(:trip_id => session[:trip_id]) %>
-		<%= link_to 'Treks', 
-					trek_bookings_path(:trip_id => session[:trip_id]) %></br>
+		<%= link_to 'Room Bookings', bookings_path(:trip_id => session[:trip_id]) %></br>
 	</div>
 <% end %>
 <p><%= will_paginate @taxi_bookings %></p>

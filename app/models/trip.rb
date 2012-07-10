@@ -7,9 +7,7 @@ class Trip < ActiveRecord::Base
 	DRIVER_UNIT_COST = 500
 
 	belongs_to :guest
-
 	belongs_to :agency
-
 	belongs_to :advisor
 
 	has_many :rooms, dependent: :destroy
@@ -17,10 +15,7 @@ class Trip < ActiveRecord::Base
 		:allow_destroy => true
 
 	has_many :bookings
-
 	has_many :taxi_bookings
-
-	has_many :trek_bookings
 
 	has_many :payments, dependent: :destroy
 	accepts_nested_attributes_for :payments, :reject_if => :all_blank,
@@ -42,7 +37,6 @@ class Trip < ActiveRecord::Base
 	after_save :update_line_item_status
 
 	before_destroy 	:ensure_not_referenced_by_booking,
-									:ensure_not_referenced_by_trek_booking,
 									:ensure_not_referenced_by_taxi_booking
 
 	validates :guest_id, :name, :start_date, :end_date, :number_of_days, 
@@ -140,14 +134,6 @@ class Trip < ActiveRecord::Base
 			price_for_transport = 0
 		end
 
-		if trek_bookings.any?
-			price_for_treks = trek_bookings.to_a.sum { |trek_booking|
-				trek_booking.unit_price * number_of_guests * 
-					trek_booking.number_of_days }
-		else
-			price_for_treks = 0
-		end
-
 		if number_of_drivers
 			price_for_drivers = number_of_drivers * number_of_driver_nights * DRIVER_UNIT_COST
 		else
@@ -155,7 +141,7 @@ class Trip < ActiveRecord::Base
 		end
 
 		ttl_price = price_for_bookings + price_for_vas + price_for_transport +
-									price_for_treks + price_for_drivers
+									price_for_drivers
 
 		return ttl_price
 	end
@@ -321,15 +307,6 @@ class Trip < ActiveRecord::Base
 				return true
 			else
 				errors.add(:base, "Destroy failed because #{name} has taxi bookings")
-				return false
-			end
-		end
-
-		def ensure_not_referenced_by_trek_booking
-			if trek_bookings.empty?
-				return true
-			else
-				errors.add(:base, "Destroy failed because #{name} has trek bookings")
 				return false
 			end
 		end

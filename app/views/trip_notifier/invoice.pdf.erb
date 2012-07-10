@@ -188,17 +188,6 @@
 					</tr>
 					<% serial_number += 1 %>
 				<% end %>
-				<% @trip.trek_bookings.each do |trek_booking| %>
-					<tr>
-						<td class="sno"><%= serial_number %></td>
-						<td class="text">Trek: <%= trek_booking.trek.name %> (<%= pluralize(@trip.number_of_guests, "person") %>, <%= pluralize(trek_booking.number_of_days, "day") %>)</td>
-						<td></td>
-						<td></td>
-						<td class="number"> <%= number_to_currency_wo_symbol(trek_booking.unit_price) %></td>
-						<td class="number"> <%= number_to_currency_wo_symbol(trek_booking.total_price) %></td>
-					</tr>
-					<% serial_number += 1 %>
-				<% end %>
 				<tr>
 					<td></td>
 					<% if @trip.discount != 0 %>

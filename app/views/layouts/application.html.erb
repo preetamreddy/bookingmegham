@@ -41,12 +41,6 @@
 								</tr>
 								<%= render(trip.bookings.order('check_in_date')) %>
 							<% end %>
-							<% if trip.trek_bookings.any? %>
-								<tr>
-									<td colspan=3><b>Treks</b></td>
-								</tr>
-								<%= render(trip.trek_bookings) %>
-							<% end %>
 						<% end %>
 					</table>
 				<% end %>
@@ -55,7 +49,6 @@
 					<dd><%= link_to 'Guests', guests_path %></dd>
 					<dd><%= link_to 'Trips', trips_path %></dd>
 					<dd><%= link_to 'Room Bookings', bookings_path %></dd>
-					<dd><%= link_to 'Treks', trek_bookings_path %></dd>
 					<dd><%= link_to 'Transport', taxi_bookings_path %></dd>
 					<dd><%= link_to 'Payments', payments_path %></dd>
 					<dd><%= link_to 'Availability Chart', availability_chart_path %></dd>
@@ -67,7 +60,6 @@
 					<dd><%= link_to 'Value Added Services', 
 										value_added_services_path %></dd>
 					<dd><%= link_to 'Taxis', taxis_path %></dd>
-					<dd><%= link_to 'Treks', treks_path %></dd>
 					<dd><%= link_to 'Agencies', agencies_path %></dd>
 					<dt>Feedback</dt>
 					<dd><a href="mailto:preetam@ezbook.in?subject=Feedback">Give Feedback</a></dd>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120707141810) do
+ActiveRecord::Schema.define(:version => 20120710012702) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -237,34 +237,6 @@ ActiveRecord::Schema.define(:version => 20120707141810) do
 
   add_index "taxis", ["account_id"], :name => "index_taxis_on_account_id"
 
-  create_table "trek_bookings", :force => true do |t|
-    t.integer  "trip_id"
-    t.integer  "trek_id"
-    t.integer  "unit_price"
-    t.date     "start_date"
-    t.string   "origin"
-    t.string   "final_destination"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "number_of_days"
-    t.date     "end_date"
-    t.integer  "account_id"
-  end
-
-  add_index "trek_bookings", ["account_id"], :name => "index_trek_bookings_on_account_id"
-
-  create_table "trek_prices", :force => true do |t|
-    t.integer  "trek_id"
-    t.integer  "unit_price"
-    t.integer  "min_group_size"
-    t.integer  "max_group_size"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "account_id"
-  end
-
-  add_index "trek_prices", ["account_id"], :name => "index_trek_prices_on_account_id"
-
   create_table "treks", :force => true do |t|
     t.string   "name"
     t.text     "itinerary"
@@ -291,7 +263,6 @@ ActiveRecord::Schema.define(:version => 20120707141810) do
     t.integer  "discount"
     t.integer  "number_of_drivers"
     t.string   "payment_status"
-    t.integer  "number_of_trekkers",               :default => 0
     t.integer  "number_of_days"
     t.string   "medical_constraints"
     t.integer  "agency_id"
