@@ -1,5 +1,4 @@
 class Agency < ActiveRecord::Base
-	has_many :properties
 	has_many :guests
 	has_many :trips
 	has_many :advisors
@@ -9,7 +8,7 @@ class Agency < ActiveRecord::Base
 	before_save :set_defaults_if_nil, :titleize, :strip_whitespaces
 
 	before_destroy 	:ensure_does_not_have_trips,
-									:ensure_does_not_have_properties, :ensure_does_not_have_taxis,
+									:ensure_does_not_have_taxis,
 									:ensure_does_not_have_guests,
 									:ensure_is_not_an_account
 
@@ -33,15 +32,6 @@ class Agency < ActiveRecord::Base
 				return true
 			else
 				errors.add(:base, "Destroy failed because #{name} has Trips")
-				return false
-			end
-		end
-
-		def ensure_does_not_have_properties
-			if properties.empty?
-				return true
-			else
-				errors.add(:base, "Destroy failed because #{name} has properties")
 				return false
 			end
 		end

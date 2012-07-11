@@ -6,10 +6,6 @@
   <span class="saved_value"><%= @property.name %></span>
 </p>
 <p>
-  <b>Agency:</b>
-  <span class="saved_value"><%= @property.agency.name %></span>
-</p>
-<p>
   <b>Ensure availability before booking:</b>
   <span class="saved_value"><%= @property.ensure_availability_before_booking.to_english %></span>
 </p>
@@ -26,18 +22,28 @@
   <span class="saved_value"><%= @property.phone_number_2 %></span>
 </p>
 <p>
+  <b>Email:</b>
+  <span class="saved_value"><%= @property.email %></span>
+</p>
+<p>
   <b>URL:</b>
   <span class="saved_value"><%= @property.url %></span>
 </p>
-
+<p>
+  <b>City:</b>
+  <span class="saved_value"><%= @property.city %></span>
+</p>
+<p>
+  <b>Address:</b>
+  <span class="saved_value"><%= @property.address %></span>
+</p>
 <p>
   <b>Price for driver:</b>
   <span class="saved_value"><%= number_to_currency(@property.price_for_driver) %></span>
 </p>
-
 <p>
-  <b>Address:</b>
-  <span class="saved_value"><%= @property.address %></span>
+  <b>Service tax:</b>
+  <span class="saved_value"><%= @property.service_tax %></span>
 </p>
 <p>
   <b>Activities:</b>

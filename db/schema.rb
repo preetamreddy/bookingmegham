@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120711061025) do
+ActiveRecord::Schema.define(:version => 20120711120958) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -147,13 +147,16 @@ ActiveRecord::Schema.define(:version => 20120711061025) do
     t.datetime "updated_at"
     t.integer  "ensure_availability_before_booking", :default => 1
     t.integer  "consider_blocked_rooms_as_booked",   :default => 1
-    t.integer  "agency_id"
     t.string   "phone_number"
     t.string   "phone_number_2"
     t.text     "address"
     t.text     "suggested_activities"
     t.string   "url"
     t.integer  "account_id"
+    t.integer  "agency_id"
+    t.string   "service_tax",                        :default => "0"
+    t.string   "email"
+    t.string   "city"
   end
 
   add_index "properties", ["account_id"], :name => "index_properties_on_account_id"

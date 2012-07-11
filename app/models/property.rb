@@ -1,6 +1,4 @@
 class Property < ActiveRecord::Base
-	belongs_to :agency
-
 	has_many :room_types
 
 	before_save :titleize, :set_defaults_if_nil,
