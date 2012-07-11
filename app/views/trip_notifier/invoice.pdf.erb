@@ -157,7 +157,7 @@
 					<% booking.vas_bookings.each do |vas_booking| %>
 						<tr>
 							<td></td>
-							<td class="text"><li><%= vas_booking.value_added_service.name %> for <%= pluralize(vas_booking.number_of_people, "person") %></li></td>
+							<td class="text"><li><%= vas_booking.value_added_service %> (<%= vas_booking.number_of_units %>)</li></td>
 							<td></td>
 							<td></td>
 							<td class="number"> <%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
@@ -169,7 +169,7 @@
 				<% @trip.vas_bookings.each do |vas_booking| %>
 					<tr>
 						<td class="sno"><%= serial_number %></td>
-						<td class="text"><%= vas_booking.value_added_service.name %> for <%= pluralize(vas_booking.number_of_people, "person") %></td>
+						<td class="text"><%= vas_booking.value_added_service %> (<%= vas_booking.number_of_units %>)</td>
 						<td></td>
 						<td></td>
 						<td class="number"> <%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>

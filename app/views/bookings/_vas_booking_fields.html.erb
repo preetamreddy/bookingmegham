@@ -1,10 +1,11 @@
 <div class="nested_form_row">
-	<%= f.collection_select(:value_added_service_id, 
-				ValueAddedService.scoped_by_account_id(current_user.account_id).
-				order("name").find_all_by_property_id(@booking.room_type.property_id),
-				:id, :name, :prompt => "") %>
-	<%= f.label :number_of_people, "Number of people" %>
-	<%= f.number_field :number_of_people, min: 0, max: 999 %>
+	<%= f.text_field :value_added_service, size: 30 %>
+
+	<%= f.label :unit_price, "Unit price" %>
+	<%= f.number_field :unit_price, min: 0, max: 99999 %>
+
+	<%= f.label :number_of_units, "#" %>
+	<%= f.number_field :number_of_units, min: 0, max: 999 %>
 
 	<%= f.link_to_remove "x" %>
 </div>	

@@ -9,30 +9,24 @@
 </p>
 
 <p>
-  <b>Vas:</b>
-  <%= @vas_booking.vas_id %>
+  <b>Value added service:</b>
+  <%= @vas_booking.value_added_service %>
 </p>
 
 <p>
   <b>Unit price:</b>
-  <%= @vas_booking.unit_price %>
+  <%= number_to_currency(@vas_booking.unit_price) %>
 </p>
 
 <p>
-  <b>Number of people:</b>
-  <%= @vas_booking.number_of_people %>
+  <b>#:</b>
+  <%= @vas_booking.number_of_units %>
 </p>
 
 <p>
-  <b>Number of days:</b>
-  <%= @vas_booking.number_of_days %>
+  <b>Total price:</b>
+  <%= number_to_currency(@vas_booking.total_price) %>
 </p>
-
-<p>
-  <b>Description:</b>
-  <%= @vas_booking.description %>
-</p>
-
 
 <%= link_to 'Edit', edit_vas_booking_path(@vas_booking) %> |
 <%= link_to 'Back', vas_bookings_path %>

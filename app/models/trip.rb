@@ -29,7 +29,7 @@ class Trip < ActiveRecord::Base
 
 	before_validation :update_end_date
 
-	before_save :set_defaults_if_nil, :update_vas_unit_price,
+	before_save :set_defaults_if_nil,
 							:update_payment_status, :update_pay_by_date,
 							:update_number_of_children_below_5_years,
 							:strip_whitespaces, :titleize
@@ -121,7 +121,7 @@ class Trip < ActiveRecord::Base
 
 		if vas_bookings.any?
 			price_for_vas = vas_bookings.to_a.sum { |vas_booking|
-				vas_booking.unit_price * vas_booking.number_of_people }
+				vas_booking.unit_price * vas_booking.number_of_units }
 		else
 			price_for_vas = 0
 		end
@@ -223,14 +223,6 @@ class Trip < ActiveRecord::Base
 
 		def update_end_date
 			self.end_date = start_date + number_of_days - 1
-		end
-
-		def update_vas_unit_price
-			vas_bookings.each do |vas_booking|
-				if payment_status == NOT_PAID
-					vas_booking.unit_price = vas_booking.value_added_service.unit_price
-				end
-			end
 		end
 
 		def update_payment_status

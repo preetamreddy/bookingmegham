@@ -17,7 +17,7 @@ class Booking < ActiveRecord::Base
 	before_validation :set_defaults_if_nil, 
 										:update_number_of_rooms, :update_check_out_date
 
-	before_save :update_room_rate, :update_vas_unit_price,
+	before_save :update_room_rate,
 							:update_total_price, :update_service_tax_rate,
 							:update_service_tax, :strip_whitespaces, :titleize
 
@@ -107,14 +107,6 @@ class Booking < ActiveRecord::Base
 		end
 	end
 
-	def update_vas_unit_price
-		vas_bookings.each do |vas_booking|
-			if trip.payment_status == Trip::NOT_PAID
-				vas_booking.unit_price = vas_booking.value_added_service.unit_price
-			end
-		end
-	end
-
 	def update_total_price
 		if rooms.any?
 			price_per_night = rooms.to_a.sum { |room|
@@ -127,7 +119,7 @@ class Booking < ActiveRecord::Base
 
 		if vas_bookings.any?
 			price_for_vas = vas_bookings.to_a.sum { |vas_booking|
-				vas_booking.unit_price * vas_booking.number_of_people }
+				vas_booking.unit_price * vas_booking.number_of_units }
 		else
 			price_for_vas = 0
 		end

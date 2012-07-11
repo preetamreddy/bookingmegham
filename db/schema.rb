@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120710012702) do
+ActiveRecord::Schema.define(:version => 20120711061025) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -304,28 +304,15 @@ ActiveRecord::Schema.define(:version => 20120710012702) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
 
-  create_table "value_added_services", :force => true do |t|
-    t.integer  "property_id"
-    t.string   "name"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "unit_price",  :default => 0
-    t.integer  "min_people",  :default => 1
-    t.integer  "account_id"
-  end
-
-  add_index "value_added_services", ["account_id"], :name => "index_value_added_services_on_account_id"
-
   create_table "vas_bookings", :force => true do |t|
     t.integer  "trip_id"
     t.integer  "booking_id"
-    t.integer  "value_added_service_id"
     t.integer  "unit_price"
-    t.integer  "number_of_people"
+    t.integer  "number_of_units"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "account_id"
+    t.text     "value_added_service"
   end
 
   add_index "vas_bookings", ["account_id"], :name => "index_vas_bookings_on_account_id"

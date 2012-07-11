@@ -20,24 +20,16 @@
     <%= f.number_field :booking_id %>
   </div>
   <div class="field">
-    <%= f.label :vas_id %><br />
-    <%= f.number_field :vas_id %>
+    <%= f.label :value_added_service %><br />
+    <%= f.text_field :value_added_service %>
   </div>
   <div class="field">
     <%= f.label :unit_price %><br />
     <%= f.number_field :unit_price %>
   </div>
   <div class="field">
-    <%= f.label :number_of_people %><br />
-    <%= f.number_field :number_of_people %>
-  </div>
-  <div class="field">
-    <%= f.label :number_of_days %><br />
-    <%= f.number_field :number_of_days %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
+    <%= f.label :number_of_units, "#" %><br />
+    <%= f.number_field :number_of_units %>
   </div>
   <div class="actions">
     <%= f.submit %>

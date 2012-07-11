@@ -59,7 +59,7 @@
 				<td class="number"><%= room.number_of_adults %></td>
 				<td class="number"><%= room.number_of_children_between_5_and_12_years %></td>
 				<td class="number"><%= room.number_of_children_below_5_years %></td>
-				<td class="number"><%= room.room_rate %></td>
+				<td class="number"><%= number_to_currency(room.room_rate) %></td>
 			</tr>
 		<% end %>
 	</table>
@@ -74,15 +74,17 @@
 	<table class="nested_table">
 		<tr>
 			<th class="text">Name</th>
-			<th class="number">No. of people</th>
 			<th class="number">Unit price</th>
+			<th class="number">#</th>
+			<th class="number">Total price</th>
 		</tr>
 	
 		<% @booking.vas_bookings.each do |vas_booking| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-				<td class="text"><%= vas_booking.value_added_service.name %></td>
-				<td class="number"><%= vas_booking.number_of_people %></td>
-				<td class="number"><%= vas_booking.unit_price %></td>
+				<td class="text"><%= vas_booking.value_added_service %></td>
+				<td class="number"><%= number_to_currency(vas_booking.unit_price) %></td>
+				<td class="number"><%= vas_booking.number_of_units %></td>
+				<td class="number"><%= number_to_currency(vas_booking.total_price) %></td>
 			</tr>
 		<% end %>
 	</table>

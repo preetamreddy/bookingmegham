@@ -4,12 +4,10 @@
   <tr>
     <th>Trip</th>
     <th>Booking</th>
-    <th>Vas</th>
+    <th>Value added service</th>
     <th>Unit price</th>
-    <th>Number of people</th>
-    <th>Number of days</th>
-    <th>Description</th>
-    <th></th>
+    <th>#</th>
+    <th>Total price</th>
     <th></th>
     <th></th>
   </tr>
@@ -18,11 +16,10 @@
   <tr>
     <td><%= vas_booking.trip_id %></td>
     <td><%= vas_booking.booking_id %></td>
-    <td><%= vas_booking.vas_id %></td>
-    <td><%= vas_booking.unit_price %></td>
-    <td><%= vas_booking.number_of_people %></td>
-    <td><%= vas_booking.number_of_days %></td>
-    <td><%= vas_booking.description %></td>
+    <td><%= vas_booking.value_added_service %></td>
+    <td><%= number_to_currency(vas_booking.unit_price) %></td>
+    <td><%= vas_booking.number_of_units %></td>
+    <td><%= number_to_currency(vas_booking.total_price) %></td>
     <td><%= link_to 'Show', vas_booking %></td>
     <td><%= link_to 'Edit', edit_vas_booking_path(vas_booking) %></td>
     <td><%= link_to 'Destroy', vas_booking, confirm: 'Are you sure?', method: :delete %></td>

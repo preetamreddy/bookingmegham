@@ -3,15 +3,10 @@ class Property < ActiveRecord::Base
 
 	has_many :room_types
 
-	has_many :value_added_services, dependent: :destroy
-	accepts_nested_attributes_for :value_added_services, :reject_if => :all_blank,
-		:allow_destroy => true
-
 	before_save :titleize, :set_defaults_if_nil,
 							:strip_whitespaces
 
-	before_destroy 	:ensure_does_not_have_room_types,
-									:ensure_does_not_have_value_added_services
+	before_destroy 	:ensure_does_not_have_room_types
 
 	validates_uniqueness_of :name, :scope => :account_id, :case_sensitive => false
 
@@ -47,15 +42,6 @@ class Property < ActiveRecord::Base
 				return true
 			else
 				errors.add(:base, "Destroy failed because #{name} has Room Types")
-				return false
-			end
-		end
-
-		def ensure_does_not_have_value_added_services
-			if value_added_services.empty?
-				return true
-			else
-				errors.add(:base, "Destroy failed because #{name} has Value Added Services")
 				return false
 			end
 		end
