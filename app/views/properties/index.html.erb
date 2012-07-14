@@ -8,7 +8,7 @@
    	<th class="text">Email</th>
    	<th class="text">City</th>
    	<th class="number">Driver</th>
-   	<th class="text">Service tax</th>
+   	<th class="text">Service tax rate</th>
 		<th class="number">Ensure availability</th>
 		<th></th>
   </tr>
@@ -23,7 +23,7 @@
     <td class="text"><%= property.email %></td>
     <td class="text"><%= property.city %></td>
     <td class="currency"><%= number_to_currency(property.price_for_driver) %></td>
-    <td class="text"><%= property.service_tax %></td>
+    <td class="text"><%= property.service_tax_rate %></td>
     <td class="text"><%= property.ensure_availability_before_booking.to_english %></td>
     <td>
     	<%= link_to 'Show details', property %></br>

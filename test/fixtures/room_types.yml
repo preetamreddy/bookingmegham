@@ -9,7 +9,7 @@ sangla_deluxe_tent:
   price_for_children_between_5_and_12_years: 1200
   description: At ground level
   number_of_rooms: 8
-  price_for_room: 1500
+  price_for_lodging: 1500
 
 sangla_super_deluxe_tent:
   account_id: 1
@@ -22,7 +22,7 @@ sangla_super_deluxe_tent:
   price_for_children_between_5_and_12_years: 1200
   description: On a raised platform
   number_of_rooms: 5
-  price_for_room: 1500
+  price_for_lodging: 1500
 
 sangla_retreat_deluxe:
   account_id: 1
@@ -35,7 +35,7 @@ sangla_retreat_deluxe:
   price_for_children_between_5_and_12_years: 1200
   description: Ground floor of retreat
   number_of_rooms: 6
-  price_for_room: 2500
+  price_for_lodging: 2500
 
 sangla_retreat_super_deluxe:
   account_id: 1
@@ -48,7 +48,7 @@ sangla_retreat_super_deluxe:
   price_for_children_between_5_and_12_years: 1200
   description: First floor of retreat
   number_of_rooms: 6
-  price_for_room: 3000
+  price_for_lodging: 3000
 
 sojha_retreat_deluxe:
   account_id: 1
@@ -60,7 +60,7 @@ sojha_retreat_deluxe:
   price_for_children_below_5_years: 0
   price_for_children_between_5_and_12_years: 1200
   number_of_rooms: 2
-  price_for_room: 1900
+  price_for_lodging: 1900
 
 sojha_suite:
   account_id: 1
@@ -72,7 +72,7 @@ sojha_suite:
   price_for_children_below_5_years: 0
   price_for_children_between_5_and_12_years: 1200
   number_of_rooms: 2
-  price_for_room: 2400
+  price_for_lodging: 2400
 
 sojha_cottage_deluxe:
   account_id: 1
@@ -84,7 +84,7 @@ sojha_cottage_deluxe:
   price_for_children_below_5_years: 0
   price_for_children_between_5_and_12_years: 1200
   number_of_rooms: 6
-  price_for_room: 2200
+  price_for_lodging: 2200
 
 thanedar_standard:
   account_id: 1
@@ -96,7 +96,7 @@ thanedar_standard:
   price_for_children_below_5_years: 0
   price_for_children_between_5_and_12_years: 1200
   number_of_rooms: 1
-  price_for_room: 1000
+  price_for_lodging: 1000
 
 thanedar_deluxe:
   account_id: 1
@@ -108,7 +108,7 @@ thanedar_deluxe:
   price_for_children_below_5_years: 0
   price_for_children_between_5_and_12_years: 1200
   number_of_rooms: 5
-  price_for_room: 1200
+  price_for_lodging: 1200
 
 thanedar_suite:
   account_id: 1
@@ -120,7 +120,7 @@ thanedar_suite:
   price_for_children_below_5_years: 0
   price_for_children_between_5_and_12_years: 1200
   number_of_rooms: 2
-  price_for_room: 2000
+  price_for_lodging: 2000
 
 thanedar_log_cabin:
   account_id: 1
@@ -132,7 +132,7 @@ thanedar_log_cabin:
   price_for_children_below_5_years: 0
   price_for_children_between_5_and_12_years: 1200
   number_of_rooms: 2
-  price_for_room: 2000
+  price_for_lodging: 2000
 
 kaza_standard:
   account_id: 1
@@ -144,7 +144,7 @@ kaza_standard:
   price_for_children_below_5_years: 0
   price_for_children_between_5_and_12_years: 1200
   number_of_rooms: 11
-  price_for_room: 800
+  price_for_lodging: 800
 
 sonapani_standard:
   account_id: 2
@@ -156,7 +156,7 @@ sonapani_standard:
   price_for_children_below_5_years: 0
   price_for_children_between_5_and_12_years: 900
   number_of_rooms: 10
-  price_for_room: 800
+  price_for_lodging: 800
 
 sonapani_family_cottage:
   account_id: 2
@@ -168,4 +168,4 @@ sonapani_family_cottage:
   price_for_children_below_5_years: 0
   price_for_children_between_5_and_12_years: 900
   number_of_rooms: 2
-  price_for_room: 800
+  price_for_lodging: 800

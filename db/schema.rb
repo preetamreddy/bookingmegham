@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120711120958) do
+ActiveRecord::Schema.define(:version => 20120712063915) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -154,7 +154,7 @@ ActiveRecord::Schema.define(:version => 20120711120958) do
     t.string   "url"
     t.integer  "account_id"
     t.integer  "agency_id"
-    t.string   "service_tax",                        :default => "0"
+    t.string   "service_tax_rate",                   :default => "0"
     t.string   "email"
     t.string   "city"
   end
@@ -170,7 +170,7 @@ ActiveRecord::Schema.define(:version => 20120711120958) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "number_of_rooms"
-    t.integer  "price_for_room"
+    t.integer  "price_for_lodging"
     t.integer  "price_for_triple_occupancy",                :default => 0
     t.integer  "price_for_children_between_5_and_12_years", :default => 0
     t.integer  "price_for_children_below_5_years",          :default => 0
@@ -189,7 +189,7 @@ ActiveRecord::Schema.define(:version => 20120711120958) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "room_rate"
-    t.integer  "service_tax_rate"
+    t.integer  "service_tax_per_room_night"
     t.integer  "number_of_children_below_5_years",          :default => 0
     t.integer  "account_id"
   end

@@ -18,7 +18,7 @@ class Booking < ActiveRecord::Base
 										:update_number_of_rooms, :update_check_out_date
 
 	before_save :update_room_rate,
-							:update_total_price, :update_service_tax_rate,
+							:update_total_price, :update_service_tax_per_room_night,
 							:update_service_tax, :strip_whitespaces, :titleize
 
 	before_create :update_guest_id, :update_property_id
@@ -135,10 +135,10 @@ class Booking < ActiveRecord::Base
 		end
 	end
 
-	def update_service_tax_rate
+	def update_service_tax_per_room_night
 		rooms.each do |room|	
-			if trip.payment_status == Trip::NOT_PAID or room.service_tax_rate == nil
-				room.service_tax_rate = RoomType.find(room_type_id).service_tax
+			if trip.payment_status == Trip::NOT_PAID or room.service_tax_per_room_night == nil
+				room.service_tax_per_room_night = RoomType.find(room_type_id).service_tax
 			end
 		end
 	end
@@ -146,7 +146,7 @@ class Booking < ActiveRecord::Base
 	def update_service_tax
 		if rooms.any?
 			service_tax_per_night = rooms.to_a.sum { |room|
-				room.service_tax_rate * room.number_of_rooms }
+				room.service_tax_per_room_night * room.number_of_rooms }
 		else
 			service_tax_per_night = 0
 		end

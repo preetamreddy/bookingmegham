@@ -14,13 +14,13 @@ class RoomType < ActiveRecord::Base
 	validates_numericality_of :number_of_rooms,
 														:price_for_single_occupancy,
 														:price_for_double_occupancy,
-														:price_for_room,
+														:price_for_lodging,
 														allow_nil: true, only_integer: true,
 														greater_than_or_equal_to: 0,
 														message: "should be a number greater than or equal to 0"
 	
 	def service_tax
-		(price_for_room * property.service_tax.to_f / 100.0).round
+		(price_for_lodging * property.service_tax_rate.to_f / 100.0).round
 	end
 
 	def RoomType.price(id, occupancy, number_of_adults, number_of_children_between_5_and_12_years,
@@ -98,7 +98,7 @@ class RoomType < ActiveRecord::Base
 		def set_defaults_if_nil
 			self.price_for_single_occupancy ||= 0
 			self.price_for_double_occupancy ||= 0
-			self.price_for_room ||= 0
+			self.price_for_lodging ||= 0
 			self.number_of_rooms ||= 99
 		end
 

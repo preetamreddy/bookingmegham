@@ -22,7 +22,6 @@ FactoryGirl.define do
 	  operates_taxis 1
 	  is_travel_agency 1
 	  short_name { "#{name}" }
-	  service_tax 0
 	end
 
 	factory :property do
@@ -46,7 +45,7 @@ FactoryGirl.define do
 		price_for_single_occupancy 4700
 		price_for_double_occupancy 5600
 		number_of_rooms 8
-		price_for_room 1500
+		price_for_lodging 1500
 	  price_for_children_below_5_years 0
 	  price_for_triple_occupancy 2000
 	  price_for_children_between_5_and_12_years 1200
