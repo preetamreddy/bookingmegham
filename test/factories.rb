@@ -26,7 +26,6 @@ FactoryGirl.define do
 
 	factory :property do
 		account_id 3
-	  agency
 	  name { Faker::Address.city }
 	  price_for_driver 500
 	  ensure_availability_before_booking 1

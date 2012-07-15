@@ -6,13 +6,10 @@ class GuestTest < ActiveSupport::TestCase
 
 	test "guest details can not be empty" do
 		srini = FactoryGirl.build(:guest,
-							:name => "",
-							:title => "")
+							:name => "")
 		assert srini.invalid?
 		assert srini.errors[:name].any?
-		assert srini.errors[:title].any?
 		srini.name = "Srinivas Rao"
-		srini.title = "Mr"
 		assert srini.save
 	end
 
