@@ -25,7 +25,7 @@
 	  </tr>
 		<% @guests.each do |guest| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-		    <td class="nowrap"><%= guest.title + " " + guest.name %></td>
+		    <td class="nowrap"><%= guest.name_with_title %></td>
 		    <td class="text"><%= guest.agency.short_name if guest.agency_id %></td>
 		    <td class="number">
 					<span class="nowrap"><%= guest.phone_number %></span><br/>

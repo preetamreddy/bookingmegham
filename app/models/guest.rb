@@ -1,5 +1,5 @@
 class Guest < ActiveRecord::Base
-	TITLE = [ "Mr", "Ms", "Mrs" ]
+	TITLE = [ "Mr", "Ms", "Mrs", "Dr." ]
 
 	belongs_to :agency
 
@@ -9,7 +9,7 @@ class Guest < ActiveRecord::Base
 
 	before_destroy :ensure_not_referenced_by_trip
 
-	validates :name, :title, presence: true
+	validates :name, presence: true
 
 	validates_uniqueness_of :phone_number, :email_id, :scope => :account_id,
 		:allow_nil => true, :allow_blank => true, :case_sensitive => false
@@ -18,7 +18,11 @@ class Guest < ActiveRecord::Base
 		:format => { :with => /^[\+]?[\d\s]*$/, :message => "is not valid" }
 
 	def name_with_title
-		title + " " + name
+		title != "" ? "#{title} #{name}" : "#{name}"
+	end
+
+	def last_name_with_title
+		title != "" ? "#{title} #{name.split.last}" : "#{name}"
 	end
 
 	private

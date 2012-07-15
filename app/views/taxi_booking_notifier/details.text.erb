@@ -7,7 +7,7 @@ We have a requirement to arrange transportation for a guest as below:
 
 <%= pluralize(@taxi_booking.number_of_vehicles, @taxi_booking.taxi.model) %> starting <%= l @taxi_booking.start_date %> for <%= pluralize(@taxi_booking.number_of_days, "day") %>, ending on <%= l @taxi_booking.end_date %>.
 
-Guest Name: <%= @trip.guest.title%> <%= @trip.guest.name.split.last %>
+Guest Name: <%= @trip.guest.last_name_with_title %>
 Phone number: <%= @trip.guest.phone_number %>
 <% if @trip.number_of_children == 0 %>
 Number of people: <%= @trip.number_of_adults %>
@@ -16,7 +16,7 @@ Number of people: <%= @trip.number_of_adults %> + <%= @trip.number_of_children %
 <% end %>
 
 Pickup address: <%= @taxi_booking.pickup_address %>
-Pickup time: <%= l @taxi_booking.pickup_time, :format => :short %>
+Pickup time: <%= l @taxi_booking.pickup_time, :format => :short if @taxi_booking.pickup_time %>
 
 Itinerary:
 <% @trip.bookings.order(:check_in_date).each do |booking| %>

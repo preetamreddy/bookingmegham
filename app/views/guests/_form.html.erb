@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :title %><br />
-    <%= f.select :title, Guest::TITLE, prompt: 'Title' %>
+    <%= f.select :title, Guest::TITLE, prompt: 'Title', :include_blank => true %>
   </div>
   <div class="field">
     <%= f.label :name %><br />

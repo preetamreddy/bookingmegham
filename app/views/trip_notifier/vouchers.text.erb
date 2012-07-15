@@ -1,7 +1,7 @@
 to: <%= @trip.guest.email_id %>
 cc: <%= @trip.email_ids %>, <%= @trip.advisor.email_id %>, <%= TripNotifier::ACCOUNTS_EMAIL_ID %>
 
-Dear <%= @trip.guest.title + " " + @trip.guest.name.split.last %>
+Dear <%= @trip.guest.last_name_with_title %>
 
 Thank you for planning your holiday with Banjara Camps and Retreats.
 
