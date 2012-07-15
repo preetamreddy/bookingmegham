@@ -11,9 +11,18 @@
 		white-space: nowrap;
 	}
 
+	table th {
+		border-top: 3px solid black;
+	}
+
 	.property {
 		background: #CFCFCF;
 		font-weight: bold;
+		td {
+			font-size: 17px;
+			border-top: 3px solid black;
+			border-bottom: 1px solid black;
+		}
 	}
 
 	.room_type {
@@ -22,21 +31,21 @@
 
 	.sold_out {
 		text-align: right;
-		color: red;
+		background-color: red;
 	}
 
 	.not_serviceble {
 		text-align: right;
-		color: red;
+		background-color: red;
 	}
 
 	.partial {
 		text-align: right;
-		color: orange;
+		background-color: orange;
 	}
 
 	.available {
 		text-align: right;
-		color: green
+		background-color: green
 	}
 }
