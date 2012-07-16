@@ -4,6 +4,31 @@ class TripTest < ActiveSupport::TestCase
 	setup do
 		@preetam = FactoryGirl.create(:guest,
 										:name => "Preetam Reddy")
+		@himachal_trip = FactoryGirl.create(:trip,
+											:guest => @preetam)
+	end
+
+	test "price for vas rolls up from vas bookings - single vas" do
+		airport_pickup = FactoryGirl.create(:vas_booking_for_trip,
+			:value_added_service => "Airport pickup",
+			:unit_price => 1000,
+			:number_of_units => 1,
+			:trip => @himachal_trip)
+		assert_equal 1000, @himachal_trip.price_for_vas
+	end
+
+	test "price for vas rolls up from vas bookings - multiple vas" do
+		airport_pickup = FactoryGirl.create(:vas_booking_for_trip,
+			:value_added_service => "Airport pickup",
+			:unit_price => 1000,
+			:number_of_units => 1,
+			:trip => @himachal_trip)
+		airport_drop = FactoryGirl.create(:vas_booking_for_trip,
+			:value_added_service => "Airport drop",
+			:unit_price => 1000,
+			:number_of_units => 1,
+			:trip => @himachal_trip)
+		assert_equal 2000, @himachal_trip.price_for_vas
 	end
 
 #  test "trip should belong to a valid guest" do

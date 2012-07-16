@@ -14,30 +14,18 @@ class Trip < ActiveRecord::Base
 	accepts_nested_attributes_for :rooms, :reject_if => :all_blank,
 		:allow_destroy => true
 
-	has_many :bookings
-	has_many :taxi_bookings
-
-	has_many :payments, dependent: :destroy
-	accepts_nested_attributes_for :payments, :reject_if => :all_blank,
-		:allow_destroy => true
-
 	has_many :vas_bookings, dependent: :destroy
 	accepts_nested_attributes_for :vas_bookings, :reject_if => :all_blank,
 		:allow_destroy => true
 
+	has_many :bookings
+	has_many :taxi_bookings
+	has_many :payments
+
 	after_initialize :init
 
-	before_validation :update_end_date
-
-	before_save :set_defaults_if_nil,
-							:update_payment_status, :update_pay_by_date,
-							:update_number_of_children_below_5_years,
-							:strip_whitespaces, :titleize
-
-	after_save :update_line_item_status
-
-	before_destroy 	:ensure_not_referenced_by_booking,
-									:ensure_not_referenced_by_taxi_booking
+	before_validation :set_defaults_if_nil, :strip_whitespaces, :titleize,
+										:update_end_date
 
 	validates :guest_id, :name, :start_date, :end_date, :number_of_days, 
 						presence: true
@@ -51,16 +39,22 @@ class Trip < ActiveRecord::Base
 						only_integer: true, greater_than_or_equal_to: 0, allow_nil: true,
 						message: "should be a number greater than or equal to 0"
 
-	validate :ensure_guest_exists, :ensure_end_date_is_greater_than_start_date
+	validate :ensure_end_date_is_greater_than_start_date, :ensure_guest_exists
 
-	def tds
-		if direct_booking == 0
-			tds = (tac * TDS_PERCENT / 100.0).round
+	before_save :update_payment_status, :update_pay_by_date,
+							:update_number_of_children_below_5_years
+
+	after_save :update_line_item_status
+
+	before_destroy 	:ensure_not_referenced_by_booking,
+									:ensure_not_referenced_by_taxi_booking
+
+	def number_of_rooms
+		if rooms.empty?
+			return 0
 		else
-			tds = 0
+			rooms.to_a.sum { |room| room.number_of_rooms }
 		end
-
-		return tds
 	end
 
 	def number_of_adults
@@ -69,12 +63,6 @@ class Trip < ActiveRecord::Base
 		else
 			rooms.to_a.sum { |room| room.number_of_adults * room.number_of_rooms }
 		end
-	end
-
-	def number_of_children
-		bachcha_party =  number_of_children_between_5_and_12_years + number_of_children_below_5_years
-
-		return bachcha_party
 	end
 
 	def number_of_children_between_5_and_12_years
@@ -86,19 +74,17 @@ class Trip < ActiveRecord::Base
 		end
 	end
 
-	def number_of_rooms
-		if rooms.empty?
-			return 0
-		else
-			rooms.to_a.sum { |room| room.number_of_rooms }
-		end
-	end
-
 	def number_of_guests
 		guests = number_of_adults + number_of_children_between_5_and_12_years +
 							number_of_children_below_5_years
 
 		return guests
+	end
+
+	def number_of_children
+		bachcha_party =  number_of_children_between_5_and_12_years + number_of_children_below_5_years
+
+		return bachcha_party
 	end
 
 	def guests
@@ -112,18 +98,39 @@ class Trip < ActiveRecord::Base
 		guests = guests + ")"
 	end
 
+	def long_name
+		guest.name + ' - ' + name
+	end
+
+	def number_of_driver_nights
+		days_booked = []
+		num_nights = 0
+		if bookings.any?
+			bookings.each do |booking|
+				days_booked << (booking.check_in_date...booking.check_out_date).to_a
+			end
+		end
+
+		num_nights = days_booked.flatten.uniq.count
+
+		return num_nights
+	end
+
+	def price_for_vas
+		if vas_bookings.any?
+			vas_total = vas_bookings.to_a.sum { |vas_booking| vas_booking.total_price }
+		else
+			vas_total = 0
+		end
+
+		return vas_total
+	end
+
 	def total_price
 		if bookings.any?
 			price_for_bookings = bookings.to_a.sum { |booking| booking.total_price }
 		else
 			price_for_bookings = 0
-		end
-
-		if vas_bookings.any?
-			price_for_vas = vas_bookings.to_a.sum { |vas_booking|
-				vas_booking.unit_price * vas_booking.number_of_units }
-		else
-			price_for_vas = 0
 		end
 
 		if taxi_bookings.any?
@@ -146,18 +153,18 @@ class Trip < ActiveRecord::Base
 		return ttl_price
 	end
 
-	def number_of_driver_nights
-		days_booked = []
-		num_nights = 0
-		if bookings.any?
-			bookings.each do |booking|
-				days_booked << (booking.check_in_date...booking.check_out_date).to_a
-			end
+	def tds
+		if direct_booking == 0
+			tds = (tac * TDS_PERCENT / 100.0).round
+		else
+			tds = 0
 		end
 
-		num_nights = days_booked.flatten.uniq.count
+		return tds
+	end
 
-		return num_nights
+	def final_price
+		total_price - discount - tac + tds
 	end
 
 	def cancellation_charge
@@ -180,16 +187,6 @@ class Trip < ActiveRecord::Base
 		return refund_amount
 	end
 
-	def service_tax
-		if bookings.any?
-			service_tax = bookings.to_a.sum { |booking| booking.service_tax }
-		else
-			service_tax = 0
-		end
-		
-		return service_tax
-	end
-
 	def paid
 		if payments.empty?
 			return 0
@@ -202,28 +199,62 @@ class Trip < ActiveRecord::Base
 		final_price - paid - refund_amount
 	end
 
+	def service_tax
+		if bookings.any?
+			service_tax = bookings.to_a.sum { |booking| booking.service_tax }
+		else
+			service_tax = 0
+		end
+		
+		return service_tax
+	end
+
 	def net_after_taxes
 		final_price - tds - service_tax
 	end
 
-	def final_price
-		total_price - discount - tac + tds
-	end
-
-	def long_name
-		guest.name + ' - ' + name
-	end
-
 	private
-
 		def init
 			self.discount ||= 0
 			self.tac ||= 0
+			self.payment_status ||= NOT_PAID
+		end
+
+		def set_defaults_if_nil
+			self.number_of_children_below_5_years ||= 0
+			self.number_of_drivers ||= 0
+			self.invoice_date ||= Date.today
+		end
+
+		def titleize
+			self.name = name.titleize
+		end
+
+		def strip_whitespaces
+			self.remarks = remarks.to_s.strip
 		end
 
 		def update_end_date
 			self.end_date = start_date + number_of_days - 1
 		end
+
+		def ensure_end_date_is_greater_than_start_date
+			if end_date <= start_date
+				errors.add(:base, "Could not create Trip as end date is earlier than start date")
+				return false
+			end
+		end
+
+		def ensure_guest_exists
+			begin
+				guest = Guest.find(guest_id)
+			rescue ActiveRecord::RecordNotFound
+				errors.add(:base, "Could not create Trip as Guest '#{guest_id}' does not exist")
+				return false
+			else
+				return true
+			end
+		end	
 
 		def update_payment_status
 			if total_price == 0
@@ -266,23 +297,21 @@ class Trip < ActiveRecord::Base
 			end
 		end
 
-		def ensure_guest_exists
-			begin
-				guest = Guest.find(guest_id)
-			rescue ActiveRecord::RecordNotFound
-				errors.add(:base, "Could not create Trip as Guest '#{guest_id}' does not exist")
-				return false
+		def update_line_item_status
+			if payment_status == NOT_PAID
+				blocked = 1
 			else
-				return true
+				blocked = 0
 			end
-		end	
 
-		def set_defaults_if_nil
-			self.number_of_children_below_5_years ||= 0
-			self.number_of_drivers ||= 0
-			self.invoice_date ||= Date.today
-			self.discount ||= 0
-			self.tac ||= 0
+			if bookings.any?
+				bookings.each do |booking|
+					booking.line_items.each do |line_item|
+						line_item.blocked = blocked
+						line_item.save!
+					end
+				end
+			end
 		end
 
 		def ensure_not_referenced_by_booking
@@ -301,37 +330,5 @@ class Trip < ActiveRecord::Base
 				errors.add(:base, "Destroy failed because #{name} has taxi bookings")
 				return false
 			end
-		end
-
-		def ensure_end_date_is_greater_than_start_date
-			if end_date <= start_date
-				errors.add(:base, "Could not create Trip as end date is earlier than start date")
-				return false
-			end
-		end
-
-		def update_line_item_status
-			if payment_status == NOT_PAID
-				blocked = 1
-			else
-				blocked = 0
-			end
-
-			if bookings.any?
-				bookings.each do |booking|
-					booking.line_items.each do |line_item|
-						line_item.blocked = blocked
-						line_item.save!
-					end
-				end
-			end
-		end
-
-		def titleize
-			self.name = name.titleize
-		end
-
-		def strip_whitespaces
-			self.remarks = remarks.to_s.strip
 		end
 end

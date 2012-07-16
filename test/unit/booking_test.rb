@@ -2,8 +2,35 @@ require 'test_helper'
 
 class BookingTest < ActiveSupport::TestCase
 	setup do
-		@a_trip = FactoryGirl.create(:trip)
-		@a_room_type = FactoryGirl.create(:room_type)
+		@preetam = FactoryGirl.create(:guest,
+										:name => "Preetam Reddy")
+		@himachal_trip = FactoryGirl.create(:trip,
+											:guest => @preetam)
+		@sangla_booking = FactoryGirl.create(:booking,
+												:trip => @himachal_trip)
+	end
+
+	test "price for vas rolls up from vas bookings - single vas" do
+		rappelling = FactoryGirl.create(:vas_booking_for_booking,
+			:value_added_service => "Rappelling",
+			:unit_price => 500,
+			:number_of_units => 1,
+			:booking => @sangla_booking)
+		assert_equal 500, @sangla_booking.price_for_vas
+	end
+
+	test "price for vas rolls up from vas bookings - multiple vas" do
+		rappelling = FactoryGirl.create(:vas_booking_for_booking,
+			:value_added_service => "Rappelling",
+			:unit_price => 500,
+			:number_of_units => 1,
+			:booking => @sangla_booking)
+		river_crossing = FactoryGirl.create(:vas_booking_for_booking,
+			:value_added_service => "River crossing",
+			:unit_price => 500,
+			:number_of_units => 2,
+			:booking => @sangla_booking)
+		assert_equal 1500, @sangla_booking.price_for_vas
 	end
 
 #	test "booking should belong to a valid trip" do

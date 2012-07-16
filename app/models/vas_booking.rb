@@ -2,15 +2,17 @@ class VasBooking < ActiveRecord::Base
 	belongs_to :trip
 	belongs_to :booking
 
+	after_validation :update_total_price
+
 	before_create :set_account_id
+
+	validates :unit_price, :number_of_units, presence: true
 	
-	def total_price
-		total_price = unit_price * number_of_units
-
-		return total_price
-	end
-
 	private
+
+		def update_total_price
+			self.total_price = unit_price * number_of_units
+		end
 
 		def set_account_id
 			if trip != nil

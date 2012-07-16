@@ -77,6 +77,7 @@ FactoryGirl.define do
 		room_type
 		check_in_date { trip.start_date }
 		number_of_nights 4
+		meal_plan "EPAI"
 	end
 
 	factory :room do
@@ -87,5 +88,20 @@ FactoryGirl.define do
 		number_of_children_between_5_and_12_years 0
 		number_of_children_below_5_years 1
 		number_of_rooms 1
+	end
+
+	factory :vas_booking do
+		account_id 3
+		value_added_service { Faker::Lorem.words(1).first }
+		unit_price 1000
+		number_of_units 1
+
+		factory :vas_booking_for_trip do
+			trip
+		end
+
+		factory :vas_booking_for_booking do
+			booking
+		end
 	end
 end

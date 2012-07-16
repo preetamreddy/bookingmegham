@@ -14,18 +14,8 @@ class Booking < ActiveRecord::Base
 
 	has_many :line_items, dependent: :destroy
 
-	before_validation :set_defaults_if_nil, 
-										:update_number_of_rooms, :update_check_out_date
-
-	before_save :update_room_rate,
-							:update_total_price, :update_service_tax_per_room_night,
-							:update_service_tax, :strip_whitespaces, :titleize
-
-	before_create :update_guest_id, :update_property_id
-
-	after_save :update_line_items
-
-	before_destroy :ensure_payments_are_not_made
+	before_validation :set_defaults_if_nil, :strip_whitespaces, :titleize,
+										:update_check_out_date, :update_number_of_rooms
 
 	validates :trip_id, :room_type_id, :check_in_date, :check_out_date, :meal_plan,
 											presence: true
@@ -35,29 +25,19 @@ class Booking < ActiveRecord::Base
 														allow_nil: true, 
 														message: "should be a number greater than 0"
 
-	validate 	:ensure_trip_exists, :ensure_room_type_exists,
-						:ensure_check_out_date_is_greater_than_check_in_date,
-						:ensure_booking_is_within_trip_dates,
-						:ensure_room_availability
+	validate	:ensure_check_out_date_is_greater_than_check_in_date,
+						:ensure_trip_exists, :ensure_booking_is_within_trip_dates,
+						:ensure_room_type_exists, :ensure_room_availability
 
-	def refund_amount
-		if cancelled == 1
-			refund_amount = total_price - cancellation_charge
-		elsif cancelled == 0
-			refund_amount = 0
-		end
+	before_save :update_suggested_activities,
+							:update_room_rate, :update_total_price,
+							:update_service_tax_per_room_night, :update_service_tax
 
-		return refund_amount
-	end
+	before_create :update_guest_id, :update_property_id
 
-	def number_of_children_below_5_years
-		if rooms.empty?
-			return 0
-		else
-			rooms.to_a.sum { |room| 
-				room.number_of_children_below_5_years * room.number_of_rooms }
-		end 
-	end
+	after_save :update_line_items
+
+	before_destroy :ensure_payments_are_not_made
 
 	def food_preferences
 		return trip.food_preferences
@@ -65,93 +45,6 @@ class Booking < ActiveRecord::Base
 
 	def medical_constraints
 		return trip.medical_constraints
-	end
-
-	def add_rooms_from_trip(trip)
-		trip.rooms.each do |trip_room|
-			rooms.build(occupancy: trip_room.occupancy,
-									number_of_adults: trip_room.number_of_adults,
-									number_of_children_between_5_and_12_years: 
-										trip_room.number_of_children_between_5_and_12_years,
-									number_of_children_below_5_years: 
-										trip_room.number_of_children_below_5_years,
-									number_of_rooms: trip_room.number_of_rooms)
-		end
-	end
-
-	def set_defaults_if_nil
-		if suggested_activities == ""
-			self.suggested_activities = room_type.property.suggested_activities
-		end
-		self.number_of_drivers ||= 0
-	end
-
-	def update_number_of_rooms
-		if rooms.any?
-			num_rooms = rooms.to_a.sum { |room| room.number_of_rooms }
-		else
-			num_rooms = 0
-		end
-
-		self.number_of_rooms = num_rooms
-	end
-
-	def update_room_rate
-		rooms.each do |room|
-			if trip.payment_status == Trip::NOT_PAID or room.room_rate == nil
-				room.room_rate = RoomType.price(room_type_id, room.occupancy,
-														room.number_of_adults,
-														room.number_of_children_between_5_and_12_years,
-														room.number_of_children_below_5_years)
-			end
-		end
-	end
-
-	def update_total_price
-		if rooms.any?
-			price_per_night = rooms.to_a.sum { |room|
-				room.room_rate * room.number_of_rooms }
-		else
-			price_per_night = 0
-		end
-
-		price_for_rooms = price_per_night * number_of_nights
-
-		if vas_bookings.any?
-			price_for_vas = vas_bookings.to_a.sum { |vas_booking|
-				vas_booking.unit_price * vas_booking.number_of_units }
-		else
-			price_for_vas = 0
-		end
-
-		self.total_price = price_for_rooms + price_for_vas + price_for_drivers
-	end
-
-	def price_for_drivers
-		if number_of_drivers > 0
-			price_for_drivers = number_of_drivers * number_of_nights * room_type.property.price_for_driver
-		else
-			price_for_drivers = 0
-		end
-	end
-
-	def update_service_tax_per_room_night
-		rooms.each do |room|	
-			if trip.payment_status == Trip::NOT_PAID or room.service_tax_per_room_night == nil
-				room.service_tax_per_room_night = RoomType.find(room_type_id).service_tax
-			end
-		end
-	end
-
-	def update_service_tax
-		if rooms.any?
-			service_tax_per_night = rooms.to_a.sum { |room|
-				room.service_tax_per_room_night * room.number_of_rooms }
-		else
-			service_tax_per_night = 0
-		end
-
-		self.service_tax = number_of_nights * service_tax_per_night
 	end
 
 	def number_of_adults
@@ -171,15 +64,69 @@ class Booking < ActiveRecord::Base
 		end 
 	end
 
-	private
+	def number_of_children_below_5_years
+		if rooms.empty?
+			return 0
+		else
+			rooms.to_a.sum { |room| 
+				room.number_of_children_below_5_years * room.number_of_rooms }
+		end 
+	end
 
-		def ensure_payments_are_not_made
-			if trip.payment_status == Trip::NOT_PAID
-				return true
-			else
-				errors.add(:base, "Could not delete booking as payments have been made for the trip")
-				return false
-			end
+	def price_for_drivers
+		if number_of_drivers > 0
+			price_for_drivers = number_of_drivers * number_of_nights * room_type.property.price_for_driver
+		else
+			price_for_drivers = 0
+		end
+	end
+
+	def price_for_vas
+		if vas_bookings.any?
+			vas_total = vas_bookings.to_a.sum { |vas_booking| vas_booking.total_price }
+		else
+			vas_total = 0
+		end
+
+		return vas_total
+	end
+
+	def refund_amount
+		if cancelled == 1
+			refund_amount = total_price - cancellation_charge
+		elsif cancelled == 0
+			refund_amount = 0
+		end
+
+		return refund_amount
+	end
+
+	def add_rooms_from_trip(trip)
+		trip.rooms.each do |trip_room|
+			rooms.build(occupancy: trip_room.occupancy,
+									number_of_adults: trip_room.number_of_adults,
+									number_of_children_between_5_and_12_years: 
+										trip_room.number_of_children_between_5_and_12_years,
+									number_of_children_below_5_years: 
+										trip_room.number_of_children_below_5_years,
+									number_of_rooms: trip_room.number_of_rooms)
+		end
+	end
+
+	private
+		def set_defaults_if_nil
+			self.number_of_drivers ||= 0
+		end
+
+		def strip_whitespaces
+			self.remarks = remarks.to_s.strip
+			self.getting_there = getting_there.to_s.strip
+			self.getting_home = getting_home.to_s.strip
+		end
+
+		def titleize
+			self.guests_arriving_from = guests_arriving_from.titleize if guests_arriving_from
+			self.departure_destination = departure_destination.titleize if departure_destination
 		end
 
 		def update_check_out_date
@@ -191,6 +138,53 @@ class Booking < ActiveRecord::Base
 			end
 		end
 
+		def update_number_of_rooms
+			if rooms.any?
+				num_rooms = rooms.to_a.sum { |room| room.number_of_rooms }
+			else
+				num_rooms = 0
+			end
+	
+			self.number_of_rooms = num_rooms
+		end
+
+		def ensure_check_out_date_is_greater_than_check_in_date
+			if check_out_date <= check_in_date
+				errors.add(:base, "Could not create Booking as check-out date is earlier than or same as check-in date")
+				return false
+			end
+		end
+
+		def ensure_trip_exists
+			begin
+				trip = Trip.find(trip_id)
+			rescue ActiveRecord::RecordNotFound
+				errors.add(:base, "Could not create Booking as Trip '#{trip_id}' does not exist")
+				return false
+ 			else
+        return true
+			end
+		end
+
+		def ensure_booking_is_within_trip_dates
+			if (check_in_date < trip.start_date or check_in_date > trip.end_date) or
+					(check_out_date < trip.start_date or check_out_date > trip.end_date)
+				errors.add(:base, "Could not create booking as it is not within the trip dates")
+				return false
+			end
+		end
+
+		def ensure_room_type_exists
+			begin
+				room_type = RoomType.find(room_type_id)
+			rescue ActiveRecord::RecordNotFound
+				errors.add(:base, "Could not create Booking as Room Type '#{room_type_id}' does not exist")
+				return false
+ 			else
+        return true
+			end
+		end
+		
 		def ensure_room_availability
 			if new_record?
 				rooms_required = number_of_rooms
@@ -208,41 +202,61 @@ class Booking < ActiveRecord::Base
 			end
 		end
 
-		def ensure_trip_exists
-			begin
-				trip = Trip.find(trip_id)
-			rescue ActiveRecord::RecordNotFound
-				errors.add(:base, "Could not create Booking as Trip '#{trip_id}' does not exist")
-				return false
- 			else
-        return true
+		def update_suggested_activities
+			if suggested_activities == ""
+				self.suggested_activities = room_type.property.suggested_activities.to_s.strip
 			end
 		end
 
-		def ensure_room_type_exists
-			begin
-				room_type = RoomType.find(room_type_id)
-			rescue ActiveRecord::RecordNotFound
-				errors.add(:base, "Could not create Booking as Room Type '#{room_type_id}' does not exist")
-				return false
- 			else
-        return true
-			end
-		end
-		
-		def ensure_check_out_date_is_greater_than_check_in_date
-			if check_out_date <= check_in_date
-				errors.add(:base, "Could not create Booking as check-out date is earlier than or same as check-in date")
-				return false
+		def update_room_rate
+			rooms.each do |room|
+				if trip.payment_status == Trip::NOT_PAID or room.room_rate == nil
+					room.room_rate = RoomType.price(room_type_id, room.occupancy,
+															room.number_of_adults,
+															room.number_of_children_between_5_and_12_years,
+															room.number_of_children_below_5_years)
+				end
 			end
 		end
 
-		def ensure_booking_is_within_trip_dates
-			if (check_in_date < trip.start_date or check_in_date > trip.end_date) or
-					(check_out_date < trip.start_date or check_out_date > trip.end_date)
-				errors.add(:base, "Could not create booking as it is not within the trip dates")
-				return false
+		def update_total_price
+			if rooms.any?
+				price_per_night = rooms.to_a.sum { |room|
+					room.room_rate * room.number_of_rooms }
+			else
+				price_per_night = 0
 			end
+	
+			price_for_rooms = price_per_night * number_of_nights
+	
+			self.total_price = price_for_rooms + price_for_vas + price_for_drivers
+		end
+
+		def update_service_tax_per_room_night
+			rooms.each do |room|	
+				if trip.payment_status == Trip::NOT_PAID or room.service_tax_per_room_night == nil
+					room.service_tax_per_room_night = RoomType.find(room_type_id).service_tax
+				end
+			end
+		end
+	
+		def update_service_tax
+			if rooms.any?
+				service_tax_per_night = rooms.to_a.sum { |room|
+					room.service_tax_per_room_night * room.number_of_rooms }
+			else
+				service_tax_per_night = 0
+			end
+	
+			self.service_tax = number_of_nights * service_tax_per_night
+		end
+
+		def update_guest_id
+			self.guest_id = trip.guest_id
+		end
+
+		def update_property_id
+			self.property_id = room_type.property_id
 		end
 
 		def update_line_items
@@ -253,6 +267,10 @@ class Booking < ActiveRecord::Base
 			if cancelled == 0 and rooms.any?
 				add_line_items
 			end	
+		end
+
+		def delete_line_items
+			line_items.destroy_all
 		end
 
 		def add_line_items
@@ -275,27 +293,12 @@ class Booking < ActiveRecord::Base
 			end
 		end
 
-		def delete_line_items
-			line_items.destroy_all
-		end
-
-		def update_guest_id
-			self.guest_id = trip.guest_id
-		end
-
-		def update_property_id
-			self.property_id = room_type.property_id
-		end
-
-		def titleize
-			self.guests_arriving_from = guests_arriving_from.titleize if guests_arriving_from
-			self.departure_destination = departure_destination.titleize if departure_destination
-		end
-
-		def strip_whitespaces
-			self.remarks = remarks.to_s.strip
-			self.suggested_activities = suggested_activities.to_s.strip
-			self.getting_there = getting_there.to_s.strip
-			self.getting_home = getting_home.to_s.strip
+		def ensure_payments_are_not_made
+			if trip.payment_status == Trip::NOT_PAID
+				return true
+			else
+				errors.add(:base, "Could not delete booking as payments have been made for the trip")
+				return false
+			end
 		end
 end
