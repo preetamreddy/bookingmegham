@@ -104,8 +104,6 @@ class TripsController < ApplicationController
   def update
     respond_to do |format|
       if @trip.update_attributes(params[:trip])
-				@trip.save
-
         format.html { redirect_to @trip, notice: 'Trip was successfully updated.' }
         format.json { head :ok }
 			else
