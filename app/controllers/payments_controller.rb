@@ -80,8 +80,6 @@ class PaymentsController < ApplicationController
 
     respond_to do |format|
       if @payment.save
-				trip.save
-
 				PaymentNotifier.receipt(@payment, current_user.id).deliver
 
         format.html { redirect_to @payment, notice: 'Payment was successfully created.' }
@@ -100,8 +98,6 @@ class PaymentsController < ApplicationController
 
     respond_to do |format|
       if @payment.update_attributes(params[:payment])
-				trip.save
-
 				PaymentNotifier.receipt(@payment, current_user.id).deliver
 
         format.html { redirect_to @payment, notice: 'Payment was successfully updated.' }
@@ -119,7 +115,6 @@ class PaymentsController < ApplicationController
 		trip = Trip.scoped_by_account_id(current_user.account_id).find(@payment.trip_id)
 
     @payment.destroy
-		trip.save	
 
     respond_to do |format|
       format.html { redirect_to payments_url }

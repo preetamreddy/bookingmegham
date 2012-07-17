@@ -24,10 +24,9 @@ class Trip < ActiveRecord::Base
 
 	after_initialize :init
 
-	before_validation :set_defaults_if_nil, :strip_whitespaces, :titleize,
-										:update_end_date
+	before_validation :set_defaults_if_nil
 
-	validates :guest_id, :name, :start_date, :end_date, :number_of_days, 
+	validates :guest_id, :name, :start_date, :number_of_days, 
 						presence: true
 
 	validates_numericality_of :guest_id, :number_of_days,
@@ -39,9 +38,10 @@ class Trip < ActiveRecord::Base
 						only_integer: true, greater_than_or_equal_to: 0, allow_nil: true,
 						message: "should be a number greater than or equal to 0"
 
-	validate :ensure_end_date_is_greater_than_start_date, :ensure_guest_exists
-
-	before_save :update_payment_status, :update_pay_by_date,
+	before_save :strip_whitespaces, :titleize,
+							:update_end_date, :ensure_end_date_is_greater_than_start_date,
+							:ensure_guest_exists,
+							:update_payment_status, :update_pay_by_date,
 							:update_number_of_children_below_5_years
 
 	after_save :update_line_item_status
@@ -117,13 +117,19 @@ class Trip < ActiveRecord::Base
 	end
 
 	def price_for_vas
-		if vas_bookings.any?
-			vas_total = vas_bookings.to_a.sum { |vas_booking| vas_booking.total_price }
+		if vas_bookings.any? 
+			price_for_vas = vas_bookings.to_a.sum { |vas_booking| vas_booking.total_price }
 		else
-			vas_total = 0
+			price_for_vas = 0
 		end
+	end
 
-		return vas_total
+	def price_for_transport
+		if taxi_bookings.any?
+			price_for_transport = taxi_bookings.to_a.sum { |taxi_booking| taxi_booking.total_price }
+		else
+			price_for_transport = 0
+		end
 	end
 
 	def total_price
@@ -131,14 +137,6 @@ class Trip < ActiveRecord::Base
 			price_for_bookings = bookings.to_a.sum { |booking| booking.total_price }
 		else
 			price_for_bookings = 0
-		end
-
-		if taxi_bookings.any?
-			price_for_transport = taxi_bookings.to_a.sum { |taxi_booking|
-				taxi_booking.unit_price * taxi_booking.number_of_vehicles *
-					taxi_booking.number_of_days }
-		else
-			price_for_transport = 0
 		end
 
 		if number_of_drivers
@@ -217,7 +215,6 @@ class Trip < ActiveRecord::Base
 		def init
 			self.discount ||= 0
 			self.tac ||= 0
-			self.payment_status ||= NOT_PAID
 		end
 
 		def set_defaults_if_nil

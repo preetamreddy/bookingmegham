@@ -14,7 +14,7 @@ class Booking < ActiveRecord::Base
 
 	has_many :line_items, dependent: :destroy
 
-	before_validation :set_defaults_if_nil, :strip_whitespaces, :titleize,
+	before_validation :set_defaults_if_nil,
 										:update_check_out_date, :update_number_of_rooms
 
 	validates :trip_id, :room_type_id, :check_in_date, :check_out_date, :meal_plan,
@@ -29,7 +29,8 @@ class Booking < ActiveRecord::Base
 						:ensure_trip_exists, :ensure_booking_is_within_trip_dates,
 						:ensure_room_type_exists, :ensure_room_availability
 
-	before_save :update_suggested_activities,
+	before_save :strip_whitespaces, :titleize,
+							:update_suggested_activities,
 							:update_room_rate, :update_total_price,
 							:update_service_tax_per_room_night, :update_service_tax
 
@@ -118,17 +119,6 @@ class Booking < ActiveRecord::Base
 			self.number_of_drivers ||= 0
 		end
 
-		def strip_whitespaces
-			self.remarks = remarks.to_s.strip
-			self.getting_there = getting_there.to_s.strip
-			self.getting_home = getting_home.to_s.strip
-		end
-
-		def titleize
-			self.guests_arriving_from = guests_arriving_from.titleize if guests_arriving_from
-			self.departure_destination = departure_destination.titleize if departure_destination
-		end
-
 		def update_check_out_date
 			if check_in_date and number_of_nights != nil
 				self.check_out_date = check_in_date + number_of_nights
@@ -200,6 +190,17 @@ class Booking < ActiveRecord::Base
 					return false
 				end
 			end
+		end
+
+		def strip_whitespaces
+			self.remarks = remarks.to_s.strip
+			self.getting_there = getting_there.to_s.strip
+			self.getting_home = getting_home.to_s.strip
+		end
+
+		def titleize
+			self.guests_arriving_from = guests_arriving_from.titleize if guests_arriving_from
+			self.departure_destination = departure_destination.titleize if departure_destination
 		end
 
 		def update_suggested_activities

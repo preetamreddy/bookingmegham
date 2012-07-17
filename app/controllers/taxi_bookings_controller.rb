@@ -58,8 +58,6 @@ class TaxiBookingsController < ApplicationController
 
     respond_to do |format|
       if @taxi_booking.save
-				trip.save
-
         format.html { redirect_to @taxi_booking, notice: 'Taxi booking was successfully created.' }
         format.json { render json: @taxi_booking, status: :created, location: @taxi_booking }
       else

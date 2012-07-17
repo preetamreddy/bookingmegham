@@ -10,7 +10,7 @@
     <th class="text">Pickup address</th>
     <th class="text">Drop off city</th>
     <th class="number">Unit price</th>
-    <th class="text">Reservation reference</th>
+    <th class="number">Total price</th>
     <th></th>
   </tr>
 
@@ -20,7 +20,8 @@
     <td class="text"><%= taxi_booking.taxi.agency.name %></td>
     <td class="text">
     	<span class="nowrap"><%= pluralize(taxi_booking.number_of_vehicles, taxi_booking.taxi.model) %></span><br/>
-			<span class="nowrap"><%= l taxi_booking.start_date, :format => :short %> to <%= l taxi_booking.end_date, :format => :short %></span>
+			<span class="nowrap"><%= l taxi_booking.start_date, :format => :short %> to <%= l taxi_booking.end_date, :format => :short %></span><br/>
+    	<span class="nowrap">(<%= pluralize(taxi_booking.number_of_days, "day") %>)</span>
 		</td>
 		<td class="text">
     <% if taxi_booking.pickup_time %>
@@ -30,7 +31,7 @@
     <td class="text"><%= taxi_booking.pickup_address %></td>
     <td class="text"><%= taxi_booking.drop_off_city %></td>
     <td class="nowrap"><%= number_to_currency(taxi_booking.unit_price) %></td>
-    <td class="text"><%= taxi_booking.reservation_reference %></td>
+    <td class="nowrap"><%= number_to_currency(taxi_booking.total_price) %></td>
     <td>
 			<%= link_to 'Show details', taxi_booking %><br/>
     	<%= link_to 'Edit', edit_taxi_booking_path(taxi_booking) %><br/>
