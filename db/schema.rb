@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120717093524) do
+ActiveRecord::Schema.define(:version => 20120717121847) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -257,7 +257,6 @@ ActiveRecord::Schema.define(:version => 20120717093524) do
     t.integer  "guest_id"
     t.date     "start_date"
     t.date     "end_date"
-    t.integer  "number_of_children_below_5_years"
     t.string   "food_preferences"
     t.date     "pay_by_date"
     t.text     "remarks"
@@ -273,8 +272,8 @@ ActiveRecord::Schema.define(:version => 20120717093524) do
     t.integer  "advisor_id"
     t.string   "email_ids"
     t.date     "invoice_date"
-    t.integer  "direct_booking",                   :default => 1
-    t.integer  "tac",                              :default => 0
+    t.integer  "direct_booking",      :default => 1
+    t.integer  "tac",                 :default => 0
     t.integer  "account_id"
   end
 
