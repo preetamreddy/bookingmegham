@@ -34,8 +34,7 @@ class Trip < ActiveRecord::Base
 
 	before_save :strip_whitespaces, :titleize,
 							:update_end_date, :ensure_end_date_is_greater_than_start_date,
-							:ensure_guest_exists,
-							:update_payment_status, :update_pay_by_date
+							:ensure_guest_exists
 
 	after_save :update_line_item_status
 
@@ -181,7 +180,7 @@ class Trip < ActiveRecord::Base
 		def init
 			self.discount ||= 0
 			self.tac ||= 0
-			self.food_preferences ||= NOT_PAID
+			self.payment_status ||= NOT_PAID
 		end
 
 		def set_defaults_if_nil
@@ -217,34 +216,6 @@ class Trip < ActiveRecord::Base
 				return true
 			end
 		end	
-
-		def update_payment_status
-			if total_price == 0
-				pay_status = NOT_PAID
-			elsif total_price > 0 and balance_payment <= 0
-				pay_status = FULLY_PAID
-			elsif total_price > 0 and balance_payment > 0 and paid > 0
-				pay_status = PARTIALLY_PAID
-			else
-				pay_status = NOT_PAID
-			end
-	
-			self.payment_status = pay_status
-		end
-
-		def update_pay_by_date
-			if new_record?
-				self.pay_by_date = Date.today.to_date + 2
-			else	
-				if payment_status == FULLY_PAID
-					self.pay_by_date = nil
-				elsif payment_status == PARTIALLY_PAID
-					self.pay_by_date = start_date - 21
-				else
-					self.pay_by_date = created_at.to_date + 2
-				end
-			end
-		end
 
 		def update_line_item_status
 			if payment_status == NOT_PAID
