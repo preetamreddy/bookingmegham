@@ -116,12 +116,8 @@ class BookingsController < ApplicationController
   # POST /bookings
   # POST /bookings.json
   def create
-		trip = Trip.scoped_by_account_id(current_user.account_id).find(@booking.trip_id)
-		
     respond_to do |format|
       if @booking.save
-				trip.save
-
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
 				format.js { render :js => "window.location.replace('#{booking_url(@booking)}');" }
         format.json { render json: @booking, status: :created, location: @booking }

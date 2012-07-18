@@ -1,5 +1,5 @@
 class BillingObserver < ActiveRecord::Observer
-	observe :payment, :taxi_booking, :vas_booking
+	observe :payment, :taxi_booking, :vas_booking, :booking
 
 	def after_save(model)
 		trip = model.trip
