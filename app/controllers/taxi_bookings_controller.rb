@@ -54,8 +54,6 @@ class TaxiBookingsController < ApplicationController
   # POST /taxi_bookings
   # POST /taxi_bookings.json
   def create
-		trip = Trip.scoped_by_account_id(current_user.account_id).find(@taxi_booking.trip_id)
-
     respond_to do |format|
       if @taxi_booking.save
         format.html { redirect_to @taxi_booking, notice: 'Taxi booking was successfully created.' }

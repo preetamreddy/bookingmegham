@@ -122,14 +122,8 @@
 			<%= number_to_currency(@trip.paid) %>
 		</span></p>
 	<% end %>
-	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
-    <%= f.label :refund_amount %><br />
-		<p><span class="highlight">
-			<%= number_to_currency(@trip.refund_amount) %>
-		</span></p>
-	<% end %>
 
-	<%= hidden_div_if(@trip.total_price == 0, class: "field") do %>
+	<%= hidden_div_if(@trip.balance_payment == 0, class: "field") do %>
 		<% if @trip.balance_payment > 0 %>
     	<%= f.label :balance_payment %><br />
 			<p><span class="highlight">
@@ -139,6 +133,13 @@
     	<%= f.date_select :pay_by_date, :start_year => Time.now.year,
 				:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
 		<% end %>
+	<% end %>
+
+	<%= hidden_div_if(@trip.refund_amount == 0, class: "field") do %>
+    <%= f.label :refund_amount %><br />
+		<p><span class="highlight">
+			<%= number_to_currency(@trip.refund_amount) %>
+		</span></p>
 	<% end %>
 
 	<div class="field">

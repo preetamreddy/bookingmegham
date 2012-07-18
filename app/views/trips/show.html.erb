@@ -124,14 +124,14 @@
   <span class="saved_value"><%= number_to_currency(@trip.paid) if @trip.paid %>
 <% end %>
 
-<%= hidden_p_unless(@trip.total_price > 0) do %>
-  <b>Refund amount:</b>
-  <span class="saved_value"><%= number_to_currency(@trip.refund_amount) if @trip.refund_amount %>
+<%= hidden_p_unless(@trip.balance_payment > 0) do %>
+  <b>Balance:</b>
+  <span class="saved_value"><%= number_to_currency(@trip.balance_payment) %>
 <% end %>
 
-<%= hidden_p_unless(@trip.total_price > 0) do %>
-  <b>Balance:</b>
-  <span class="saved_value"><%= number_to_currency(@trip.balance_payment) if @trip.balance_payment %>
+<%= hidden_p_unless(@trip.refund_amount > 0) do %>
+  <b>Refund amount:</b>
+  <span class="saved_value"><%= number_to_currency(@trip.refund_amount) %>
 <% end %>
 
 <%= hidden_p_unless(@trip.total_price > 0) do %>

@@ -76,8 +76,6 @@ class PaymentsController < ApplicationController
   # POST /payments
   # POST /payments.json
   def create
-		trip = Trip.scoped_by_account_id(current_user.account_id).find(@payment.trip_id)
-
     respond_to do |format|
       if @payment.save
 				PaymentNotifier.receipt(@payment, current_user.id).deliver
@@ -94,8 +92,6 @@ class PaymentsController < ApplicationController
   # PUT /payments/1
   # PUT /payments/1.json
   def update
-		trip = Trip.scoped_by_account_id(current_user.account_id).find(@payment.trip_id)
-
     respond_to do |format|
       if @payment.update_attributes(params[:payment])
 				PaymentNotifier.receipt(@payment, current_user.id).deliver
@@ -112,8 +108,6 @@ class PaymentsController < ApplicationController
   # DELETE /payments/1
   # DELETE /payments/1.json
   def destroy
-		trip = Trip.scoped_by_account_id(current_user.account_id).find(@payment.trip_id)
-
     @payment.destroy
 
     respond_to do |format|

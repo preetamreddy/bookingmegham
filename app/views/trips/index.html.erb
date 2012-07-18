@@ -73,9 +73,16 @@
 				</td>
 		    <td class="number">
 					<%= trip.payment_status %><br/>
-					<span class="nowrap">To pay: <%= number_to_currency(trip.final_price) %><br/></span>
-					<span class="nowrap">Paid: <%= number_to_currency(trip.paid) %><br/></span>
-					<span class="nowrap">Balance: <%= number_to_currency(trip.balance_payment) %><br/></span>
+					<span class="nowrap">Final Price: <%= number_to_currency(trip.final_price) %><br/></span>
+					<% if trip.paid > 0 %>
+						<span class="nowrap">Paid: <%= number_to_currency(trip.paid) %><br/></span>
+					<% end %>
+					<% if trip.balance_payment > 0 %>
+						<span class="nowrap">Balance: <%= number_to_currency(trip.balance_payment) %><br/></span>
+					<% end %>
+					<% if trip.refund_amount > 0 %>
+						<span class="nowrap">Refund: <%= number_to_currency(trip.refund_amount) %><br/></span>
+					<% end %>
 					<% if trip.payment_status != Trip::FULLY_PAID %>
 						<span class="nowrap">Pay by: <%= l trip.pay_by_date, :format => :short if trip.pay_by_date %></span>
 					<% end %>

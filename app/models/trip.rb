@@ -181,6 +181,7 @@ class Trip < ActiveRecord::Base
 		def init
 			self.discount ||= 0
 			self.tac ||= 0
+			self.food_preferences ||= NOT_PAID
 		end
 
 		def set_defaults_if_nil
