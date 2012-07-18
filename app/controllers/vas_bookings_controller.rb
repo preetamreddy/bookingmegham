@@ -4,6 +4,21 @@ class VasBookingsController < ApplicationController
   # GET /vas_bookings
   # GET /vas_bookings.json
   def index
+		if params[:trip_id]
+			trip_id = params[:trip_id].to_i
+			if Trip.scoped_by_account_id(current_user.account_id).find_all_by_id(trip_id).any?
+				session[:trip_id] = trip_id
+				session[:guest_id] = Trip.scoped_by_account_id(current_user.account_id).find(trip_id).guest_id
+			end
+		end
+
+		if session[:trip_id]
+			@vas_bookings = @vas_bookings.paginate(page: params[:page], per_page: 10).
+													find_all_by_trip_id(session[:trip_id])
+		else
+    	@vas_bookings = @vas_bookings.paginate(page: params[:page], per_page: 10)
+		end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @vas_bookings }
@@ -22,6 +37,10 @@ class VasBookingsController < ApplicationController
   # GET /vas_bookings/new
   # GET /vas_bookings/new.json
   def new
+		if session[:trip_id]
+			@vas_booking.trip_id = session[:trip_id]
+		end
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @vas_booking }

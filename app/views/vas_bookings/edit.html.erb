@@ -1,6 +1,9 @@
-<h1>Editing vas_booking</h1>
+<div class="edit_form">
+	<fieldset>
+		<legend>Edit Value added service</legend>
 
-<%= render 'form' %>
+		<%= render 'form' %>
 
-<%= link_to 'Show', @vas_booking %> |
-<%= link_to 'Back', vas_bookings_path %>
+		<%= link_to 'Cancel', vas_bookings_path, :class => 'cancel_link' %>
+	</fieldset>
+</div>

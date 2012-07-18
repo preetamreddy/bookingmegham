@@ -1,7 +1,7 @@
 <%= form_for(@vas_booking) do |f| %>
   <% if @vas_booking.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@vas_booking.errors.count, "error") %> prohibited this vas_booking from being saved:</h2>
+      <h2><%= pluralize(@vas_booking.errors.count, "error") %> prohibited this value added service from being saved:</h2>
 
       <ul>
       <% @vas_booking.errors.full_messages.each do |msg| %>
@@ -11,13 +11,25 @@
     </div>
   <% end %>
 
+	<%= hidden_div_if(@vas_booking.new_record?, class: "field") do %>
+		<%= f.label :id, "ID" %><br />
+		<p><span class="highlight">
+			<%= @vas_booking.id %>
+		</span></p>
+	<% end %>
+
   <div class="field">
-    <%= f.label :trip_id %><br />
-    <%= f.number_field :trip_id %>
-  </div>
-  <div class="field">
-    <%= f.label :booking_id %><br />
-    <%= f.number_field :booking_id %>
+    <%= f.label :trip_id, "Trip" %><br />
+    <% if @vas_booking.trip_id %>
+			<%= f.collection_select(:trip_id,
+						Trip.scoped_by_account_id(current_user.account_id).
+						find_all_by_id(@vas_booking.trip_id), :id, :long_name) %>
+		<% else %>
+			<%= f.collection_select(:trip_id, 
+						Trip.scoped_by_account_id(current_user.account_id).
+						joins('JOIN guests ON guests.id = trips.guest_id').
+						order('guests.name, trips.name').all, :id, :long_name) %>
+		<% end %>
   </div>
   <div class="field">
     <%= f.label :value_added_service %><br />
@@ -31,7 +43,7 @@
     <%= f.label :number_of_units, "#" %><br />
     <%= f.number_field :number_of_units %>
   </div>
-  <div class="actions">
+  <div class="action_container">
     <%= f.submit %>
   </div>
 <% end %>

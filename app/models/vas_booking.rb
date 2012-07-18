@@ -2,12 +2,12 @@ class VasBooking < ActiveRecord::Base
 	belongs_to :trip
 	belongs_to :booking
 
-	after_validation :update_total_price
+	validates :unit_price, :number_of_units, presence: true
+
+	before_save :update_total_price
 
 	before_create :set_account_id
 
-	validates :unit_price, :number_of_units, presence: true
-	
 	private
 
 		def update_total_price
