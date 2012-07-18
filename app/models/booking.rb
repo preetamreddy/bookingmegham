@@ -41,16 +41,16 @@ class Booking < ActiveRecord::Base
 	before_destroy :ensure_payments_are_not_made
 
 	def food_preferences
-		return trip.food_preferences
+		trip.food_preferences
 	end
 
 	def medical_constraints
-		return trip.medical_constraints
+		trip.medical_constraints
 	end
 
 	def number_of_adults
 		if rooms.empty?
-			return 0
+			0
 		else
 			rooms.to_a.sum { |room| room.number_of_adults * room.number_of_rooms }
 		end
@@ -58,7 +58,7 @@ class Booking < ActiveRecord::Base
 
 	def number_of_children_between_5_and_12_years
 		if rooms.empty?
-			return 0
+			0
 		else
 			rooms.to_a.sum { |room| 
 				room.number_of_children_between_5_and_12_years * room.number_of_rooms }
@@ -67,7 +67,7 @@ class Booking < ActiveRecord::Base
 
 	def number_of_children_below_5_years
 		if rooms.empty?
-			return 0
+			0
 		else
 			rooms.to_a.sum { |room| 
 				room.number_of_children_below_5_years * room.number_of_rooms }
@@ -76,30 +76,22 @@ class Booking < ActiveRecord::Base
 
 	def price_for_drivers
 		if number_of_drivers > 0
-			price_for_drivers = number_of_drivers * number_of_nights * room_type.property.price_for_driver
+			number_of_drivers * number_of_nights * room_type.property.price_for_driver
 		else
-			price_for_drivers = 0
+			0
 		end
 	end
 
 	def price_for_vas
 		if vas_bookings.any?
-			vas_total = vas_bookings.to_a.sum { |vas_booking| vas_booking.total_price }
+			vas_bookings.to_a.sum { |vas_booking| vas_booking.total_price }
 		else
-			vas_total = 0
+			0
 		end
-
-		return vas_total
 	end
 
-	def refund_amount
-		if cancelled == 1
-			refund_amount = total_price - cancellation_charge
-		elsif cancelled == 0
-			refund_amount = 0
-		end
-
-		return refund_amount
+	def final_price
+		cancelled == 0 ? total_price : cancellation_charge
 	end
 
 	def add_rooms_from_trip(trip)

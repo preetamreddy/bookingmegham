@@ -73,7 +73,7 @@
 					<% elsif booking.cancelled == 1 %>
 						<span class="text">Cancelled</span><br/>
 						<span class="nowrap">Price: <%= number_to_currency(booking.total_price) %></span><br/>
-						<span class="nowrap">Refund: <%= number_to_currency(booking.refund_amount) %></span>
+						<span class="nowrap">Cancellation Chg: <%= number_to_currency(booking.cancellation_charge) %></span>
 					<% end %>
 				</td>
 		    <td class="text"><%= booking.medical_constraints %></td>

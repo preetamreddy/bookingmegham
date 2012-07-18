@@ -119,7 +119,7 @@ class Trip < ActiveRecord::Base
 
 	def price_for_room_bookings
 		if bookings.any?
-			bookings.to_a.sum { |booking| booking.total_price }
+			bookings.to_a.sum { |booking| booking.final_price }
 		else
 			0
 		end
@@ -141,22 +141,6 @@ class Trip < ActiveRecord::Base
 		total_price - discount - tac + tds
 	end
 
-	def cancellation_charge
-		if bookings.any?
-			bookings.to_a.sum { |booking| booking.cancellation_charge }
-		else
-			0
-		end
-	end
-
-	def refund_amount
-		if bookings.any?
-			bookings.to_a.sum { |booking| booking.refund_amount }
-		else
-			0
-		end
-	end
-
 	def paid
 		if payments.empty?
 			return 0
@@ -166,7 +150,19 @@ class Trip < ActiveRecord::Base
 	end
 
 	def balance_payment
-		final_price - paid - refund_amount
+		if final_price > paid
+			final_price - paid
+		else
+			0
+		end
+	end
+
+	def refund_amount
+		if paid > final_price
+			paid - final_price
+		else
+			0
+		end
 	end
 
 	def service_tax

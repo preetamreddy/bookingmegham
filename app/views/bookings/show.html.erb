@@ -140,11 +140,6 @@
   <span class="saved_value"><%= number_to_currency(@booking.cancellation_charge) %>
 <% end %>
 
-<%= hidden_p_unless(@booking.cancelled == 1) do %>
-  <b>Refund amount:</b>
-  <span class="saved_value"><%= number_to_currency(@booking.refund_amount) %>
-<% end %>
-
 <b>Billing instructions:</b>
 <table class="nested_table">
 	<tr>
