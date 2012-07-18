@@ -78,8 +78,6 @@ class PaymentsController < ApplicationController
   def create
     respond_to do |format|
       if @payment.save
-				PaymentNotifier.receipt(@payment, current_user.id).deliver
-
         format.html { redirect_to @payment, notice: 'Payment was successfully created.' }
         format.json { render json: @payment, status: :created, location: @payment }
       else
@@ -94,8 +92,6 @@ class PaymentsController < ApplicationController
   def update
     respond_to do |format|
       if @payment.update_attributes(params[:payment])
-				PaymentNotifier.receipt(@payment, current_user.id).deliver
-
         format.html { redirect_to @payment, notice: 'Payment was successfully updated.' }
         format.json { head :ok }
       else
