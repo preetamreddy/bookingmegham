@@ -4,7 +4,6 @@ class Trip < ActiveRecord::Base
 	FULLY_PAID = 'Fully Paid'
 	CONFIRMED_NOT_PAID = "Confirmed Not Paid"
 	TDS_PERCENT = 10
-	DRIVER_UNIT_COST = 500
 
 	belongs_to :guest
 	belongs_to :agency
@@ -32,10 +31,6 @@ class Trip < ActiveRecord::Base
 	validates_numericality_of :guest_id, :number_of_days,
 						only_integer: true, greater_than: 0, allow_nil: true,
 						message: "should be a number greater than 0"
-
-	validates_numericality_of :number_of_drivers,
-						only_integer: true, greater_than_or_equal_to: 0, allow_nil: true,
-						message: "should be a number greater than or equal to 0"
 
 	before_save :strip_whitespaces, :titleize,
 							:update_end_date, :ensure_end_date_is_greater_than_start_date,
@@ -98,24 +93,12 @@ class Trip < ActiveRecord::Base
 			guests = guests + " + " + number_of_children_below_5_years.to_s
 		end
 		guests = guests + ")"
+
+		return guests
 	end
 
 	def long_name
 		guest.name + ' - ' + name
-	end
-
-	def number_of_driver_nights
-		days_booked = []
-		num_nights = 0
-		if bookings.any?
-			bookings.each do |booking|
-				days_booked << (booking.check_in_date...booking.check_out_date).to_a
-			end
-		end
-
-		num_nights = days_booked.flatten.uniq.count
-
-		return num_nights
 	end
 
 	def price_for_vas
@@ -134,33 +117,24 @@ class Trip < ActiveRecord::Base
 		end
 	end
 
-	def total_price
+	def price_for_room_bookings
 		if bookings.any?
-			price_for_bookings = bookings.to_a.sum { |booking| booking.total_price }
+			bookings.to_a.sum { |booking| booking.total_price }
 		else
-			price_for_bookings = 0
+			0
 		end
+	end
 
-		if number_of_drivers
-			price_for_drivers = number_of_drivers * number_of_driver_nights * DRIVER_UNIT_COST
-		else
-			price_for_drivers = 0
-		end
-
-		ttl_price = price_for_bookings + price_for_vas + price_for_transport +
-									price_for_drivers
-
-		return ttl_price
+	def total_price
+		price_for_vas + price_for_transport + price_for_room_bookings
 	end
 
 	def tds
 		if direct_booking == 0
-			tds = (tac * TDS_PERCENT / 100.0).round
+			(tac * TDS_PERCENT / 100.0).round
 		else
-			tds = 0
+			0
 		end
-
-		return tds
 	end
 
 	def final_price
@@ -169,22 +143,18 @@ class Trip < ActiveRecord::Base
 
 	def cancellation_charge
 		if bookings.any?
-			cancellation_charge = bookings.to_a.sum { |booking| booking.cancellation_charge }
+			bookings.to_a.sum { |booking| booking.cancellation_charge }
 		else
-			cancellation_charge = 0
+			0
 		end
-
-		return cancellation_charge
 	end
 
 	def refund_amount
 		if bookings.any?
-			refund_amount = bookings.to_a.sum { |booking| booking.refund_amount }
+			bookings.to_a.sum { |booking| booking.refund_amount }
 		else
-			refund_amount = 0
+			0
 		end
-
-		return refund_amount
 	end
 
 	def paid
@@ -201,12 +171,10 @@ class Trip < ActiveRecord::Base
 
 	def service_tax
 		if bookings.any?
-			service_tax = bookings.to_a.sum { |booking| booking.service_tax }
+			bookings.to_a.sum { |booking| booking.service_tax }
 		else
-			service_tax = 0
+			0
 		end
-		
-		return service_tax
 	end
 
 	def net_after_taxes
@@ -220,7 +188,6 @@ class Trip < ActiveRecord::Base
 		end
 
 		def set_defaults_if_nil
-			self.number_of_drivers ||= 0
 			self.invoice_date ||= Date.today
 		end
 

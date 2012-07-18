@@ -70,9 +70,6 @@
 					<% if trip.number_of_children_below_5_years != 0 %>
 						<span class="nowrap">Infants: <%= trip.number_of_children_below_5_years %><br/></span>
 					<% end %>
-					<% if trip.number_of_drivers != 0 %>
-						Drivers: <%= trip.number_of_drivers %>
-					<% end %>
 				</td>
 		    <td class="number">
 					<%= trip.payment_status %><br/>
