@@ -104,4 +104,13 @@ FactoryGirl.define do
 			booking
 		end
 	end
+
+	factory :payment do
+		account_id 3
+		trip
+		payee_name { Faker::Lorem.words(1).first }
+		date_received { Date.today }
+		amount 1000
+		payment_mode "Axis"
+	end
 end

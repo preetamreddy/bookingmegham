@@ -2,14 +2,14 @@ class BillingObserver < ActiveRecord::Observer
 	observe :payment, :taxi_booking, :vas_booking, :booking
 
 	def after_save(model)
-		trip = model.trip
+		trip = Trip.find_by_id(model.trip_id)
 		if trip
 			update_payment_status_and_pay_by_date(trip)
 		end
 	end
 
 	def after_destroy(model)
-		trip = model.trip
+		trip = Trip.find_by_id(model.trip_id)
 		if trip
 			update_payment_status_and_pay_by_date(trip)
 		end

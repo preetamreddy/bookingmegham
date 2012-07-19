@@ -59,18 +59,6 @@ class TripTest < ActiveSupport::TestCase
 #		assert a_trip.save
 #	end
 #
-#	test "non adults should be greater than or equal to 0" do
-#		a_trip = FactoryGirl.build(:trip,
-#							number_of_children_below_5_years: "none",
-#							number_of_drivers: 1.5)
-#		assert a_trip.invalid?
-#		assert a_trip.errors[:number_of_children_below_5_years].any?
-#		assert a_trip.errors[:number_of_drivers].any?
-#		a_trip.number_of_children_below_5_years = 1
-#		a_trip.number_of_drivers = 0
-#		assert a_trip.save
-#	end
-
 #	test "total price computation" do
 #		himachal_trip = Trip.create(guest_id: @naren_id,
 #											name: "Himachal Trip",
