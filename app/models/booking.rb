@@ -31,8 +31,7 @@ class Booking < ActiveRecord::Base
 
 	before_save :strip_whitespaces, :titleize,
 							:update_suggested_activities,
-							:update_room_rate, :update_total_price,
-							:update_service_tax_per_room_night, :update_service_tax
+							:update_total_price
 
 	before_create :update_guest_id, :update_property_id
 
@@ -201,47 +200,8 @@ class Booking < ActiveRecord::Base
 			end
 		end
 
-		def update_room_rate
-			rooms.each do |room|
-				if trip.payment_status == Trip::NOT_PAID or room.room_rate == nil
-					room.room_rate = RoomType.price(room_type_id, room.occupancy,
-															room.number_of_adults,
-															room.number_of_children_between_5_and_12_years,
-															room.number_of_children_below_5_years)
-				end
-			end
-		end
-
 		def update_total_price
-			if rooms.any?
-				price_per_night = rooms.to_a.sum { |room|
-					room.room_rate * room.number_of_rooms }
-			else
-				price_per_night = 0
-			end
-	
-			price_for_rooms = price_per_night * number_of_nights
-	
-			self.total_price = price_for_rooms + price_for_vas + price_for_drivers
-		end
-
-		def update_service_tax_per_room_night
-			rooms.each do |room|	
-				if trip.payment_status == Trip::NOT_PAID or room.service_tax_per_room_night == nil
-					room.service_tax_per_room_night = RoomType.find(room_type_id).service_tax
-				end
-			end
-		end
-	
-		def update_service_tax
-			if rooms.any?
-				service_tax_per_night = rooms.to_a.sum { |room|
-					room.service_tax_per_room_night * room.number_of_rooms }
-			else
-				service_tax_per_night = 0
-			end
-	
-			self.service_tax = number_of_nights * service_tax_per_night
+			self.total_price = price_for_rooms + price_for_drivers + price_for_vas
 		end
 
 		def update_guest_id

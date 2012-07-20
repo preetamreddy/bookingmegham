@@ -6,8 +6,6 @@ class Room < ActiveRecord::Base
 
 	before_validation :set_defaults_if_nil
 
-	before_create :set_account_id
-
 	validates :occupancy, :number_of_adults, :number_of_rooms, presence: true
 
 	validates :occupancy, inclusion: ROOM_OCCUPANCY_TYPES
@@ -25,8 +23,22 @@ class Room < ActiveRecord::Base
 		:inclusion => { :in => [0, 1, 2, 3],
 		:message => "%{value} is not a valid option for number of children / room" }
 
-	def total_price
-		room_rate * number_of_rooms * booking.number_of_nights
+	before_create :set_account_id,
+								:update_service_tax_per_room_night,
+								:update_room_rate,
+								:update_total_price,
+								:update_service_tax
+
+	before_update :update_room_rate,
+								:update_total_price,
+								:update_service_tax
+
+	def room_type_id
+		booking_id ? booking.room_type_id : nil
+	end
+
+	def number_of_nights
+		booking_id ? booking.number_of_nights : nil
 	end
 
 	def guests_per_room
@@ -44,10 +56,38 @@ class Room < ActiveRecord::Base
 		end
 
 		def set_account_id
-			if trip != nil
+			if trip_id
 				self.account_id = trip.account_id
-			elsif booking != nil
+			elsif booking_id
 				self.account_id = booking.account_id
+			end
+		end
+
+		def update_service_tax_per_room_night
+			if booking_id
+				self.service_tax_per_room_night = RoomType.find(room_type_id).service_tax
+			end
+		end
+
+		def update_room_rate
+			if booking_id
+				self.room_rate = RoomType.price(room_type_id,
+													occupancy,
+													number_of_adults,
+													number_of_children_between_5_and_12_years,
+													number_of_children_below_5_years)
+			end
+		end
+
+		def update_total_price
+			if booking_id
+				self.total_price = booking_id ? room_rate * number_of_rooms * number_of_nights : nil
+			end
+		end
+
+		def update_service_tax
+			if booking_id
+				self.service_tax = booking_id ? service_tax_per_room_night * number_of_rooms * number_of_nights : nil
 			end
 		end
 end
