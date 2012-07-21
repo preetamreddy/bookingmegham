@@ -81,14 +81,6 @@ class Booking < ActiveRecord::Base
 		end
 	end
 
-	def price_for_vas
-		if vas_bookings.any?
-			vas_bookings.to_a.sum { |vas_booking| vas_booking.total_price }
-		else
-			0
-		end
-	end
-
 	def final_price
 		cancelled == 0 ? total_price : cancellation_charge
 	end
@@ -201,7 +193,7 @@ class Booking < ActiveRecord::Base
 		end
 
 		def update_total_price
-			self.total_price = price_for_rooms + price_for_drivers + price_for_vas
+			self.total_price = price_for_rooms + price_for_vas + price_for_drivers
 		end
 
 		def update_guest_id
