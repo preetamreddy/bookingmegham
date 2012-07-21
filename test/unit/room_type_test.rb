@@ -3,6 +3,8 @@ require 'test_helper'
 class RoomTypeTest < ActiveSupport::TestCase
 	setup do
 		@darjeeling = FactoryGirl.create(:property)
+		@standard = FactoryGirl.create(:room_type,
+									:property => @darjeeling)
 	end
 
   test "room type should belong to a valid property" do
@@ -84,5 +86,10 @@ class RoomTypeTest < ActiveSupport::TestCase
 		assert_equal(4922, RoomType.price(a_room_type.id, "Single", 1, 0, 1))
 		assert_equal(5144, RoomType.price(a_room_type.id, "Single", 1, 0, 2))
 		assert_equal(5477, RoomType.price(a_room_type.id, "Single", 1, 1, 1))
+	end
+
+	test "room rate calculation" do
+		assert_equal 4700, RoomType.price(@standard.id, "Single", 1, 0, 0)
+		assert_equal 5600, RoomType.price(@standard.id, "Double", 2, 0, 0)
 	end
 end

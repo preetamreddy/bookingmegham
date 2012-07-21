@@ -25,10 +25,10 @@ class TripTest < ActiveSupport::TestCase
 			:trip => @himachal_trip)
 		airport_drop = FactoryGirl.create(:vas_booking_for_trip,
 			:value_added_service => "Airport drop",
-			:unit_price => 1000,
+			:unit_price => 2000,
 			:number_of_units => 1,
 			:trip => @himachal_trip)
-		assert_equal 2000, @himachal_trip.price_for_vas
+		assert_equal 3000, @himachal_trip.price_for_vas
 	end
 
 #  test "trip should belong to a valid guest" do
