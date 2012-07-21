@@ -100,14 +100,6 @@ class Trip < ActiveRecord::Base
 		guest.name + ' - ' + name
 	end
 
-	def price_for_transport
-		if taxi_bookings.any?
-			price_for_transport = taxi_bookings.to_a.sum { |taxi_booking| taxi_booking.total_price }
-		else
-			price_for_transport = 0
-		end
-	end
-
 	def price_for_room_bookings
 		if bookings.any?
 			bookings.to_a.sum { |booking| booking.final_price }

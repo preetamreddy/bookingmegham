@@ -24,6 +24,13 @@ FactoryGirl.define do
 	  short_name { "#{name}" }
 	end
 
+	factory :advisor do
+		account_id 3
+		name { Faker::Name.name }
+	  phone_number_1 { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
+	  email_id { Faker::Internet.email }
+	end
+
 	factory :property do
 		account_id 3
 	  name { Faker::Address.city }
@@ -50,6 +57,14 @@ FactoryGirl.define do
 	  price_for_children_between_5_and_12_years 1200
 	end
 
+	factory :taxi do
+		account_id 3
+		agency
+		model "Toyota Innova"
+		max_passengers 7
+		unit_price 3500
+	end
+
 	factory :guest do
 		account_id 3
 		name { Faker::Name.name }
@@ -66,8 +81,8 @@ FactoryGirl.define do
 		name { Faker::Lorem.words(1).first }
 		start_date { Date.today + 30.days }
 		number_of_days 10
-		agency_id { Agency.find_by_short_name("Banjara Camps").id }
-		advisor_id { Advisor.find_by_name("Kavita Goel").id }
+		agency
+		advisor
 		direct_booking 1
 	end
 
@@ -110,6 +125,15 @@ FactoryGirl.define do
 		factory :vas_booking_for_booking do
 			booking
 		end
+	end
+
+	factory :taxi_booking do
+		account_id 3
+		trip
+		taxi
+		number_of_vehicles 1
+		start_date { Date.today + 30.days }
+		number_of_days 10
 	end
 
 	factory :payment do
