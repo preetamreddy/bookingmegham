@@ -70,12 +70,14 @@ class Room < ActiveRecord::Base
 		end
 
 		def update_room_rate
-			if (trip.payment_status == Trip::NOT_PAID or unit_price == nil) and booking_id
-				self.room_rate = RoomType.price(room_type_id,
-													occupancy,
-													number_of_adults,
-													number_of_children_between_5_and_12_years,
-													number_of_children_below_5_years)
+			if booking_id
+				if booking.trip.payment_status == Trip::NOT_PAID or unit_price == nil
+					self.room_rate = RoomType.price(room_type_id,
+														occupancy,
+														number_of_adults,
+														number_of_children_between_5_and_12_years,
+														number_of_children_below_5_years)
+				end
 			end
 		end
 
