@@ -79,15 +79,13 @@
 		<%= f.number_field :number_of_drivers, min: 0 %>
 	</div>
 
-	<% if @booking.room_type_id %>
-		<div class="field">
-			<%= f.label :value_added_services %>
-		</div>
-		<div class="nested_form">
-			<%= f.fields_for :vas_bookings %>
-			<%= f.link_to_add "Add new", :vas_bookings %><br/>
-		</div>
-	<% end %>
+	<div class="field">
+		<%= f.label :value_added_services %>
+	</div>
+	<div class="nested_form">
+		<%= f.fields_for :vas_bookings %>
+		<%= f.link_to_add "Add new", :vas_bookings %><br/>
+	</div>
 
 	<div class="field">
     <%= f.label :suggested_activities %><br />

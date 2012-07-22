@@ -118,6 +118,7 @@ FactoryGirl.define do
 		value_added_service { Faker::Lorem.words(1).first }
 		unit_price 1000
 		number_of_units 1
+		every_day 0	
 
 		factory :vas_booking_for_trip do
 			trip

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120721115842) do
+ActiveRecord::Schema.define(:version => 20120723104825) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -144,7 +144,6 @@ ActiveRecord::Schema.define(:version => 20120721115842) do
   create_table "properties", :force => true do |t|
     t.string   "name"
     t.integer  "price_for_driver"
-    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "ensure_availability_before_booking", :default => 1
@@ -159,6 +158,7 @@ ActiveRecord::Schema.define(:version => 20120721115842) do
     t.string   "service_tax_rate",                   :default => "0"
     t.string   "email"
     t.string   "city"
+    t.text     "description"
   end
 
   add_index "properties", ["account_id"], :name => "index_properties_on_account_id"
@@ -322,6 +322,7 @@ ActiveRecord::Schema.define(:version => 20120721115842) do
     t.integer  "account_id"
     t.text     "value_added_service"
     t.integer  "total_price",         :default => 0
+    t.integer  "every_day",           :default => 0
   end
 
   add_index "vas_bookings", ["account_id"], :name => "index_vas_bookings_on_account_id"
