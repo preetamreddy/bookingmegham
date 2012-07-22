@@ -8,29 +8,33 @@ class BookingTest < ActiveSupport::TestCase
 											:guest => @preetam)
 		@sangla_booking = FactoryGirl.create(:booking,
 												:trip => @himachal_trip)
+		@vas_booking = FactoryGirl.create(:vas_booking_for_booking,
+									:booking => @sangla_booking)
+		@room = FactoryGirl.create(:room_for_booking,
+							:booking => @sangla_booking)
 	end
 
-	test "price for vas rolls up from vas bookings - single vas" do
-		rappelling = FactoryGirl.create(:vas_booking_for_booking,
-			:value_added_service => "Rappelling",
-			:unit_price => 500,
-			:number_of_units => 1,
-			:booking => @sangla_booking)
-		assert_equal 500, @sangla_booking.price_for_vas
+	test "price for vas rolls up to bookings" do
+		assert_equal 1000, @sangla_booking.reload.price_for_vas
 	end
 
-	test "price for vas rolls up from vas bookings - multiple vas" do
-		rappelling = FactoryGirl.create(:vas_booking_for_booking,
-			:value_added_service => "Rappelling",
-			:unit_price => 500,
-			:number_of_units => 1,
-			:booking => @sangla_booking)
-		river_crossing = FactoryGirl.create(:vas_booking_for_booking,
-			:value_added_service => "River crossing",
-			:unit_price => 500,
-			:number_of_units => 2,
-			:booking => @sangla_booking)
-		assert_equal 1500, @sangla_booking.price_for_vas
+	test "price for rooms rolls up to bookings" do
+		assert_equal 22400, @sangla_booking.reload.price_for_rooms
+	end
+
+	test "price for drivers rolls up to bookings" do
+		assert_equal 2000, @sangla_booking.reload.price_for_drivers
+	end
+
+	test "total price in bookings is updated" do
+		assert_equal 25400, @sangla_booking.reload.total_price
+	end
+
+	test "final price calculation" do
+		assert_equal 25400, @sangla_booking.reload.final_price	
+		@sangla_booking.update_attributes(:cancelled => 1,
+			:cancellation_charge => 11200)
+		assert_equal 11200, @sangla_booking.reload.final_price	
 	end
 
 #	test "booking should belong to a valid trip" do

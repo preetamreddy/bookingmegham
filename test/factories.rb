@@ -92,6 +92,7 @@ FactoryGirl.define do
 		room_type
 		check_in_date { trip.start_date }
 		number_of_nights 4
+		number_of_drivers 1
 		meal_plan "EPAI"
 	end
 
