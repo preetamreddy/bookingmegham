@@ -25,11 +25,11 @@
 		<tr>
 			<th class="number">ID</th>
 			<th class="text">Guest</th>
+			<th class="text">Property</th>
 			<th class="text">Rooms</th>
-			<th class="text"># People</th>
 			<th class="text">Arriving from</th>
-			<th class="text">Price</th>
 			<th class="text">Medical constraints</th>
+			<th class="text">Total Price</th>
 			<th></th>
 		</tr>
 	
@@ -44,21 +44,13 @@
 				</td>
 		    <td class="text">
 		    	<%= booking.room_type.property.name %></br>
-		      <span class="nowrap"><%= pluralize(booking.number_of_rooms, 
-								booking.room_type.room_type) %></span></br>
 		    	<span class="nowrap"><%= l booking.check_in_date, :format => :short %> to <%= l booking.check_out_date, :format => :short %></span><br/>
 					(<%= booking.number_of_nights %> nights)
 				</td>
 		    <td class="text">
-					Adults: <%= booking.number_of_adults %><br/>
-					<% if booking.number_of_children_between_5_and_12_years != 0 %>
-		    		<span class="nowrap">Children: <%= booking.number_of_children_between_5_and_12_years %></span><br/>
-					<% end %>
-					<% if booking.number_of_children_below_5_years != 0 %>
-		    		<span class="nowrap">Infants: <%= booking.number_of_children_below_5_years %></span><br/>
-					<% end %>
-					<% if booking.number_of_drivers != 0 %>
-						Drivers: <%= booking.number_of_drivers %>
+					<% booking.rooms.each do |room| %>
+						<span class="nowrap"><%= pluralize(room.number_of_rooms, booking.room_type.room_type) %> @ 
+						<%= room.all_guests_per_room %> / room<br/></span>
 					<% end %>
 				</td>
 		    <td class="text">
@@ -67,6 +59,7 @@
 						@ <%= l booking.guests_arrival_time, :format => :short %>
 					<% end %>
 				</td>
+		    <td class="text"><%= booking.medical_constraints %></td>
 				<td>
 					<% if booking.cancelled == 0 %>
 						<span class="nowrap">Price: <%= number_to_currency(booking.total_price) %></span>
@@ -76,7 +69,6 @@
 						<span class="nowrap">Cancellation Chg: <%= number_to_currency(booking.cancellation_charge) %></span>
 					<% end %>
 				</td>
-		    <td class="text"><%= booking.medical_constraints %></td>
 		
 		    <td class='link'>
 					<%= link_to 'Show details', booking %><br/>

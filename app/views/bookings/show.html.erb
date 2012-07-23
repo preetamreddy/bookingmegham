@@ -50,6 +50,7 @@
 			<th class="number">Children / room</th>
 			<th class="number">Infants / room</th>
 			<th class="number">Room rate / night</th>
+			<th class="number">Total price</th>
 		</tr>
 
 		<% @booking.rooms.each do |room| %>
@@ -60,6 +61,7 @@
 				<td class="number"><%= room.number_of_children_between_5_and_12_years %></td>
 				<td class="number"><%= room.number_of_children_below_5_years %></td>
 				<td class="number"><%= number_to_currency(room.room_rate) %></td>
+				<td class="number"><%= number_to_currency(room.total_price) %></td>
 			</tr>
 		<% end %>
 	</table>

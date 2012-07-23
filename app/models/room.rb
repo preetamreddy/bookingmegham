@@ -49,6 +49,16 @@ class Room < ActiveRecord::Base
 		end
 	end
 
+	def all_guests_per_room
+		if number_of_children_between_5_and_12_years == 0 and number_of_children_below_5_years == 0
+			number_of_adults.to_s
+		elsif number_of_children_below_5_years == 0
+			number_of_adults.to_s + "+" + number_of_children_between_5_and_12_years.to_s
+		else
+			number_of_adults.to_s + "+" + number_of_children_between_5_and_12_years.to_s + "+" + number_of_children_below_5_years.to_s
+		end
+	end
+
 	private
 		def set_defaults_if_nil
 			self.number_of_children_between_5_and_12_years ||= 0

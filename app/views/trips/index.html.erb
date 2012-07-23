@@ -64,11 +64,7 @@
 		    <td class="text">
 					<% trip.rooms.each do |room| %>
 						<span class="nowrap"><%= pluralize(room.number_of_rooms, room.occupancy) %> @ 
-						<%= room.number_of_adults %>
-						<%= (" + " + room.number_of_children_between_5_and_12_years.to_s) if room.number_of_children_between_5_and_12_years != 0 %> / room<br/></span>
-					<% end %>
-					<% if trip.number_of_children_below_5_years != 0 %>
-						<span class="nowrap">Infants: <%= trip.number_of_children_below_5_years %><br/></span>
+						<%= room.all_guests_per_room %> / room<br/></span>
 					<% end %>
 				</td>
 		    <td class="number">
