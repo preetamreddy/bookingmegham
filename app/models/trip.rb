@@ -38,8 +38,9 @@ class Trip < ActiveRecord::Base
 
 	after_save :update_line_item_status
 
-	before_destroy 	:ensure_not_referenced_by_booking,
-									:ensure_not_referenced_by_taxi_booking
+	before_destroy 	:ensure_not_referenced_by_bookings,
+									:ensure_not_referenced_by_taxi_bookings,
+									:ensure_not_referenced_by_payments
 
 	def number_of_rooms
 		if rooms.empty?
@@ -218,7 +219,7 @@ class Trip < ActiveRecord::Base
 			end
 		end
 
-		def ensure_not_referenced_by_booking
+		def ensure_not_referenced_by_bookings
 			if bookings.empty?
 				return true
 			else
@@ -227,11 +228,20 @@ class Trip < ActiveRecord::Base
 			end
 		end
 
-		def ensure_not_referenced_by_taxi_booking
+		def ensure_not_referenced_by_taxi_bookings
 			if taxi_bookings.empty?
 				return true
 			else
 				errors.add(:base, "Destroy failed because #{name} has taxi bookings")
+				return false
+			end
+		end
+
+		def ensure_not_referenced_by_payments
+			if payments.empty?
+				return true
+			else
+				errors.add(:base, "Destroy failed because #{name} has payments")
 				return false
 			end
 		end
