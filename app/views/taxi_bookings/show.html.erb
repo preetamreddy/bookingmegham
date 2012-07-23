@@ -3,70 +3,57 @@
 <div class="show_saved_record">
 <p>
   <b>Trip:</b>
-  <span class"saved_value"><%= @taxi_booking.trip.long_name %></span>
+  <span class="saved_value"><%= @taxi_booking.trip.long_name %></span>
 </p>
 
 <p>
   <b>Operator:</b>
-  <span class"saved_value"><%= @taxi_booking.taxi.agency.name %></span>
+  <span class="saved_value"><%= @taxi_booking.taxi.agency.name %></span>
 </p>
 
 <p>
   <b>Taxi:</b>
-  <span class"saved_value"><%= pluralize(@taxi_booking.number_of_vehicles, @taxi_booking.taxi.model) %></span>
+  <span class="saved_value"><%= pluralize(@taxi_booking.number_of_vehicles, @taxi_booking.taxi.model) %></span>
 </p>
 
 <p>
   <b>Start date:</b>
-  <span class"saved_value"><%= l @taxi_booking.start_date %></span>
+  <span class="saved_value"><%= l @taxi_booking.start_date %></span>
 </p>
 
 <p>
   <b>End date:</b>
-  <span class"saved_value"><%= l @taxi_booking.end_date %></span>
+  <span class="saved_value"><%= l @taxi_booking.end_date %></span>
 </p>
 
 <p>
   <b>Number of days:</b>
-  <span class"saved_value"><%= @taxi_booking.number_of_days %></span>
+  <span class="saved_value"><%= @taxi_booking.number_of_days %></span>
 </p>
 
 <p>
   <b>Unit price:</b>
-  <span class"saved_value">
-		<%= number_to_currency(@taxi_booking.unit_price) %>
-	</span>
+  <span class="saved_value"><%= number_to_currency(@taxi_booking.unit_price) %></span>
 </p>
 
 <p>
   <b>Total price:</b>
-  <span class"saved_value">
-		<%= number_to_currency(@taxi_booking.total_price) %>
-	</span>
-</p>
-
-<p>
-  <b>Reservation reference:</b>
-  <span class"saved_value"><%= @taxi_booking.reservation_reference %></span>
+  <span class="saved_value"><%= number_to_currency(@taxi_booking.total_price) %></span>
 </p>
 
 <p>
   <b>Pickup time:</b>
-  <span class"saved_value">
-		<% if @taxi_booking.pickup_time %>
-			<%= l @taxi_booking.pickup_time, :format => :short %>
-		<% end %>
-	</span>
+  <span class="saved_value"><%= l @taxi_booking.pickup_time, :format => :short if @taxi_booking.pickup_time %></span>
 </p>
 
 <p>
   <b>Pickup address:</b>
-  <span class"saved_value"><%= @taxi_booking.pickup_address %></span>
+  <span class="saved_value"><%= @taxi_booking.pickup_address %></span>
 </p>
 
 <p>
   <b>Drop off city:</b>
-  <span class"saved_value"><%= @taxi_booking.drop_off_city %></span>
+  <span class="saved_value"><%= @taxi_booking.drop_off_city %></span>
 </p>
 
 <% if @taxi_booking.taxi_details.any? %>
