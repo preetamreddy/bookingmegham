@@ -3,8 +3,8 @@ class AddTotalPriceToVasBookings < ActiveRecord::Migration
     add_column :vas_bookings, :total_price, :integer
 
 		VasBooking.all.each do |vas_booking|
-			vas_booking.total_price = vas_booking.unit_price * vas_booking.number_of_units
-			vas_booking.save!
+			vas_booking.update_column(:total_price, 
+				vas_booking.unit_price * vas_booking.number_of_units)
 		end
   end
 

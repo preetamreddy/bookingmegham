@@ -3,8 +3,7 @@ class AddVasToVasBookings < ActiveRecord::Migration
     add_column :vas_bookings, :vas, :text
 
 		VasBooking.all.each do |vas_booking|
-			vas_booking.vas = vas_booking.value_added_service.name
-			vas_booking.save!
+			vas_booking.update_column(:vas, vas_booking.value_added_service.name)
 		end
   end
   def down
