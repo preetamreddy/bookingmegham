@@ -11,16 +11,6 @@ class Payment < ActiveRecord::Base
 		only_integer: true, greater_than_or_equal_to: 0, allow_nil: true,
 		message: "should be a number greater than 0"
 
-	def name_for_receipts
-		if payee_name == ""
-			name_for_receipts = trip.guest.name_with_title
-		else
-			name_for_receipts = payee_name
-		end
-
-		return name_for_receipts
-	end
-
 	def receipt_number
 		"BCRPL/#{trip_id}/#{id}"
 	end

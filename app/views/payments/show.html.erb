@@ -7,18 +7,23 @@
 </p>
 
 <p>
+  <b>Receipt No:</b>
+	<span class="saved_value"><%= "BCRPL/#{@payment.trip_id}/#{@payment.id}" %></span>
+</p>
+
+<p>
   <b>Payee name:</b>
   <span class="saved_value"><%= @payment.payee_name %></span>
 </p>
 
 <p>
-  <b>Date received:</b>
-  <span class="saved_value"><%= l @payment.date_received %></span>
+  <b>Amount:</b>
+  <span class="saved_value"><%= number_to_currency(@payment.amount) %></span>
 </p>
 
 <p>
-  <b>Amount:</b>
-  <span class="saved_value"><%= number_to_currency(@payment.amount) %></span>
+  <b>Date received:</b>
+  <span class="saved_value"><%= l @payment.date_received %></span>
 </p>
 
 <p>

@@ -35,16 +35,16 @@
     <%= f.text_field :payee_name %>
   </div>
   <div class="field">
-    <%= f.label :date_received %><br />
-    <%= f.date_select :date_received %>
-  </div>
-  <div class="field">
     <%= f.label :amount %><br />
     <%= f.number_field :amount %>
   </div>
   <div class="field">
+    <%= f.label :date_received %><br />
+    <%= f.date_select :date_received %>
+  </div>
+  <div class="field">
     <%= f.label :payment_mode %><br />
-		<%= f.select :payment_mode, Payment::PAYMENT_MODE, prompt: 'Payment mode' %>
+		<%= f.select :payment_mode, Payment::PAYMENT_MODE, prompt: 'Select' %>
   </div>
   <div class="field">
     <%= f.label :details %><br />

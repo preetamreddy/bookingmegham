@@ -61,6 +61,7 @@ class PaymentsController < ApplicationController
   def new
 		if session[:trip_id]
 			@payment.trip_id = session[:trip_id]
+			@payment.payee_name = Trip.find(session[:trip_id]).guest.name_with_title
 		end
 
     respond_to do |format|
