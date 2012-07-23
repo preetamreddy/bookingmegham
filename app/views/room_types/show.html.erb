@@ -12,43 +12,43 @@
 </p>
 
 <p>
+  <b>Number of rooms:</b>
+  <span class="saved_value"><%= @room_type.number_of_rooms %>
+</p>
+
+<p>
   <b>Price for single occupancy:</b>
-  <span class="saved_value"><%= @room_type.price_for_single_occupancy %>
+  <span class="saved_value"><%= number_to_currency(@room_type.price_for_single_occupancy) %>
 </p>
 
 <p>
   <b>Price for double occupancy:</b>
-  <span class="saved_value"><%= @room_type.price_for_double_occupancy %>
+  <span class="saved_value"><%= number_to_currency(@room_type.price_for_double_occupancy) %>
 </p>
 
 <p>
   <b>Price for third adult:</b>
-  <span class="saved_value"><%= @room_type.price_for_triple_occupancy %>
+  <span class="saved_value"><%= number_to_currency(@room_type.price_for_triple_occupancy) %>
 </p>
 
 <p>
   <b>Price for children between 5 and 12 years:</b>
-  <span class="saved_value"><%= @room_type.price_for_children_between_5_and_12_years %>
+  <span class="saved_value"><%= number_to_currency(@room_type.price_for_children_between_5_and_12_years) %>
 </p>
 
 <p>
   <b>Price for children below 5 years:</b>
-  <span class="saved_value"><%= @room_type.price_for_children_below_5_years %>
+  <span class="saved_value"><%= number_to_currency(@room_type.price_for_children_below_5_years) %>
 </p>
 
 <p>
   <b>Price for lodging:</b>
-  <span class="saved_value"><%= @room_type.price_for_lodging %>
+  <span class="saved_value"><%= number_to_currency(@room_type.price_for_lodging) %>
 </p>
 
 <p>
   <b>Service tax per room:</b>
-  <span class="saved_value"><%= @room_type.service_tax %>
-</p>
-
-<p>
-  <b>Number of rooms:</b>
-  <span class="saved_value"><%= @room_type.number_of_rooms %>
+  <span class="saved_value"><%= number_to_currency(@room_type.service_tax) %>
 </p>
 
 <p>

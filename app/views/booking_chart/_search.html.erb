@@ -6,7 +6,7 @@
 		collect { |p| [p.name, p.id] }, @property_id)) %>
 	<%= label_tag :chart_start_date, "Starting from" %>
 	<%= select_date @chart_start_date, :prefix => 'chart_start_date' %>
-	<%= label_tag :number_of_days, "For days" %>
+	<%= label_tag :number_of_days, "Show days" %>
 	<%= number_field_tag :number_of_days, @number_of_days, min: 1, max: 99 %>
 	<%= submit_tag "Search", :name => nil %>
 <% end %>

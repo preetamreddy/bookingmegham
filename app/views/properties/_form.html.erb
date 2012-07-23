@@ -15,6 +15,10 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
+  <div class="field">
+    <%= f.label :city, "City / Village" %><br />
+    <%= f.text_field :city %>
+  </div>
 	<div class="field">
 		<%= f.label :ensure_availability_before_booking %>
 		<%= f.check_box :ensure_availability_before_booking, default: 1 %>
@@ -36,20 +40,16 @@
     <%= f.text_field :url %>
   </div>
   <div class="field">
-    <%= f.label :city %><br />
-    <%= f.text_field :city %>
-  </div>
-  <div class="field">
-    <%= f.label :address %><br />
-    <%= f.text_area :address, rows: 6 %>
-  </div>
-  <div class="field">
     <%= f.label :price_for_driver %><br />
     <%= f.number_field :price_for_driver, :min => 0 %>
   </div>
   <div class="field">
     <%= f.label :service_tax_rate %><br />
     <%= f.text_field :service_tax_rate %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_area :address, rows: 6 %>
   </div>
   <div class="field">
     <%= f.label :suggested_activities, "Activities" %><br />

@@ -20,10 +20,6 @@
     <%= f.text_field :short_name %>
   </div>
 	<div class="field">
-		<%= f.label :operates_properties %>
-		<%= f.check_box :operates_properties, default: 1 %>
-	</div>
-	<div class="field">
 		<%= f.label :is_travel_agency %>
 		<%= f.check_box :is_travel_agency, default: 1 %>
 	</div>
@@ -47,10 +43,6 @@
     <%= f.label :pan_number, "PAN number" %><br />
     <%= f.text_field :pan_number %>
   </div>
-	<%= hidden_div_if(true, class: "field") do %>
-    <%= f.label :service_tax %><br />
-    <%= f.text_field :service_tax %>
-	<% end %>
   <div class="field">
     <%= f.label :logo_file_name, "Logo Filename" %><br />
     <%= f.text_field :logo_file_name %>

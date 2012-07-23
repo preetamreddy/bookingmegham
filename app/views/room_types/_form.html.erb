@@ -28,6 +28,10 @@
     <%= f.text_field :room_type %>
   </div>
   <div class="field">
+    <%= f.label :number_of_rooms %><br />
+    <%= f.number_field :number_of_rooms, :min => 1 %>
+  </div>
+  <div class="field">
     <%= f.label :price_for_single_occupancy, "Single Occupancy" %><br />
     <%= f.number_field :price_for_single_occupancy, :min => 0 %>
   </div>
@@ -50,10 +54,6 @@
   <div class="field">
     <%= f.label :price_for_lodging, "Lodging Price" %><br />
     <%= f.number_field :price_for_lodging, :min => 0 %>
-  </div>
-  <div class="field">
-    <%= f.label :number_of_rooms %><br />
-    <%= f.number_field :number_of_rooms, :min => 1 %>
   </div>
   <div class="field">
     <%= f.label :description %><br />

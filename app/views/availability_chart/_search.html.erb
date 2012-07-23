@@ -1,8 +1,8 @@
 <%= form_tag availability_chart_path, :method => "get" do %>
-		<%= label_tag :chart_start_date %>
-		<%= select_date @chart_start_date, :prefix => 'chart_start_date_arr' %>
 		<%= label_tag :rooms_required, "For rooms" %>
 		<%= number_field_tag :rooms_required, @rooms_required, min: 1, max: 99 %>
+		<%= label_tag :chart_start_date, "Starting from" %>
+		<%= select_date @chart_start_date, :prefix => 'chart_start_date_arr' %>
 		<%= label_tag :number_of_days, "Show Days" %>
 		<%= number_field_tag :number_of_days, @number_of_days, min: 1, max: 99 %>
 		<%= submit_tag "Show", :name => nil %>

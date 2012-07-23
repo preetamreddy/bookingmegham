@@ -4,10 +4,10 @@
 <table class="index_table" border="1">
   <tr>
     <th>Agency</th>
-    <th>Short name</th>
+		<th class="nowrap">Nature of business</th>
+    <th>City</th>
     <th>Email</th>
     <th>Url</th>
-    <th>City</th>
     <th></th>
   </tr>
 
@@ -17,10 +17,15 @@
 			<span class="nowrap"><%= agency.name %></span><br />
     	<span class="nowrap"><%= agency.phone_number %></span>
 		</td>
-    <td class="text"><%= agency.short_name %></td>
+		<td class="nowrap">
+			<% if agency.is_travel_agency == 1 %>
+				<%= 'Travel agency' %><br/>
+			<% end %>
+			<%= agency.operates_taxis == 1 ? 'Taxi operator' : nil %>	
+		</td>
+    <td class="nowrap"><%= agency.city %></td>
     <td class="text"><%= agency.email_id %></td>
     <td class="nowrap"><%= agency.url %></td>
-    <td class="nowrap"><%= agency.city %></td>
     <td>
     	<%= link_to 'Show details', agency %><br />
     	<%= link_to 'Edit', edit_agency_path(agency) %><br />

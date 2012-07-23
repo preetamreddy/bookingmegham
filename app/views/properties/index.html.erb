@@ -3,28 +3,30 @@
 <% if @properties.count > 0 %>
 <table class="index_table" border="1">
   <tr>
-   	<th class="text">Name</th>
-   	<th class="text">Phone Numbers</th>
+   	<th class="text">Property</th>
+   	<th class="text">City / Village</th>
+		<th class="text">Ensure availability</th>
    	<th class="text">Email</th>
-   	<th class="text">City</th>
    	<th class="number">Driver</th>
-   	<th class="text">Service tax rate</th>
-		<th class="number">Ensure availability</th>
+   	<th class="number">Service tax rate</th>
 		<th></th>
   </tr>
 
 <% @properties.each do |property| %>
 	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-    <td class="text"><%= property.name %></td>
     <td class="nowrap">
+    	<%= property.name %><br/>
 			<%= property.phone_number %><br/>
 			<%= property.phone_number_2 %>
 		</td>
-    <td class="text"><%= property.email %></td>
     <td class="text"><%= property.city %></td>
-    <td class="currency"><%= number_to_currency(property.price_for_driver) %></td>
-    <td class="text"><%= property.service_tax_rate %></td>
     <td class="text"><%= property.ensure_availability_before_booking.to_english %></td>
+    <td class="text"><%= property.email %></td>
+    <td class="currency"><%= number_to_currency(property.price_for_driver) %></td>
+    <td class="number">
+			<%= number_to_percentage(property.service_tax_rate, :precision => 2, 
+						:strip_insignificant_zeros => true) %>
+		</td>
     <td>
     	<%= link_to 'Show details', property %></br>
     	<%= link_to 'Edit', edit_property_path(property) %></br>
