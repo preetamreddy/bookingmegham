@@ -17,7 +17,6 @@
 			<%= @booking.id %>
 		</span></p>
 	<% end %>
-
   <div class="field">
    	<%= f.label :trip_id %><br />
 		<% if @booking.trip_id %>
@@ -69,7 +68,6 @@
 			<%= f.number_field :number_of_nights, :disabled => true %>
 		<% end %>
 	</div>
-
 	<%= hidden_div_if(!@booking.total_price, class: "field") do %>
     <%= f.label :total_price %><br />
 		<p><span class="highlight">
@@ -83,10 +81,9 @@
 		</span></p>
 	<% end %>
   <div class="field">
-    <%= f.label :cancelled, "Cancelled?" %>
+    <%= f.label :cancelled, "Cancel?" %>
     <%= f.check_box :cancelled, default: 1 %>
   </div>
-
 	<%= hidden_div_if(@cancel_booking == 0, class: "field") do %>
     <%= f.label :cancellation_charge, "Cancellation chg." %><br />
    	<%= f.number_field :cancellation_charge %>

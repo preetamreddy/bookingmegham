@@ -8,22 +8,12 @@
 
 <p>
   <b>Guest:</b>
-  <span class="saved_value"><%= @booking.trip.guest.name %>
-</p>
-
-<p>
-  <b>Trip name:</b>
-  <span class="saved_value"><%= @booking.trip.name %>
+  <span class="saved_value"><%= "#{@booking.trip.guest.name} - #{@booking.trip.name}" %>
 </p>
 
 <p>
 	<b>Property:</b>
-	<span class="saved_value"><%= @booking.room_type.property.name %>
-</p>
-
-<p>
-	<b>Room type:</b>
-	<span class="saved_value"><%= @booking.room_type.room_type %>
+	<span class="saved_value"><%= "#{@booking.room_type.property.name} - #{@booking.room_type.room_type}" %>
 </p>
 
 <p>
@@ -69,6 +59,11 @@
 <p>
   <b>Meal Plan:</b>
   <span class="saved_value"><%= @booking.meal_plan %>
+</p>
+
+<p>
+  <b>Number of drivers:</b>
+  <span class="saved_value"><%= @booking.number_of_drivers %>
 </p>
 
 <% if @booking.vas_bookings.any? %>
@@ -150,7 +145,7 @@
 </p>
 
 <p>
-  <b>Remarks:</b>
+  <b>Notes:</b>
   <span class="saved_value"><%= @booking.remarks %>
 </p>
 

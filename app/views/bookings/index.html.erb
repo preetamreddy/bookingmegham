@@ -52,6 +52,7 @@
 						<span class="nowrap"><%= pluralize(room.number_of_rooms, booking.room_type.room_type) %> @ 
 						<%= room.all_guests_per_room %> / room<br/></span>
 					<% end %>
+					<span class="nowrap">Meal plan: <%= booking.meal_plan %></span>
 				</td>
 		    <td class="text">
 		    	<%= booking.guests_arriving_from %><br/>

@@ -17,7 +17,6 @@
 			<%= @booking.id %>
 		</span></p>
 	<% end %>
-
   <div class="field">
    	<%= f.label :trip_id %><br />
 		<% if @booking.trip_id %>
@@ -70,17 +69,6 @@
 		<% end %>
 	</div>
 
-	<%= hidden_div_if(true, class: "field") do %>
-    <%= f.label :check_out_date %><br />
-		<% if @booking.new_record? %>
-    	<%= f.date_select :check_out_date, :start_year => Time.now.year, 
-				:end_year => Time.now.year + 1, :prompt => true %>
-		<% else %>
-    	<%= f.date_select :check_out_date, :start_year => Time.now.year, 
-				:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
-		<% end %>
-	<% end %>
-
 	<div class="field">
 		<%= f.label :rooms %>
 	</div>
@@ -89,6 +77,11 @@
 		<%= f.link_to_add "Add new", :rooms %><br/>
 	</div>
 
+	<div class="field">
+    <%= f.label :meal_plan %><br />
+		<%= f.select :meal_plan, Booking::MEAL_PLANS,
+					prompt: 'Select a meal plan' %>
+	</div>
 	<div class="field">
 		<%= f.label :number_of_drivers, "Drivers" %>
 		<%= f.number_field :number_of_drivers, min: 0 %>
@@ -103,12 +96,6 @@
 	</div>
 
 	<div class="field">
-    <%= f.label :meal_plan %><br />
-		<%= f.select :meal_plan, Booking::MEAL_PLANS,
-					prompt: 'Select a meal plan' %>
-	</div>
-
-	<div class="field">
     <%= f.label :guests_arriving_from, "Arriving from" %><br />
     <%= f.text_field :guests_arriving_from %>
 	</div>
@@ -120,14 +107,13 @@
     <%= f.label :departure_destination, "Departure to" %><br />
     <%= f.text_field :departure_destination %>
 	</div>
-
-	<%= hidden_div_if(!@booking.total_price, class: "field") do %>
+	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
     <%= f.label :total_price %><br />
 		<p><span class="highlight">
     	<%= number_to_currency(@booking.total_price) %>
 		</span></p>
 	<% end %>
-	<%= hidden_div_if(!@booking.total_price, class: "field") do %>
+	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
     <%= f.label :service_tax %><br />
 		<p><span class="highlight">
     	<%= number_to_currency(@booking.service_tax) %>
@@ -151,7 +137,7 @@
     <%= f.text_field :reservation_reference %>
 	</div>
   <div class="field">
-    <%= f.label :remarks %><br />
+    <%= f.label :remarks, "Notes" %><br />
     <%= f.text_area :remarks, rows: 6 %>
   </div>
 
