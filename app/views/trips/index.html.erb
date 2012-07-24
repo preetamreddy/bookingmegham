@@ -42,7 +42,7 @@
 	    <th class="text">Guest</th>
 	    <th class="text">Trip</th>
 	    <th class="text">Rooms</th>
-			<th class="number">Payment status</th>
+			<th class="text">Payment status</th>
 	    <th></th>
 	  </tr>
 	
@@ -66,7 +66,7 @@
 						<%= room.all_guests_per_room %> / room<br/></span>
 					<% end %>
 				</td>
-		    <td class="number">
+		    <td class="text">
 					<%= trip.payment_status %><br/>
 					<span class="nowrap">Final Price: <%= number_to_currency(trip.final_price) %><br/></span>
 					<% if trip.paid > 0 %>
