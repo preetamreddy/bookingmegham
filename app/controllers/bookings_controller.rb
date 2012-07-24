@@ -83,10 +83,7 @@ class BookingsController < ApplicationController
   # GET /bookings/new.json
   def new
 		if params[:room_type_id]
-			property = RoomType.scoped_by_account_id(current_user.account_id).find(params[:room_type_id]).property
-
 			@booking.room_type_id = params[:room_type_id]
-			@booking.suggested_activities = property.suggested_activities
 		end
 		
 		if session[:trip_id]	

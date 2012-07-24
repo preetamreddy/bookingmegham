@@ -30,7 +30,6 @@ class Booking < ActiveRecord::Base
 						:ensure_room_type_exists, :ensure_room_availability
 
 	before_save :strip_whitespaces, :titleize,
-							:update_suggested_activities,
 							:update_total_price
 
 	before_create :update_guest_id, :update_property_id
@@ -177,19 +176,11 @@ class Booking < ActiveRecord::Base
 
 		def strip_whitespaces
 			self.remarks = remarks.to_s.strip
-			self.getting_there = getting_there.to_s.strip
-			self.getting_home = getting_home.to_s.strip
 		end
 
 		def titleize
 			self.guests_arriving_from = guests_arriving_from.titleize if guests_arriving_from
 			self.departure_destination = departure_destination.titleize if departure_destination
-		end
-
-		def update_suggested_activities
-			if suggested_activities == ""
-				self.suggested_activities = room_type.property.suggested_activities.to_s.strip
-			end
 		end
 
 		def update_total_price

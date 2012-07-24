@@ -173,8 +173,6 @@
 <div class="action_container">
 	<%= link_to 'Edit', edit_trip_path(@trip) %>
 	<%= link_to 'View Bookings', bookings_path(:trip_id => @trip.id) %>
-	<%= link_to 'Email Itinerary', email_trip_path(:trip_id => @trip.id,
-				:type => 'itinerary') %>
 	<%= link_to 'Generate Invoice', email_trip_path(:trip_id => @trip.id,
 				:type => 'invoice') %>
 	<%= link_to 'Generate Vouchers', email_trip_path(:trip_id => @trip.id,

@@ -95,39 +95,19 @@
 <% end %>
 
 <p>
-  <b>Suggested activities:</b>
-  <span class="saved_value"><%= @booking.suggested_activities %>
-</p>
-
-<p>
   <b>Arriving from:</b>
   <span class="saved_value"><%= @booking.guests_arriving_from %>
 </p>
-
-<%= hidden_p_unless(@booking.guests_arriving_from != "") do %>
-  <b>Distance / time:</b>
-  <span class="saved_value"><%= @booking.distance_and_time %>
-<% end %>
 
 <%= hidden_p_unless(@booking.guests_arriving_from != "") do %>
   <b>Aarrival time:</b>
   <span class="saved_value"><%= l @booking.guests_arrival_time, :format => :short if @booking.guests_arrival_time %>
 <% end %>
 
-<%= hidden_p_unless(@booking.guests_arriving_from != "") do %>
-  <b>Journey details:</b>
-  <span class="saved_value"><%= @booking.getting_there %>
-<% end %>
-
 <p>
   <b>Departure to:</b>
   <span class="saved_value"><%= @booking.departure_destination %>
 </p>
-
-<%= hidden_p_unless(@booking.departure_destination != "") do %>
-  <b>Homeward Journey:</b>
-  <span class="saved_value"><%= @booking.getting_home %>
-<% end %>
 
 <p>
   <b>Total price:</b>

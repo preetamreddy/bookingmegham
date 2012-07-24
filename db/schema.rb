@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120723113354) do
+ActiveRecord::Schema.define(:version => 20120724103941) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -74,7 +74,6 @@ ActiveRecord::Schema.define(:version => 20120723113354) do
     t.integer  "property_id"
     t.integer  "number_of_nights"
     t.integer  "service_tax",                 :default => 0
-    t.text     "suggested_activities"
     t.string   "departure_destination"
     t.integer  "collect_for_all_extras",      :default => 1
     t.integer  "collect_for_children",        :default => 1
@@ -82,9 +81,6 @@ ActiveRecord::Schema.define(:version => 20120723113354) do
     t.integer  "bill_agent_on_chosen_plan",   :default => 1
     t.string   "meal_plan"
     t.string   "reservation_reference"
-    t.string   "distance_and_time"
-    t.text     "getting_there"
-    t.text     "getting_home"
     t.string   "booking_status",              :default => "Booked"
     t.integer  "cancellation_charge",         :default => 0
     t.integer  "cancelled",                   :default => 0
