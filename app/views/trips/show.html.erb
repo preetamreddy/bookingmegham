@@ -19,13 +19,6 @@
 </p>
 
 <p>
-  <b>Direct booking:</b>
-	<% if @trip.direct_booking == 1 %>
-  	<span class="saved_value"><%= @trip.direct_booking.to_english %>
-	<% end %>
-</p>
-
-<p>
   <b>Trip Name:</b>
   <span class="saved_value"><%= @trip.name %>
 </p>
@@ -91,44 +84,49 @@
 	</table>
 <% end %>
 
-<%= hidden_p_unless(@trip.total_price > 0) do %>
+<p>
   <b>Payment Status:</b>
-  <span class="saved_value"><%= @trip.payment_status if @trip.payment_status %>
-<% end %>
+  <span class="saved_value"><%= @trip.payment_status %>
+</p>
 
-<%= hidden_p_unless(@trip.total_price > 0) do %>
+<p>
   <b>Total price:</b>
-  <span class="saved_value"><%= number_to_currency(@trip.total_price) if @trip.total_price %>
-<% end %>
+  <span class="saved_value"><%= number_to_currency(@trip.total_price) %>
+</p>
 
-<%= hidden_p_unless(@trip.total_price > 0) do %>
+<p>
   <b>Discount:</b>
-  <span class="saved_value"><%= number_to_currency(@trip.discount) if @trip.discount %>
-<% end %>
+  <span class="saved_value"><%= number_to_currency(@trip.discount) %>
+</p>
 
-<%= hidden_p_unless(@trip.total_price > 0 && @trip.direct_booking == 0) do %>
+<%= hidden_p_unless(@trip.direct_booking == 0) do %>
   <b>TAC:</b>
-  <span class="saved_value"><%= number_to_currency(@trip.tac) if @trip.tac %>
+  <span class="saved_value"><%= number_to_currency(@trip.tac) %>
 <% end %>
 
-<%= hidden_p_unless(@trip.total_price > 0 && @trip.direct_booking == 0) do %>
-  <b>TDS on commission:</b>
-  <span class="saved_value"><%= number_to_currency(@trip.tds) if @trip.tac %>
+<%= hidden_p_unless(@trip.direct_booking == 0) do %>
+  <b>TDS on TAC:</b>
+  <span class="saved_value"><%= number_to_currency(@trip.tds) %>
 <% end %>
 
-<%= hidden_p_unless(@trip.total_price > 0) do %>
+<p>
   <b>Final price:</b>
-  <span class="saved_value"><%= number_to_currency(@trip.final_price) if @trip.final_price %>
-<% end %>
+  <span class="saved_value"><%= number_to_currency(@trip.final_price) %>
+</p>
 
-<%= hidden_p_unless(@trip.total_price > 0) do %>
+<p>
   <b>Paid:</b>
-  <span class="saved_value"><%= number_to_currency(@trip.paid) if @trip.paid %>
-<% end %>
+  <span class="saved_value"><%= number_to_currency(@trip.paid) %>
+</p>
 
-<%= hidden_p_unless(@trip.balance_payment > 0) do %>
-  <b>Balance:</b>
+<p>
+  <b>Balance payment:</b>
   <span class="saved_value"><%= number_to_currency(@trip.balance_payment) %>
+</p>
+
+<%= hidden_p_unless(@trip.pay_by_date) do %>
+  <b>Pay by:</b>
+  <span class="saved_value"><%= l @trip.pay_by_date if @trip.pay_by_date %>
 <% end %>
 
 <%= hidden_p_unless(@trip.refund_amount > 0) do %>
@@ -136,20 +134,15 @@
   <span class="saved_value"><%= number_to_currency(@trip.refund_amount) %>
 <% end %>
 
-<%= hidden_p_unless(@trip.total_price > 0) do %>
-  <b>Pay by:</b>
-  <span class="saved_value"><%= l @trip.pay_by_date if @trip.pay_by_date %>
-<% end %>
-
 <p>
   <b>Invoice date:</b>
   <span class="saved_value"><%= l @trip.invoice_date if @trip.invoice_date %>
 </p>
 
-<%= hidden_p_unless(@trip.total_price > 0) do %>
+<p>
   <b>Service tax:</b>
-  <span class="saved_value"><%= number_to_currency(@trip.service_tax) if @trip.service_tax %>
-<% end %>
+  <span class="saved_value"><%= number_to_currency(@trip.service_tax) %>
+</p>
 
 <p>
   <b>Food preferences:</b>
@@ -167,7 +160,7 @@
 </p>
 
 <p>
-  <b>Remarks:</b>
+  <b>Notes:</b>
   <span class="saved_value"><%= @trip.remarks %>
 </p>
 
