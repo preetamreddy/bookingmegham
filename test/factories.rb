@@ -91,7 +91,6 @@ FactoryGirl.define do
 		room_type
 		check_in_date { Date.today + 30.days }
 		number_of_nights 4
-		number_of_drivers 1
 		meal_plan "EPAI"
 	end
 

@@ -28,10 +28,6 @@ class BookingTest < ActiveSupport::TestCase
 		assert_equal 22400, @sangla_booking.reload.price_for_rooms
 	end
 
-	test "price for drivers rolls up to bookings" do
-		assert_equal 2000, @sangla_booking.reload.price_for_drivers
-	end
-
 	test "total price in bookings is updated" do
 		assert_equal 25400, @sangla_booking.reload.total_price
 	end

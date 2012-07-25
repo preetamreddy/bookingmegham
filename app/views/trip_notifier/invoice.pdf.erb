@@ -144,16 +144,6 @@
 							<td class="number"> <%= number_to_currency_wo_symbol(room.total_price) %></td>
 						</tr>
 					<% end %>
-					<% if booking.number_of_drivers > 0 %>
-						<tr>
-							<td></td>
-							<td class="text"><li>Charge for <%= pluralize(booking.number_of_drivers, "driver") %></li></td>
-							<td class="number"><%= booking.number_of_nights %></td>
-							<td></td>
-							<td class="number"> <%= number_to_currency_wo_symbol(booking.room_type.property.price_for_driver) %></td>
-							<td class="number"> <%= number_to_currency_wo_symbol(booking.price_for_drivers) %></td>
-						</tr>
-					<% end %>
 					<% booking.vas_bookings.each do |vas_booking| %>
 						<tr>
 							<td></td>

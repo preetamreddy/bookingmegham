@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120725092348) do
+ActiveRecord::Schema.define(:version => 20120725172840) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -84,7 +84,6 @@ ActiveRecord::Schema.define(:version => 20120725092348) do
     t.string   "booking_status",              :default => "Booked"
     t.integer  "cancellation_charge",         :default => 0
     t.integer  "cancelled",                   :default => 0
-    t.integer  "number_of_drivers",           :default => 0
     t.integer  "account_id"
     t.integer  "price_for_rooms",             :default => 0
     t.integer  "price_for_vas",               :default => 0

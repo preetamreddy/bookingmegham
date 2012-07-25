@@ -132,12 +132,6 @@
 						<td>Children: <%= booking.number_of_children_between_5_and_12_years %></td>
 						<td>Infants: <%= booking.number_of_children_below_5_years %></td>
 					</tr>
-					<% if booking.number_of_drivers > 0 %>
-						<tr>
-							<td></td>
-							<td colspan=3>Drivers: <%= booking.number_of_drivers %></td>
-						</tr>
-					<% end %>
 					<tr>
 						<td class="left" colspan=4>Reservation Reference: <%= booking.reservation_reference %></td>
 					</tr>

@@ -67,10 +67,6 @@
 		<%= f.select :meal_plan, Booking::MEAL_PLANS,
 					prompt: 'Select a meal plan' %>
 	</div>
-	<div class="field">
-		<%= f.label :number_of_drivers, "Drivers" %>
-		<%= f.number_field :number_of_drivers, min: 0 %>
-	</div>
 
 	<div class="field">
 		<%= f.label :value_added_services %>

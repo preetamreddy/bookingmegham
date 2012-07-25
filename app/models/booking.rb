@@ -14,8 +14,7 @@ class Booking < ActiveRecord::Base
 
 	has_many :line_items, dependent: :destroy
 
-	before_validation :set_defaults_if_nil,
-										:update_check_out_date, :update_number_of_rooms
+	before_validation :update_check_out_date, :update_number_of_rooms
 
 	validates :trip_id, :room_type_id, :check_in_date, :check_out_date, :meal_plan,
 											presence: true
@@ -85,10 +84,6 @@ class Booking < ActiveRecord::Base
 	end
 
 	private
-		def set_defaults_if_nil
-			self.number_of_drivers ||= 0
-		end
-
 		def update_check_out_date
 			if check_in_date and number_of_nights != nil
 				self.check_out_date = check_in_date + number_of_nights
