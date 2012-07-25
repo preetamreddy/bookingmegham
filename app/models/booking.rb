@@ -72,18 +72,6 @@ class Booking < ActiveRecord::Base
 		end 
 	end
 
-	def price_for_drivers
-		if number_of_drivers > 0
-			number_of_drivers * number_of_nights * room_type.property.price_for_driver
-		else
-			0
-		end
-	end
-
-	def final_price
-		cancelled == 0 ? total_price : cancellation_charge
-	end
-
 	def add_rooms_from_trip(trip)
 		trip.rooms.each do |trip_room|
 			rooms.build(occupancy: trip_room.occupancy,
@@ -184,7 +172,11 @@ class Booking < ActiveRecord::Base
 		end
 
 		def update_total_price
-			self.total_price = price_for_rooms + price_for_vas + price_for_drivers
+			if cancelled == 0
+				self.total_price = price_for_rooms + price_for_vas
+			else
+				self.total_price = cancellation_charge
+			end
 		end
 
 		def update_guest_id

@@ -103,7 +103,7 @@ class Trip < ActiveRecord::Base
 
 	def price_for_room_bookings
 		if bookings.any?
-			bookings.to_a.sum { |booking| booking.final_price }
+			bookings.to_a.sum { |booking| booking.total_price }
 		else
 			0
 		end
