@@ -2,7 +2,7 @@ FactoryGirl.define do
 	factory :account do
 		id 3
 		name { Faker::Company.name }
-		subdomain { name.gsub(/[^a-zA-Z]/, '') }
+		subdomain { Faker::Company.name }
 	  phone_number_1 { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
 	  email { Faker::Internet.email }
 		postal_address { "#{Faker::Address.secondary_address}, #{Faker::Address.street_name}" }
@@ -17,11 +17,11 @@ FactoryGirl.define do
 		postal_address { "#{Faker::Address.secondary_address}, #{Faker::Address.street_name}" }
 	  city { Faker::Address.city }
 		url { Faker::Internet.url }
-		logo_file_name { "#{name.gsub(/[^a-zA-Z]/, '')}.jpg" }
+		logo_file_name { "#{Faker::Company.name}.jpg" }
 	  operates_properties 1
 	  operates_taxis 1
 	  is_travel_agency 1
-	  short_name { "#{name}" }
+	  short_name { Faker::Company.name }
 	end
 
 	factory :advisor do
@@ -39,7 +39,6 @@ FactoryGirl.define do
 	  consider_blocked_rooms_as_booked 1
 	  phone_number { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
 	  phone_number_2 { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
-		address { "#{name}" }
 		suggested_activities { Faker::Lorem.paragraph }
 		url { Faker::Internet.url }
 	end
@@ -90,7 +89,7 @@ FactoryGirl.define do
 		account_id 3
 		trip
 		room_type
-		check_in_date { trip.start_date }
+		check_in_date { Date.today + 30.days }
 		number_of_nights 4
 		number_of_drivers 1
 		meal_plan "EPAI"
