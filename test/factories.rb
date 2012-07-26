@@ -41,6 +41,7 @@ FactoryGirl.define do
 	  phone_number_2 { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
 		suggested_activities { Faker::Lorem.paragraph }
 		url { Faker::Internet.url }
+		service_tax_rate 6.18
 	end
 
 	factory :room_type do

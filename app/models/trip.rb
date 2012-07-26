@@ -101,16 +101,8 @@ class Trip < ActiveRecord::Base
 		guest.name + ' - ' + name
 	end
 
-	def price_for_room_bookings
-		if bookings.any?
-			bookings.to_a.sum { |booking| booking.total_price }
-		else
-			0
-		end
-	end
-
 	def total_price
-		price_for_vas + price_for_transport + price_for_room_bookings
+		price_for_vas + price_for_transport + price_for_rooms
 	end
 
 	def tds
@@ -144,14 +136,6 @@ class Trip < ActiveRecord::Base
 	def refund_amount
 		if paid > final_price
 			paid - final_price
-		else
-			0
-		end
-	end
-
-	def service_tax
-		if bookings.any?
-			bookings.to_a.sum { |booking| booking.service_tax }
 		else
 			0
 		end
