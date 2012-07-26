@@ -81,7 +81,7 @@ class Room < ActiveRecord::Base
 
 		def update_room_rate
 			if booking_id
-				if booking.trip.payment_status == Trip::NOT_PAID or unit_price == nil
+				if booking.trip.payment_status == Trip::NOT_PAID or room_rate == nil
 					self.room_rate = RoomType.price(room_type_id,
 														occupancy,
 														number_of_adults,
