@@ -36,6 +36,8 @@ class Trip < ActiveRecord::Base
 							:update_end_date, :ensure_end_date_is_greater_than_start_date,
 							:ensure_guest_exists
 
+	before_update :update_payment_status_and_pay_by_date
+
 	after_save :update_line_item_status
 
 	before_destroy 	:ensure_not_referenced_by_bookings,
@@ -177,6 +179,21 @@ class Trip < ActiveRecord::Base
 				return true
 			end
 		end	
+
+		def update_payment_status_and_pay_by_date
+			if paid == 0
+				self.payment_status = NOT_PAID
+				self.pay_by_date = created_at.to_date + 2
+			else 
+				if balance_payment > 0
+					self.payment_status = PARTIALLY_PAID
+					self.pay_by_date = start_date - 21
+				else
+					self.payment_status = FULLY_PAID
+					self.pay_by_date = nil
+				end
+			end	
+		end
 
 		def update_line_item_status
 			if payment_status == NOT_PAID

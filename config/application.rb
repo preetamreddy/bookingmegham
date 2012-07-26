@@ -23,7 +23,7 @@ module Bookingmegham
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
     # Activate observers that should always be running.
-    config.active_record.observers = 	:billing_observer, :room_observer, :vas_booking_observer,
+    config.active_record.observers = 	:room_observer, :vas_booking_observer,
 			:taxi_booking_observer, :booking_observer, :payment_observer
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
