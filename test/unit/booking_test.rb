@@ -20,6 +20,16 @@ class BookingTest < ActiveSupport::TestCase
 		assert a_booking.save
 	end
 
+	test "booking cannot be deleted when it has rooms" do
+		@vas_booking.destroy
+		assert !@sangla_booking.reload.destroy
+	end
+
+	test "booking cannot be deleted when it has vas bookings" do
+		@room.destroy
+		assert !@sangla_booking.reload.destroy
+	end
+
 	test "price for vas rolls up to bookings" do
 		assert_equal 1000, @sangla_booking.reload.price_for_vas
 	end

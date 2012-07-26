@@ -91,12 +91,14 @@ class BookingObserverTest < ActiveSupport::TestCase
 		assert_equal 1116, @himachal_trip.service_tax
 	end
 
-	test "deleting bookings updates trips" do
+	test "deleting booking updates trips" do
 		booking_2 = FactoryGirl.create(:booking,
 									:trip => @himachal_trip)
 		room_2 = FactoryGirl.create(:room_for_booking,
 						:booking => booking_2,
 						:number_of_rooms => 2)
+		@room.destroy
+		@booking_vas.destroy
 		@sangla_booking.destroy
 		assert_equal 44800, @himachal_trip.reload.price_for_rooms
 		assert_equal 744, @himachal_trip.service_tax

@@ -35,7 +35,8 @@ class Booking < ActiveRecord::Base
 
 	after_save :update_line_items
 
-	before_destroy :ensure_payments_are_not_made
+	before_destroy :ensure_payments_are_not_made,
+		:ensure_rooms_and_vas_dont_exist
 
 	def food_preferences
 		trip.food_preferences
@@ -221,6 +222,15 @@ class Booking < ActiveRecord::Base
 				return true
 			else
 				errors.add(:base, "Could not delete booking as payments have been made for the trip")
+				return false
+			end
+		end
+
+		def ensure_rooms_and_vas_dont_exist
+			if total_price == 0
+				return true
+			else
+				errors.add(:base, "Destroy failed because booking has vas / rooms")
 				return false
 			end
 		end
