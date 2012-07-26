@@ -3,8 +3,7 @@ class RoomObserver < ActiveRecord::Observer
 		if room.booking_id
 			delta_total_price = room.total_price
 			delta_service_tax = room.service_tax
-			update_price_for_rooms(room.booking, delta_total_price)
-			update_service_tax(room.booking, delta_service_tax)
+			update_price_for_rooms_and_service_tax(room.booking, delta_total_price, delta_service_tax)
 		end
 	end
 
@@ -12,8 +11,7 @@ class RoomObserver < ActiveRecord::Observer
 		if room.booking_id
 			delta_total_price = room.total_price - room.total_price_was
 			delta_service_tax = room.service_tax - room.service_tax_was
-			update_price_for_rooms(room.booking, delta_total_price)
-			update_service_tax(room.booking, delta_service_tax)
+			update_price_for_rooms_and_service_tax(room.booking, delta_total_price, delta_service_tax)
 		end
 	end
 
@@ -21,16 +19,12 @@ class RoomObserver < ActiveRecord::Observer
 		if room.booking_id
 			delta_total_price = 0 - room.total_price
 			delta_service_tax = 0 - room.service_tax
-			update_price_for_rooms(room.booking, delta_total_price)
-			update_service_tax(room.booking, delta_service_tax)
+			update_price_for_rooms_and_service_tax(room.booking, delta_total_price, delta_service_tax)
 		end
 	end
 
-	def update_price_for_rooms(booking, delta)
-		booking.update_attributes(:price_for_rooms => booking.price_for_rooms + delta)
-	end
-
-	def update_service_tax(booking, delta)
-		booking.update_attributes(:service_tax => booking.service_tax + delta)
+	def update_price_for_rooms_and_service_tax(booking, delta_total_price, delta_service_tax)
+		booking.update_attributes(:price_for_rooms => booking.price_for_rooms + delta_total_price,
+			:service_tax => booking.service_tax + delta_service_tax)
 	end
 end
