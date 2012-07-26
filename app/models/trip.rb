@@ -117,14 +117,6 @@ class Trip < ActiveRecord::Base
 		total_price - discount - tac + tds
 	end
 
-	def paid
-		if payments.empty?
-			return 0
-		else
-			payments.to_a.sum { |payment| payment.amount }
-		end
-	end
-
 	def balance_payment
 		if final_price > paid
 			final_price - paid
