@@ -3,7 +3,15 @@ class AgenciesController < ApplicationController
   # GET /agencies
   # GET /agencies.json
   def index
-    @agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name)
+		if params[:is_travel_agency]
+    	@agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).
+				find_all_by_is_travel_agency(1)
+		elsif params[:operates_taxis]
+    	@agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).
+				find_all_by_operates_taxis(1)
+		else
+    	@agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name)
+		end
 
     respond_to do |format|
       format.html # index.html.erb

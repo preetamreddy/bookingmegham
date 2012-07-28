@@ -1,10 +1,23 @@
-<h1>Listing Agencies</h1>
+<% if params[:is_travel_agency] %>
+	<h1>Listing Travel agencies</h1>
+<% elsif params[:operates_taxis] %>
+	<h1>Listing Taxi oeprators</h1>
+<% else %>
+	<h1>Listing all Agencies</h1>
+<% end %>
+
+<div class="action_container">
+	Show <%= link_to 'Travel agencies', agencies_path(:is_travel_agency => 1) %>
+	<%= link_to 'Taxi operators', agencies_path(:operates_taxis => 1) %>
+	<%= link_to 'All Agencies', agencies_path %>
+</div>
 
 <% if @agencies.count > 0 %>
 <table class="index_table" border="1">
   <tr>
     <th>Agency</th>
-		<th class="nowrap">Nature of business</th>
+    <th>Travel agency</th>
+    <th>Taxi operator</th>
     <th>City</th>
     <th>Email</th>
     <th>Url</th>
@@ -17,12 +30,8 @@
 			<span class="nowrap"><%= agency.name %></span><br />
     	<span class="nowrap"><%= agency.phone_number %></span>
 		</td>
-		<td class="nowrap">
-			<% if agency.is_travel_agency == 1 %>
-				<%= 'Travel agency' %><br/>
-			<% end %>
-			<%= agency.operates_taxis == 1 ? 'Taxi operator' : nil %>	
-		</td>
+    <td class="text"><%= agency.is_travel_agency.to_english %></td>
+    <td class="nowrap"><%= agency.operates_taxis.to_english %></td>
     <td class="nowrap"><%= agency.city %></td>
     <td class="text"><%= agency.email_id %></td>
     <td class="nowrap"><%= agency.url %></td>
