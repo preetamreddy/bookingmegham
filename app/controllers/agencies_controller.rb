@@ -3,14 +3,21 @@ class AgenciesController < ApplicationController
   # GET /agencies
   # GET /agencies.json
   def index
-		if params[:is_travel_agency]
+		agency_name = params[:name]
+		agency_name ||= ''
+		agency_name = agency_name.downcase
+
+		if params[:agency_type] == "travel_agencies"
     	@agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).
-				find_all_by_is_travel_agency(1)
-		elsif params[:operates_taxis]
+				find(:all, :conditions => [ 'lower(name) like ? and is_travel_agency = 1',
+					"%" + agency_name + "%" ])
+		elsif params[:agency_type] == "taxi_operators"
     	@agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).
-				find_all_by_operates_taxis(1)
+				find(:all, :conditions => [ 'lower(name) like ? and operates_taxis = 1',
+					"%" + agency_name + "%" ])
 		else
-    	@agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name)
+    	@agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).
+				find(:all, :conditions => [ 'lower(name) like ?', "%" + agency_name + "%" ])
 		end
 
     respond_to do |format|

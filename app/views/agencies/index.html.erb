@@ -1,16 +1,10 @@
-<% if params[:is_travel_agency] %>
-	<h1>Listing Travel agencies</h1>
-<% elsif params[:operates_taxis] %>
-	<h1>Listing Taxi oeprators</h1>
-<% else %>
-	<h1>Listing all Agencies</h1>
-<% end %>
+<h1>Listing Agencies</h1>
 
 <div class="action_container">
-	Show <%= link_to 'Travel agencies', agencies_path(:is_travel_agency => 1) %>
-	<%= link_to 'Taxi operators', agencies_path(:operates_taxis => 1) %>
-	<%= link_to 'All Agencies', agencies_path %>
+	<%= render 'search' %>
 </div>
+
+<%= link_to 'New Agency', new_agency_path, :class => "back_link" %>
 
 <% if @agencies.count > 0 %>
 <table class="index_table" border="1">
@@ -46,14 +40,11 @@
 </table>
 <% else %>
 	<div id="error_explanation">
-		<h2>Agencies have not yet been created</h2>
+		<h2>Agencies not found</h2>
 		<ul>
-			<li>Click below to create a new Agency</li>
+			<li>Click 'New Agency' link to create an agency</li>
 		</ul>
 	</div>
 <% end %>
 
-<div class="action_container">
-	<%= link_to 'New Agency', new_agency_path %>
-</div>
 <p><%= will_paginate @agencies %></p>
