@@ -49,7 +49,7 @@ class RoomTypesController < ApplicationController
   def new
 		if session[:property_name]
 			@room_type.property_id = Property.scoped_by_account_id(current_user.account_id).
-				find_by_name(session[:property_name])
+				find_by_name(session[:property_name]).id
 		end
 
     respond_to do |format|
