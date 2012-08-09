@@ -1,5 +1,11 @@
 <h1>Listing Properties</h1>
 
+<div class="action_container">
+	<%= render 'search' %>
+</div>
+
+<%= link_to 'New Property', new_property_path, :class => "new_link" %>
+
 <% if @properties.count > 0 %>
 <table class="index_table" border="1">
   <tr>
@@ -39,14 +45,11 @@
 </table>
 <% else %>
   <div id="error_explanation">
-		<h2>Properties have not yet been created</h2>
+		<h2>Properties not found</h2>
 		<ul>
-			<li>Click below to create a new property</li>
+			<li>Click 'New Property' link to create a property</li>
 		</ul>
   </div>
 <% end %>
 
-<div class="action_container">
-	<%= link_to 'New Property', new_property_path %>
-</div>
 <p><%= will_paginate @properties %></p>

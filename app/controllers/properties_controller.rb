@@ -5,7 +5,17 @@ class PropertiesController < ApplicationController
   def index
 		session[:property_id] = nil
 
-    @properties = @properties.paginate(page: params[:page], per_page: 10).order(:name)
+		property_name = params[:name]
+		property_name ||= ''
+		property_name = property_name.downcase
+
+		city = params[:city]
+		city ||= ''
+		city = city.downcase
+
+    @properties = @properties.paginate(page: params[:page], per_page: 10).order(:name).
+			find(:all, :conditions => [ 'lower(name) like ? and lower(city) like ?',
+				"%" + property_name + "%", "%" + city + "%" ])
 
     respond_to do |format|
       format.html # index.html.erb
