@@ -1,5 +1,11 @@
 <h1>Listing Transport Bookings</h1>
 
+<% if !session[:guest_id] %>
+	<div id="search">
+		<%= render 'search' %>
+	</div>
+<% end %>
+
 <% if @taxi_bookings.count > 0 %>
 <table class="index_table" border="1">
   <tr>
