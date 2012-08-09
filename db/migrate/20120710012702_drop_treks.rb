@@ -1,5 +1,6 @@
 class DropTreks < ActiveRecord::Migration
   def up
+		drop_table :treks
   end
 
   def down
