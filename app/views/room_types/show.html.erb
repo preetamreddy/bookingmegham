@@ -61,4 +61,4 @@
 	<%= link_to 'Edit', edit_room_type_path(@room_type) %>
 </div>
 
-<%= link_to 'Back to Room Type Listing', room_types_path(:property_id => session[:property_id]), :class => "back_link" %>
+<%= link_to 'Back to Room Type Listing', room_types_path(:property_name => session[:property_name]), :class => "back_link" %>

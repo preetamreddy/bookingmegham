@@ -1,0 +1,6 @@
+<%= form_tag room_types_path, :method => "get" do %>
+	<%= text_field_tag :property_name, 
+		params[:property_name] ? params[:property_name] : session[:property_name],
+		:placeholder => "Property Name" %>
+	<%= submit_tag "Search", :name => nil %>
+<% end %>

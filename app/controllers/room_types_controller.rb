@@ -3,20 +3,30 @@ class RoomTypesController < ApplicationController
   # GET /room_types
   # GET /room_types.json
   def index
-		if params[:property_id] == 'All'
-			session[:property_id] = nil
-		elsif params[:property_id]
-			property_id = params[:property_id].to_i
-			if Property.scoped_by_account_id(current_user.account_id).find_all_by_id(property_id).any?
-				session[:property_id] = property_id
-			end
-		end	
+		if params[:property_name]
+			property_name = params[:property_name].downcase
+		elsif session[:property_name]
+			property_name = session[:property_name].downcase
+		end
 
-		if session[:property_id]
-			@room_types = @room_types.order(:price_for_double_occupancy).
-											find_all_by_property_id(session[:property_id])
+		if property_name
+			properties = Property.scoped_by_account_id(current_user.account_id).
+				find(:all, :conditions => [ 'lower(name) like ?', "%" + property_name + "%" ])
+
+			if properties.count == 1
+				session[:property_name] = properties.first.name
+			else
+				session[:property_name] = nil
+			end
+	
+			@room_types = @room_types.paginate(page: params[:page], per_page: 10).
+				order('property_id, price_for_double_occupancy').
+				find_all_by_property_id(properties)
 		else
-    	@room_types = @room_types.order('property_id, price_for_double_occupancy')
+			@room_types = @room_types.paginate(page: params[:page], per_page: 10).
+				order('property_id, price_for_double_occupancy')
+
+			session[:property_name] = nil
 		end
 
     respond_to do |format|
@@ -37,7 +47,10 @@ class RoomTypesController < ApplicationController
   # GET /room_types/new
   # GET /room_types/new.json
   def new
-		@room_type.property_id = session[:property_id]
+		if session[:property_name]
+			@room_type.property_id = Property.scoped_by_account_id(current_user.account_id).
+				find_by_name(session[:property_name])
+		end
 
     respond_to do |format|
       format.html # new.html.erb

@@ -3,8 +3,6 @@ class PropertiesController < ApplicationController
   # GET /properties
   # GET /properties.json
   def index
-		session[:property_id] = nil
-
 		property_name = params[:name]
 		property_name ||= ''
 		property_name = property_name.downcase
