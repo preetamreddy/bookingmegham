@@ -10,7 +10,6 @@
 			params[:agency_type] == nil || params[:agency_type] == 'all' ? true : false %>
 		<%= label_tag :agency_type, "All" %>
 	</fieldset>
-	<%= text_field_tag :name, params[:name],
-				:placeholder => "Name", :class => "name_input" %>
+	<%= text_field_tag :name, params[:name], :placeholder => "Name" %>
 	<%= submit_tag "Search", :name => nil %>
 <% end %>
