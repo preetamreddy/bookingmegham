@@ -1,0 +1,6 @@
+<%= form_tag taxis_path, :method => "get" do %>
+	<%= text_field_tag :taxi_operator_name, 
+		params[:taxi_operator_name] ? params[:taxi_operator_name] : session[:taxi_operator_name],
+		:placeholder => "Taxi operator name" %>
+	<%= submit_tag "Search", :name => nil %>
+<% end %>

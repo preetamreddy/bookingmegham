@@ -1,5 +1,11 @@
 <h1>Listing Taxis</h1>
 
+<div class="action_container">
+	<%= render 'search' %>
+</div>
+
+<%= link_to 'New Taxi', new_taxi_path, :class => "new_link" %>
+
 <% if @taxis.count > 0 %>
 <table class="index_table" border="1">
   <tr>
@@ -28,13 +34,11 @@
 </table>
 <% else %>
 	<div id="error_explanation">
-		<h2>Taxis have not yet been created</h2>
+		<h2>Taxis not found</h2>
 		<ul>
-			<li>Click below to create a new taxi</li>
+			<li>Click 'New Taxi' link to create a new taxi</li>
 		</ul>
 	</div>
 <% end %>
 
-<div class="action_container">
-	<%= link_to 'New Taxi', new_taxi_path %>
-</div>
+<p><%= will_paginate @taxis %></p>

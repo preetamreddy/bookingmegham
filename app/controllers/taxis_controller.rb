@@ -3,6 +3,30 @@ class TaxisController < ApplicationController
   # GET /taxis
   # GET /taxis.json
   def index
+		if params[:taxi_operator_name]
+			taxi_operator_name = params[:taxi_operator_name].downcase
+		elsif session[:taxi_operator_name]
+			taxi_operator_name = session[:taxi_operator_name].downcase
+		end
+
+		if taxi_operator_name
+			taxi_operators = Agency.scoped_by_account_id(current_user.account_id).
+				find(:all, :conditions => [ 'lower(name) like ?', "%" + taxi_operator_name + "%" ])
+
+			if taxi_operators.count == 1
+				session[:taxi_operator_name] = taxi_operators.first.name
+			else
+				session[:taxi_operator_name] = nil
+			end
+	
+			@taxis = @taxis.paginate(page: params[:page], per_page: 10).
+				find_all_by_agency_id(taxi_operators)
+		else
+			@taxis = @taxis.paginate(page: params[:page], per_page: 10)
+		
+			session[:taxi_operator_name] = nil
+		end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @taxis }
