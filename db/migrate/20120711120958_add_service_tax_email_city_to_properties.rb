@@ -5,11 +5,12 @@ class AddServiceTaxEmailCityToProperties < ActiveRecord::Migration
     add_column :properties, :city, :string
 
 		Property.all.each do |property|
+			agency = Agency.find(property.agency_id)
 			if property.ensure_availability_before_booking == 1
-				property.service_tax_rate = property.agency.service_tax
+				property.service_tax_rate = agency.service_tax
 			end
-			property.email = property.agency.email_id
-			property.city = property.agency.city
+			property.email = agency.email_id
+			property.city = agency.city
 			property.save!
 		end
   end
