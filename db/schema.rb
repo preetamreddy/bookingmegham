@@ -240,18 +240,6 @@ ActiveRecord::Schema.define(:version => 20120726024730) do
 
   add_index "taxis", ["account_id"], :name => "index_taxis_on_account_id"
 
-  create_table "treks", :force => true do |t|
-    t.string   "name"
-    t.text     "itinerary"
-    t.string   "difficulty"
-    t.integer  "number_of_days"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "account_id"
-  end
-
-  add_index "treks", ["account_id"], :name => "index_treks_on_account_id"
-
   create_table "trips", :force => true do |t|
     t.integer  "guest_id"
     t.date     "start_date"
