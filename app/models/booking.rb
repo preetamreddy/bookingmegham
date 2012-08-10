@@ -198,19 +198,12 @@ class Booking < ActiveRecord::Base
 		end
 
 		def add_line_items
-			if trip.payment_status == Trip::NOT_PAID
-				blocked = 1
-			else
-				blocked = 0
-			end
-
 			date = check_in_date
 			while date < check_out_date do
 				rooms.each do |room|
 					line_item = line_items.build(room_type_id: room_type_id,
 												date: date,
-												booked_rooms: room.number_of_rooms,
-												blocked: blocked)
+												booked_rooms: room.number_of_rooms)
 					line_item.save!
 				end
 				date += 1

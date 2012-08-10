@@ -61,8 +61,8 @@ class RoomType < ActiveRecord::Base
 		property.name + ' - ' + room_type
 	end
 
-	def available_rooms(date, consider_blocked_rooms_as_booked)
-		booked_rooms = LineItem.booked_rooms(id, date, consider_blocked_rooms_as_booked)	
+	def available_rooms(date)
+		booked_rooms = LineItem.booked_rooms(id, date)	
 		if booked_rooms
 			available_rooms = number_of_rooms - booked_rooms
 		else
@@ -76,15 +76,11 @@ class RoomType < ActiveRecord::Base
 		return property.ensure_availability_before_booking
 	end
 
-	def consider_blocked_rooms_as_booked
-		return property.consider_blocked_rooms_as_booked
-	end
-
 	def availability(start_date, end_date, rooms_required)
 		availability_status = true
 		if ensure_availability_before_booking == 1
 			(start_date...end_date).each do |date|
-				if available_rooms(date, consider_blocked_rooms_as_booked) < rooms_required
+				if available_rooms(date) < rooms_required
 					availability_status = false
 				end
 			end

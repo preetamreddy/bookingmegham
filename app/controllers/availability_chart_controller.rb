@@ -1,12 +1,5 @@
 class AvailabilityChartController < ApplicationController
   def index
-		if !params[:consider_blocked_rooms_as_booked]
-			@consider_blocked_rooms_as_booked = 1
-		else 
-			@consider_blocked_rooms_as_booked = 
-					params[:consider_blocked_rooms_as_booked].to_i
-		end
-
 		if params[:trip_id]
 			session[:trip_id] = params[:trip_id].to_i
 			session[:guest_id] = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id]).guest_id
@@ -45,8 +38,6 @@ class AvailabilityChartController < ApplicationController
 			@chart_end_date = @chart_start_date + @number_of_days
 		end
 
-		consider_blocked_rooms_as_booked = @consider_blocked_rooms_as_booked
-
 		@chart_date_range = (@chart_start_date...@chart_end_date)
 		@chart_date_range_short = (@chart_start_date...@chart_end_date).to_a.collect { |date| l date, :format => :short }
 
@@ -57,7 +48,7 @@ class AvailabilityChartController < ApplicationController
 		@properties.each do |property|
 			@chart_date_range.each do |date|
 				@availability.store([:property, property.id, date], 
-					property.available_rooms(date, consider_blocked_rooms_as_booked))
+					property.available_rooms(date))
 			end
 		end
 
@@ -67,7 +58,7 @@ class AvailabilityChartController < ApplicationController
 		@room_types.each do |room_type|
 			@chart_date_range.each do |date|
 				@availability.store([:room_type, room_type.id, date], 
-					room_type.available_rooms(date, consider_blocked_rooms_as_booked))
+					room_type.available_rooms(date))
 			end
 		end
 

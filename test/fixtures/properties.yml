@@ -3,7 +3,6 @@ sangla:
   name: Sangla
   price_for_driver: 500
   ensure_availability_before_booking: 1
-  consider_blocked_rooms_as_booked: 1
   phone_number: +91 98169 59904
   phone_number_2: +91 98168 81936
   service_tax_rate: "6.18"
@@ -36,7 +35,6 @@ kaza:
   name: Kaza
   price_for_driver: 500
   ensure_availability_before_booking: 1
-  consider_blocked_rooms_as_booked: 1
   phone_number: +91 94187 18123
   phone_number_2: +91 94595 20640
   service_tax_rate: "6.18"
@@ -62,7 +60,6 @@ sojha:
   name: Sojha
   price_for_driver: 500
   ensure_availability_before_booking: 1
-  consider_blocked_rooms_as_booked: 1
   phone_number: +91 94183 46973
   phone_number_2: +91 1903 200070 
   service_tax_rate: "6.18"
@@ -87,7 +84,6 @@ thanedar:
   name: Thanedar
   price_for_driver: 500
   ensure_availability_before_booking: 1
-  consider_blocked_rooms_as_booked: 1
   phone_number: +91 94180 77180 
   phone_number_2: +91 1782 222265 
   service_tax_rate: "6.18"
@@ -112,7 +108,6 @@ sonapani:
   name: Sonapani
   price_for_driver: 400
   ensure_availability_before_booking: 1
-  consider_blocked_rooms_as_booked: 1
   phone_number: +91 80063 00100
   phone_number_2: +91 80063 00100
   service_tax_rate: ""

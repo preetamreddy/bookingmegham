@@ -6,20 +6,12 @@ class LineItem < ActiveRecord::Base
 
 	before_create :set_account_id
 
-	def LineItem.booked_rooms(id, date, consider_blocked_rooms_as_booked)
-		if consider_blocked_rooms_as_booked == 1
-			bookings = LineItem.
-				where("room_type_id = :id AND date = :date",
-					{ :id => id, :date => date }).
-				group(:room_type_id, :date).
-				sum(:booked_rooms)
-		else
-			bookings = LineItem.
-				where("room_type_id = :id AND date = :date AND blocked = 0",
-					{ :id => id, :date => date }).
-				group(:room_type_id, :date).
-				sum(:booked_rooms)
-		end
+	def LineItem.booked_rooms(id, date)
+		bookings = LineItem.
+			where("room_type_id = :id AND date = :date",
+				{ :id => id, :date => date }).
+			group(:room_type_id, :date).
+			sum(:booked_rooms)
 
 		return bookings[[id, date]]
 	end

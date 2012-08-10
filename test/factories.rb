@@ -36,7 +36,6 @@ FactoryGirl.define do
 	  name { Faker::Address.city }
 	  price_for_driver 500
 	  ensure_availability_before_booking 1
-	  consider_blocked_rooms_as_booked 1
 	  phone_number { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
 	  phone_number_2 { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
 		suggested_activities { Faker::Lorem.paragraph }

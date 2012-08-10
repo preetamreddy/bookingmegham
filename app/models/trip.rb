@@ -38,8 +38,6 @@ class Trip < ActiveRecord::Base
 
 	before_update :update_payment_status_and_pay_by_date
 
-	after_save :update_line_item_status
-
 	before_destroy 	:ensure_not_referenced_by_bookings,
 									:ensure_not_referenced_by_taxi_bookings,
 									:ensure_not_referenced_by_payments
@@ -193,23 +191,6 @@ class Trip < ActiveRecord::Base
 					self.pay_by_date = nil
 				end
 			end	
-		end
-
-		def update_line_item_status
-			if payment_status == NOT_PAID
-				blocked = 1
-			else
-				blocked = 0
-			end
-
-			if bookings.any?
-				bookings.each do |booking|
-					booking.line_items.each do |line_item|
-						line_item.blocked = blocked
-						line_item.save!
-					end
-				end
-			end
 		end
 
 		def ensure_not_referenced_by_bookings
