@@ -2,6 +2,7 @@ class Booking < ActiveRecord::Base
 	MEAL_PLANS = ["EPAI", "CPAI", "MAPAI", "APAI"]
 
 	belongs_to :trip
+	belongs_to :property
 	belongs_to :room_type
 
 	has_many :rooms, dependent: :destroy
@@ -26,17 +27,19 @@ class Booking < ActiveRecord::Base
 
 	validate	:ensure_check_out_date_is_greater_than_check_in_date,
 						:ensure_trip_exists, :ensure_booking_is_within_trip_dates,
-						:ensure_room_type_exists, :ensure_room_availability
+						:ensure_room_type_exists
 
 	before_save :strip_whitespaces, :titleize,
 							:update_total_price
 
 	before_create :update_guest_id, :update_property_id
 
-	after_save :update_line_items
-
 	before_destroy :ensure_payments_are_not_made,
 		:ensure_rooms_and_vas_dont_exist
+
+	def ensure_availability_before_booking
+		property.ensure_availability_before_booking
+	end
 
 	def food_preferences
 		trip.food_preferences
@@ -141,23 +144,6 @@ class Booking < ActiveRecord::Base
 			end
 		end
 		
-		def ensure_room_availability
-			if new_record?
-				rooms_required = number_of_rooms
-			else	
-				rooms_required = number_of_rooms - number_of_rooms_was 
-			end
-
-			if rooms_required > 0
-				if room_type.availability(check_in_date, check_out_date, rooms_required)
-					return true
-				else
-					errors.add(:base, "Could not create booking due to unavailability of rooms")
-					return false
-				end
-			end
-		end
-
 		def strip_whitespaces
 			self.remarks = remarks.to_s.strip
 		end
@@ -181,33 +167,6 @@ class Booking < ActiveRecord::Base
 
 		def update_property_id
 			self.property_id = room_type.property_id
-		end
-
-		def update_line_items
-			if line_items.any?
-				delete_line_items
-			end
-
-			if cancelled == 0 and rooms.any?
-				add_line_items
-			end	
-		end
-
-		def delete_line_items
-			line_items.destroy_all
-		end
-
-		def add_line_items
-			date = check_in_date
-			while date < check_out_date do
-				rooms.each do |room|
-					line_item = line_items.build(room_type_id: room_type_id,
-												date: date,
-												booked_rooms: room.number_of_rooms)
-					line_item.save!
-				end
-				date += 1
-			end
 		end
 
 		def ensure_payments_are_not_made

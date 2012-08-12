@@ -113,6 +113,12 @@ class BookingsController < ApplicationController
   # POST /bookings
   # POST /bookings.json
   def create
+		@booking.rooms.each do |room|
+			room.room_type_id = @booking.room_type_id
+			room.check_in_date = @booking.check_in_date
+			room.number_of_nights = @booking.number_of_nights
+		end
+
     respond_to do |format|
       if @booking.save
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }

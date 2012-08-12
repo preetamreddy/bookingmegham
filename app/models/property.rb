@@ -1,5 +1,6 @@
 class Property < ActiveRecord::Base
 	has_many :room_types
+	has_many :bookings
 
 	before_save :titleize, :set_defaults_if_nil,
 							:strip_whitespaces

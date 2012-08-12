@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120810135816) do
+ActiveRecord::Schema.define(:version => 20120812031943) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(:version => 20120810135816) do
     t.datetime "updated_at"
     t.integer  "booked_rooms"
     t.integer  "account_id"
+    t.integer  "room_id"
   end
 
   add_index "line_items", ["account_id"], :name => "index_line_items_on_account_id"
@@ -189,6 +190,10 @@ ActiveRecord::Schema.define(:version => 20120810135816) do
     t.integer  "account_id"
     t.integer  "total_price"
     t.integer  "service_tax"
+    t.integer  "room_type_id"
+    t.date     "check_in_date"
+    t.date     "check_out_date"
+    t.integer  "number_of_nights"
   end
 
   add_index "rooms", ["account_id"], :name => "index_rooms_on_account_id"

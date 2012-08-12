@@ -2,6 +2,7 @@ class RoomType < ActiveRecord::Base
 	belongs_to :property
 
 	has_many :bookings
+	has_many :rooms
 	has_many :line_items
 
 	before_save :capitalize, :set_defaults_if_nil,
