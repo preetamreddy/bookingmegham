@@ -75,7 +75,7 @@ class Booking < ActiveRecord::Base
 	end
 
 	def add_rooms_from_trip(trip)
-		trip.rooms.each do |trip_room|
+		trip.trip_rooms.each do |trip_room|
 			rooms.build(occupancy: trip_room.occupancy,
 									number_of_adults: trip_room.number_of_adults,
 									number_of_children_between_5_and_12_years: 

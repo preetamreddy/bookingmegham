@@ -64,9 +64,9 @@
 		<%= f.label :rooms %>
 	</div>
 	<div class="nested_form">
-		<%= f.fields_for :rooms %>
+		<%= f.fields_for :trip_rooms %>
 		<% if (@trip.payment_status == Trip::NOT_PAID or @trip.new_record?) %>
-			<%= f.link_to_add "Add new", :rooms %><br/>
+			<%= f.link_to_add "Add new", :trip_rooms %><br/>
 		<% end %>
 	</div>
 

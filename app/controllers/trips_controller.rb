@@ -57,7 +57,7 @@ class TripsController < ApplicationController
 			session[:guest_id] = params[:guest_id].to_i
 		end
 
-		@trip.rooms.build
+		@trip.trip_rooms.build
 		@trip.guest_id = session[:guest_id]
 
 		if session[:guest_id]

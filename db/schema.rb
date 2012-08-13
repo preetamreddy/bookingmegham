@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120812031943) do
+ActiveRecord::Schema.define(:version => 20120813123333) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -242,6 +242,18 @@ ActiveRecord::Schema.define(:version => 20120812031943) do
   end
 
   add_index "taxis", ["account_id"], :name => "index_taxis_on_account_id"
+
+  create_table "trip_rooms", :force => true do |t|
+    t.integer  "trip_id"
+    t.string   "occupancy"
+    t.integer  "number_of_rooms"
+    t.integer  "number_of_adults"
+    t.integer  "number_of_children_between_5_and_12_years"
+    t.integer  "number_of_children_below_5_years",          :default => 0
+    t.integer  "account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "trips", :force => true do |t|
     t.integer  "guest_id"

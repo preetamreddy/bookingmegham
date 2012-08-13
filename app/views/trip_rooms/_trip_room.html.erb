@@ -1,0 +1,8 @@
+<tr>
+	<td colspan=2><%= pluralize(trip_room.number_of_rooms, trip_room.occupancy) %></td>
+	<td class="number">
+		@ <%= trip_room.number_of_adults %>
+		<%= (" + " + trip_room.number_of_children_between_5_and_12_years.to_s) if trip_room.number_of_children_between_5_and_12_years != 0 %> / room
+	</td>
+</tr>
+

@@ -38,7 +38,7 @@
   <span class="saved_value"><%= @trip.number_of_days %>
 </p>
 
-<% if @trip.rooms.any? %>	
+<% if @trip.trip_rooms.any? %>	
 	<b>Rooms:</b>
 	<table class="nested_table">
 		<tr>
@@ -49,13 +49,13 @@
 			<th class="number">Infants / room</th>
 		</tr>
 
-		<% @trip.rooms.each do |room| %>
+		<% @trip.trip_rooms.each do |trip_room| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">	
-				<td class="text"><%= room.occupancy %></td>
-				<td class="number"><%= room.number_of_rooms %></td>
-				<td class="number"><%= room.number_of_adults %></td>
-				<td class="number"><%= room.number_of_children_between_5_and_12_years %></td>
-				<td class="number"><%= room.number_of_children_below_5_years %></td>
+				<td class="text"><%= trip_room.occupancy %></td>
+				<td class="number"><%= trip_room.number_of_rooms %></td>
+				<td class="number"><%= trip_room.number_of_adults %></td>
+				<td class="number"><%= trip_room.number_of_children_between_5_and_12_years %></td>
+				<td class="number"><%= trip_room.number_of_children_below_5_years %></td>
 			</tr>
 		<% end %>
 	</table>

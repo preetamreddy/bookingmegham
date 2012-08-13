@@ -9,8 +9,8 @@ class Trip < ActiveRecord::Base
 	belongs_to :agency
 	belongs_to :advisor
 
-	has_many :rooms, dependent: :destroy
-	accepts_nested_attributes_for :rooms, :reject_if => :all_blank,
+	has_many :trip_rooms, dependent: :destroy
+	accepts_nested_attributes_for :trip_rooms, :reject_if => :all_blank,
 		:allow_destroy => true
 
 	has_many :vas_bookings, dependent: :destroy
@@ -43,36 +43,36 @@ class Trip < ActiveRecord::Base
 									:ensure_not_referenced_by_payments
 
 	def number_of_rooms
-		if rooms.empty?
+		if trip_rooms.empty?
 			return 0
 		else
-			rooms.to_a.sum { |room| room.number_of_rooms }
+			trip_rooms.to_a.sum { |trip_room| trip_room.number_of_rooms }
 		end
 	end
 
 	def number_of_adults
-		if rooms.empty?
+		if trip_rooms.empty?
 			return 0
 		else
-			rooms.to_a.sum { |room| room.number_of_adults * room.number_of_rooms }
+			trip_rooms.to_a.sum { |trip_room| trip_room.number_of_adults * trip_room.number_of_rooms }
 		end
 	end
 
 	def number_of_children_between_5_and_12_years
-		if rooms.empty?
+		if trip_rooms.empty?
 			return 0
 		else
-			rooms.to_a.sum { |room| 
-				room.number_of_children_between_5_and_12_years * room.number_of_rooms }
+			trip_rooms.to_a.sum { |trip_room| 
+				trip_room.number_of_children_between_5_and_12_years * trip_room.number_of_rooms }
 		end
 	end
 
 	def number_of_children_below_5_years
-		if rooms.empty?
+		if trip_rooms.empty?
 			return 0
 		else
-			rooms.to_a.sum { |room| 
-				room.number_of_children_below_5_years * room.number_of_rooms }
+			trip_rooms.to_a.sum { |trip_room| 
+				trip_room.number_of_children_below_5_years * trip_room.number_of_rooms }
 		end
 	end
 

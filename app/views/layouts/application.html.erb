@@ -34,7 +34,7 @@
 						<% if session[:trip_id] %>
 							<% trip = Trip.find(session[:trip_id]) %>
 							<%= render(trip) %>
-							<%= render(trip.rooms) %>
+							<%= render(trip.trip_rooms) %>
 							<% if trip.bookings.any? %>
 								<tr>
 									<td colspan=3><b>Itinerary</b></td>

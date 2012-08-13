@@ -61,9 +61,9 @@
 					(<%= trip.number_of_days %> days)
 				</td>
 		    <td class="text">
-					<% trip.rooms.each do |room| %>
-						<span class="nowrap"><%= pluralize(room.number_of_rooms, room.occupancy) %> @ 
-						<%= room.all_guests_per_room %> / room<br/></span>
+					<% trip.trip_rooms.each do |trip_room| %>
+						<span class="nowrap"><%= pluralize(trip_room.number_of_rooms, trip_room.occupancy) %> @ 
+						<%= trip_room.all_guests_per_room %> / room<br/></span>
 					<% end %>
 				</td>
 		    <td class="text">
