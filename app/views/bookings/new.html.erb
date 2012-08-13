@@ -1,17 +1,16 @@
 <div class="new_form">
 	<fieldset>
-		<legend>New Booking</legend>
-
 		<% if @booking.property_id %>
+			<legend>New Booking</legend>
 			<%= render 'form' %>
 			<%= link_to 'Cancel', bookings_path, :class => "cancel_link" %>
 		<% else %>
+			<legend>Select Property for new Booking</legend>
 			<%= render 'properties' %>
 			<div class="action_container">
 				<%= link_to 'Availability Chart', availability_chart_path %>
 			</div>
 			<%= link_to 'Cancel', bookings_path, :class => "cancel_link" %>
 		<% end %>
-
 	</fieldset>
 </div>
