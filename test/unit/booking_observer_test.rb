@@ -5,7 +5,7 @@ class BookingObserverTest < ActiveSupport::TestCase
 		@himachal_trip = FactoryGirl.create(:trip)
 		@sangla_booking = FactoryGirl.create(:booking,
 												:trip => @himachal_trip)
-		@room = FactoryGirl.create(:room_for_booking,
+		@room = FactoryGirl.create(:room,
 						:booking => @sangla_booking)
 		@booking_vas = FactoryGirl.create(:vas_booking_for_booking,
 										:booking => @sangla_booking,
@@ -30,7 +30,7 @@ class BookingObserverTest < ActiveSupport::TestCase
 	end
 
 	test "adding new room rows updates trip" do
-		room_2 = FactoryGirl.create(:room_for_booking,
+		room_2 = FactoryGirl.create(:room,
 						:booking => @sangla_booking,
 						:occupancy => "Single",
 						:number_of_adults => 1)
@@ -39,7 +39,7 @@ class BookingObserverTest < ActiveSupport::TestCase
 	end
 
 	test "deleting room rows updates trip" do
-		room_2 = FactoryGirl.create(:room_for_booking,
+		room_2 = FactoryGirl.create(:room,
 						:booking => @sangla_booking,
 						:occupancy => "Single",
 						:number_of_adults => 1)
@@ -73,7 +73,7 @@ class BookingObserverTest < ActiveSupport::TestCase
 	test "adding new bookings updates trips" do
 		booking_2 = FactoryGirl.create(:booking,
 									:trip => @himachal_trip)
-		room_2 = FactoryGirl.create(:room_for_booking,
+		room_2 = FactoryGirl.create(:room,
 						:booking => booking_2,
 						:number_of_rooms => 2)
 		assert_equal 67500, @himachal_trip.reload.price_for_rooms
@@ -83,7 +83,7 @@ class BookingObserverTest < ActiveSupport::TestCase
 	test "updating bookings updates trips" do
 		booking_2 = FactoryGirl.create(:booking,
 									:trip => @himachal_trip)
-		room_2 = FactoryGirl.create(:room_for_booking,
+		room_2 = FactoryGirl.create(:room,
 						:booking => booking_2,
 						:number_of_rooms => 2)
 		@room.update_attributes(:number_of_adults => 3)
@@ -94,7 +94,7 @@ class BookingObserverTest < ActiveSupport::TestCase
 	test "deleting booking updates trips" do
 		booking_2 = FactoryGirl.create(:booking,
 									:trip => @himachal_trip)
-		room_2 = FactoryGirl.create(:room_for_booking,
+		room_2 = FactoryGirl.create(:room,
 						:booking => booking_2,
 						:number_of_rooms => 2)
 		@room.destroy

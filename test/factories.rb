@@ -96,20 +96,13 @@ FactoryGirl.define do
 
 	factory :room do
 		account_id 3
+		booking
+		room_type
 		occupancy "Double"
 		number_of_adults 2
 		number_of_children_between_5_and_12_years 0
 		number_of_children_below_5_years 1
 		number_of_rooms 1
-
-		factory :room_for_trip do
-			trip
-		end
-
-		factory :room_for_booking do
-			booking
-			room_type
-		end
 	end
 
 	factory :vas_booking do

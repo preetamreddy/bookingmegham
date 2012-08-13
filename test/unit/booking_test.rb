@@ -7,7 +7,7 @@ class BookingTest < ActiveSupport::TestCase
 												:trip => @himachal_trip)
 		@vas_booking = FactoryGirl.create(:vas_booking_for_booking,
 									:booking => @sangla_booking)
-		@room = FactoryGirl.create(:room_for_booking,
+		@room = FactoryGirl.create(:room,
 							:booking => @sangla_booking)
 	end
 

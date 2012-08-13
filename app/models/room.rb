@@ -1,7 +1,6 @@
 class Room < ActiveRecord::Base
 	ROOM_OCCUPANCY_TYPES = [ "Single", "Double" ]
 
-	belongs_to :trip
 	belongs_to :booking
 	belongs_to :room_type
 
@@ -41,11 +40,7 @@ class Room < ActiveRecord::Base
 								:update_service_tax
 
 	def cancelled
-		if booking_id
-			booking.cancelled
-		else
-			nil
-		end
+		booking.cancelled
 	end
 
 	def guests_per_room
@@ -124,40 +119,28 @@ class Room < ActiveRecord::Base
 		end
 
 		def set_account_id
-			if trip_id
-				self.account_id = trip.account_id
-			elsif booking_id
-				self.account_id = booking.account_id
-			end
+			self.account_id = booking.account_id
 		end
 
 		def update_service_tax_per_room_night
-			if booking_id
-				self.service_tax_per_room_night = room_type.service_tax
-			end
+			self.service_tax_per_room_night = room_type.service_tax
 		end
 
 		def update_room_rate
-			if booking_id
-				if booking.trip.payment_status == Trip::NOT_PAID or room_rate == nil
-					self.room_rate = RoomType.price(room_type_id,
-														occupancy,
-														number_of_adults,
-														number_of_children_between_5_and_12_years,
-														number_of_children_below_5_years)
-				end
+			if booking.trip.payment_status == Trip::NOT_PAID or room_rate == nil
+				self.room_rate = RoomType.price(room_type_id,
+													occupancy,
+													number_of_adults,
+													number_of_children_between_5_and_12_years,
+													number_of_children_below_5_years)
 			end
 		end
 
 		def update_total_price
-			if booking_id
-				self.total_price = booking_id ? room_rate * number_of_rooms * number_of_nights : nil
-			end
+			self.total_price = room_rate * number_of_rooms * number_of_nights
 		end
 
 		def update_service_tax
-			if booking_id
-				self.service_tax = booking_id ? service_tax_per_room_night * number_of_rooms * number_of_nights : nil
-			end
+			self.service_tax = service_tax_per_room_night * number_of_rooms * number_of_nights
 		end
 end

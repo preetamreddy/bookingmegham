@@ -8,7 +8,7 @@ class TripTest < ActiveSupport::TestCase
 			:guest => @preetam)
 		@sangla_booking = FactoryGirl.create(:booking,
 			:trip => @himachal_trip)
-		@room = FactoryGirl.create(:room_for_booking,
+		@room = FactoryGirl.create(:room,
 			:booking => @sangla_booking)
 		@guide = FactoryGirl.create(:vas_booking_for_trip,
 							:trip => @himachal_trip,
@@ -134,7 +134,7 @@ class TripTest < ActiveSupport::TestCase
 			:amount => 22900)
 		booking_2 = FactoryGirl.create(:booking,
 			:trip => @himachal_trip)
-		room = FactoryGirl.create(:room_for_booking,
+		room = FactoryGirl.create(:room,
 			:booking => booking_2)
 		assert_equal Trip::PARTIALLY_PAID, @himachal_trip.reload.payment_status
 		assert_equal (@himachal_trip.start_date - 21), @himachal_trip.pay_by_date

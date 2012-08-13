@@ -5,7 +5,7 @@ class RoomObserverTest < ActiveSupport::TestCase
 		@himachal_trip = FactoryGirl.create(:trip)
 		@sangla_booking = FactoryGirl.create(:booking,
 												:trip => @himachal_trip)
-		@room = FactoryGirl.create(:room_for_booking,
+		@room = FactoryGirl.create(:room,
 						:booking => @sangla_booking)
 	end
 
@@ -26,7 +26,7 @@ class RoomObserverTest < ActiveSupport::TestCase
 	end
 
 	test "adding new room rows updates booking" do
-		room_2 = FactoryGirl.create(:room_for_booking,
+		room_2 = FactoryGirl.create(:room,
 						:booking => @sangla_booking,
 						:occupancy => "Single",
 						:number_of_adults => 1)
@@ -35,7 +35,7 @@ class RoomObserverTest < ActiveSupport::TestCase
 	end
 
 	test "deleting room rows updates booking" do
-		room_2 = FactoryGirl.create(:room_for_booking,
+		room_2 = FactoryGirl.create(:room,
 						:booking => @sangla_booking,
 						:occupancy => "Single",
 						:number_of_adults => 1)

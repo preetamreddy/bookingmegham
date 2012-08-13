@@ -5,7 +5,7 @@ class PaymentObserverTest < ActiveSupport::TestCase
 		@himachal_trip = FactoryGirl.create(:trip)
 		@sangla_booking = FactoryGirl.create(:booking,
 			:trip => @himachal_trip)
-		@room = FactoryGirl.create(:room_for_booking,
+		@room = FactoryGirl.create(:room,
 			:booking => @sangla_booking)
 		@payment = FactoryGirl.create(:payment,
 			:trip => @himachal_trip)

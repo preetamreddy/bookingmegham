@@ -1,32 +1,26 @@
 class RoomObserver < ActiveRecord::Observer
 	def after_create(room)
-		if room.booking_id
-			delta_total_price = room.total_price
-			delta_service_tax = room.service_tax
-			update_price_for_rooms_and_service_tax(room.booking, delta_total_price, delta_service_tax)
+		delta_total_price = room.total_price
+		delta_service_tax = room.service_tax
+		update_price_for_rooms_and_service_tax(room.booking, delta_total_price, delta_service_tax)
 
-			add_line_items_for room
-		end
+		add_line_items_for room
 	end
 
 	def after_update(room)
-		if room.booking_id
-			delta_total_price = room.total_price - room.total_price_was
-			delta_service_tax = room.service_tax - room.service_tax_was
-			update_price_for_rooms_and_service_tax(room.booking, delta_total_price, delta_service_tax)
+		delta_total_price = room.total_price - room.total_price_was
+		delta_service_tax = room.service_tax - room.service_tax_was
+		update_price_for_rooms_and_service_tax(room.booking, delta_total_price, delta_service_tax)
 
-			update_line_items_for room
-		end
+		update_line_items_for room
 	end
 
 	def after_destroy(room)
-		if room.booking_id
-			delta_total_price = 0 - room.total_price
-			delta_service_tax = 0 - room.service_tax
-			update_price_for_rooms_and_service_tax(room.booking, delta_total_price, delta_service_tax)
+		delta_total_price = 0 - room.total_price
+		delta_service_tax = 0 - room.service_tax
+		update_price_for_rooms_and_service_tax(room.booking, delta_total_price, delta_service_tax)
 
-			delete_line_items_for room
-		end
+		delete_line_items_for room
 	end
 
 	def update_price_for_rooms_and_service_tax(booking, delta_total_price, delta_service_tax)
