@@ -31,17 +31,15 @@
 		<% end %>
   </div>
 	<div class="field">
-   	<%= f.label :room_type_id %><br />
-		<% if @booking.room_type_id %>
-    	<%= f.collection_select(:room_type_id, 
-						RoomType.scoped_by_account_id(current_user.account_id).
-						find_all_by_id(@booking.room_type_id), :id, :long_name) %>
+   	<%= f.label :property_id %><br />
+		<% if @booking.property_id %>
+    	<%= f.collection_select(:property_id, 
+						Property.scoped_by_account_id(current_user.account_id).
+						find_all_by_id(@booking.property_id), :id, :name) %>
 		<% else %>
-    	<%= f.collection_select(:room_type_id, 
-						RoomType.scoped_by_account_id(current_user.account_id).
-						joins('JOIN properties ON properties.id = room_types.property_id').
-						order('properties.name, room_types.room_type').all,
-						:id, :long_name) %>
+    	<%= f.collection_select(:property_id, 
+						Property.scoped_by_account_id(current_user.account_id).
+						order('name').all, :id, :name) %>
 		<% end %>
 	</div>
   <div class="field">

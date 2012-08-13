@@ -99,7 +99,7 @@ class BookingObserverTest < ActiveSupport::TestCase
 						:number_of_rooms => 2)
 		@room.destroy
 		@booking_vas.destroy
-		@sangla_booking.destroy
+		@sangla_booking.reload.destroy
 		assert_equal 44800, @himachal_trip.reload.price_for_rooms
 		assert_equal 744, @himachal_trip.service_tax
 	end

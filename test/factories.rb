@@ -88,7 +88,7 @@ FactoryGirl.define do
 	factory :booking do
 		account_id 3
 		trip
-		room_type
+		property
 		check_in_date { Date.today + 30.days }
 		number_of_nights 4
 		meal_plan "EPAI"
@@ -108,6 +108,7 @@ FactoryGirl.define do
 
 		factory :room_for_booking do
 			booking
+			room_type
 		end
 	end
 

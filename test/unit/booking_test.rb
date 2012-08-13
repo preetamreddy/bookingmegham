@@ -11,12 +11,12 @@ class BookingTest < ActiveSupport::TestCase
 							:booking => @sangla_booking)
 	end
 
-	test "booking should be for a valid room type" do
+	test "booking should be for a valid property" do
 		a_booking = FactoryGirl.build(:booking,
-									:room_type => nil)
+									:property => nil)
 		assert a_booking.invalid?
-		super_deluxe_tent = FactoryGirl.create(:room_type)
-		a_booking.room_type_id = super_deluxe_tent.id
+		sojha = FactoryGirl.create(:property)
+		a_booking.property_id = sojha.id
 		assert a_booking.save
 	end
 

@@ -43,13 +43,13 @@
 		    	<span class="nowrap"><%= booking.trip.guest.phone_number %></span>
 				</td>
 		    <td class="text">
-		    	<%= booking.room_type.property.name %></br>
+		    	<%= booking.property.name %></br>
 		    	<span class="nowrap"><%= l booking.check_in_date, :format => :short %> to <%= l booking.check_out_date, :format => :short %></span><br/>
 					(<%= booking.number_of_nights %> nights)
 				</td>
 		    <td class="text">
 					<% booking.rooms.each do |room| %>
-						<span class="nowrap"><%= pluralize(room.number_of_rooms, booking.room_type.room_type) %> @ 
+						<span class="nowrap"><%= pluralize(room.number_of_rooms, room.room_type.room_type) %> @ 
 						<%= room.all_guests_per_room %> / room<br/></span>
 					<% end %>
 					<span class="nowrap">Meal plan: <%= booking.meal_plan %></span>

@@ -82,8 +82,10 @@ class BookingsController < ApplicationController
   # GET /bookings/new
   # GET /bookings/new.json
   def new
-		if params[:room_type_id]
-			@booking.room_type_id = params[:room_type_id]
+		if params[:property_id]
+			@booking.property_id = params[:property_id]
+		else
+			@properties = Property.scoped_by_account_id(current_user.account_id).order(:name).all
 		end
 		
 		if session[:trip_id]	
@@ -114,7 +116,6 @@ class BookingsController < ApplicationController
   # POST /bookings.json
   def create
 		@booking.rooms.each do |room|
-			room.room_type_id = @booking.room_type_id
 			room.check_in_date = @booking.check_in_date
 			room.number_of_nights = @booking.number_of_nights
 		end

@@ -7,7 +7,7 @@ class Room < ActiveRecord::Base
 
 	has_many :line_items
 
-	before_validation :set_defaults_if_nil, :update_room_type_id,
+	before_validation :set_defaults_if_nil,
 										:update_check_in_date, :update_number_of_nights,
 										:update_check_out_date
 
@@ -28,7 +28,7 @@ class Room < ActiveRecord::Base
 		:inclusion => { :in => [0, 1, 2, 3],
 		:message => "%{value} is not a valid option for number of children / room" }
 
-	validate :ensure_room_availability
+	validate :ensure_room_type_exists, :ensure_room_availability
 
 	before_create :set_account_id,
 								:update_service_tax_per_room_night,
@@ -39,6 +39,14 @@ class Room < ActiveRecord::Base
 	before_update :update_room_rate,
 								:update_total_price,
 								:update_service_tax
+
+	def cancelled
+		if booking_id
+			booking.cancelled
+		else
+			nil
+		end
+	end
 
 	def guests_per_room
 		if number_of_children_between_5_and_12_years == 0
@@ -64,12 +72,6 @@ class Room < ActiveRecord::Base
 			self.number_of_children_below_5_years ||= 0
 		end
 
-		def update_room_type_id
-			if booking_id
-				self.room_type_id = booking.room_type_id
-			end
-		end
-
 		def update_check_in_date
 			if booking_id
 				self.check_in_date = booking.check_in_date
@@ -88,6 +90,19 @@ class Room < ActiveRecord::Base
 			end
 		end
 
+		def ensure_room_type_exists
+			if room_type_id
+				begin
+					room_type = RoomType.find(room_type_id)
+				rescue ActiveRecord::RecordNotFound
+					errors.add(:base, "Could not create Booking as Room Type '#{room_type_id}' does not exist")
+					return false
+ 				else
+        	return true
+				end
+			end
+		end
+
 		def ensure_room_availability
 			if room_type_id
 				if new_record? or room_type_id_changed?
@@ -97,8 +112,6 @@ class Room < ActiveRecord::Base
 				end
 	
 				if rooms_required > 0
-					room_type = RoomType.find(room_type_id)
-	
 					if room_type.availability(check_in_date, check_out_date, rooms_required)
 						return true
 					else
@@ -120,7 +133,7 @@ class Room < ActiveRecord::Base
 
 		def update_service_tax_per_room_night
 			if booking_id
-				self.service_tax_per_room_night = RoomType.find(room_type_id).service_tax
+				self.service_tax_per_room_night = room_type.service_tax
 			end
 		end
 

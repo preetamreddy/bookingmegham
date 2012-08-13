@@ -20,12 +20,12 @@ Pickup time: <%= l @taxi_booking.pickup_time, :format => :short if @taxi_booking
 
 Itinerary:
 <% @trip.bookings.order(:check_in_date).each do |booking| %>
-<%= l booking.check_in_date, :format => :short %>: <%= booking.guests_arriving_from %> - <%= booking.room_type.property.name %>
+<%= l booking.check_in_date, :format => :short %>: <%= booking.guests_arriving_from %> - <%= booking.property.name %>
 <% ((booking.check_in_date + 1)...booking.check_out_date).each do |date| %>
-<%= l date, :format => :short %>: <%= booking.room_type.property.name %>
+<%= l date, :format => :short %>: <%= booking.property.name %>
 <% end %>
 <% if booking == @trip.bookings.order(:check_in_date).last %>
-<%= l booking.check_out_date, :format => :short %>: <%= booking.room_type.property.name %> - <%= @taxi_booking.drop_off_city %>
+<%= l booking.check_out_date, :format => :short %>: <%= booking.property.name %> - <%= @taxi_booking.drop_off_city %>
 <% end %>
 <% end %>		
 

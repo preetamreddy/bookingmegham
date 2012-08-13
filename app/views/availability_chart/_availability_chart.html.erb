@@ -22,7 +22,9 @@
 				<% end %>
 			<% end %>
 			<% if session[:trip_id] %>
-				<td></td>
+				<td>
+					<%= link_to 'Book', new_booking_path(:property_id => property.id), :remote => true %>
+				</td>
 			<% end %>
 		</tr>
 
@@ -39,9 +41,7 @@
 						<% end %>
 					<% end %>
 					<% if session[:trip_id] %>
-						<td>
-							<%= link_to 'Book', new_booking_path(:room_type_id => room_type.id), :remote => true %>
-						</td>
+						<td></td>
 					<% end %>
 				</tr>
 			<% end %>

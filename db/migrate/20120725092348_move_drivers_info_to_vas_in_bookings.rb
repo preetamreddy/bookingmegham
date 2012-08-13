@@ -3,7 +3,7 @@ class MoveDriversInfoToVasInBookings < ActiveRecord::Migration
 		Booking.observers.disable :all do
 			Booking.where("number_of_drivers > 0").each do |booking|
 				booking.vas_bookings.build(value_added_service: "Accompanying drivers",
-					unit_price: booking.room_type.property.price_for_driver,
+					unit_price: booking.property.price_for_driver,
 					number_of_units: booking.number_of_drivers,
 					every_day: 1)	
 				booking.save!

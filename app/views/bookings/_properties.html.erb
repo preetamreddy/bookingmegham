@@ -1,0 +1,28 @@
+<% if @properties.count > 0 %>
+<table class="index_table" border="1">
+  <tr>
+   	<th class="text">Property</th>
+   	<th class="text">City / Village</th>
+		<th class="text">Ensure availability</th>
+		<th></th>
+  </tr>
+
+<% @properties.each do |property| %>
+	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+    <td class="nowrap"><%= property.name %></td>
+    <td class="text"><%= property.city %></td>
+    <td class="text"><%= property.ensure_availability_before_booking.to_english %></td>
+    <td>
+			<%= link_to 'Book', new_booking_path(:property_id => property.id) %>
+		</td>
+  </tr>
+<% end %>
+</table>
+<% else %>
+  <div id="error_explanation">
+		<h2>Properties not found</h2>
+		<ul>
+			<li>Properties have to be created before bookings can be made</li>
+		</ul>
+  </div>
+<% end %>

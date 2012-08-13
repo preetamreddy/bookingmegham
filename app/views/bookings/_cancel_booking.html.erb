@@ -11,83 +11,53 @@
     </div>
   <% end %>
 
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
+	<div class="field">
 		<%= f.label :id, "Booking ID" %><br />
 		<p><span class="highlight">
 			<%= @booking.id %>
 		</span></p>
-	<% end %>
+	</div>
   <div class="field">
    	<%= f.label :trip_id %><br />
-		<% if @booking.trip_id %>
-    	<%= f.collection_select(:trip_id, 
-						Trip.scoped_by_account_id(current_user.account_id).
-							find_all_by_id(@booking.trip_id), :id, :long_name) %>
-		<% elsif session[:guest_id] %>
-			<%= f.collection_select(:trip_id, 
-						Trip.scoped_by_account_id(current_user.account_id).
-						joins('JOIN guests ON guests.id = trips.guest_id').
-						order('guests.name, trips.name').
-						find_all_by_guest_id(session[:guest_id]), :id, :long_name) %>
-		<% else %>
-    	<%= f.collection_select(:trip_id, 
-						Trip.scoped_by_account_id(current_user.account_id).
-						joins('JOIN guests ON guests.id = trips.guest_id').
-						order('guests.name, trips.name').all, :id, :long_name) %>
-		<% end %>
+    <%= f.collection_select(:trip_id, 
+					Trip.scoped_by_account_id(current_user.account_id).
+					find_all_by_id(@booking.trip_id), :id, :long_name) %>
   </div>
 	<div class="field">
-   	<%= f.label :room_type_id %><br />
-		<% if @booking.room_type_id %>
-    	<%= f.collection_select(:room_type_id, 
-						RoomType.scoped_by_account_id(current_user.account_id).
-							find_all_by_id(@booking.room_type_id), :id, :long_name) %>
-		<% else %>
-    	<%= f.collection_select(:room_type_id, 
-						RoomType.scoped_by_account_id(current_user.account_id).
-						joins('JOIN properties ON properties.id = room_types.property_id').
-						order('properties.name, room_types.room_type').all,
-						:id, :long_name) %>
-		<% end %>
+   	<%= f.label :property_id %><br />
+    <%= f.collection_select(:property_id, 
+					Property.scoped_by_account_id(current_user.account_id).
+					find_all_by_id(@booking.property_id), :id, :name) %>
 	</div>
   <div class="field">
     <%= f.label :check_in_date, "Check-in" %><br />
-		<% if @booking.new_record? %>
-    	<%= f.date_select :check_in_date, :start_year => Time.now.year, 
-				:end_year => Time.now.year + 1, :prompt => true %>
-		<% else %>
-    	<%= f.date_select :check_in_date, :start_year => Time.now.year, 
-				:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
-		<% end %>
+    <%= f.date_select :check_in_date, :start_year => Time.now.year, 
+			:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
   </div>
 	<div class="field">
 		<%= f.label :number_of_nights, "Nights" %>
-		<% if @booking.new_record? %>
-			<%= f.number_field :number_of_nights, min: 1 %>
-		<% else %>
-			<%= f.number_field :number_of_nights, :disabled => true %>
-		<% end %>
+		<%= f.number_field :number_of_nights, :disabled => true %>
 	</div>
-	<%= hidden_div_if(!@booking.total_price, class: "field") do %>
+	<div class="field">
     <%= f.label :total_price %><br />
 		<p><span class="highlight">
-    	<%= number_to_currency(@booking.total_price) %>
+    	<%= number_to_currency(@booking.total_price) if @booking.total_price %>
 		</span></p>
-	<% end %>
-	<%= hidden_div_if(!@booking.total_price, class: "field") do %>
+	</div>
+	<div class="field">
     <%= f.label :service_tax %><br />
 		<p><span class="highlight">
-    	<%= number_to_currency(@booking.service_tax) %>
+    	<%= number_to_currency(@booking.service_tax) if @booking.service_tax %>
 		</span></p>
-	<% end %>
+  </div>
   <div class="field">
     <%= f.label :cancelled, "Cancel?" %>
     <%= f.check_box :cancelled, default: 1 %>
   </div>
-	<%= hidden_div_if(@cancel_booking == 0, class: "field") do %>
+  <div class="field">
     <%= f.label :cancellation_charge, "Cancellation chg." %><br />
    	<%= f.number_field :cancellation_charge %>
-	<% end %>
+  </div>
 
   <div class="action_container">
     <%= f.submit %>

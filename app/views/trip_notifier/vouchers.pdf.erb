@@ -109,8 +109,8 @@
 						<td colspan=2 class="agency_address"><%= @trip.advisor.agency.name %><br/><%= @trip.advisor.agency.postal_address %><br/>Phone: <%= @trip.advisor.agency.phone_number %></td>
 						<td colspan=2 class="property_address">
 							The Manager
-							<%= booking.room_type.property.address %>
-							Phone: <%= booking.room_type.property.phone_number %>
+							<%= booking.property.address %>
+							Phone: <%= booking.property.phone_number %>
 						</td>
 					</tr>
 				</table>
@@ -140,7 +140,7 @@
 					</tr>
 					<% booking.rooms.each do |room| %>
 						<tr>
-							<td colspan=2><li><%= booking.room_type.room_type %> on <%= room.occupancy %> occupancy @ <%= room.guests_per_room %> / room</li></td>
+							<td colspan=2><li><%= room.room_type.room_type %> - <%= room.occupancy %> occupancy @ <%= room.guests_per_room %> / room</li></td>
 							<td colspan=2>Number of rooms: <%= room.number_of_rooms %></td>
 						</tr>
 					<% end %>

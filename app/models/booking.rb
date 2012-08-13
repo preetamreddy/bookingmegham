@@ -17,22 +17,21 @@ class Booking < ActiveRecord::Base
 
 	before_validation :update_check_out_date, :update_number_of_rooms
 
-	validates :trip_id, :room_type_id, :check_in_date, :check_out_date, :meal_plan,
+	validates :trip_id, :check_in_date, :check_out_date, :meal_plan,
 											presence: true
 
-	validates_numericality_of :trip_id, :room_type_id,
-														only_integer: true, greater_than: 0, 
-														allow_nil: true, 
-														message: "should be a number greater than 0"
+	validates_numericality_of :trip_id,
+		only_integer: true, greater_than: 0, allow_nil: true, 
+		message: "should be a number greater than 0"
 
 	validate	:ensure_check_out_date_is_greater_than_check_in_date,
-						:ensure_trip_exists, :ensure_booking_is_within_trip_dates,
-						:ensure_room_type_exists
+						:ensure_property_exists,
+						:ensure_trip_exists, :ensure_booking_is_within_trip_dates
 
 	before_save :strip_whitespaces, :titleize,
 							:update_total_price
 
-	before_create :update_guest_id, :update_property_id
+	before_create :update_guest_id
 
 	before_destroy :ensure_payments_are_not_made,
 		:ensure_rooms_and_vas_dont_exist
@@ -114,6 +113,17 @@ class Booking < ActiveRecord::Base
 			end
 		end
 
+		def ensure_property_exists
+			begin
+				trip = Property.find(property_id)
+			rescue ActiveRecord::RecordNotFound
+				errors.add(:base, "Could not create Booking as Property '#{property_id}' does not exist")
+				return false
+ 			else
+        return true
+			end
+		end
+
 		def ensure_trip_exists
 			begin
 				trip = Trip.find(trip_id)
@@ -133,17 +143,6 @@ class Booking < ActiveRecord::Base
 			end
 		end
 
-		def ensure_room_type_exists
-			begin
-				room_type = RoomType.find(room_type_id)
-			rescue ActiveRecord::RecordNotFound
-				errors.add(:base, "Could not create Booking as Room Type '#{room_type_id}' does not exist")
-				return false
- 			else
-        return true
-			end
-		end
-		
 		def strip_whitespaces
 			self.remarks = remarks.to_s.strip
 		end
@@ -163,10 +162,6 @@ class Booking < ActiveRecord::Base
 
 		def update_guest_id
 			self.guest_id = trip.guest_id
-		end
-
-		def update_property_id
-			self.property_id = room_type.property_id
 		end
 
 		def ensure_payments_are_not_made

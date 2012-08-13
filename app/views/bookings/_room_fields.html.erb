@@ -6,6 +6,17 @@
 		<%= f.label :double, "Double" %>
 	</fieldset>
 	
+	<%= f.label :room_type_id, "Room type" %>
+	<% if @booking.property_id %>
+  	<%= f.collection_select(:room_type_id,
+					RoomType.scoped_by_account_id(current_user.account_id).
+					find_all_by_property_id(@booking.property_id), :id, :room_type) %>
+	<% else %>
+  	<%= f.collection_select(:room_type_id,
+					RoomType.scoped_by_account_id(current_user.account_id).
+					find(:all), :id, :long_name) %>
+	<% end %>
+
 	<%= f.label :number_of_rooms, "#" %>
 	<%= f.number_field :number_of_rooms, min: 1, max: 99 %>
 

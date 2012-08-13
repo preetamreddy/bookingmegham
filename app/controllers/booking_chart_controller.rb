@@ -37,22 +37,22 @@ class BookingChartController < ApplicationController
 		@room_types.each do |room_type|
 			available_rooms = (1..room_type.number_of_rooms).to_a
 
-			in_camp = Booking.scoped_by_account_id(current_user.account_id).
+			in_camp = Room.scoped_by_account_id(current_user.account_id).
 				order("check_in_date, number_of_rooms desc").
-				find(:all, :conditions => 
-				[ 'room_type_id = ? and check_in_date <= ? and check_out_date > ? and cancelled = ?',
-				room_type.id, @chart_start_date, @chart_start_date, 0 ])
+				find(:all, :conditions => [
+					'room_type_id = ? and check_in_date <= ? and check_out_date > ?',
+					room_type.id, @chart_start_date, @chart_start_date ])
 
-			in_camp.each do |booking|
-				alloted_rooms[booking.id] = []
-				booking.rooms.each do |room|
+			in_camp.each do |room|
+				if room.cancelled == 0
+					alloted_rooms[room.id] = []
 					room.number_of_rooms.times do
 						room_number = available_rooms.shift
-						alloted_rooms[booking.id] << room_number
-						in_camp_dates = @chart_start_date...booking.check_out_date
+						alloted_rooms[room.id] << room_number
+						in_camp_dates = @chart_start_date...room.check_out_date
 						in_camp_dates.each do	|date|
 							@booking_chart.store([room_type.id, room_number, date], [
-								booking.trip.guest.name + room.guests_per_room, booking.trip.payment_status])
+								room.booking.trip.guest.name + room.guests_per_room, room.booking.trip.payment_status])
 						end
 					end
 				end
@@ -64,29 +64,30 @@ class BookingChartController < ApplicationController
 
 			date_range = (@chart_start_date + 1)..@chart_end_date
 			date_range.each do |date|
-				check_outs = Booking.scoped_by_account_id(current_user.account_id).find(:all, :conditions => [
-					'room_type_id = ? and check_out_date = ? and cancelled = ?', room_type.id, date, 0 ])
-				check_outs.each do |booking|
-					alloted_rooms[booking.id].each do |room_number|
-						available_rooms.push(room_number)	
+				check_outs = Room.scoped_by_account_id(current_user.account_id).find(:all, :conditions => [
+					'room_type_id = ? and check_out_date = ?', room_type.id, date ])
+				check_outs.each do |room|
+					if room.cancelled == 0
+						alloted_rooms[room.id].each do |room_number|
+							available_rooms.push(room_number)	
+						end
 					end
 				end
 
-				check_ins = Booking.scoped_by_account_id(current_user.account_id).order("number_of_rooms desc").
+				check_ins = Room.scoped_by_account_id(current_user.account_id).order("number_of_rooms desc").
 					find(:all, :conditions => [
-					'room_type_id = ? and check_in_date = ? and cancelled = ?', room_type.id, date, 0 ])
-				check_ins.each do |booking|
-					alloted_rooms[booking.id] = []
-					available_rooms = sort_for_contiguous_rooms(available_rooms,
-						booking.number_of_rooms)
-					booking.rooms.each do |room|
+					'room_type_id = ? and check_in_date = ?', room_type.id, date ])
+				check_ins.each do |room|
+					if room.cancelled == 0
+						alloted_rooms[room.id] = []
+						available_rooms = sort_for_contiguous_rooms(available_rooms, room.number_of_rooms)
 						room.number_of_rooms.times do
 							room_number = available_rooms.shift
-							alloted_rooms[booking.id] << room_number
-							in_camp_dates = booking.check_in_date...booking.check_out_date
+							alloted_rooms[room.id] << room_number
+							in_camp_dates = room.check_in_date...room.check_out_date
 							in_camp_dates.each do |date|
 								@booking_chart.store([room_type.id, room_number, date],
-									[booking.trip.guest.name + room.guests_per_room, booking.trip.payment_status])
+									[room.booking.trip.guest.name + room.guests_per_room, room.booking.trip.payment_status])
 							end
 						end
 					end
