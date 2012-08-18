@@ -1,5 +1,4 @@
 .bookings {
-
 	table th:nth-last-child(2) {
 		width: auto;
 	}
@@ -37,5 +36,30 @@
 
 	.nested_form {
 		padding-left: 10.8em;
+	}
+
+	.properties_table {
+		margin-top: 1em;
+		border-spacing: 0;
+		border-collapse: collapse;
+		border-color: #CFCCCA;
+		width: auto;
+		
+		th {
+			padding: 5px;
+			background: #605C59;
+			color: #FFF;
+		}
+	
+		td {
+			padding: 2px 4px;
+			vertical-align: top;
+	
+			&:nth-last-child(1) {
+				font-size: .9em;
+				white-space: nowrap;
+				width: 80px;
+			}
+		}
 	}
 }

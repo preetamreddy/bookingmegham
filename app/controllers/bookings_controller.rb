@@ -85,7 +85,8 @@ class BookingsController < ApplicationController
 		if params[:property_id]
 			@booking.property_id = params[:property_id]
 		else
-			@properties = Property.scoped_by_account_id(current_user.account_id).order(:name).all
+      @properties = Property.scoped_by_account_id(current_user.account_id).
+        order('ensure_availability_before_booking desc, name').all
 		end
 		
 		if session[:trip_id]	
