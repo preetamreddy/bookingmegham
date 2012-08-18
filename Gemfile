@@ -72,3 +72,6 @@ gem "high_voltage"
 
 # For authorization
 gem "cancan"
+
+# For debugging
+gem 'ruby-debug19'
