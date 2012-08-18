@@ -16,9 +16,9 @@ class VasBookingObserver < ActiveRecord::Observer
 
 	def parent_of(vas_booking)
 		if vas_booking.trip_id
-			vas_booking.trip
+			Trip.find(vas_booking.trip_id)
 		elsif vas_booking.booking_id
-			vas_booking.booking
+			Booking.find(vas_booking.booking_id)
 		end
 	end
 
