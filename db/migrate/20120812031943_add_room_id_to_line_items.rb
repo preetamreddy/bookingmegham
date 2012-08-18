@@ -4,7 +4,7 @@ class AddRoomIdToLineItems < ActiveRecord::Migration
 
 		Booking.all.each do |booking|
 			booking.line_items.destroy_all
-			if booking.ensure_availability_before_booking == 1
+			if booking.ensure_availability_before_booking == 1 and booking.cancelled == 0
 				booking.rooms.each do |room|
 					date = room.check_in_date
 					while date < room.check_out_date do

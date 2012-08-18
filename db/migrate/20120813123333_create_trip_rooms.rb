@@ -12,8 +12,8 @@ class CreateTripRooms < ActiveRecord::Migration
       t.timestamps
     end
 
-		Room.all.each do |room|
-			if room.trip_id
+    Room.observers.disable :all do
+			Room.where('trip_id is not null').each do |room|
 				TripRoom.create(:trip_id => room.trip_id,
 					:occupancy => room.occupancy,
 					:number_of_rooms => room.number_of_rooms,
@@ -25,22 +25,24 @@ class CreateTripRooms < ActiveRecord::Migration
 					:updated_at => room.updated_at)
 				room.destroy
 			end
-		end
+    end
   end
 
 	def down
-		TripRoom.all.each do |trip_room|
-			Room.create(:trip_id => trip_room.trip_id,
-				:occupancy => trip_room.occupancy,
-				:number_of_rooms => trip_room.number_of_rooms,
-				:number_of_adults => trip_room.number_of_adults,
-				:number_of_children_between_5_and_12_years => trip_room.number_of_children_between_5_and_12_years,
-				:number_of_children_below_5_years => trip_room.number_of_children_below_5_years,
-				:account_id => trip_room.account_id,
-				:created_at => trip_room.created_at,
-				:updated_at => trip_room.updated_at)
-			trip_room.destroy
-		end
+    Room.observers.disable :all do
+			TripRoom.all.each do |trip_room|
+				Room.create(:trip_id => trip_room.trip_id,
+					:occupancy => trip_room.occupancy,
+					:number_of_rooms => trip_room.number_of_rooms,
+					:number_of_adults => trip_room.number_of_adults,
+					:number_of_children_between_5_and_12_years => trip_room.number_of_children_between_5_and_12_years,
+					:number_of_children_below_5_years => trip_room.number_of_children_below_5_years,
+					:account_id => trip_room.account_id,
+					:created_at => trip_room.created_at,
+					:updated_at => trip_room.updated_at)
+				trip_room.destroy
+			end
+    end
 
 		drop_table :trip_rooms
 	end
