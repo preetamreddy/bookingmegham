@@ -74,4 +74,6 @@ gem "high_voltage"
 gem "cancan"
 
 # For debugging
-gem 'ruby-debug19'
+group :development do
+  gem 'ruby-debug19'
+end
