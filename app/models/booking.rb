@@ -5,11 +5,11 @@ class Booking < ActiveRecord::Base
 	belongs_to :property
 	belongs_to :room_type
 
-	has_many :rooms, dependent: :destroy
+	has_many :rooms
 	accepts_nested_attributes_for :rooms, :reject_if => :all_blank,
 		:allow_destroy => true
 
-	has_many :vas_bookings, dependent: :destroy
+	has_many :vas_bookings
 	accepts_nested_attributes_for :vas_bookings, :reject_if => :all_blank,
 		:allow_destroy => true
 
@@ -176,7 +176,7 @@ class Booking < ActiveRecord::Base
 		end
 
 		def ensure_rooms_and_vas_dont_exist
-			if total_price == 0
+			if rooms.empty? and vas_bookings.empty?
 				return true
 			else
 				errors.add(:base, "Destroy failed because booking has vas / rooms")
