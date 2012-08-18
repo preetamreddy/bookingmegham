@@ -13,7 +13,7 @@ class Booking < ActiveRecord::Base
 	accepts_nested_attributes_for :vas_bookings, :reject_if => :all_blank,
 		:allow_destroy => true
 
-	has_many :line_items, dependent: :destroy
+	has_many :line_items
 
 	before_validation :update_check_out_date, :update_number_of_rooms
 
@@ -35,6 +35,8 @@ class Booking < ActiveRecord::Base
 
 	before_destroy :ensure_payments_are_not_made,
 		:ensure_rooms_and_vas_dont_exist
+
+  after_update :delete_line_items_for_cancelled_bookings
 
 	def ensure_availability_before_booking
 		property.ensure_availability_before_booking
@@ -181,4 +183,10 @@ class Booking < ActiveRecord::Base
 				return false
 			end
 		end
+
+    def delete_line_items_for_cancelled_bookings
+		  if cancelled_changed? and cancelled == 1 and line_items.any?
+			  line_items.destroy_all
+		  end
+    end
 end
