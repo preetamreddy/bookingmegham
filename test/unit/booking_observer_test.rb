@@ -13,7 +13,7 @@ class BookingObserverTest < ActiveSupport::TestCase
 	end
 
 	test "room price and service_tax is aggregated into trip" do
-		assert_equal 22700, @himachal_trip.price_for_rooms
+		assert_equal 22700, @himachal_trip.reload.price_for_rooms
 		assert_equal 372, @himachal_trip.service_tax
 	end
 

@@ -55,7 +55,7 @@ class TripTest < ActiveSupport::TestCase
 		assert_equal 2500, @himachal_trip.reload.price_for_vas
 	end
 	test "trip final price includes vas" do
-		assert_equal 22900, @himachal_trip.final_price
+		assert_equal 22900, @himachal_trip.reload.final_price
 	end
 
 	test "payment status is not paid until payments are made" do

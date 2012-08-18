@@ -10,7 +10,7 @@ class RoomObserverTest < ActiveSupport::TestCase
 	end
 
 	test "room price and service_tax is aggregated into booking" do
-		assert_equal 22400, @sangla_booking.price_for_rooms
+		assert_equal 22400, @sangla_booking.reload.price_for_rooms
 		assert_equal 372, @sangla_booking.service_tax
 	end
 
