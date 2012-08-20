@@ -61,7 +61,13 @@ class PaymentsController < ApplicationController
   def new
 		if session[:trip_id]
 			@payment.trip_id = session[:trip_id]
-			@payment.payee_name = Trip.find(session[:trip_id]).guest.name_with_title
+
+      guest = Trip.find(session[:trip_id]).guest
+      if guest.agency_id
+        @payment.payee_name = guest.agency.name
+      else
+        @payment.payee_name = guest.name_with_title
+      end
 		end
 
     respond_to do |format|
