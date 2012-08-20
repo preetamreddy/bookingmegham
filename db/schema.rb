@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120813162225) do
+ActiveRecord::Schema.define(:version => 20120820081852) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -141,7 +141,7 @@ ActiveRecord::Schema.define(:version => 20120813162225) do
     t.integer  "price_for_driver"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "ensure_availability_before_booking", :default => 1
+    t.integer  "ensure_availability_before_booking", :default => 0
     t.string   "phone_number"
     t.string   "phone_number_2"
     t.text     "address"
