@@ -8,6 +8,8 @@ module BookingChartHelper
 			attributes["class"] = "fully_paid"
 		elsif payment_status == Trip::CONFIRMED_NOT_PAID
 			attributes["class"] = "confirmed_not_paid"
+    else
+      attributes["class"] = "text" 
 		end
 		content_tag("td", attributes, &block)
 	end

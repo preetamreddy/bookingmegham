@@ -1,5 +1,8 @@
 <h1>Booking Chart</h1>
 
+<div id="booking_chart">
+</div>
+
 <div id="search">
 	<%= render 'search' %>
 </div>
@@ -23,7 +26,8 @@
 	  		<tr class=<%= tr_class %>>
 	    		<td class="nowrap"><%= room_type.room_type %></td>
 					<% @chart_date_range.each do |date| %>
-						<%= show_allocation_with_color_code(@booking_chart[[room_type.id, room_number, date]][1], class: "text") do %>
+            <%= show_allocation_with_color_code(@booking_chart[[room_type.id, room_number, date]][1], 
+                  booking_id: @booking_chart[[room_type.id, room_number, date]][2]) do %>
 							<% @booking_chart[[room_type.id, room_number, date]][0] %>
 						<% end %>
 					<% end %>
