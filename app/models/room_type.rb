@@ -96,7 +96,7 @@ class RoomType < ActiveRecord::Base
 			self.price_for_single_occupancy ||= 0
 			self.price_for_double_occupancy ||= 0
 			self.price_for_lodging ||= 0
-			self.number_of_rooms ||= 99
+			self.number_of_rooms ||= 0
 		end
 
 		def ensure_does_not_have_bookings
