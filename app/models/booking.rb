@@ -31,8 +31,6 @@ class Booking < ActiveRecord::Base
 	before_save :strip_whitespaces, :titleize,
 							:update_total_price
 
-	before_create :update_guest_id
-
 	before_destroy :ensure_payments_are_not_made,
 		:ensure_rooms_and_vas_dont_exist
 
@@ -160,10 +158,6 @@ class Booking < ActiveRecord::Base
 			else
 				self.total_price = cancellation_charge
 			end
-		end
-
-		def update_guest_id
-			self.guest_id = trip.guest_id
 		end
 
 		def ensure_payments_are_not_made
