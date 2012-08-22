@@ -7,6 +7,7 @@ FactoryGirl.define do
 	  email { Faker::Internet.email }
 		postal_address { "#{Faker::Address.secondary_address}, #{Faker::Address.street_name}" }
 		url { Faker::Internet.url }
+		logo_file_name { "#{Faker::Company.name}.jpg" }
 	end
 
 	factory :agency do
@@ -17,7 +18,6 @@ FactoryGirl.define do
 		postal_address { "#{Faker::Address.secondary_address}, #{Faker::Address.street_name}" }
 	  city { Faker::Address.city }
 		url { Faker::Internet.url }
-		logo_file_name { "#{Faker::Company.name}.jpg" }
 	  operates_properties 1
 	  operates_taxis 1
 	  is_travel_agency 1

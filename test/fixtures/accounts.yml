@@ -8,6 +8,7 @@ banjara:
     1A, Hauz Khas Village,
     New Delhi-110 016 India
   url: www.banjaracamps.com
+  logo_file_name: Banjara.jpg
 
 himalayanvillage:
   id: 2
@@ -19,3 +20,4 @@ himalayanvillage:
     Sonapani,
     Uttarakhand, India
   url: www.himalayanvillage.com
+  logo_file_name: Himalayanvillage.jpg

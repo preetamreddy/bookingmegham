@@ -5,19 +5,22 @@
   	<tr>
 			<th class="text">Name</th>
     	<th class="text">Subdomain</th>
-    	<th class="text">Phone number</th>
     	<th class="text">Email</th>
     	<th class="text">Url</th>
+    	<th class="text">Logo file name</th>
     	<th></th>
   	</tr>
 
 		<% @accounts.each do |account| %>
   		<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-    		<td class="text"><%= account.name %></td>
+        <td class="text">
+          <%= account.name %><br />
+          <%= account.phone_number_1 %>
+        </td>
     		<td class="text"><%= account.subdomain %></td>
-    		<td class="text"><%= account.phone_number_1 %></td>
     		<td class="text"><%= account.email %></td>
     		<td class="text"><%= account.url %></td>
+    		<td class="text"><%= account.logo_file_name %></td>
     		<td>
 					<%= link_to 'Show details', account %></br>
     			<%= link_to 'Edit', edit_account_path(account) %></br>

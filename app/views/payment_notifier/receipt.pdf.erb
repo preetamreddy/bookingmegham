@@ -67,7 +67,7 @@
 			<table class="table">
 				<tr>
 					<td colspan=2>
-						<%= wicked_pdf_image_tag @trip.advisor.agency.logo_file_name	%>
+						<%= wicked_pdf_image_tag Account.find(@trip.account_id).logo_file_name	%>
 					</td>
 					<td colspan=4 class="address">
 						<span class="bold">

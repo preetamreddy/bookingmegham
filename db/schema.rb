@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120821185205) do
+ActiveRecord::Schema.define(:version => 20120822095553) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20120821185205) do
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "logo_file_name"
   end
 
   create_table "advisors", :force => true do |t|
