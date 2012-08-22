@@ -27,19 +27,13 @@
 						'is_travel_agency = ?', 1 ]), :id, :name, :include_blank => true) %>
   </div>
   <div class="field">
-    <%= f.label :phone_number %><br />
+    <%= f.label :phone_number, "Phone numbers" %><br />
     <%= f.text_field :phone_number %>
-  </div>
-  <div class="field">
-    <%= f.label :phone_number_2, "Alt. Phone number" %><br />
     <%= f.text_field :phone_number_2 %>
   </div>
   <div class="field">
-    <%= f.label :email_id %><br />
+    <%= f.label :email_id, "Email IDs" %><br />
     <%= f.text_field :email_id %>
-  </div>
-  <div class="field">
-    <%= f.label :email_id_2, "Alt. Email ID" %><br />
     <%= f.text_field :email_id_2 %>
   </div>
   <div class="field">
