@@ -63,7 +63,6 @@ class TripsController < ApplicationController
 		if session[:guest_id]
 			guest = Guest.scoped_by_account_id(current_user.account_id).find(session[:guest_id])
 			@trip.agency_id = guest.agency_id
-			@trip.remarks = guest.other_information
 		end
 
 		if !@trip.agency_id

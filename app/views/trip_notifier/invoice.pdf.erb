@@ -96,7 +96,7 @@
 				</tr>
 				<tr>
 					<% if @trip.direct_booking == 1 %>
-						<td colspan=3 class="client">To,<br/><%= @trip.guest.name %><br/><%= @trip.guest.address %><br/>Phone: <%= @trip.guest.phone_number %></td>
+						<td colspan=3 class="client">To,<br/><%= @trip.guest.name %><br/><%= @trip.guest.postal_address %><br/>Phone: <%= @trip.guest.phone_number %></td>
 					<% else %>
 						<td colspan=3 class="client">To,<br/><%= @trip.agency.name %><br/><%= @trip.agency.postal_address %><br/>Phone: <%= @trip.agency.phone_number %><br/>PAN No: <%= @trip.agency.pan_number %></td>
 					<% end %>

@@ -15,10 +15,6 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
-  <div class="field">
-    <%= f.label :short_name %><br />
-    <%= f.text_field :short_name %>
-  </div>
 	<div class="field">
 		<%= f.label :is_travel_agency %>
 		<%= f.check_box :is_travel_agency, default: 1 %>
@@ -32,8 +28,16 @@
     <%= f.text_field :phone_number %>
   </div>
   <div class="field">
+    <%= f.label :phone_number_2, "Alt. Phone number" %><br />
+    <%= f.text_field :phone_number_2 %>
+  </div>
+  <div class="field">
     <%= f.label :email_id %><br />
     <%= f.text_field :email_id %>
+  </div>
+  <div class="field">
+    <%= f.label :email_id, "Alt. Email ID" %><br />
+    <%= f.text_field :email_id_2 %>
   </div>
   <div class="field">
     <%= f.label :url %><br />

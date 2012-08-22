@@ -5,7 +5,7 @@ class Agency < ActiveRecord::Base
 	has_many :users
 	has_many :taxis
 
-	before_save :set_defaults_if_nil, :titleize, :strip_whitespaces
+	before_save :titleize, :strip_whitespaces
 
 	before_destroy 	:ensure_does_not_have_trips,
 									:ensure_does_not_have_taxis,
@@ -19,13 +19,19 @@ class Agency < ActiveRecord::Base
 
 	validates :phone_number, :format => { :with => /^[\+]?[\d\s]*$/, :message => "is not valid" }
 
-	private
+  def title
+    ""
+  end
 
-		def set_defaults_if_nil
-			if read_attribute(:short_name) == ""
-				write_attribute(:short_name, read_attribute(:name))
-			end
-		end
+  def name_with_title
+    name
+  end
+
+  def last_name_with_title
+    name
+  end
+
+	private
 
 		def ensure_does_not_have_trips
 			if trips.empty?
@@ -65,7 +71,6 @@ class Agency < ActiveRecord::Base
 
 		def titleize
 			self.city = city.titleize if city
-			self.short_name = short_name.titleize if short_name
 		end
 
 		def strip_whitespaces

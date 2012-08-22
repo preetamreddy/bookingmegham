@@ -21,7 +21,6 @@ FactoryGirl.define do
 	  operates_properties 1
 	  operates_taxis 1
 	  is_travel_agency 1
-	  short_name { Faker::Company.name }
 	end
 
 	factory :advisor do
@@ -69,7 +68,7 @@ FactoryGirl.define do
 		name { Faker::Name.name }
 	  phone_number { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
 		email_id { Faker::Internet.email }
-		resident_of { Faker::Address.city }
+		city { Faker::Address.city }
 	  phone_number_2 { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
 		title "Mr"
 	end

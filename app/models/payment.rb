@@ -21,7 +21,7 @@ class Payment < ActiveRecord::Base
 
 	def agency
 		if trip.direct_booking == 0
-			return trip.agency.short_name
+			return trip.agency.name
 		elsif trip.direct_booking == 1
 			return ""
 		end

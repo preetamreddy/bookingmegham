@@ -13,7 +13,6 @@ banjara:
   operates_properties: 1
   operates_taxis: 0
   is_travel_agency: 0
-  short_name: Banjara Camps
   is_account: 1
 
 great_escape:
@@ -25,7 +24,6 @@ great_escape:
   operates_properties: 0
   operates_taxis: 0
   is_travel_agency: 1
-  short_name: Great Escape
   is_account: 0
 
 himalayanvillage:
@@ -43,5 +41,4 @@ himalayanvillage:
   operates_properties: 1
   operates_taxis: 0
   is_travel_agency: 0
-  short_name: Himalayan Village
   is_account: 1

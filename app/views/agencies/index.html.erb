@@ -22,12 +22,16 @@
 	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
     <td>
 			<span class="nowrap"><%= agency.name %></span><br />
-    	<span class="nowrap"><%= agency.phone_number %></span>
+      <span class="nowrap"><%= agency.phone_number %></span><br />
+    	<span class="nowrap"><%= agency.phone_number_2 %></span>
 		</td>
     <td class="text"><%= agency.is_travel_agency.to_english %></td>
     <td class="nowrap"><%= agency.operates_taxis.to_english %></td>
     <td class="nowrap"><%= agency.city %></td>
-    <td class="text"><%= agency.email_id %></td>
+    <td class="text">
+      <%= agency.email_id %><br />
+      <%= agency.email_id_2 %>
+    </td>
     <td class="nowrap"><%= agency.url %></td>
     <td>
     	<%= link_to 'Show details', agency %><br />

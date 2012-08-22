@@ -20,7 +20,6 @@
 	    <th class="text">Email</th>
 	    <th class="nowrap">Travel Agency</th>
 	    <th class="text">Resident of</th>
-	    <th class="text">Notes</th>
 			<th></th>
 	  </tr>
 		<% @guests.each do |guest| %>
@@ -34,9 +33,8 @@
 					<%= guest.email_id %><br/>
 					<%= guest.email_id_2 %>
 				</td>
-		    <td class="text"><%= guest.agency.short_name if guest.agency_id %></td>
-		    <td class="text"><%= guest.resident_of %></td>
-		    <td class="prewrap"><%= guest.other_information %></td>
+		    <td class="text"><%= guest.agency.name if guest.agency_id %></td>
+		    <td class="text"><%= guest.city %></td>
 		    <td>
 					<%= link_to 'Edit', edit_guest_path(guest) %></br>
 					<%= link_to 'Destroy', guest, confirm: 'Are you sure?',

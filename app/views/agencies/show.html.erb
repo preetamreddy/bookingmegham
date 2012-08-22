@@ -7,11 +7,6 @@
 </p>
 
 <p>
-  <b>Short Name:</b>
-  <span class="saved_value"><%= @agency.short_name %></span>
-</p>
-
-<p>
   <b>Is Travel Agency:</b>
   <span class="saved_value"><%= @agency.is_travel_agency.to_english %></span>
 </p>
@@ -27,8 +22,18 @@
 </p>
 
 <p>
-  <b>Email:</b>
+  <b>Alt. Phone number:</b>
+  <span class="saved_value"><%= @agency.phone_number_2 %></span>
+</p>
+
+<p>
+  <b>Email ID:</b>
   <span class="saved_value"><%= @agency.email_id %></span>
+</p>
+
+<p>
+  <b>Alt Email ID:</b>
+  <span class="saved_value"><%= @agency.email_id_2 %></span>
 </p>
 
 <p>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120821094619) do
+ActiveRecord::Schema.define(:version => 20120821185205) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -54,6 +54,8 @@ ActiveRecord::Schema.define(:version => 20120821094619) do
     t.text     "service_tax",         :default => "0"
     t.integer  "account_id"
     t.integer  "is_account",          :default => 0
+    t.string   "phone_number_2"
+    t.string   "email_id_2"
   end
 
   add_index "agencies", ["account_id"], :name => "index_agencies_on_account_id"
@@ -94,13 +96,13 @@ ActiveRecord::Schema.define(:version => 20120821094619) do
     t.string   "name"
     t.string   "phone_number"
     t.string   "email_id"
-    t.string   "resident_of"
+    t.string   "city"
     t.text     "other_information"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "phone_number_2"
     t.string   "email_id_2"
-    t.text     "address"
+    t.text     "postal_address"
     t.string   "title"
     t.integer  "agency_id"
     t.integer  "account_id"

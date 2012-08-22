@@ -41,7 +41,7 @@
 					<% if payment.trip.direct_booking == 1 %>
 						<%= payment.trip.guest.name %>
 					<% else %>
-						<%= payment.trip.guest.name %> / <%= payment.trip.agency.short_name %>
+						<%= payment.trip.guest.name %> / <%= payment.trip.agency.name %>
 					<% end %>
 				</td>
 		    <td class="text"><%= "BCRPL/#{payment.trip_id}/#{payment.id}" %></td>

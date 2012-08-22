@@ -9,7 +9,7 @@
 <p>
   <b>Agency:</b>
 	<% if @guest.agency_id %>
-  	<span class="saved_value"><%= @guest.agency.short_name %>
+  	<span class="saved_value"><%= @guest.agency.name %>
 	<% end %>
 </p>
 
@@ -35,17 +35,12 @@
 
 <p>
   <b>Resident of:</b>
-  <span class="saved_value"><%= @guest.resident_of %>
+  <span class="saved_value"><%= @guest.city %>
 </p>
 
 <p>
-  <b>Address:</b>
-  <span class="saved_value"><%= @guest.address %>
-</p>
-
-<p>
-  <b>Notes:</b>
-  <span class="saved_value"><%= @guest.other_information %>
+  <b>Postal address:</b>
+  <span class="saved_value"><%= @guest.postal_address %>
 </p>
 </div>
 

@@ -11,7 +11,7 @@ class GuestsController < ApplicationController
 		if (params[:name] or params[:phone_number] or params[:email_id])
 			if params[:agency_id].to_i > 0
 				@guests = @guests.paginate(page: params[:page], per_page: 20).
-										order('name, resident_of').
+										order('name, city').
 										find(:all, :conditions => [ 
 										'lower(name) like ? and
 										(phone_number like ? or phone_number_2 like ?) and
@@ -23,7 +23,7 @@ class GuestsController < ApplicationController
 										"%" + params[:email_id] + "%", params[:agency_id] ])
 			else
 				@guests = @guests.paginate(page: params[:page], per_page: 20).
-										order('name, resident_of').
+										order('name, city').
 										find(:all, :conditions => [ 
 										'lower(name) like ? and
 										(phone_number like ? or phone_number_2 like ?) and
@@ -36,7 +36,7 @@ class GuestsController < ApplicationController
 			end
 		else
 			@guests = @guests.paginate(page: params[:page], per_page: 20).
-									order('name, resident_of')
+									order('name, city')
 		end
 
 		@records_returned = @guests.count

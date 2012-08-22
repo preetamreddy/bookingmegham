@@ -25,6 +25,10 @@ class Guest < ActiveRecord::Base
 		title != "" ? "#{title} #{name.split.last}" : "#{name}"
 	end
 
+  def pan_number
+    ""
+  end
+
 	private
 
 		def ensure_not_referenced_by_trip
@@ -38,11 +42,10 @@ class Guest < ActiveRecord::Base
 
 		def titleize
 			self.name = name.titleize
-			self.resident_of = resident_of.titleize if resident_of
+			self.city = city.titleize if city
 		end
 
 		def strip_whitespaces
-			self.other_information = other_information.to_s.strip
-			self.address = address.to_s.strip
+			self.postal_address = postal_address.to_s.strip
 		end
 end
