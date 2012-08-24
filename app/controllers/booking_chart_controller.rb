@@ -1,5 +1,9 @@
 class BookingChartController < ApplicationController 
   def index
+		if session[:trip_id]
+			trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
+    end
+
 		if params[:property_id]
 			@property_id = params[:property_id].to_i
 		else
@@ -13,12 +17,16 @@ class BookingChartController < ApplicationController
 				params[:chart_start_date][:year].to_i,
 				params[:chart_start_date][:month].to_i,
 				params[:chart_start_date][:day].to_i)
+    elsif session[:trip_id]
+      @chart_start_date = trip.start_date
 		else
 			@chart_start_date = Date.today
 		end
 
 		if params[:number_of_days]
 			@number_of_days = params[:number_of_days].to_i
+    elsif session[:trip_id]
+      @number_of_days = trip.number_of_days - 1
 		else
 			@number_of_days = 10 
 		end
