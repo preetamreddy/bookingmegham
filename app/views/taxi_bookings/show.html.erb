@@ -2,8 +2,18 @@
 
 <div class="show_saved_record">
 <p>
+  <b>ID:</b>
+  <span class="saved_value"><%= @taxi_booking.id %></span>
+</p>
+
+<p>
+  <b>Customer:</b>
+  <span class="saved_value"><%= @taxi_booking.trip.customer.name %></span>
+</p>
+
+<p>
   <b>Trip:</b>
-  <span class="saved_value"><%= @taxi_booking.trip.long_name %></span>
+  <span class="saved_value"><%= @taxi_booking.trip.name %></span>
 </p>
 
 <p>
@@ -82,5 +92,4 @@
 				email_taxi_booking_path(:taxi_booking_id => @taxi_booking.id) %> 
 </div>
 
-<%= link_to 'Back to Taxi Booking Listing', taxi_bookings_path,
-			:class => "back_link" %>
+<%= link_to 'Back to Taxi Booking Listing', taxi_bookings_path, :class => "back_link" %>

@@ -3,7 +3,7 @@ class Guest < ActiveRecord::Base
 
 	belongs_to :agency
 
-	has_many :trips
+	has_many :trips, :as => :customer
 
 	before_save :titleize, :strip_whitespaces
 

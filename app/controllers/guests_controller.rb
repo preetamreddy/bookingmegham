@@ -3,37 +3,26 @@ class GuestsController < ApplicationController
   # GET /guests
   # GET /guests.json
   def index
-		if params[:clear]
-			session[:trip_id] = nil
-			session[:guest_id] = nil
-		end
-
 		if (params[:name] or params[:phone_number] or params[:email_id])
-			if params[:agency_id].to_i > 0
-				@guests = @guests.paginate(page: params[:page], per_page: 20).
-										order('name, city').
-										find(:all, :conditions => [ 
-										'lower(name) like ? and
-										(phone_number like ? or phone_number_2 like ?) and
-										(email_id like ? or email_id_2 like ?) and agency_id = ?',
-										"%" + params[:name] + "%",
-										"%" + params[:phone_number] + "%",
-										"%" + params[:phone_number] + "%",
-										"%" + params[:email_id] + "%",
-										"%" + params[:email_id] + "%", params[:agency_id] ])
-			else
-				@guests = @guests.paginate(page: params[:page], per_page: 20).
-										order('name, city').
-										find(:all, :conditions => [ 
-										'lower(name) like ? and
-										(phone_number like ? or phone_number_2 like ?) and
-										(email_id like ? or email_id_2 like ?)',
-										"%" + params[:name] + "%",
-										"%" + params[:phone_number] + "%",
-										"%" + params[:phone_number] + "%",
-										"%" + params[:email_id] + "%",
-										"%" + params[:email_id] + "%" ])
-			end
+		  guest_name = params[:name]
+		  guest_name ||= ''
+		  guest_name = guest_name.downcase
+
+		  email_id = params[:email_id]
+		  email_id ||= ''
+		  email_id = email_id.downcase
+
+			@guests = @guests.paginate(page: params[:page], per_page: 20).
+									order('name, city').
+									find(:all, :conditions => [ 
+									'lower(name) like ? and
+									(phone_number like ? or phone_number_2 like ?) and
+									(email_id like ? or email_id_2 like ?)',
+									"%" + guest_name + "%",
+									"%" + params[:phone_number] + "%",
+									"%" + params[:phone_number] + "%",
+									"%" + email_id + "%",
+									"%" + email_id + "%" ])
 		else
 			@guests = @guests.paginate(page: params[:page], per_page: 20).
 									order('name, city')
@@ -102,8 +91,9 @@ class GuestsController < ApplicationController
   def destroy
     @guest.destroy
 
-		if session[:guest_id] == params[:id].to_i
-			session[:guest_id] = nil
+		if session[:customer_type] == @guest.class.name and session[:customer_id] == params[:id].to_i
+			session[:customer_type] = nil
+			session[:customer_id] = nil
 		end
 
     respond_to do |format|

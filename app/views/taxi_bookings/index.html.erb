@@ -1,69 +1,78 @@
 <h1>Listing Transport Bookings</h1>
 
-<% if !session[:guest_id] %>
-	<div id="search">
-		<%= render 'search' %>
-	</div>
+<% if !(session[:customer_type] and session[:customer_id]) %>
+  <div id="search">
+    <%= render 'search' %>
+  </div>
 <% end %>
 
-<% if @taxi_bookings.count > 0 %>
-<table class="index_table" border="1">
-  <tr>
-    <th class="text">Trip</th>
-    <th class="text">Operator</th>
-    <th class="text">Taxi</th>
-    <th class="text">Pickup time</th>
-    <th class="text">Pickup address</th>
-    <th class="text">Drop off city</th>
-    <th class="number">Unit price</th>
-    <th class="number">Total price</th>
-    <th></th>
-  </tr>
-
-<% @taxi_bookings.each do |taxi_booking| %>
-  <tr>
-    <td class="text"><%= taxi_booking.trip.long_name %></td>
-    <td class="text"><%= taxi_booking.taxi.agency.name %></td>
-    <td class="text">
-    	<span class="nowrap"><%= pluralize(taxi_booking.number_of_vehicles, taxi_booking.taxi.model) %></span><br/>
-			<span class="nowrap"><%= l taxi_booking.start_date, :format => :short %> to <%= l taxi_booking.end_date, :format => :short %></span><br/>
-    	<span class="nowrap">(<%= pluralize(taxi_booking.number_of_days, "day") %>)</span>
-		</td>
-		<td class="text">
-    <% if taxi_booking.pickup_time %>
-			<%= l taxi_booking.pickup_time, :format => :short %>
-		<% end %>
-		</td>
-    <td class="text"><%= taxi_booking.pickup_address %></td>
-    <td class="text"><%= taxi_booking.drop_off_city %></td>
-    <td class="nowrap"><%= number_to_currency(taxi_booking.unit_price) %></td>
-    <td class="nowrap"><%= number_to_currency(taxi_booking.total_price) %></td>
-    <td>
-			<%= link_to 'Show details', taxi_booking %><br/>
-    	<%= link_to 'Edit', edit_taxi_booking_path(taxi_booking) %><br/>
-    	<%= link_to 'Destroy', taxi_booking, confirm: 'Are you sure?', 
-						method: :delete %>
-		</td>
-  </tr>
-<% end %>
-</table>
-<% else %>
-	<div id="error_explanation">
-		<h2>Taxi bookings not found</h2>
-		<ul>
-			<% if session[:trip_id] %>
-				<li>Click below to create a new taxi booking</li>
-			<% else %>
-				<li>Create a new taxi booking after first selecting a trip</li>
-			<% end %>
-		</ul>
-	</div>
+<% if @records_returned == 0 %>
+  <div id="error_explanation">
+    <h2>Taxi bookings not found</h2>
+    <ul>
+      <% if session[:trip_id] %>
+        <li>Click below link to create new taxi bookings</li>
+      <% elsif session[:customer_type] and session[:customer_id] %>
+        <li>Create / Select a Trip to create new taxi bookings</li>
+      <% else %>
+        <li>Check your search conditions</li>
+      <% end %>
+    </ul>
+  </div>
+<% else %>  
+  <table class="index_table" border="1">
+    <tr>
+      <th class="number">ID</th>
+      <th class="text">Guest</th>
+      <th class="text">Operator</th>
+      <th class="text">Taxi</th>
+      <th class="text">Pickup time</th>
+      <th class="text">Pickup address</th>
+      <th class="text">Drop off city</th>
+      <th class="number">Unit price</th>
+      <th class="number">Total price</th>
+      <th></th>
+    </tr>
+  
+    <% @taxi_bookings.each do |taxi_booking| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+        <td class="number">
+          <%= taxi_booking.id %>
+        </td>
+        <td class="text">
+          <span class="nowrap"><%= taxi_booking.trip.guest_name %></span><br/>
+          <span class="nowrap"><%= taxi_booking.trip.guest_phone_number %></span>
+        </td>
+        <td class="text"><%= taxi_booking.taxi.agency.name %></td>
+        <td class="text">
+          <span class="nowrap"><%= pluralize(taxi_booking.number_of_vehicles, taxi_booking.taxi.model) %></span><br/>
+          <span class="nowrap"><%= l taxi_booking.start_date, :format => :short %> to <%= l taxi_booking.end_date, :format => :short %></span><br/>
+          <span class="nowrap">(<%= pluralize(taxi_booking.number_of_days, "day") %>)</span>
+        </td>
+        <td class="text">
+        <% if taxi_booking.pickup_time %>
+          <%= l taxi_booking.pickup_time, :format => :short %>
+        <% end %>
+        </td>
+        <td class="text"><%= taxi_booking.pickup_address %></td>
+        <td class="text"><%= taxi_booking.drop_off_city %></td>
+        <td class="nowrap"><%= number_to_currency(taxi_booking.unit_price) %></td>
+        <td class="nowrap"><%= number_to_currency(taxi_booking.total_price) %></td>
+        <td>
+          <%= link_to 'Show details', taxi_booking %><br/>
+          <%= link_to 'Edit', edit_taxi_booking_path(taxi_booking) %><br/>
+          <%= link_to 'Destroy', taxi_booking, confirm: 'Are you sure?', 
+                method: :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
 <% end %>
 
 <% if session[:trip_id] %>
-	<div class="action_container">
-		<%= link_to 'New Transport Booking', new_taxi_booking_path %>
-		<%= link_to 'Room Bookings', bookings_path(:trip_id => session[:trip_id]) %></br>
-	</div>
+  <div class="action_container">
+    <%= link_to 'New Transport Booking', new_taxi_booking_path %>
+    <%= link_to 'Room Bookings', bookings_path %></br>
+  </div>
 <% end %>
 <p><%= will_paginate @taxi_bookings %></p>

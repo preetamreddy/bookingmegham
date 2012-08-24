@@ -4,18 +4,16 @@ class TripsController < ApplicationController
   # GET /trips
   # GET /trips.json
   def index
-		if params[:guest_id]
-			guest_id = params[:guest_id].to_i
-			if Guest.scoped_by_account_id(current_user.account_id).find_all_by_id(guest_id).any?
-				session[:guest_id] = guest_id
-				session[:trip_id] = nil
-			end
-		end
+    if params[:customer_type] and params[:customer_id]
+			store_customer_in_session(params[:customer_type], params[:customer_id].to_i)
+    end
 
-		if session[:guest_id]
+		if session[:customer_type] and session[:customer_id]
 			@trips = @trips.paginate(page: params[:page], per_page: 10).
 								order("start_date DESC, end_date DESC").
-								find_all_by_guest_id(session[:guest_id])
+								find(:all, :conditions => [
+                     'customer_type = ? and customer_id = ?',
+                     session[:customer_type], session[:customer_id] ])
 		else
 			if params[:payment_status]
     		@trips = @trips.paginate(page: params[:page], per_page: 10).
@@ -53,30 +51,23 @@ class TripsController < ApplicationController
   # GET /trips/new
   # GET /trips/new.json
   def new
-		if (params[:guest_id])
-			session[:guest_id] = params[:guest_id].to_i
+		if (params[:customer_type] and params[:customer_id])
+			store_customer_in_session(params[:customer_type], params[:customer_id].to_i)
 		end
 
-		@trip.trip_rooms.build
-		@trip.guest_id = session[:guest_id]
+    if session[:customer_type] and session[:customer_id]
+		  @trip.customer_type = session[:customer_type]
+		  @trip.customer_id = session[:customer_id]
+		  @trip.advisor_id = current_user.advisor_id
+		  @trip.trip_rooms.build
 
-		if session[:guest_id]
-			guest = Guest.scoped_by_account_id(current_user.account_id).find(session[:guest_id])
-			@trip.agency_id = guest.agency_id
-		end
-
-		if !@trip.agency_id
-			@trip.direct_booking = 1
-			@trip.agency_id = current_user.agency.id
-		else
-			@trip.direct_booking = 0
-		end
-
-		@trip.advisor_id = current_user.advisor_id
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @trip }
+      respond_to do |format|
+        format.html # new.html.erb
+        format.json { render json: @trip }
+      end
+    else
+      redirect_to trips_url, 
+        alert: 'New trips can only be created after selecting a customer from agency / guest listing.'
     end
   end
 
@@ -142,4 +133,18 @@ class TripsController < ApplicationController
       format.json { render json: trip, status: :sent, location: trip }
 		end
 	end
+
+  private
+    def store_customer_in_session(customer_type, customer_id)
+      begin
+			  if customer_type.classify.constantize.scoped_by_account_id(current_user.account_id).
+	          find_all_by_id(customer_id).any?
+				  session[:customer_type] = customer_type
+				  session[:customer_id] = customer_id
+				  session[:trip_id] = nil
+			  end
+      rescue NameError
+        return true
+      end
+    end
 end

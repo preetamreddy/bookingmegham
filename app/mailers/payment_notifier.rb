@@ -11,10 +11,10 @@ class PaymentNotifier < ActionMailer::Base
 		@user = User.find(user_id)
 
 		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
-				subject: "Banjara Camps - Payment Receipt for trip #{@payment.trip_id}/#{@payment.trip.guest.name}") do |format|
+				subject: "Payment Receipt for trip #{@payment.trip_id}-#{@payment.trip.name}") do |format|
 			format.text
 			format.pdf do
-				attachments["Receipt #{@trip.id}/#{@payment.id}/#{@trip.guest.name}.pdf"] = 
+				attachments["Receipt #{@trip.id}/#{@payment.id}/#{@trip.name}.pdf"] = 
 					WickedPdf.new.pdf_from_string(
 					render_to_string(:pdf => "receipt", 
 					:template 						=> 'payment_notifier/receipt.pdf.erb',

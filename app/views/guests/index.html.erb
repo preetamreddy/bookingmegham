@@ -1,14 +1,16 @@
 <h1>Listing Guests</h1>
 
-<div id="search">
+<div class="action_container">
 	<%= render 'search' %>
 </div>
+
+<%= link_to 'New Guest', new_guest_path, :class => "new_link" %>
 
 <% if @records_returned == 0 %>
 	<div id="error_explanation">
 		<h2>Guests not found</h2>
 		<ul>
-			<li>Change your search conditions or click below to create a new Guest</li>
+			<li>Check your search conditions or create a new Guest</li>
 		</ul>
 	</div>
 <% else %>
@@ -16,16 +18,15 @@
 	<table class="index_table" border="1">
 		<tr>
 	    <th class="text">Name</th>
-	    <th class="nowrap">Phone number</th>
 	    <th class="text">Email</th>
-	    <th class="nowrap">Travel Agency</th>
 	    <th class="text">Resident of</th>
+	    <th class="text">Postal address</th>
 			<th></th>
 	  </tr>
 		<% @guests.each do |guest| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-		    <td class="nowrap"><%= guest.name_with_title %></td>
-		    <td class="text">
+        <td class="text">
+          <span class="nowrap"><%= guest.name_with_title %></span><br/>
 					<span class="nowrap"><%= guest.phone_number %></span><br/>
 					<span class="nowrap"><%= guest.phone_number_2 %></span>
 				</td>
@@ -33,19 +34,16 @@
 					<%= guest.email_id %><br/>
 					<%= guest.email_id_2 %>
 				</td>
-		    <td class="text"><%= guest.agency.name if guest.agency_id %></td>
 		    <td class="text"><%= guest.city %></td>
+		    <td class="text"><%= guest.postal_address %></td>
 		    <td>
 					<%= link_to 'Edit', edit_guest_path(guest) %></br>
 					<%= link_to 'Destroy', guest, confirm: 'Are you sure?',
 									method: :delete %></br>
-					<%= link_to 'View Trips', trips_path(:guest_id => guest.id) %>
+          <%= link_to 'View Trips', trips_path(:customer_type => guest.class.name, :customer_id => guest.id) %>
 				</td>
 		  </tr>
 		<% end %>
 	</table>
 <% end %>
-<div class="action_container">
-	<%= link_to 'New Guest', new_guest_path %>
-</div>
 <p><%= will_paginate @guests %></p>

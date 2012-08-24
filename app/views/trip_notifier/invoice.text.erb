@@ -1,24 +1,11 @@
-<% if @trip.direct_booking == 1 %>
-	to: <%= @trip.guest.email_id %>
-	cc: <%= @trip.email_ids %>, <%= @trip.advisor.email_id %>, <%= TripNotifier::ACCOUNTS_EMAIL_ID %>
-<% else %>
-	to: <%= @trip.agency.email_id %>
-	cc: <%= @trip.advisor.email_id %>, <%= TripNotifier::ACCOUNTS_EMAIL_ID %>
-<% end %>
+to: <%= @trip.customer.email_id %>
+cc: <%= @trip.email_ids %>, <%= @trip.advisor.email_id %>, <%= TripNotifier::ACCOUNTS_EMAIL_ID %>
 
-<% if @trip.direct_booking == 1 %>
-Dear <%= @trip.guest.last_name_with_title %>
+Dear <%= @trip.customer.last_name_with_title %>
 
-Greetings from Banjara Camps and Retreats!
+Thank you for planning your holiday with Banjara Camps and Retreats.
 
 Attached is the invoice for your trip '<%= @trip.name %>'.
-
-We look forward to hosting you at Banjara Camps.
-<% else %>
-Greetings from Banjara Camps and Retreats!
-
-Attached is the invoice for your trip with id: <%= @trip.id %> and ref: <%= @trip.guest.name %> <%= @trip.guests %>.
-<% end %>
 
 With warm regards,
 <%= @user.advisor.name %>

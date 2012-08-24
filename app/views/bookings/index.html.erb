@@ -1,6 +1,6 @@
 <h1>Listing Room Bookings</h1>
 
-<% if !session[:guest_id] %>
+<% if !(session[:customer_type] and session[:customer_id]) %>
 	<div id="search">
 		<%= render 'search' %>
 	</div>
@@ -11,16 +11,15 @@
 		<h2>Bookings not found</h2>
 		<ul>
 			<% if session[:trip_id] %>
-				<li>Click below to create a new booking</li>
-			<% elsif session[:guest_id] %>
-				<li>Create a new booking after first selecting a trip</li>
+				<li>Click below link to create new bookings</li>
+			<% elsif session[:customer_type] and session[:customer_id] %>
+				<li>Create / Select a Trip to create new bookings</li>
 			<% else %>
-				<li>Change your search conditions</li>
+				<li>Check your search conditions</li>
 			<% end %>
 		</ul>
 	</div>
 <% else %>	
-
 	<table class="index_table" border="1">
 		<tr>
 			<th class="number">ID</th>
@@ -39,8 +38,8 @@
 					<%= booking.id %>
 				</td>
 		    <td class="text">
-					<span class="nowrap"><%= booking.trip.guest.name %></span><br/>
-		    	<span class="nowrap"><%= booking.trip.guest.phone_number %></span>
+					<span class="nowrap"><%= booking.trip.guest_name %></span><br/>
+		    	<span class="nowrap"><%= booking.trip.guest_phone_number %></span>
 				</td>
 		    <td class="text">
 		    	<%= booking.property.name %></br>
@@ -91,8 +90,7 @@
 <% if session[:trip_id] %>
 	<div class="action_container">
 		<%= link_to 'New Room Booking', new_booking_path %>
-		<%= link_to 'Availability Chart', availability_chart_path %>
-		<%= link_to 'Transport', taxi_bookings_path(:trip_id => session[:trip_id]) %></br>
+    <%= link_to 'Transport', taxi_bookings_path %>
 	</div>
 <% end %>
 <p><%= will_paginate @bookings %></p>

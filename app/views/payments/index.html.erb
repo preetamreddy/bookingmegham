@@ -1,6 +1,6 @@
 <h1>Listing Payments</h1>
 
-<% if !session[:trip_id] %>
+<% if !(session[:customer_type] and session[:customer_id]) %>
 	<div id="search">
 		<%= render 'search' %>
 	</div>
@@ -15,17 +15,19 @@
 		<h2>Payments not found</h2>
 		<ul>
 			<% if session[:trip_id] %>
-				<li>Click below to create a new payment</li>
+				<li>Click below link to create a new payment</li>
+      <% elsif session[:customer_type] and session[:customer_id] %>
+        <li>Create / Select a Trip to create new payments</li>
 			<% else %>
-				<li>Change your search conditions</li>
+				<li>Check your search conditions</li>
 			<% end %>
 		</ul>
 	</div>
 <% else %>
-
 	<table class="index_table" border="1">
 	  <tr>
-	    <th class="text">Guest / Agency</th>
+	    <th class="number">ID</th>
+	    <th class="text">Guest</th>
 	    <th class="text">Receipt No</th>
 	    <th class="text">Payee name</th>
 	    <th class="currency">Amount</th>
@@ -36,13 +38,13 @@
 	  </tr>
 
 		<% @payments.each do |payment| %>
-		  <tr>
-				<td class="text">
-					<% if payment.trip.direct_booking == 1 %>
-						<%= payment.trip.guest.name %>
-					<% else %>
-						<%= payment.trip.guest.name %> / <%= payment.trip.agency.name %>
-					<% end %>
+		  <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+				<td class="number">
+					<%= payment.id %>
+				</td>
+		    <td class="text">
+					<span class="nowrap"><%= payment.trip.guest_name %></span><br/>
+		    	<span class="nowrap"><%= payment.trip.guest_phone_number %></span>
 				</td>
 		    <td class="text"><%= "BCRPL/#{payment.trip_id}/#{payment.id}" %></td>
 		    <td class="text"><%= payment.payee_name %></td>

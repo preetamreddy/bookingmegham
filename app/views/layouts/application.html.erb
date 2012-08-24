@@ -20,16 +20,16 @@
 	<div id="columns">
 		<% if user_signed_in? %>
 			<div id="side">
-				<%= hidden_div_if(!session[:guest_id], id: 'session_info') do %>
+				<%= hidden_div_if(!(session[:customer_type] and session[:customer_id]), id: 'session_info') do %>
 					<table>
 						<tr>
 							<th class="heading" colspan=2>Bookings for</th>
 							<th class="clear"><%= link_to 'Clear', 
-													guests_path(:clear => 1) %></th>
+													root_path(:clear => 1) %></th>
 						</tr>
-						<% if session[:guest_id] %>
-							<% guest = Guest.find(session[:guest_id]) %>
-							<%= render(guest) %>
+						<% if session[:customer_type] and session[:customer_id] %>
+							<% customer = session[:customer_type].classify.constantize.find(session[:customer_id]) %>
+							<%= render(customer) %>
 						<% end %>
 						<% if session[:trip_id] %>
 							<% trip = Trip.find(session[:trip_id]) %>
@@ -47,6 +47,7 @@
 				<dl>
 					<dt>Booking Mgmt</dt>
 					<dd><%= link_to 'Guests', guests_path %></dd>
+          <dd><%= link_to 'Travel Agencies', agencies_path %></dd>
 					<dd><%= link_to 'Trips', trips_path %></dd>
 					<dd><%= link_to 'Room Bookings', bookings_path %></dd>
 					<dd><%= link_to 'Transport', taxi_bookings_path %></dd>
@@ -56,7 +57,6 @@
 					<dt>Booking Admin</dt>
 					<dd><%= link_to 'Properties', properties_path %></dd>
 					<dd><%= link_to 'Room Types', room_types_path %></dd>
-					<dd><%= link_to 'Agencies', agencies_path %></dd>
 					<dd><%= link_to 'Taxis', taxis_path %></dd>
 					<dt>Feedback</dt>
 					<dd><a href="mailto:preetam@ezbook.in?subject=Feedback">Give Feedback</a></dd>

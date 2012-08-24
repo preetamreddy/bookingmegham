@@ -5,11 +5,7 @@ class PaymentsController < ApplicationController
   # GET /payments.json
   def index
 		if params[:trip_id]
-			trip_id = params[:trip_id].to_i
-			if Trip.scoped_by_account_id(current_user.account_id).find_all_by_id(trip_id).any?
-				session[:trip_id] = trip_id
-				session[:guest_id] = Trip.scoped_by_account_id(current_user.account_id).find(trip_id).guest_id
-			end
+      store_trip_in_session(params[:trip_id].to_i)
 		end
 
 		if params[:from_date]
@@ -32,6 +28,14 @@ class PaymentsController < ApplicationController
 		if session[:trip_id]
 			@payments = @payments.order("trip_id, date_received, id").find(:all, :conditions => [
 											'trip_id = ?', session[:trip_id] ])
+		elsif session[:customer_type] and session[:customer_id]
+			trips = Trip.scoped_by_account_id(current_user.account_id).
+        find(:all, :conditions => [
+             'customer_type = ? and customer_id = ?',
+             session[:customer_type], session[:customer_id] ])
+			@payments = @payments.paginate(page: params[:page], per_page: 10).
+        order("trip_id, date_received, id").
+				find_all_by_trip_id(trips)
 		else
 			@payments = @payments.order("trip_id, date_received, id").find(:all, :conditions => [
 											'date_received >= ? and date_received <= ?',
@@ -60,19 +64,17 @@ class PaymentsController < ApplicationController
   # GET /payments/new.json
   def new
 		if session[:trip_id]
-			@payment.trip_id = session[:trip_id]
+      trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
+			@payment.trip_id = trip.id
+      @payment.payee_name = trip.customer.name_with_title
 
-      guest = Trip.find(session[:trip_id]).guest
-      if guest.agency_id
-        @payment.payee_name = guest.agency.name
-      else
-        @payment.payee_name = guest.name_with_title
+      respond_to do |format|
+        format.html # new.html.erb
+        format.json { render json: @payment }
       end
-		end
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @payment }
+    else
+      redirect_to payments_url, 
+        alert: 'New payments can only be created after selecting a trip.'
     end
   end
 
@@ -128,4 +130,14 @@ class PaymentsController < ApplicationController
 			format.json { render json: payment, status: :sent, location: payment }
 		end
 	end
+
+  private
+    def store_trip_in_session(trip_id)
+			if Trip.scoped_by_account_id(current_user.account_id).find_all_by_id(trip_id).any?
+			  trip = Trip.scoped_by_account_id(current_user.account_id).find(trip_id)
+			  session[:trip_id] = trip.id
+			  session[:customer_type] = trip.customer_type
+			  session[:customer_id] = trip.customer_id
+      end
+    end
 end

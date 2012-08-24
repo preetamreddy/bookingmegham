@@ -19,13 +19,6 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </div>
- 	<div class="field">
-   	<%= f.label :agency_id, "Agency" %><br />
-    <%= f.collection_select(:agency_id, 
-					Agency.scoped_by_account_id(current_user.account_id).
-						order('name').find(:all, :conditions => [
-						'is_travel_agency = ?', 1 ]), :id, :name, :include_blank => true) %>
-  </div>
   <div class="field">
     <%= f.label :phone_number, "Phone numbers" %><br />
     <%= f.text_field :phone_number %>

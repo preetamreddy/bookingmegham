@@ -15,16 +15,8 @@ class Payment < ActiveRecord::Base
 		"BCRPL/#{trip_id}/#{id}"
 	end
 
-	def guest_name
-		return trip.guest.name
-	end
-
-	def agency
-		if trip.direct_booking == 0
-			return trip.agency.name
-		elsif trip.direct_booking == 1
-			return ""
-		end
+	def customer_name
+		trip.customer.name
 	end
 
 	def date_final_payment
@@ -35,32 +27,16 @@ class Payment < ActiveRecord::Base
 		end
 	end
 
-	def agent_final_price
-		if trip.direct_booking == 0
-			return trip.final_price
-		elsif trip.direct_booking == 1
-			return 0
-		end
-	end
-
-	def direct_final_price
-		if trip.direct_booking == 1
-			return trip.final_price
-		elsif trip.direct_booking == 0
-			return 0
-		end
-	end
-
 	comma do
 		trip_id 'Trip ID'
-		guest_name
-		agency
+		customer_name 'Customer'
+		trip :customer_type => 'Agency / Guest'
 		trip :start_date => 'Trip Start Dt'
 		date_final_payment 'Date of Full Payment'
 		receipt_number 'Rcpt No.'
 		date_received 'Date of Payment'
 		amount 'Amount Recd.'
-		payment_mode
+		payment_mode 'Payment Mode'
 		details 'Payment Details'
 		trip :final_price => 'Booking Cost Total'
 		trip :paid => 'Total Recd.'
@@ -68,10 +44,9 @@ class Payment < ActiveRecord::Base
 		trip :discount => 'Discount'
 		trip :tac => 'TAC'
 		trip :tds => 'TDS'
-		trip :service_tax
+		trip :service_tax => 'Service Tax'
 		trip :net_after_taxes => 'Net After Taxes'
-		agent_final_price 'Agent Booking'
-		direct_final_price 'Direct Booking'
+		trip :final_price => 'Final Price'
 	end
 
 	private

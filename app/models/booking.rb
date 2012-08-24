@@ -15,7 +15,7 @@ class Booking < ActiveRecord::Base
 
 	has_many :line_items
 
-	before_validation :update_check_out_date, :update_number_of_rooms
+	before_validation :set_defaults_if_nil, :update_check_out_date, :update_number_of_rooms
 
 	validates :trip_id, :check_in_date, :check_out_date, :meal_plan,
 											presence: true
@@ -87,6 +87,10 @@ class Booking < ActiveRecord::Base
 	end
 
 	private
+    def set_defaults_if_nil
+      self.remarks ||= trip.remarks
+    end
+
 		def update_check_out_date
 			if check_in_date and number_of_nights != nil
 				self.check_out_date = check_in_date + number_of_nights
@@ -115,7 +119,7 @@ class Booking < ActiveRecord::Base
 
 		def ensure_property_exists
 			begin
-				trip = Property.find(property_id)
+				property = Property.find(property_id)
 			rescue ActiveRecord::RecordNotFound
 				errors.add(:base, "Could not create Booking as Property '#{property_id}' does not exist")
 				return false

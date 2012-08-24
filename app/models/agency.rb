@@ -1,6 +1,6 @@
 class Agency < ActiveRecord::Base
 	has_many :guests
-	has_many :trips
+	has_many :trips, :as => :customer
 	has_many :advisors
 	has_many :users
 	has_many :taxis

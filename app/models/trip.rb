@@ -4,9 +4,9 @@ class Trip < ActiveRecord::Base
 	FULLY_PAID = 'Fully Paid'
 	CONFIRMED_NOT_PAID = "Confirmed Not Paid"
 	TDS_PERCENT = 10
+  GUEST = "Guest"
 
-	belongs_to :guest
-	belongs_to :agency
+	belongs_to :customer, :polymorphic => true
 	belongs_to :advisor
 
 	has_many :trip_rooms, dependent: :destroy
@@ -25,16 +25,16 @@ class Trip < ActiveRecord::Base
 
 	before_validation :set_defaults_if_nil
 
-	validates :guest_id, :name, :start_date, :number_of_days, 
+	validates :customer_type, :customer_id, :name, :start_date, :number_of_days, 
 						presence: true
 
-	validates_numericality_of :guest_id, :number_of_days,
+	validates_numericality_of :customer_id, :number_of_days,
 						only_integer: true, greater_than: 0, allow_nil: true,
 						message: "should be a number greater than 0"
 
 	before_save :strip_whitespaces, :titleize,
 							:update_end_date, :ensure_end_date_is_greater_than_start_date,
-							:ensure_guest_exists
+              :ensure_customer_exists
 
 	before_update :update_payment_status_and_pay_by_date
 
@@ -97,8 +97,16 @@ class Trip < ActiveRecord::Base
 		return guests
 	end
 
+  def guest_name
+    customer_type == GUEST ? customer.name_with_title : name
+  end
+
+  def guest_phone_number
+    customer.phone_number
+  end
+
 	def long_name
-		guest.name + ' - ' + name
+		customer.name + ' - ' + name
 	end
 
 	def total_price
@@ -106,11 +114,7 @@ class Trip < ActiveRecord::Base
 	end
 
 	def tds
-		if direct_booking == 0
-			(tac * TDS_PERCENT / 100.0).round
-		else
-			0
-		end
+		(tac * TDS_PERCENT / 100.0).round
 	end
 
 	def final_price
@@ -167,16 +171,19 @@ class Trip < ActiveRecord::Base
 			end
 		end
 
-		def ensure_guest_exists
-			begin
-				guest = Guest.find(guest_id)
-			rescue ActiveRecord::RecordNotFound
-				errors.add(:base, "Could not create Trip as Guest '#{guest_id}' does not exist")
-				return false
-			else
-				return true
-			end
-		end	
+    def ensure_customer_exists
+      begin
+        customer = customer_type.classify.constantize.find(customer_id)
+      rescue ActiveRecord::RecordNotFound
+        errors.add(:base, "Could not create Trip as customer does not exist")
+        return false
+      rescue NameError
+        errors.add(:base, "Could not create Trip as customer does not exist")
+        return false
+      else
+        return true
+      end
+    end
 
 		def update_payment_status_and_pay_by_date
 			if paid == 0

@@ -2,8 +2,18 @@
 
 <div class="show_saved_record">
 <p>
+  <b>ID:</b>
+  <span class="saved_value"><%= @payment.id %></span>
+</p>
+
+<p>
+  <b>Customer:</b>
+  <span class="saved_value"><%= @payment.trip.customer.name %></span>
+</p>
+
+<p>
   <b>Trip:</b>
-  <span class="saved_value"><%= @payment.trip_id %></span>
+  <span class="saved_value"><%= @payment.trip.name %></span>
 </p>
 
 <p>

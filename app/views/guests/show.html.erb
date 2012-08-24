@@ -7,13 +7,6 @@
 </p>
 
 <p>
-  <b>Agency:</b>
-	<% if @guest.agency_id %>
-  	<span class="saved_value"><%= @guest.agency.name %>
-	<% end %>
-</p>
-
-<p>
   <b>Phone number:</b>
   <span class="saved_value"><%= @guest.phone_number %>
 </p>
@@ -46,7 +39,7 @@
 
 <div class="action_container">
 	<%= link_to 'Edit', edit_guest_path(@guest) %>
-	<%= link_to 'Create Trip', new_trip_path(:guest_id => @guest.id) %>
+  <%= link_to 'Create Trip', new_trip_path(:customer_type => @guest.class.name, :customer_id => @guest.id) %>
 </div>
 
 <%= link_to 'Back to Guest Listing', guests_path, :class => "back_link" %>

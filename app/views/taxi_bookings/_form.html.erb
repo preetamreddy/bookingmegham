@@ -23,12 +23,7 @@
     <% if @taxi_booking.trip_id %>
 			<%= f.collection_select(:trip_id,
 						Trip.scoped_by_account_id(current_user.account_id).
-						find_all_by_id(@taxi_booking.trip_id), :id, :long_name) %>
-		<% else %>
-			<%= f.collection_select(:trip_id, 
-						Trip.scoped_by_account_id(current_user.account_id).
-						joins('JOIN guests ON guests.id = trips.guest_id').
-						order('guests.name, trips.name').all, :id, :long_name) %>
+						find_all_by_id(@taxi_booking.trip_id), :id, :name) %>
 		<% end %>
   </div>
   <div class="field">
@@ -44,13 +39,8 @@
   </div>
 	<div class="field">
 		<%= f.label :start_date %><br />
-		<% if @taxi_booking.new_record? %>
-			<%= f.date_select :start_date, :start_year => Time.now.year,
-						:end_year => Time.now.year + 1, :prompt => true %>
-		<% else %>
-			<%= f.date_select :start_date, :start_year => Time.now.year,
-						:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
-		<% end %>
+		<%= f.date_select :start_date, :start_year => Time.now.year,
+					:end_year => Time.now.year + 1, :prompt => true %>
 	</div>
   <div class="field">
     <%= f.label :number_of_days %><br />

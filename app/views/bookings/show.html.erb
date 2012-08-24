@@ -3,32 +3,37 @@
 <div class="show_saved_record">
 <p>
   <b>ID:</b>
-  <span class="saved_value"><%= @booking.id %>
+  <span class="saved_value"><%= @booking.id %></span>
 </p>
 
 <p>
-  <b>Guest:</b>
-  <span class="saved_value"><%= "#{@booking.trip.guest.name} - #{@booking.trip.name}" %>
+  <b>Customer:</b>
+  <span class="saved_value"><%= @booking.trip.customer.name %></span>
+</p>
+
+<p>
+  <b>Trip:</b>
+  <span class="saved_value"><%= @booking.trip.name %></span>
 </p>
 
 <p>
 	<b>Property:</b>
-	<span class="saved_value"><%= @booking.property.name %>
+  <span class="saved_value"><%= @booking.property.name %></span>
 </p>
 
 <p>
   <b>Check in:</b>
-  <span class="saved_value"><%= l @booking.check_in_date %>
+  <span class="saved_value"><%= l @booking.check_in_date %></span>
 </p>
 
 <p>
   <b>Check out:</b>
-  <span class="saved_value"><%= l @booking.check_out_date %>
+  <span class="saved_value"><%= l @booking.check_out_date %></span>
 </p>
 
 <p>
   <b>Nights:</b>
-  <span class="saved_value"><%= @booking.number_of_nights %>
+  <span class="saved_value"><%= @booking.number_of_nights %></span>
 </p>
 
 	<b>Rooms:</b>
@@ -60,7 +65,7 @@
 
 <p>
   <b>Meal Plan:</b>
-  <span class="saved_value"><%= @booking.meal_plan %>
+  <span class="saved_value"><%= @booking.meal_plan %></span>
 </p>
 
 <% if @booking.vas_bookings.any? %>
@@ -88,32 +93,32 @@
 
 <p>
   <b>Arriving from:</b>
-  <span class="saved_value"><%= @booking.guests_arriving_from %>
+  <span class="saved_value"><%= @booking.guests_arriving_from %></span>
 </p>
 
 <%= hidden_p_unless(@booking.guests_arriving_from != "") do %>
   <b>Aarrival time:</b>
-  <span class="saved_value"><%= l @booking.guests_arrival_time, :format => :short if @booking.guests_arrival_time %>
+  <span class="saved_value"><%= l @booking.guests_arrival_time, :format => :short if @booking.guests_arrival_time %></span>
 <% end %>
 
 <p>
   <b>Departure to:</b>
-  <span class="saved_value"><%= @booking.departure_destination %>
+  <span class="saved_value"><%= @booking.departure_destination %></span>
 </p>
 
 <p>
   <b>Total price:</b>
-  <span class="saved_value"><%= number_to_currency(@booking.total_price) if @booking.total_price %>
+  <span class="saved_value"><%= number_to_currency(@booking.total_price) if @booking.total_price %></span>
 </p>
 
 <p>
   <b>Service tax:</b>
-  <span class="saved_value"><%= number_to_currency(@booking.service_tax) if @booking.service_tax %>
+  <span class="saved_value"><%= number_to_currency(@booking.service_tax) if @booking.service_tax %></span>
 </p>
 
 <%= hidden_p_unless(@booking.cancelled == 1) do %>
   <b>Cancellation charge:</b>
-  <span class="saved_value"><%= number_to_currency(@booking.cancellation_charge) %>
+  <span class="saved_value"><%= number_to_currency(@booking.cancellation_charge) %></span>
 <% end %>
 
 <b>Billing instructions:</b>
@@ -138,19 +143,20 @@
 
 <p>
   <b>Reservation Reference:</b>
-  <span class="saved_value"><%= @booking.reservation_reference %>
+  <span class="saved_value"><%= @booking.reservation_reference %></span>
 </p>
 
 <p>
   <b>Notes:</b>
-  <span class="saved_value"><%= @booking.remarks %>
+  <span class="saved_value"><%= @booking.remarks %></span>
 </p>
 
 <div class="action_container">
 	<% if @booking.trip.payment_status == Trip::NOT_PAID %>
 		<%= link_to 'Edit', edit_booking_path(@booking) %>
+  <% else %>
+    &nbsp;
 	<% end %>
-	<%= link_to 'Check Availability', availability_chart_path %>
 </div>
 
 <%= link_to 'Back to Booking Listing', bookings_path, :class => "back_link" %>

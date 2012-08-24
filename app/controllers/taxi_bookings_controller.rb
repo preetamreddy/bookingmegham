@@ -5,11 +5,7 @@ class TaxiBookingsController < ApplicationController
   # GET /taxi_bookings.json
   def index
 		if params[:trip_id]
-			trip_id = params[:trip_id].to_i
-			if Trip.scoped_by_account_id(current_user.account_id).find_all_by_id(trip_id).any?
-				session[:trip_id] = trip_id
-				session[:guest_id] = Trip.scoped_by_account_id(current_user.account_id).find(trip_id).guest_id
-			end
+      store_trip_in_session(params[:trip_id].to_i)
 		end
 
 		if params[:start_date]
@@ -31,14 +27,24 @@ class TaxiBookingsController < ApplicationController
 
 		if session[:trip_id]
 			@taxi_bookings = @taxi_bookings.paginate(page: params[:page], per_page: 10).
+										      order("start_date").
 													find_all_by_trip_id(session[:trip_id])
+		elsif session[:customer_type] and session[:customer_id]
+			trips = Trip.scoped_by_account_id(current_user.account_id).
+        find(:all, :conditions => [
+             'customer_type = ? and customer_id = ?',
+             session[:customer_type], session[:customer_id] ])
+			@taxi_bookings = @taxi_bookings.paginate(page: params[:page], per_page: 10).
+			  order("start_date").find_all_by_trip_id(trips)
 		else
 			@taxi_bookings = @taxi_bookings.paginate(page: params[:page], per_page: 10).
-													order("start_date, end_date").
+													order("start_date").
 													find(:all, :conditions => [
 														'start_date >= ? and start_date < ?',
 														@start_date, @upto_date ])
 		end
+
+		@records_returned = @taxi_bookings.count
 
     respond_to do |format|
       format.html # index.html.erb
@@ -60,12 +66,15 @@ class TaxiBookingsController < ApplicationController
   def new
 		if session[:trip_id]
 			@taxi_booking.trip_id = session[:trip_id]
-		end
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @taxi_booking }
-    end
+      respond_to do |format|
+        format.html # new.html.erb
+        format.json { render json: @taxi_booking }
+      end
+    else
+      redirect_to taxi_bookings_url, 
+        alert: 'New taxi bookings can only be created after selecting a trip.'
+		end
   end
 
   # GET /taxi_bookings/1/edit
@@ -120,4 +129,14 @@ class TaxiBookingsController < ApplicationController
       format.json { render json: @taxi_booking, status: :sent, location: @taxi_booking }
 		end
 	end
+
+  private
+    def store_trip_in_session(trip_id)
+			if Trip.scoped_by_account_id(current_user.account_id).find_all_by_id(trip_id).any?
+			  trip = Trip.scoped_by_account_id(current_user.account_id).find(trip_id)
+			  session[:trip_id] = trip.id
+			  session[:customer_type] = trip.customer_type
+			  session[:customer_id] = trip.customer_id
+      end
+    end
 end

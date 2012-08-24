@@ -1,26 +1,11 @@
-<% if @trip.direct_booking == 1 %>
-	to: <%= @trip.guest.email_id %>
-	cc: <%= @trip.email_ids %>, <%= @trip.advisor.email_id %>, <%= TripNotifier::ACCOUNTS_EMAIL_ID %>
-<% else %>
-	to: <%= @trip.agency.email_id %>
-	cc: <%= @trip.advisor.email_id %>, <%= TripNotifier::ACCOUNTS_EMAIL_ID %>
-<% end %>
+to: <%= @trip.customer.email_id %>
+cc: <%= @trip.email_ids %>, <%= @trip.advisor.email_id %>, <%= TripNotifier::ACCOUNTS_EMAIL_ID %>
 
-<% if @trip.direct_booking == 1 %>
 Dear <%= @payment.payee_name %>
 
 Thank you for planning your holiday with Banjara Camps and Retreats.
 
-We have received a payment of Rs. <%= number_to_currency_wo_symbol(@payment.amount) %> for your trip <%= @trip.name %>. Thank you very much for making the payment. The receipt is attached with this email.
-
-We look forward to meeting you soon.
-<% else %>
-Greetings from Banjara Camps and Retreats!
-
-Payment Receipt: <%= @payment.receipt_number %>
-
-We gratefully acknowledge the receipt of a payment of Rs. <%= number_to_currency_wo_symbol(@payment.amount) %> for the trip with id: <%= @payment.trip_id %> and ref: <%= @trip.guest.name %> <%= @trip.guests %>. The receipt is attached with this email.
-<% end %>
+The receipt for your payment of Rs. <%= number_to_currency_wo_symbol(@payment.amount) %>, for the trip '<%= @trip.name %>', is attached with this email.
 
 With warm regards,
 <%= @user.advisor.name %>

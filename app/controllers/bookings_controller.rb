@@ -5,11 +5,7 @@ class BookingsController < ApplicationController
   # GET /bookings.json
   def index
 		if params[:trip_id]
-			trip_id = params[:trip_id].to_i
-			if Trip.scoped_by_account_id(current_user.account_id).find_all_by_id(trip_id).any?
-				session[:trip_id] = trip_id
-				session[:guest_id] = Trip.scoped_by_account_id(current_user.account_id).find(trip_id).guest_id
-			end
+      store_trip_in_session(params[:trip_id].to_i)
 		end
 			
 		if params[:property_id]
@@ -39,8 +35,11 @@ class BookingsController < ApplicationController
 			@bookings = @bookings.paginate(page: params[:page], per_page: 10).
 										order("check_in_date, check_out_date").
 										find_all_by_trip_id(session[:trip_id])
-		elsif session[:guest_id]
-			trips = Trip.scoped_by_account_id(current_user.account_id).find_all_by_guest_id(session[:guest_id])
+		elsif session[:customer_type] and session[:customer_id]
+			trips = Trip.scoped_by_account_id(current_user.account_id).
+        find(:all, :conditions => [
+             'customer_type = ? and customer_id = ?',
+             session[:customer_type], session[:customer_id] ])
 			@bookings = @bookings.paginate(page: params[:page], per_page: 10).
 										order("check_in_date, check_out_date").
 										find_all_by_trip_id(trips)
@@ -82,25 +81,37 @@ class BookingsController < ApplicationController
   # GET /bookings/new
   # GET /bookings/new.json
   def new
-		if params[:property_id]
-			@booking.property_id = params[:property_id]
-		else
-      @properties = Property.scoped_by_account_id(current_user.account_id).
-        order('ensure_availability_before_booking desc, name').all
-		end
-		
-		if session[:trip_id]	
-			trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
-
-			@booking.trip_id = session[:trip_id]
-			@booking.remarks = trip.remarks
-			@booking.add_rooms_from_trip(trip)
+		if params[:trip_id]
+      store_trip_in_session(params[:trip_id].to_i)
 		end
 
-    respond_to do |format|
-      format.html # new.html.erb
-			format.js
-      format.json { render json: @booking }
+    if Property.scoped_by_account_id(current_user.account_id).
+        find_all_by_id(params[:property_id].to_i).any?
+      property_id = params[:property_id].to_i
+    else
+      property_id = 0
+    end
+
+    if session[:trip_id]
+			if property_id > 0
+				@booking.property_id = params[:property_id]
+			
+				trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
+				@booking.trip_id = trip.id
+				@booking.add_rooms_from_trip(trip)
+	
+	      respond_to do |format|
+	        format.html # new.html.erb
+				  format.js
+	        format.json { render json: @booking }
+	      end
+			else
+	      @properties = Property.scoped_by_account_id(current_user.account_id).
+	        order('ensure_availability_before_booking desc, name').all
+			end
+    else
+      redirect_to bookings_url, 
+        alert: 'New bookings can only be created after selecting a trip.'
     end
   end
 
@@ -158,4 +169,14 @@ class BookingsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  private
+    def store_trip_in_session(trip_id)
+			if Trip.scoped_by_account_id(current_user.account_id).find_all_by_id(trip_id).any?
+			  trip = Trip.scoped_by_account_id(current_user.account_id).find(trip_id)
+			  session[:trip_id] = trip.id
+			  session[:customer_type] = trip.customer_type
+			  session[:customer_id] = trip.customer_id
+      end
+    end
 end

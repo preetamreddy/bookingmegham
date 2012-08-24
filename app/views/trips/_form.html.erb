@@ -16,36 +16,20 @@
 			<%= @trip.id %>
 		</span></p>
 	<% end %>
- 	<div class="field">
-   	<%= f.label :guest_id, "Guest" %><br />
-		<% if @trip.guest_id %>
-    	<%= f.collection_select(:guest_id, 
-						Guest.scoped_by_account_id(current_user.account_id).
-							find_all_by_id(@trip.guest_id), :id, :name) %>
-		<% else %>
-    	<%= f.collection_select(:guest_id, 
-						Guest.scoped_by_account_id(current_user.account_id).
-							order("name"), :id, :name) %>
-		<% end %>
-  </div>
- 	<div class="field">
-   	<%= f.label :agency_id, "Agency" %><br />
-		<% if @trip.agency_id %>
-    	<%= f.collection_select(:agency_id, 
-						Agency.scoped_by_account_id(current_user.account_id).
-							order('name').find_all_by_id(@trip.agency_id), :id, :name) %>
-		<% else %>
-    	<%= f.collection_select(:agency_id, 
-						Agency.scoped_by_account_id(current_user.account_id).
-							order('name'), :id, :name) %>
-		<% end %>
-  </div>
 	<%= hidden_div_if(true, class: "field") do %>
-    <%= f.label :direct_booking %><br />
-    <%= f.number_field :direct_booking %>
+    <%= f.label :customer_type %><br />
+    <%= f.text_field :customer_type %>
 	<% end %>
+ 	<div class="field">
+   	<%= f.label :customer_id, "Customer" %><br />
+		<% if @trip.customer_type and @trip.customer_id %>
+    	<%= f.collection_select(:customer_id, 
+						@trip.customer_type.classify.constantize.scoped_by_account_id(current_user.account_id).
+							find_all_by_id(@trip.customer_id), :id, :name) %>
+		<% end %>
+  </div>
   <div class="field">
-    <%= f.label :name, "Trip name" %><br />
+    <%= f.label :name, "Trip tag" %><br />
     <%= f.text_field :name, size: 30 %>
   </div>
   <div class="field">
@@ -94,11 +78,11 @@
     <%= f.label :discount, "Discount" %><br />
    	<%= f.number_field :discount, :min => 0 %>
 	<% end %>
-	<%= hidden_div_if((@trip.new_record? or @trip.direct_booking == 1), class: "field") do %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :tac, "TAC" %><br />
    	<%= f.number_field :tac, :min => 0 %>
 	<% end %>
-	<%= hidden_div_if((@trip.new_record? or @trip.direct_booking == 1), class: "field") do %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :tds, "TDS on TAC" %><br />
 		<p><span class="highlight">
 			<%= number_to_currency(@trip.tds) %>

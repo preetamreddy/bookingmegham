@@ -7,19 +7,12 @@
 </p>
 
 <p>
-  <b>Guest:</b>
-  <span class="saved_value"><%= @trip.guest.name %>
+  <b>Customer:</b>
+  <span class="saved_value"><%= @trip.customer.name %>
 </p>
 
 <p>
-  <b>Agency:</b>
-	<% if @trip.agency_id %>
-  	<span class="saved_value"><%= @trip.agency.name %>
-	<% end %>
-</p>
-
-<p>
-  <b>Trip Name:</b>
+  <b>Trip tag:</b>
   <span class="saved_value"><%= @trip.name %>
 </p>
 
@@ -99,15 +92,15 @@
   <span class="saved_value"><%= number_to_currency(@trip.discount) %>
 </p>
 
-<%= hidden_p_unless(@trip.direct_booking == 0) do %>
+<p>
   <b>TAC:</b>
   <span class="saved_value"><%= number_to_currency(@trip.tac) %>
-<% end %>
+</p>
 
-<%= hidden_p_unless(@trip.direct_booking == 0) do %>
+<p>
   <b>TDS on TAC:</b>
   <span class="saved_value"><%= number_to_currency(@trip.tds) %>
-<% end %>
+</p>
 
 <p>
   <b>Final price:</b>
@@ -172,7 +165,7 @@
 
 <div class="action_container">
 	<%= link_to 'Edit', edit_trip_path(@trip) %>
-	<%= link_to 'View Bookings', bookings_path(:trip_id => @trip.id) %>
+	<%= link_to 'Book Rooms', new_booking_path(:trip_id => @trip.id) %>
 	<%= link_to 'Generate Invoice', email_trip_path(:trip_id => @trip.id,
 				:type => 'invoice') %>
 	<%= link_to 'Generate Vouchers', email_trip_path(:trip_id => @trip.id,

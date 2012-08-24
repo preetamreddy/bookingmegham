@@ -20,6 +20,8 @@ class AgenciesController < ApplicationController
 				find(:all, :conditions => [ 'lower(name) like ?', "%" + agency_name + "%" ])
 		end
 
+		@records_returned = @agencies.count
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @agencies }
@@ -80,6 +82,11 @@ class AgenciesController < ApplicationController
   # DELETE /agencies/1.json
   def destroy
     @agency.destroy
+
+		if session[:customer_type] == @agency.class.name and session[:customer_id] == params[:id].to_i
+			session[:customer_type] = nil
+			session[:customer_id] = nil
+		end
 
     respond_to do |format|
       format.html { redirect_to agencies_url, alert: @agency.errors[:base][0] }

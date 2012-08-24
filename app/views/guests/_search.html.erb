@@ -5,9 +5,5 @@
 				:placeholder => "Phone number", :class => "phone_number_input" %>
 	<%= text_field_tag :email_id, params[:email_id],
 				:placeholder => "Email ID", :class => "email_id_input" %>
-	<%= select_tag(:agency_id, options_for_select(
-				Agency.scoped_by_account_id(current_user.account_id).
-					order(:name).find_all_by_is_travel_agency(1).collect { |a| [a.name, a.id] }.
-					insert(0, 'Travel Agency'), params[:agency_id])) %>
 	<%= submit_tag "Search", :name => nil %>
 <% end %>

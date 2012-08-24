@@ -1,9 +1,10 @@
 class AvailabilityChartController < ApplicationController
   def index
-		if params[:trip_id]
-			session[:trip_id] = params[:trip_id].to_i
-			session[:guest_id] = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id]).guest_id
-		end
+    if params[:clear]
+      session[:trip_id] = nil
+      session[:customer_type] = nil
+      session[:customer_id] = nil
+    end
 
 		if session[:trip_id]
 			trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])

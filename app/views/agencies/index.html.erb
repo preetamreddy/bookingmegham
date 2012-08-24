@@ -1,54 +1,54 @@
 <h1>Listing Agencies</h1>
 
 <div class="action_container">
-	<%= render 'search' %>
+  <%= render 'search' %>
 </div>
 
 <%= link_to 'New Agency', new_agency_path, :class => "new_link" %>
 
-<% if @agencies.count > 0 %>
-<table class="index_table" border="1">
-  <tr>
-    <th>Agency</th>
-    <th>Travel agency</th>
-    <th>Taxi operator</th>
-    <th>City</th>
-    <th>Email</th>
-    <th>Url</th>
-    <th></th>
-  </tr>
-
-<% @agencies.each do |agency| %>
-	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-    <td>
-			<span class="nowrap"><%= agency.name %></span><br />
-      <span class="nowrap"><%= agency.phone_number %></span><br />
-    	<span class="nowrap"><%= agency.phone_number_2 %></span>
-		</td>
-    <td class="text"><%= agency.is_travel_agency.to_english %></td>
-    <td class="nowrap"><%= agency.operates_taxis.to_english %></td>
-    <td class="nowrap"><%= agency.city %></td>
-    <td class="text">
-      <%= agency.email_id %><br />
-      <%= agency.email_id_2 %>
-    </td>
-    <td class="nowrap"><%= agency.url %></td>
-    <td>
-    	<%= link_to 'Show details', agency %><br />
-    	<%= link_to 'Edit', edit_agency_path(agency) %><br />
-    	<%= link_to 'Destroy', agency, confirm: 'Are you sure?',
-						method: :delete %><br />
-		</td>
-  </tr>
-<% end %>
-</table>
+<% if @records_returned == 0 %>
+  <div id="error_explanation">
+    <h2>Agencies not found</h2>
+    <ul>
+      <li>Check your search conditions or create a new Agency</li>
+    </ul>
+  </div>
 <% else %>
-	<div id="error_explanation">
-		<h2>Agencies not found</h2>
-		<ul>
-			<li>Click 'New Agency' link to create an agency</li>
-		</ul>
-	</div>
+  <table class="index_table" border="1">
+    <tr>
+      <th>Agency</th>
+      <th>Travel agency</th>
+      <th>Taxi operator</th>
+      <th>City</th>
+      <th>Email</th>
+      <th>Url</th>
+      <th></th>
+    </tr>
+    <% @agencies.each do |agency| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+        <td>
+          <span class="nowrap"><%= agency.name %></span><br />
+          <span class="nowrap"><%= agency.phone_number %></span><br />
+          <span class="nowrap"><%= agency.phone_number_2 %></span>
+        </td>
+        <td class="text"><%= agency.is_travel_agency.to_english %></td>
+        <td class="nowrap"><%= agency.operates_taxis.to_english %></td>
+        <td class="nowrap"><%= agency.city %></td>
+        <td class="text">
+          <%= agency.email_id %><br />
+          <%= agency.email_id_2 %>
+        </td>
+        <td class="nowrap"><%= agency.url %></td>
+        <td>
+          <%= link_to 'Show details', agency %><br />
+          <%= link_to 'Edit', edit_agency_path(agency) %><br />
+          <%= link_to 'Destroy', agency, confirm: 'Are you sure?',
+                method: :delete %><br />
+          <%= link_to 'View Trips', trips_path(:customer_type => agency.class.name, :customer_id => agency.id) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
 <% end %>
 
 <p><%= will_paginate @agencies %></p>

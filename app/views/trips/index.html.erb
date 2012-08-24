@@ -1,6 +1,7 @@
-<% if session[:guest_id] %>
-	<h1>Listing Trips for <%= Guest.scoped_by_account_id(current_user.account_id).
-				find(session[:guest_id]).name %></h1>
+<% if session[:customer_type] and session[:customer_id] %>
+  <h1>Listing Trips for <%= session[:customer_type].classify.constantize.
+        scoped_by_account_id(current_user.account_id).
+				find(session[:customer_id]).name %></h1>
 <% else %>
 	<% if params[:payment_status] %>
 		<h1>Listing <%= params[:payment_status] %> Trips</h1>
@@ -11,7 +12,7 @@
 	<% end %>
 <% end %>
 
-<% if !session[:guest_id] %>
+<% if !(session[:customer_type] and session[:customer_id]) %>
 	<div class="action_container">
 		Show <%= link_to 'Not Paid Trips', 
 								trips_path(:payment_status => Trip::NOT_PAID) %>
@@ -27,10 +28,10 @@
 	<div id="error_explanation">
 		<h2>Trips not found</h2>
 		<ul>
-			<% if session[:guest_id] %>
+			<% if session[:customer_type] and session[:customer_id] %>
 				<li>Click below to create a new trip</li>
 			<% else %>
-				<li>Choose another payment status or create a new trip after first selecting a guest</li>
+				<li>Choose another payment status</li>
 			<% end %>
 		</ul>
 	</div>
@@ -39,7 +40,7 @@
 	<table class="index_table" border="1">
 	  <tr>
 	    <th class="number">ID</th>
-	    <th class="text">Guest</th>
+	    <th class="text">Customer</th>
 	    <th class="text">Trip</th>
 	    <th class="text">Rooms</th>
 			<th class="text">Payment status</th>
@@ -52,8 +53,8 @@
 					<%= trip.id %>
 				</td>
 	    	<td class="text">
-					<span class="nowrap"><%= "#{trip.guest.name} (#{trip.agency.name})" %><br/></span>
-					<span class="nowrap"><%= trip.guest.phone_number %></span>
+					<span class="nowrap"><%= trip.customer.name %><br/></span>
+					<span class="nowrap"><%= trip.customer.phone_number %></span>
 				</td>
 		    <td class="text">
 					<span class="nowrap"><%= trip.name %><br/></span>
@@ -87,8 +88,7 @@
 					<%= link_to 'Edit', edit_trip_path(trip) %></br>
 		    	<%= link_to 'Destroy', trip, confirm: 'Are you sure?', 
 								method: :delete %></br>
-					<%= link_to 'View Bookings', 
-								bookings_path(:trip_id => trip.id) %></br>
+					<%= link_to 'View Bookings', bookings_path(:trip_id => trip.id) %></br>
 					<%= link_to 'View Payments', payments_path(:trip_id => trip.id) %>
 				</td>
 		  </tr>
@@ -96,7 +96,7 @@
 	</table>
 <% end %>
 
-<% if session[:guest_id] %>
+<% if session[:customer_type] and session[:customer_id] %>
 	<div class="action_container">
 		<%= link_to 'New Trip', new_trip_path %>
 	</div>
