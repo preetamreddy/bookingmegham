@@ -28,7 +28,7 @@ class PaymentsController < ApplicationController
 		if session[:trip_id]
 			@payments = @payments.order("trip_id, date_received, id").find(:all, :conditions => [
 											'trip_id = ?', session[:trip_id] ])
-		elsif session[:customer_type] and session[:customer_id]
+		elsif session[:customer_id]
 			trips = Trip.scoped_by_account_id(current_user.account_id).
         find(:all, :conditions => [
              'customer_type = ? and customer_id = ?',

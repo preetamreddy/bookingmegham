@@ -1,4 +1,4 @@
-<% if session[:customer_type] and session[:customer_id] %>
+<% if session[:customer_id] %>
   <h1>Listing Trips for <%= session[:customer_type].classify.constantize.
         scoped_by_account_id(current_user.account_id).
 				find(session[:customer_id]).name %></h1>
@@ -12,7 +12,7 @@
 	<% end %>
 <% end %>
 
-<% if !(session[:customer_type] and session[:customer_id]) %>
+<% if !(session[:customer_id]) %>
 	<div class="action_container">
 		Show <%= link_to 'Not Paid Trips', 
 								trips_path(:payment_status => Trip::NOT_PAID) %>
@@ -28,7 +28,7 @@
 	<div id="error_explanation">
 		<h2>Trips not found</h2>
 		<ul>
-			<% if session[:customer_type] and session[:customer_id] %>
+			<% if session[:customer_id] %>
 				<li>Click below to create a new trip</li>
 			<% else %>
 				<li>Choose another payment status</li>
@@ -96,7 +96,7 @@
 	</table>
 <% end %>
 
-<% if session[:customer_type] and session[:customer_id] %>
+<% if session[:customer_id] %>
 	<div class="action_container">
 		<%= link_to 'New Trip', new_trip_path %>
 	</div>

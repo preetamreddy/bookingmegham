@@ -35,7 +35,7 @@ class BookingsController < ApplicationController
 			@bookings = @bookings.paginate(page: params[:page], per_page: 10).
 										order("check_in_date, check_out_date").
 										find_all_by_trip_id(session[:trip_id])
-		elsif session[:customer_type] and session[:customer_id]
+		elsif session[:customer_id]
 			trips = Trip.scoped_by_account_id(current_user.account_id).
         find(:all, :conditions => [
              'customer_type = ? and customer_id = ?',

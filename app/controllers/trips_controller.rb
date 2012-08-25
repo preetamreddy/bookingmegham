@@ -4,11 +4,12 @@ class TripsController < ApplicationController
   # GET /trips
   # GET /trips.json
   def index
-    if params[:customer_type] and params[:customer_id]
-			store_customer_in_session(params[:customer_type], params[:customer_id].to_i)
+    customer = find_customer
+    if customer
+			store_customer_in_session(customer.class.name, customer.id)
     end
 
-		if session[:customer_type] and session[:customer_id]
+		if session[:customer_id]
 			@trips = @trips.paginate(page: params[:page], per_page: 10).
 								order("start_date DESC, end_date DESC").
 								find(:all, :conditions => [
@@ -51,11 +52,12 @@ class TripsController < ApplicationController
   # GET /trips/new
   # GET /trips/new.json
   def new
-		if (params[:customer_type] and params[:customer_id])
-			store_customer_in_session(params[:customer_type], params[:customer_id].to_i)
+    customer = find_customer
+		if customer
+			store_customer_in_session(customer.class.name, customer.id)
 		end
 
-    if session[:customer_type] and session[:customer_id]
+    if session[:customer_id]
 		  @trip.customer_type = session[:customer_type]
 		  @trip.customer_id = session[:customer_id]
 		  @trip.advisor_id = current_user.advisor_id
@@ -146,5 +148,14 @@ class TripsController < ApplicationController
       rescue NameError
         return true
       end
+    end
+
+    def find_customer
+      params.each do |name, value|
+        if name =~ /(.+)_id$/
+          return $1.classify.constantize.scoped_by_account_id(current_user.account_id).find(value)
+        end
+      end
+      nil
     end
 end

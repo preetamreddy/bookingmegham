@@ -44,7 +44,7 @@
           <%= link_to 'Edit', edit_agency_path(agency) %><br />
           <%= link_to 'Destroy', agency, confirm: 'Are you sure?',
                 method: :delete %><br />
-          <%= link_to 'View Trips', trips_path(:customer_type => agency.class.name, :customer_id => agency.id) %>
+          <%= link_to 'View Trips', trips_path(:agency_id => agency.id) %>
         </td>
       </tr>
     <% end %>

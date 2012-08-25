@@ -30,7 +30,7 @@ class Payment < ActiveRecord::Base
 	comma do
 		trip_id 'Trip ID'
 		customer_name 'Customer'
-		trip :customer_type => 'Agency / Guest'
+		trip :customer_type => 'Customer Type'
 		trip :start_date => 'Trip Start Dt'
 		date_final_payment 'Date of Full Payment'
 		receipt_number 'Rcpt No.'

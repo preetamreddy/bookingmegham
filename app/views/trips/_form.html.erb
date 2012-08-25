@@ -22,7 +22,7 @@
 	<% end %>
  	<div class="field">
    	<%= f.label :customer_id, "Customer" %><br />
-		<% if @trip.customer_type and @trip.customer_id %>
+		<% if @trip.customer_id %>
     	<%= f.collection_select(:customer_id, 
 						@trip.customer_type.classify.constantize.scoped_by_account_id(current_user.account_id).
 							find_all_by_id(@trip.customer_id), :id, :name) %>

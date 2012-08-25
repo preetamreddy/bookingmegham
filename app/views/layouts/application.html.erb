@@ -20,14 +20,14 @@
 	<div id="columns">
 		<% if user_signed_in? %>
 			<div id="side">
-				<%= hidden_div_if(!(session[:customer_type] and session[:customer_id]), id: 'session_info') do %>
+				<%= hidden_div_if(!(session[:customer_id]), id: 'session_info') do %>
 					<table>
 						<tr>
 							<th class="heading" colspan=2>Bookings for</th>
 							<th class="clear"><%= link_to 'Clear', 
 													root_path(:clear => 1) %></th>
 						</tr>
-						<% if session[:customer_type] and session[:customer_id] %>
+						<% if session[:customer_id] %>
 							<% customer = session[:customer_type].classify.constantize.find(session[:customer_id]) %>
 							<%= render(customer) %>
 						<% end %>

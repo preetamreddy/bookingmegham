@@ -1,6 +1,6 @@
 <h1>Listing Room Bookings</h1>
 
-<% if !(session[:customer_type] and session[:customer_id]) %>
+<% if !(session[:customer_id]) %>
 	<div id="search">
 		<%= render 'search' %>
 	</div>
@@ -12,7 +12,7 @@
 		<ul>
 			<% if session[:trip_id] %>
 				<li>Click below link to create new bookings</li>
-			<% elsif session[:customer_type] and session[:customer_id] %>
+			<% elsif session[:customer_id] %>
 				<li>Create / Select a Trip to create new bookings</li>
 			<% else %>
 				<li>Check your search conditions</li>
