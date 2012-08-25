@@ -75,13 +75,11 @@ FactoryGirl.define do
 
 	factory :trip do
 		account_id 3
-		guest
+    association :customer, :factory => :guest
 		name { Faker::Lorem.words(1).first }
 		start_date { Date.today + 30.days }
 		number_of_days 10
-		agency
 		advisor
-		direct_booking 1
 	end
 
 	factory :booking do

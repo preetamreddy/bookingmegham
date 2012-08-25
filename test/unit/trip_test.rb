@@ -5,7 +5,7 @@ class TripTest < ActiveSupport::TestCase
 		@preetam = FactoryGirl.create(:guest,
 										:name => "Preetam Reddy")
 		@himachal_trip = FactoryGirl.create(:trip,
-			:guest => @preetam)
+      :customer => @preetam)
 		@sangla_booking = FactoryGirl.create(:booking,
 			:trip => @himachal_trip)
 		@room = FactoryGirl.create(:room,
@@ -16,12 +16,14 @@ class TripTest < ActiveSupport::TestCase
 							:number_of_units => 1)
 	end
 
-  test "trip should belong to a valid guest" do
+  test "trip should belong to a valid customer" do
 		new_trip = FactoryGirl.build(:trip,
-								:guest => nil)
+								:customer_type => nil,
+                :customer_id => nil)
 		assert !new_trip.save
-		assert new_trip.errors[:guest_id].any?
-		new_trip.guest_id = @preetam.id
+		assert new_trip.errors[:customer_type].any?
+		assert new_trip.errors[:customer_id].any?
+		new_trip.customer = @preetam
 		assert new_trip.save
   end
 
