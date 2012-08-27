@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120827153046) do
+ActiveRecord::Schema.define(:version => 20120827153729) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -65,7 +65,6 @@ ActiveRecord::Schema.define(:version => 20120827153046) do
     t.text     "remarks"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "room_type_id"
     t.date     "check_in_date"
     t.date     "check_out_date"
     t.integer  "trip_id"
