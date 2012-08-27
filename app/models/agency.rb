@@ -24,11 +24,11 @@ class Agency < ActiveRecord::Base
   end
 
   def name_with_title
-    name
+    registered_name
   end
 
   def last_name_with_title
-    name
+    registered_name
   end
 
 	private

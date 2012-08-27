@@ -88,14 +88,14 @@
 						<%= wicked_pdf_image_tag Account.find(@trip.account_id).logo_file_name	%>
 					</td>
 					<td colspan=4 class="address">
-						<%= @trip.advisor.agency.name %>
+						<%= @trip.advisor.agency.registered_name %>
 						<%= @trip.advisor.agency.postal_address %>
 						Phone: <%= @trip.advisor.agency.phone_number %>
 						<%= @trip.advisor.agency.url %>
 					</td>
 				</tr>
 				<tr>
-           <td colspan=3 class="client">To,<br/><%= @trip.customer.name %><br/><%= @trip.customer.postal_address %><br/>Phone: <%= @trip.customer.phone_number %><br/><%= "PAN No: #{@trip.customer.pan_number}" if @trip.customer.pan_number != "" %></td>
+           <td colspan=3 class="client">To,<br/><%= @trip.customer.name_with_title %><br/><%= @trip.customer.postal_address %><br/>Phone: <%= @trip.customer.phone_number %><br/><%= "PAN No: #{@trip.customer.pan_number}" if @trip.customer.pan_number != "" %></td>
 					<td colspan=3 class="other_info">
 						Date: <%= l @trip.invoice_date %>
 						<% if @trip.payments.any? %>Receipt No: BCRPL/<%= @trip.id %>/<%= @trip.payments.order(:date_received).last.id %>/<%= l @trip.payments.order(:date_received).last.date_received %><% end %>

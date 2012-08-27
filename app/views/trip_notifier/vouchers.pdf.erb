@@ -106,7 +106,7 @@
 						<td colspan=2>
 							<%= wicked_pdf_image_tag Account.find(@trip.account_id).logo_file_name	%>
 						</td>
-						<td colspan=2 class="agency_address"><%= @trip.advisor.agency.name %><br/><%= @trip.advisor.agency.postal_address %><br/>Phone: <%= @trip.advisor.agency.phone_number %></td>
+						<td colspan=2 class="agency_address"><%= @trip.advisor.agency.registered_name %><br/><%= @trip.advisor.agency.postal_address %><br/>Phone: <%= @trip.advisor.agency.phone_number %></td>
 						<td colspan=2 class="property_address">
 							The Manager
 							<%= booking.property.address %>
