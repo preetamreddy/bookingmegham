@@ -11,7 +11,8 @@ class PropertiesController < ApplicationController
 		city ||= ''
 		city = city.downcase
 
-    @properties = @properties.paginate(page: params[:page], per_page: 10).order(:name).
+    @properties = @properties.paginate(page: params[:page], per_page: 10).
+      order('ensure_availability_before_booking desc, name').
 			find(:all, :conditions => [ 'lower(name) like ? and lower(city) like ?',
 				"%" + property_name + "%", "%" + city + "%" ])
 
