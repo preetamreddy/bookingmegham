@@ -7,18 +7,8 @@ class AgenciesController < ApplicationController
 		agency_name ||= ''
 		agency_name = agency_name.downcase
 
-		if params[:agency_type] == "travel_agencies"
-    	@agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).
-				find(:all, :conditions => [ 'lower(name) like ? and is_travel_agency = 1',
-					"%" + agency_name + "%" ])
-		elsif params[:agency_type] == "taxi_operators"
-    	@agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).
-				find(:all, :conditions => [ 'lower(name) like ? and operates_taxis = 1',
-					"%" + agency_name + "%" ])
-		else
-    	@agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).
-				find(:all, :conditions => [ 'lower(name) like ?', "%" + agency_name + "%" ])
-		end
+   	@agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).
+			find(:all, :conditions => [ 'lower(name) like ?', "%" + agency_name + "%" ])
 
 		@records_returned = @agencies.count
 

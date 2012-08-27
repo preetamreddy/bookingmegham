@@ -12,7 +12,6 @@ banjara:
   pan_number: AACCB0246J
   operates_properties: 1
   operates_taxis: 0
-  is_travel_agency: 0
   is_account: 1
 
 great_escape:
@@ -25,7 +24,6 @@ great_escape:
   pan_number: ABCDE1234F
   operates_properties: 0
   operates_taxis: 0
-  is_travel_agency: 1
   is_account: 0
 
 himalayanvillage:
@@ -42,5 +40,4 @@ himalayanvillage:
   pan_number: AACCH0123J
   operates_properties: 1
   operates_taxis: 0
-  is_travel_agency: 0
   is_account: 1

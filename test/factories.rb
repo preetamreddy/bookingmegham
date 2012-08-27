@@ -22,7 +22,6 @@ FactoryGirl.define do
 		url { Faker::Internet.url }
 	  operates_properties 1
 	  operates_taxis 1
-	  is_travel_agency 1
     pan_number ABCDE1234F
 	end
 

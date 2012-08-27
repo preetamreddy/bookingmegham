@@ -17,8 +17,7 @@
   <table class="index_table" border="1">
     <tr>
       <th>Agency</th>
-      <th>Travel agency</th>
-      <th>Taxi operator</th>
+      <th>Operates taxis?</th>
       <th>City</th>
       <th>Email</th>
       <th>Url</th>
@@ -31,7 +30,6 @@
           <span class="nowrap"><%= agency.phone_number %></span><br />
           <span class="nowrap"><%= agency.phone_number_2 %></span>
         </td>
-        <td class="text"><%= agency.is_travel_agency.to_english %></td>
         <td class="nowrap"><%= agency.operates_taxis.to_english %></td>
         <td class="nowrap"><%= agency.city %></td>
         <td class="text">

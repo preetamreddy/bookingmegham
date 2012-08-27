@@ -1,16 +1,5 @@
 <%= form_tag agencies_path, :method => "get" do %>
 	<div class="search">
-		<fieldset>
-			<%= radio_button_tag :agency_type, 'travel_agencies', 
-				params[:agency_type] == 'travel_agencies' ? true : false %>
-			<%= label_tag :agency_type, "Travel Agencies" %>
-			<%= radio_button_tag :agency_type, 'taxi_operators', 
-				params[:agency_type] == 'taxi_operators' ? true : false %>
-			<%= label_tag :agency_type, "Taxi Operators" %>
-			<%= radio_button_tag :agency_type, 'all', 
-				params[:agency_type] == nil || params[:agency_type] == 'all' ? true : false %>
-			<%= label_tag :agency_type, "All" %>
-		</fieldset>
 		<%= text_field_tag :name, params[:name], :placeholder => "Name" %>
 		<%= submit_tag "Search", :name => nil %>
 	</div>
