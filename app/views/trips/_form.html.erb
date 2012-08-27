@@ -30,7 +30,8 @@
   </div>
   <div class="field">
     <%= f.label :name, "Trip tag" %><br />
-    <%= f.text_field :name, size: 30 %>
+    <%= f.text_field :name, 
+      :placeholder => @trip.customer_type == Trip::GUEST ? 'Trip name' : 'Guest name', size: 30 %>
   </div>
   <div class="field">
     <%= f.label :start_date %><br />
