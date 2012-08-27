@@ -75,10 +75,10 @@
 						<%= wicked_pdf_image_tag Account.find(@trip.account_id).logo_file_name	%>
 					</td>
 					<td colspan=4 class="address">
-						<%= @trip.advisor.agency.registered_name %>
-						<%= @trip.advisor.agency.postal_address %>
-						Phone: <%= @trip.advisor.agency.phone_number %>
-						<%= @trip.advisor.agency.url %>
+						<%= @trip.advisor.account.name %>
+						<%= @trip.advisor.account.postal_address %>
+						Phone: <%= @trip.advisor.account.phone_number_1 %>
+						<%= @trip.advisor.account.url %>
 					</td>
 				</tr>
 			</table>

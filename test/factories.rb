@@ -8,10 +8,12 @@ FactoryGirl.define do
 		postal_address { "#{Faker::Address.secondary_address}, #{Faker::Address.street_name}" }
 		url { Faker::Internet.url }
 		logo_file_name { "#{Faker::Company.name}.jpg" }
+    pan ABCDE1234F
 	end
 
 	factory :agency do
 		account_id 3
+	  registered_name { Faker::Company.name }
 	  name { Faker::Company.name }
 	  phone_number { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
 	  email_id { Faker::Internet.email }
@@ -21,6 +23,7 @@ FactoryGirl.define do
 	  operates_properties 1
 	  operates_taxis 1
 	  is_travel_agency 1
+    pan_number ABCDE1234F
 	end
 
 	factory :advisor do
