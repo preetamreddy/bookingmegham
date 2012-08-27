@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120827152652) do
+ActiveRecord::Schema.define(:version => 20120827153046) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -199,7 +199,6 @@ ActiveRecord::Schema.define(:version => 20120827152652) do
     t.integer  "taxi_id"
     t.integer  "number_of_vehicles"
     t.integer  "unit_price"
-    t.string   "reservation_reference"
     t.text     "pickup_address"
     t.time     "pickup_time"
     t.string   "drop_off_city"
