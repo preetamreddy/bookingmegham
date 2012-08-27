@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120827102346) do
+ActiveRecord::Schema.define(:version => 20120827144103) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -47,13 +47,10 @@ ActiveRecord::Schema.define(:version => 20120827102346) do
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "logo_file_name"
     t.string   "pan_number"
     t.integer  "operates_properties", :default => 1
     t.integer  "operates_taxis",      :default => 0
-    t.integer  "is_travel_agency",    :default => 1
     t.string   "name"
-    t.text     "service_tax",         :default => "0"
     t.integer  "account_id"
     t.integer  "is_account",          :default => 0
     t.string   "phone_number_2"

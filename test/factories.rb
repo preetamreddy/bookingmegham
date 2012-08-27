@@ -8,7 +8,7 @@ FactoryGirl.define do
 		postal_address { "#{Faker::Address.secondary_address}, #{Faker::Address.street_name}" }
 		url { Faker::Internet.url }
 		logo_file_name { "#{Faker::Company.name}.jpg" }
-    pan ABCDE1234F
+    pan "ABCDE1234F"
 	end
 
 	factory :agency do
@@ -22,7 +22,7 @@ FactoryGirl.define do
 		url { Faker::Internet.url }
 	  operates_properties 1
 	  operates_taxis 1
-    pan_number ABCDE1234F
+    pan_number "ABCDE1234F"
 	end
 
 	factory :advisor do
