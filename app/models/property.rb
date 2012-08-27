@@ -49,7 +49,6 @@ class Property < ActiveRecord::Base
 		end
 
 		def strip_whitespaces
-			self.description = description.to_s.strip
 			self.address = address.to_s.strip
 			self.suggested_activities = suggested_activities.to_s.strip
 		end
