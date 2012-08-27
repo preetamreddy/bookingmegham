@@ -1,11 +1,10 @@
 .booking_chart {
 	.chart {
+    border-spacing: 0.01px;
 		margin-top: 1em;
-		border-spacing: 0;
-		border-collapse: collapse;
-		border-color: #CFCCCA;
 		width: 100%;
 		table-layout: fixed;
+	  border: 1.5px solid #CFCCCA;
 		
 		th {
 			padding: 5px;
@@ -13,13 +12,26 @@
 			color: #FFF;
 			white-space: nowrap;
 			overflow: hidden;
+		  border: 1px solid #CFCCCA;
 		}
 
 		td {
 			padding: 2px 4px;
 			vertical-align: top;
 			white-space: wrap;
+		  border: 1px solid #CFCCCA;
+      word-wrap: break-word;
 		}
+
+    td:hover {
+		  border: 2px solid black;
+      cursor: pointer;
+    }
+
+    td:nth-child(1):hover {
+		  border: 1px solid #CFCCCA;
+      cursor: auto;
+    }
 	}
 
 	.not_paid {

@@ -85,21 +85,27 @@ class BookingsController < ApplicationController
       store_trip_in_session(params[:trip_id].to_i)
 		end
 
-    if Property.scoped_by_account_id(current_user.account_id).
-        find_all_by_id(params[:property_id].to_i).any?
-      property_id = params[:property_id].to_i
-    else
-      property_id = 0
-    end
+    room_type = find_room_type
+    property = room_type ? room_type.property : find_property 
 
     if session[:trip_id]
-			if property_id > 0
-				@booking.property_id = params[:property_id]
+			if property
+				@booking.property_id = property.id
 			
 				trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
 				@booking.trip_id = trip.id
 				@booking.add_rooms_from_trip(trip)
-	
+
+        if params[:check_in_date]
+          @booking.check_in_date = Date.strptime(params[:check_in_date], "%Y-%m-%d")
+        end
+
+        if room_type
+          @booking.rooms.each do |room|
+            room.room_type_id = room_type.id
+          end	
+        end
+
 	      respond_to do |format|
 	        format.html # new.html.erb
 				  format.js
@@ -177,6 +183,22 @@ class BookingsController < ApplicationController
 			  session[:trip_id] = trip.id
 			  session[:customer_type] = trip.customer_type
 			  session[:customer_id] = trip.customer_id
+      end
+    end
+
+    def find_property
+      if Property.scoped_by_account_id(current_user.account_id).find_all_by_id(params[:property_id].to_i).any?
+	      Property.find(params[:property_id].to_i) 
+      else
+        nil
+      end
+    end
+
+    def find_room_type
+      if RoomType.scoped_by_account_id(current_user.account_id).find_all_by_id(params[:room_type_id].to_i).any?
+	      RoomType.find(params[:room_type_id].to_i)
+      else
+        nil
       end
     end
 end
