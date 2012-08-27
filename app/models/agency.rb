@@ -9,8 +9,7 @@ class Agency < ActiveRecord::Base
 
 	before_destroy 	:ensure_does_not_have_trips,
 									:ensure_does_not_have_taxis,
-									:ensure_does_not_have_guests,
-									:ensure_is_not_an_account
+									:ensure_does_not_have_guests
 
 	validates :name, presence: true
 
@@ -57,15 +56,6 @@ class Agency < ActiveRecord::Base
 			else
 				errors.add(:base, "Destroy failed because #{name} has guests")
 				return false
-			end
-		end
-
-		def ensure_is_not_an_account
-			if is_account == 1
-				errors.add(:base, "Destroy failed because this is the default agency")
-				return false
-			else
-				return true
 			end
 		end
 
