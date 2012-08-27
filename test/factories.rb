@@ -20,7 +20,6 @@ FactoryGirl.define do
 		postal_address { "#{Faker::Address.secondary_address}, #{Faker::Address.street_name}" }
 	  city { Faker::Address.city }
 		url { Faker::Internet.url }
-	  operates_properties 1
 	  operates_taxis 1
     pan_number "ABCDE1234F"
 	end
