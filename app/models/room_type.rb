@@ -1,17 +1,9 @@
 class RoomType < ActiveRecord::Base
 	belongs_to :property
 
-	has_many :bookings
 	has_many :rooms
-	has_many :line_items
-
-	before_save :capitalize, :set_defaults_if_nil,
-							:strip_whitespaces
-
-	before_destroy :ensure_does_not_have_bookings
 
 	validates :property_id, :room_type, presence: true
-	
 	validates_numericality_of :number_of_rooms,
 														:price_for_single_occupancy,
 														:price_for_double_occupancy,
@@ -20,6 +12,11 @@ class RoomType < ActiveRecord::Base
 														greater_than_or_equal_to: 0,
 														message: "should be a number greater than or equal to 0"
 	
+	before_save :capitalize, :set_defaults_if_nil,
+							:strip_whitespaces
+
+	before_destroy :ensure_does_not_have_rooms
+
 	def service_tax
 		(price_for_lodging * property.service_tax_rate.to_f / 100.0).round
 	end
@@ -91,6 +88,9 @@ class RoomType < ActiveRecord::Base
 	end
 
 	private
+		def capitalize
+			self.room_type = room_type.capitalize
+		end
 	
 		def set_defaults_if_nil
 			self.price_for_single_occupancy ||= 0
@@ -99,20 +99,16 @@ class RoomType < ActiveRecord::Base
 			self.number_of_rooms ||= 0
 		end
 
-		def ensure_does_not_have_bookings
-			if bookings.empty?
+		def strip_whitespaces
+			self.description = description.to_s.strip
+		end
+
+		def ensure_does_not_have_rooms
+			if rooms.empty?
 				return true
 			else
 				errors.add(:base, "Destroy failed because #{room_type} has bookings")
 				return false
 			end
-		end
-
-		def capitalize
-			self.room_type = room_type.capitalize
-		end
-		
-		def strip_whitespaces
-			self.description = description.to_s.strip
 		end
 end

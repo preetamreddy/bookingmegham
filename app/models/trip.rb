@@ -12,11 +12,9 @@ class Trip < ActiveRecord::Base
 	has_many :trip_rooms, dependent: :destroy
 	accepts_nested_attributes_for :trip_rooms, :reject_if => :all_blank,
 		:allow_destroy => true
-
 	has_many :vas_bookings, dependent: :destroy
 	accepts_nested_attributes_for :vas_bookings, :reject_if => :all_blank,
 		:allow_destroy => true
-
 	has_many :bookings
 	has_many :taxi_bookings
 	has_many :payments
@@ -27,7 +25,6 @@ class Trip < ActiveRecord::Base
 
 	validates :customer_type, :customer_id, :name, :start_date, :number_of_days, 
 						presence: true
-
 	validates_numericality_of :customer_id, :number_of_days,
 						only_integer: true, greater_than: 0, allow_nil: true,
 						message: "should be a number greater than 0"
@@ -38,9 +35,9 @@ class Trip < ActiveRecord::Base
 
 	before_update :update_payment_status_and_pay_by_date
 
-	before_destroy 	:ensure_not_referenced_by_bookings,
-									:ensure_not_referenced_by_taxi_bookings,
-									:ensure_not_referenced_by_payments
+	before_destroy 	:ensure_does_not_have_bookings,
+									:ensure_does_not_have_taxi_bookings,
+									:ensure_does_not_have_payments
 
 	def number_of_rooms
 		if trip_rooms.empty?
@@ -200,7 +197,7 @@ class Trip < ActiveRecord::Base
 			end	
 		end
 
-		def ensure_not_referenced_by_bookings
+		def ensure_does_not_have_bookings
 			if bookings.empty?
 				return true
 			else
@@ -209,7 +206,7 @@ class Trip < ActiveRecord::Base
 			end
 		end
 
-		def ensure_not_referenced_by_taxi_bookings
+		def ensure_does_not_have_taxi_bookings
 			if taxi_bookings.empty?
 				return true
 			else
@@ -218,7 +215,7 @@ class Trip < ActiveRecord::Base
 			end
 		end
 
-		def ensure_not_referenced_by_payments
+		def ensure_does_not_have_payments
 			if payments.empty?
 				return true
 			else

@@ -9,7 +9,8 @@ class Account < ActiveRecord::Base
 	before_destroy :ensure_not_referenced_by_agencies,
     :ensure_not_referenced_by_guests,
     :ensure_not_referenced_by_properties,
-    :ensure_not_referenced_by_advisors
+    :ensure_does_not_have_advisors,
+    :ensure_does_not_have_users
 
 	private
 		def ensure_not_referenced_by_agencies
@@ -39,11 +40,20 @@ class Account < ActiveRecord::Base
 			end
 		end
 
-		def ensure_not_referenced_by_advisors
-			if Advisor.find_all_by_account_id(id).empty?
+		def ensure_does_not_have_advisors
+			if advisors.empty?
 				return true
 			else
 				errors.add(:base, "Destroy failed because #{name} has advisors")
+				return false
+			end
+		end
+
+		def ensure_does_not_have_users
+			if users.empty?
+				return true
+			else
+				errors.add(:base, "Destroy failed because #{name} has users")
 				return false
 			end
 		end

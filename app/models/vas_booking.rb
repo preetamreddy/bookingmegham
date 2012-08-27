@@ -9,7 +9,6 @@ class VasBooking < ActiveRecord::Base
 	before_create :set_account_id
 
 	private
-
 		def number_of_days
 			if trip_id
 				trip.number_of_days

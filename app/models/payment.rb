@@ -4,12 +4,11 @@ class Payment < ActiveRecord::Base
 	belongs_to :trip
 
 	validate :date_received, :amount, presence: true
-
-	before_save :set_defaults_if_nil, :titleize
-
 	validates_numericality_of :amount,
 		only_integer: true, greater_than_or_equal_to: 0, allow_nil: true,
 		message: "should be a number greater than 0"
+
+	before_save :set_defaults_if_nil, :titleize
 
 	def receipt_number
 		"BCRPL/#{trip_id}/#{id}"
@@ -50,7 +49,6 @@ class Payment < ActiveRecord::Base
 	end
 
 	private
-
 		def set_defaults_if_nil
 			self.amount ||= 0
 		end

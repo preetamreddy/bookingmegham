@@ -1,9 +1,9 @@
 class TaxiDetail < ActiveRecord::Base
 	belongs_to :taxi_booking
 
-	before_create :set_account_id
-
 	before_save :upcase, :titleize
+
+	before_create :set_account_id
 
 	validates :registration_number, :driver_name, :driver_phone_number,
 		presence: true
@@ -12,7 +12,6 @@ class TaxiDetail < ActiveRecord::Base
 		:format => { :with => /^[\+]?[\d\s]*$/, :message => "is not valid" }
 
 	private
-
 		def upcase
 			self.registration_number = registration_number.upcase
 		end

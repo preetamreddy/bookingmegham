@@ -3,23 +3,19 @@ class Booking < ActiveRecord::Base
 
 	belongs_to :trip
 	belongs_to :property
-	belongs_to :room_type
 
 	has_many :rooms
 	accepts_nested_attributes_for :rooms, :reject_if => :all_blank,
 		:allow_destroy => true
-
 	has_many :vas_bookings
 	accepts_nested_attributes_for :vas_bookings, :reject_if => :all_blank,
 		:allow_destroy => true
-
 	has_many :line_items
 
 	before_validation :set_defaults_if_nil, :update_check_out_date, :update_number_of_rooms
 
 	validates :trip_id, :check_in_date, :check_out_date, :meal_plan,
 											presence: true
-
 	validates_numericality_of :trip_id,
 		only_integer: true, greater_than: 0, allow_nil: true, 
 		message: "should be a number greater than 0"
@@ -32,7 +28,8 @@ class Booking < ActiveRecord::Base
 							:update_total_price
 
 	before_destroy :ensure_payments_are_not_made,
-		:ensure_rooms_and_vas_dont_exist
+		:ensure_does_not_have_rooms,
+    :ensure_does_not_have_vas_bookings
 
   after_update :delete_line_items_for_cancelled_bookings
 
@@ -173,11 +170,20 @@ class Booking < ActiveRecord::Base
 			end
 		end
 
-		def ensure_rooms_and_vas_dont_exist
-			if rooms.empty? and vas_bookings.empty?
+		def ensure_does_not_have_rooms
+			if rooms.empty?
 				return true
 			else
-				errors.add(:base, "Destroy failed because booking has vas / rooms")
+				errors.add(:base, "Destroy failed because booking has rooms")
+				return false
+			end
+		end
+
+		def ensure_does_not_have_vas_bookings
+			if vas_bookings.empty?
+				return true
+			else
+				errors.add(:base, "Destroy failed because booking has value added services")
 				return false
 			end
 		end
