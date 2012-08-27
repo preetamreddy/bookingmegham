@@ -7,8 +7,6 @@ class TaxiBookingNotifier < ActionMailer::Base
 		@taxi_booking = taxi_booking
 		@trip = taxi_booking.trip
 
-#		mail to: "#{@trip.guest.name} <#{@trip.guest.email_id}>", 
-#    	cc: "#{@trip.email_ids}, #{@trip.advisor.name} <#{@trip.advisor.email_id}>",
    	mail(to: "#{@trip.advisor.name} <#{@trip.advisor.email_id}>",
 				subject: 'New Taxi Booking from Banjara Camps') do |format|
 			format.text
