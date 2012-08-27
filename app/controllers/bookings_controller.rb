@@ -108,7 +108,6 @@ class BookingsController < ApplicationController
 
 	      respond_to do |format|
 	        format.html # new.html.erb
-				  format.js
 	        format.json { render json: @booking }
 	      end
 			else
