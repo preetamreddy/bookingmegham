@@ -8,7 +8,8 @@ class AgenciesController < ApplicationController
 		agency_name = agency_name.downcase
 
    	@agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).
-			find(:all, :conditions => [ 'lower(name) like ?', "%" + agency_name + "%" ])
+			find(:all, :conditions => [ 'lower(name) like ? or lower(registered_name) like ?',
+           "%" + agency_name + "%", "%" + agency_name + "%" ])
 
 		@records_returned = @agencies.count
 
