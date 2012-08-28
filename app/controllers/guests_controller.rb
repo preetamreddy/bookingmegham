@@ -12,7 +12,7 @@ class GuestsController < ApplicationController
 		  email_id ||= ''
 		  email_id = email_id.downcase
 
-			@guests = @guests.paginate(page: params[:page], per_page: 20).
+			@guests = @guests.paginate(page: params[:page], per_page: 10).
 									order('name, city').
 									find(:all, :conditions => [ 
 									'lower(name) like ? and
@@ -24,7 +24,7 @@ class GuestsController < ApplicationController
 									"%" + email_id + "%",
 									"%" + email_id + "%" ])
 		else
-			@guests = @guests.paginate(page: params[:page], per_page: 20).
+			@guests = @guests.paginate(page: params[:page], per_page: 10).
 									order('name, city')
 		end
 
