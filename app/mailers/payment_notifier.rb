@@ -14,7 +14,7 @@ class PaymentNotifier < ActionMailer::Base
 				subject: "Payment Receipt for trip #{@payment.trip_id}-#{@payment.trip.name}") do |format|
 			format.text
 			format.pdf do
-				attachments["Receipt #{@trip.id}/#{@payment.id}/#{@trip.name}.pdf"] = 
+				attachments["Receipt #{@trip.id}-#{@payment.id}-#{@trip.name}.pdf"] = 
 					WickedPdf.new.pdf_from_string(
 					render_to_string(:pdf => "receipt", 
 					:template 						=> 'payment_notifier/receipt.pdf.erb',

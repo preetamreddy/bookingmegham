@@ -13,7 +13,7 @@ class TripNotifier < ActionMailer::Base
 				subject: "Itinerary for your trip #{@trip.id}-#{@trip.name}") do |format|
 			format.text
 			format.pdf do
-				attachments["Itinerary #{@trip.id}/#{@trip.name}.pdf"] = WickedPdf.new.pdf_from_string(
+				attachments["Itinerary #{@trip.id}-#{@trip.name}.pdf"] = WickedPdf.new.pdf_from_string(
 					render_to_string(:pdf => "itinerary", 
 					:template 						=> 'trip_notifier/itinerary.pdf.erb',
 					:layout								=> 'layouts/default.html.erb'))
@@ -29,7 +29,7 @@ class TripNotifier < ActionMailer::Base
 				subject: "Invoice for trip #{@trip.id}-#{@trip.name}") do |format|
 			format.text
 			format.pdf do
-				attachments["Invoice #{@trip.customer.name} (ref: #{@trip.id}/#{@trip.name}).pdf"] = 
+				attachments["Invoice #{@trip.customer.name} (ref #{@trip.id}-#{@trip.name}).pdf"] = 
 					WickedPdf.new.pdf_from_string(
 					render_to_string(:pdf => "invoice", 
 					:template 						=> 'trip_notifier/invoice.pdf.erb',
@@ -46,7 +46,7 @@ class TripNotifier < ActionMailer::Base
 				subject: "Vouchers for trip #{@trip.id}-#{@trip.name}") do |format|
 			format.text
 			format.pdf do
-				attachments["Vouchers #{@trip.id}/#{@trip.name}.pdf"] = 
+				attachments["Vouchers #{@trip.id}-#{@trip.name}.pdf"] = 
 					WickedPdf.new.pdf_from_string(
 					render_to_string(:pdf => "vouchers", 
 					:template 						=> 'trip_notifier/vouchers.pdf.erb',
