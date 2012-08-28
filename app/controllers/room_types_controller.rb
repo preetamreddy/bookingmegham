@@ -66,6 +66,8 @@ class RoomTypesController < ApplicationController
   # POST /room_types.json
   def create
     respond_to do |format|
+      session[:property_name] = Property.scoped_by_account_id(current_user.account_id).
+        find(@room_type.property_id).name
       if @room_type.save
         format.html { redirect_to @room_type, notice: 'Room type was successfully created.' }
         format.json { render json: @room_type, status: :created, location: @room_type }
@@ -79,6 +81,8 @@ class RoomTypesController < ApplicationController
   # PUT /room_types/1
   # PUT /room_types/1.json
   def update
+      session[:property_name] = Property.scoped_by_account_id(current_user.account_id).
+        find(@room_type.property_id).name
     respond_to do |format|
       if @room_type.update_attributes(params[:room_type])
         format.html { redirect_to @room_type, notice: 'Room type was successfully updated.' }
