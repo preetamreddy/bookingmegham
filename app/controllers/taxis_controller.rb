@@ -20,9 +20,11 @@ class TaxisController < ApplicationController
 			end
 	
 			@taxis = @taxis.paginate(page: params[:page], per_page: 10).
+        order('agency_id, unit_price').
 				find_all_by_agency_id(taxi_operators)
 		else
-			@taxis = @taxis.paginate(page: params[:page], per_page: 10)
+			@taxis = @taxis.paginate(page: params[:page], per_page: 10).
+        order('agency_id, unit_price')
 		
 			session[:taxi_operator_name] = nil
 		end
@@ -45,6 +47,11 @@ class TaxisController < ApplicationController
   # GET /taxis/new
   # GET /taxis/new.json
   def new
+    if session[:taxi_operator_name]
+      @taxi.agency_id = Agency.scoped_by_account_id(current_user.account_id).
+        find_by_name(session[:taxi_operator_name]).id
+    end
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @taxi }
@@ -60,6 +67,8 @@ class TaxisController < ApplicationController
   def create
     respond_to do |format|
       if @taxi.save
+        session[:taxi_operator_name] = Agency.scoped_by_account_id(current_user.account_id).
+          find(@taxi.agency_id).name
         format.html { redirect_to @taxi, notice: 'Taxi was successfully created.' }
         format.json { render json: @taxi, status: :created, location: @taxi }
       else
@@ -74,6 +83,8 @@ class TaxisController < ApplicationController
   def update
     respond_to do |format|
       if @taxi.update_attributes(params[:taxi])
+        session[:taxi_operator_name] = Agency.scoped_by_account_id(current_user.account_id).
+          find(@taxi.agency_id).name
         format.html { redirect_to @taxi, notice: 'Taxi was successfully updated.' }
         format.json { head :ok }
       else

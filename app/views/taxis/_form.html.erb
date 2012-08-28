@@ -13,14 +13,14 @@
 
   <div class="field">
     <%= f.label :agency_id, "Operator" %><br />
-		<% if @taxi.new_record? %>
-			<%= f.collection_select(:agency_id,
-				Agency.scoped_by_account_id(current_user.account_id).
-					order('name').find_all_by_operates_taxis(1), :id, :name) %>
-		<% else %>
+		<% if @taxi.agency_id %>
 			<%= f.collection_select(:agency_id,
 				Agency.scoped_by_account_id(current_user.account_id).
 					order('name').find_all_by_id(@taxi.agency_id), :id, :name) %>
+		<% else %>
+			<%= f.collection_select(:agency_id,
+				Agency.scoped_by_account_id(current_user.account_id).
+					order('name').find_all_by_operates_taxis(1), :id, :name) %>
 		<% end %>
   </div>
   <div class="field">
