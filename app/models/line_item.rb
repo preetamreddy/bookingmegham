@@ -1,10 +1,7 @@
 class LineItem < ActiveRecord::Base
-	belongs_to :booking
 	belongs_to :room
 
-	validates :booking_id, :room_type_id, :date, :booked_rooms, :presence => true
-
-	before_create :set_account_id
+	validates :room_type_id, :date, :booked_rooms, :presence => true
 
 	def LineItem.booked_rooms(id, date)
 		bookings = LineItem.
@@ -15,10 +12,4 @@ class LineItem < ActiveRecord::Base
 
 		return bookings[[id, date]]
 	end
-
-	private
-		def set_account_id
-			self.account_id = booking.account_id
-		end
-
 end

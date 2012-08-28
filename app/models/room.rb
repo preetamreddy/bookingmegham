@@ -24,8 +24,9 @@ class Room < ActiveRecord::Base
 
 	validate :ensure_room_type_exists, :ensure_room_availability
 
-	before_create :set_account_id,
-								:update_service_tax_per_room_night,
+  after_validation :update_line_items
+
+	before_create :update_service_tax_per_room_night,
 								:update_room_rate,
 								:update_total_price,
 								:update_service_tax
@@ -33,10 +34,6 @@ class Room < ActiveRecord::Base
 	before_update :update_room_rate,
 								:update_total_price,
 								:update_service_tax
-
-  after_create :create_line_items
-
-  after_update :update_line_items
 
 	def cancelled
 		booking.cancelled
@@ -57,6 +54,12 @@ class Room < ActiveRecord::Base
 			number_of_adults.to_s + "+" + number_of_children_between_5_and_12_years.to_s
 		else
 			number_of_adults.to_s + "+" + number_of_children_between_5_and_12_years.to_s + "+" + number_of_children_below_5_years.to_s
+		end
+	end
+
+	def delete_line_items
+		if line_items.any?
+			line_items.destroy_all
 		end
 	end
 
@@ -117,10 +120,6 @@ class Room < ActiveRecord::Base
 			end
 		end
 
-		def set_account_id
-			self.account_id = booking.account_id
-		end
-
 		def update_service_tax_per_room_night
 			self.service_tax_per_room_night = room_type.service_tax
 		end
@@ -143,6 +142,11 @@ class Room < ActiveRecord::Base
 			self.service_tax = service_tax_per_room_night * number_of_rooms * number_of_nights
 		end
 
+		def update_line_items
+			delete_line_items
+			create_line_items
+		end
+	
 		def create_line_items
 			if room_type.ensure_availability_before_booking == 1
 				date = check_in_date
@@ -150,21 +154,10 @@ class Room < ActiveRecord::Base
 					line_item = line_items.build(room_type_id: room_type_id,
 						date: date,
 						booked_rooms: number_of_rooms,
-						booking_id: booking_id)
+            account_id: account_id)
 					line_item.save!
 					date += 1
 				end
-			end
-		end
-
-		def update_line_items
-			delete_line_items
-			create_line_items
-		end
-	
-		def delete_line_items
-			if line_items.any?
-				line_items.destroy_all
 			end
 		end
 end

@@ -135,6 +135,7 @@ class BookingsController < ApplicationController
 		@booking.rooms.each do |room|
 			room.check_in_date = @booking.check_in_date
 			room.number_of_nights = @booking.number_of_nights
+			room.account_id = @booking.account_id
 		end
 
     respond_to do |format|

@@ -10,7 +10,6 @@ class Booking < ActiveRecord::Base
 	has_many :vas_bookings
 	accepts_nested_attributes_for :vas_bookings, :reject_if => :all_blank,
 		:allow_destroy => true
-	has_many :line_items
 
 	before_validation :set_defaults_if_nil, :update_check_out_date, :update_number_of_rooms
 
@@ -189,8 +188,10 @@ class Booking < ActiveRecord::Base
 		end
 
     def delete_line_items_for_cancelled_bookings
-		  if cancelled_changed? and cancelled == 1 and line_items.any?
-			  line_items.destroy_all
+		  if cancelled_changed? and cancelled == 1
+        rooms.all.each do |room|
+			    room.delete_line_items
+        end
 		  end
     end
 end
