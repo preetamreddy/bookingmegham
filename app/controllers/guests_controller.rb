@@ -89,12 +89,12 @@ class GuestsController < ApplicationController
   # DELETE /guests/1
   # DELETE /guests/1.json
   def destroy
-    @guest.destroy
-
-		if session[:customer_type] == @guest.class.name and session[:customer_id] == params[:id].to_i
-			session[:customer_type] = nil
-			session[:customer_id] = nil
-		end
+    if @guest.destroy
+		  if session[:customer_type] == @guest.class.name and session[:customer_id] == params[:id].to_i
+			  session[:customer_type] = nil
+			  session[:customer_id] = nil
+		  end
+    end
 
     respond_to do |format|
       format.html { redirect_to guests_url, alert: @guest.errors[:base][0] }

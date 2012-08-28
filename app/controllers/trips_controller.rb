@@ -108,11 +108,11 @@ class TripsController < ApplicationController
   # DELETE /trips/1
   # DELETE /trips/1.json
   def destroy
-    @trip.destroy
-
-		if session[:trip_id] == params[:id].to_i
-			session[:trip_id] = nil
-		end
+    if @trip.destroy
+		  if session[:trip_id] == params[:id].to_i
+			  session[:trip_id] = nil
+		  end
+    end
 
     respond_to do |format|
       format.html { redirect_to trips_url, alert: @trip.errors[:base][0] }
