@@ -68,8 +68,8 @@ class TripsController < ApplicationController
         format.json { render json: @trip }
       end
     else
-      redirect_to trips_url, 
-        alert: 'New trips can only be created after selecting a customer from agency / guest listing.'
+      redirect_to guests_url, 
+        alert: 'New trips can only be created after selecting a guest / agency.'
     end
   end
 

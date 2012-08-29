@@ -11,16 +11,16 @@ class Room < ActiveRecord::Base
 										:update_check_out_date
 	validates :occupancy, :number_of_adults, :number_of_rooms, presence: true
 	validates :occupancy, inclusion: ROOM_OCCUPANCY_TYPES
-	validates :number_of_adults, allow_nil: true,
+	validates :number_of_adults,
 		:inclusion => { :in => [1, 2, 3, 4],
 		:message => "%{value} is not a valid option for number of adults / room" }
-	validates_numericality_of :number_of_rooms,
-		allow_nil: true, only_integer: true, greater_than: 0,
-		message: "%{value} should be a number greater than 0"
 	validates :number_of_children_between_5_and_12_years, 
 		:number_of_children_below_5_years, allow_nil: true,
 		:inclusion => { :in => [0, 1, 2, 3],
 		:message => "%{value} is not a valid option for number of children / room" }
+	validates_numericality_of :number_of_rooms,
+		only_integer: true, greater_than: 0,
+		message: "%{value} should be a number greater than 0"
 
 	validate :ensure_room_type_exists, :ensure_room_availability
 
@@ -143,8 +143,10 @@ class Room < ActiveRecord::Base
 		end
 
 		def update_line_items
-			delete_line_items
-			create_line_items
+      if number_of_rooms
+		    delete_line_items
+		    create_line_items
+      end
 		end
 	
 		def create_line_items

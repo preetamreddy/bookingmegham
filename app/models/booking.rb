@@ -91,7 +91,7 @@ class Booking < ActiveRecord::Base
 			if check_in_date and number_of_nights != nil
 				self.check_out_date = check_in_date + number_of_nights
 			else
-				errors.add(:base, "Please input check in date and number of nights")
+				errors.add(:base, "Please input check in date / number of nights.")
 				return false
 			end
 		end

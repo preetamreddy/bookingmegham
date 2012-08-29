@@ -87,7 +87,7 @@
 	</table>
 <% end %>
 
-<% if session[:trip_id] %>
+<% if session[:customer_id] %>
 	<div class="action_container">
 		<%= link_to 'New Room Booking', new_booking_path %>
     <%= link_to 'Transport', taxi_bookings_path %>

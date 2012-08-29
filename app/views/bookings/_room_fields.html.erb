@@ -1,6 +1,6 @@
 <div class="nested_form_row">
 	<fieldset>
-		<%= f.radio_button :occupancy, 'Single' %>
+    <%= f.radio_button :occupancy, 'Single', :required => true %>
 		<%= f.label :single, "Single" %>
 		<%= f.radio_button :occupancy, 'Double' %>
 		<%= f.label :double, "Double" %>
@@ -18,10 +18,10 @@
 	<% end %>
 
 	<%= f.label :number_of_rooms, "#" %>
-	<%= f.number_field :number_of_rooms, min: 1, max: 99 %>
+  <%= f.number_field :number_of_rooms, min: 1, max: 99, :required => true %>
 
 	<%= f.label :number_of_adults, "Adults" %>
-	<%= f.number_field :number_of_adults, min: 1, max: 4 %>
+  <%= f.number_field :number_of_adults, min: 1, max: 4, :required => true %>
 	
 	<%= f.label :number_of_children_between_5_and_12_years, "Children" %>
 	<%= f.number_field :number_of_children_between_5_and_12_years, 

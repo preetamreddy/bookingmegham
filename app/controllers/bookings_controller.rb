@@ -89,13 +89,17 @@ class BookingsController < ApplicationController
     property = room_type ? room_type.property : find_property 
 
     if session[:trip_id]
+			trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
+			@booking.trip_id = trip.id
+			@booking.add_rooms_from_trip(trip)
+    else
+      @booking.rooms.build
+    end
+
+    if session[:customer_id]
 			if property
 				@booking.property_id = property.id
 			
-				trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
-				@booking.trip_id = trip.id
-				@booking.add_rooms_from_trip(trip)
-
         if params[:check_in_date]
           @booking.check_in_date = Date.strptime(params[:check_in_date], "%Y-%m-%d")
         end
@@ -115,8 +119,8 @@ class BookingsController < ApplicationController
 	        order('ensure_availability_before_booking desc, name').all
 			end
     else
-      redirect_to bookings_url, 
-        alert: 'New bookings can only be created after selecting a trip.'
+      redirect_to guests_url,
+        alert: 'New bookings can only be created after selecting a guest / agency.'
     end
   end
 
@@ -140,6 +144,8 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       if @booking.save
+        store_trip_in_session(@booking.trip_id)
+
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
 				format.js { render :js => "window.location.replace('#{booking_url(@booking)}');" }
         format.json { render json: @booking, status: :created, location: @booking }

@@ -22,7 +22,13 @@
 		<% if @booking.trip_id %>
     	<%= f.collection_select(:trip_id, 
 						Trip.scoped_by_account_id(current_user.account_id).
-							find_all_by_id(@booking.trip_id), :id, :name) %>
+							find_all_by_id(@booking.trip_id), :id, :name_with_dates) %>
+    <% elsif session[:customer_id] %>
+      <%= f.collection_select(:trip_id,
+            Trip.scoped_by_account_id(current_user.account_id).order('name').
+            find(:all, :conditions => [ 'customer_type = ? and customer_id = ? and end_date > ?',
+              session[:customer_type], session[:customer_id], Date.today ]),
+          :id, :name_with_dates) %>
 		<% end %>
   </div>
 	<div class="field">
@@ -37,7 +43,7 @@
     <%= f.label :check_in_date, "Check-in" %><br />
 		<% if @booking.new_record? %>
     	<%= f.date_select :check_in_date, :start_year => Time.now.year, 
-				:end_year => Time.now.year + 1, :prompt => true %>
+        :end_year => Time.now.year + 1, :prompt => true %>
 		<% else %>
     	<%= f.date_select :check_in_date, :start_year => Time.now.year, 
 				:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
@@ -46,7 +52,7 @@
 	<div class="field">
 		<%= f.label :number_of_nights, "Nights" %>
 		<% if @booking.new_record? %>
-			<%= f.number_field :number_of_nights, min: 1 %>
+      <%= f.number_field :number_of_nights, min: 1, :required => true %>
 		<% else %>
 			<%= f.number_field :number_of_nights, :disabled => true %>
 		<% end %>
@@ -63,7 +69,7 @@
 	<div class="field">
     <%= f.label :meal_plan %><br />
 		<%= f.select :meal_plan, Booking::MEAL_PLANS,
-					prompt: 'Select a meal plan' %>
+      prompt: 'Select a meal plan' %>
 	</div>
 
 	<div class="field">
