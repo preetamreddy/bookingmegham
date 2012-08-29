@@ -19,9 +19,9 @@ class Booking < ActiveRecord::Base
 		only_integer: true, greater_than: 0, allow_nil: true, 
 		message: "should be a number greater than 0"
 
-	validate	:ensure_check_out_date_is_greater_than_check_in_date,
-						:ensure_property_exists,
-						:ensure_trip_exists, :ensure_booking_is_within_trip_dates
+	validate	:ensure_property_exists,
+						:ensure_trip_exists,
+            :ensure_booking_is_within_trip_dates
 
 	before_save :strip_whitespaces, :titleize,
 							:update_total_price
@@ -104,13 +104,6 @@ class Booking < ActiveRecord::Base
 			end
 	
 			self.number_of_rooms = num_rooms
-		end
-
-		def ensure_check_out_date_is_greater_than_check_in_date
-			if check_out_date <= check_in_date
-				errors.add(:base, "Could not create Booking as check-out date is earlier than or same as check-in date")
-				return false
-			end
 		end
 
 		def ensure_property_exists
