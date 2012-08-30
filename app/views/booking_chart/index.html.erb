@@ -26,11 +26,12 @@
 	  		<tr class=<%= tr_class %>>
 	    		<td class="nowrap"><%= room_type.room_type %></td>
 					<% @chart_date_range.each do |date| %>
-            <%= show_allocation_with_color_code(@booking_chart[[room_type.id, room_number, date]][1], 
-                 booking_id: @booking_chart[[room_type.id, room_number, date]][2], 
+            <%= show_allocation_with_color_code(@booking_chart[[room_type.id, room_number, date]][2], 
+                 title: @booking_chart[[room_type.id, room_number, date]][0],
+                 booking_id: @booking_chart[[room_type.id, room_number, date]][3], 
                  room_type_id: room_type.id,
                  date: date) do %>
-							<% @booking_chart[[room_type.id, room_number, date]][0] %>
+							<% @booking_chart[[room_type.id, room_number, date]][1] %>
 						<% end %>
 					<% end %>
 				</tr>

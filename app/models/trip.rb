@@ -98,6 +98,10 @@ class Trip < ActiveRecord::Base
     customer_type == GUEST ? customer.name_with_title : name
   end
 
+  def guest_name_with_agency
+    customer_type == GUEST ? customer.name : customer.name + ' - ' + name
+  end
+
   def guest_phone_number
     customer.phone_number
   end

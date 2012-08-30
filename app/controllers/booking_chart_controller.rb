@@ -60,15 +60,16 @@ class BookingChartController < ApplicationController
 						in_camp_dates = @chart_start_date...room.check_out_date
 						in_camp_dates.each do	|date|
 							@booking_chart.store([room_type.id, room_number, date], [
-                                   room.booking.trip.customer.name[0, 32] + room.guests_per_room, 
-                                   room.booking.trip.payment_status, room.booking_id])
+                room.booking.trip.guest_name_with_agency + " x " +  room.guests_per_room, 
+                room.booking.trip.guest_name_with_agency[0,18] + " x " +  room.guests_per_room, 
+                room.booking.trip.payment_status, room.booking_id])
 						end
 					end
 				end
 			end
 
 			available_rooms.each do |room_number|
-				@booking_chart.store([room_type.id, room_number, @chart_start_date], ["", "", ""])
+				@booking_chart.store([room_type.id, room_number, @chart_start_date], ["", "", "", ""])
 			end
 
 			date_range = (@chart_start_date + 1)..@chart_end_date
@@ -96,15 +97,16 @@ class BookingChartController < ApplicationController
 							in_camp_dates = room.check_in_date...room.check_out_date
 							in_camp_dates.each do |date|
 								@booking_chart.store([room_type.id, room_number, date], [
-                                     room.booking.trip.customer.name[0, 32] + room.guests_per_room, 
-                                     room.booking.trip.payment_status, room.booking_id])
+                  room.booking.trip.guest_name_with_agency + " x " +  room.guests_per_room,
+                  room.booking.trip.guest_name_with_agency[0,18] + " x " +  room.guests_per_room,
+                  room.booking.trip.payment_status, room.booking_id])
 							end
 						end
 					end
 				end
 
 				available_rooms.each do |room_number|
-					@booking_chart.store([room_type.id, room_number, date], ["", "", ""])
+					@booking_chart.store([room_type.id, room_number, date], ["", "", "", ""])
 				end
 			end
 		end
