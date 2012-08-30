@@ -15,7 +15,9 @@ class PaymentObserver < ActiveRecord::Observer
 	end
 
 	def update_paid_amount(trip_id, delta)
-    trip = Trip.find(trip_id)
-		trip.update_attributes(:paid => trip.paid + delta)
+    if delta != 0
+      trip = Trip.find(trip_id)
+		  trip.update_attributes(:paid => trip.paid + delta)
+    end
 	end
 end

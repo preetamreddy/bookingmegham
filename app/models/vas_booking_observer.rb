@@ -23,6 +23,8 @@ class VasBookingObserver < ActiveRecord::Observer
 	end
 
 	def update_vas_price_for(model, delta)
-		model.update_attributes(:price_for_vas => model.price_for_vas + delta)	
+    if delta != 0
+		  model.update_attributes(:price_for_vas => model.price_for_vas + delta)	
+    end
 	end
 end

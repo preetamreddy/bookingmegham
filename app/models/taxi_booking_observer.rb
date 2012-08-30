@@ -15,7 +15,9 @@ class TaxiBookingObserver < ActiveRecord::Observer
 	end
 
 	def update_price_for_transport(trip_id, delta)
-    trip = Trip.find(trip_id)
-		trip.update_attributes(:price_for_transport => trip.price_for_transport + delta)
+    if delta != 0
+      trip = Trip.find(trip_id)
+		  trip.update_attributes(:price_for_transport => trip.price_for_transport + delta)
+    end
 	end
 end

@@ -18,8 +18,10 @@ class RoomObserver < ActiveRecord::Observer
 	end
 
 	def update_price_for_rooms_and_service_tax(booking_id, delta_total_price, delta_service_tax)
-    booking = Booking.find(booking_id)
-		booking.update_attributes(:price_for_rooms => booking.price_for_rooms + delta_total_price,
-			:service_tax => booking.service_tax + delta_service_tax)
+    if delta_total_price != 0 or delta_service_tax != 0
+      booking = Booking.find(booking_id)
+		  booking.update_attributes(:price_for_rooms => booking.price_for_rooms + delta_total_price,
+			  :service_tax => booking.service_tax + delta_service_tax)
+    end
 	end
 end
