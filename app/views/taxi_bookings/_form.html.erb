@@ -23,7 +23,13 @@
     <% if @taxi_booking.trip_id %>
 			<%= f.collection_select(:trip_id,
 						Trip.scoped_by_account_id(current_user.account_id).
-						find_all_by_id(@taxi_booking.trip_id), :id, :name) %>
+						find_all_by_id(@taxi_booking.trip_id), :id, :name_with_dates) %>
+    <% elsif session[:customer_id] %>
+      <%= f.collection_select(:trip_id,
+            Trip.scoped_by_account_id(current_user.account_id).order('name').
+            find(:all, :conditions => [ 'customer_type = ? and customer_id = ? and end_date >= ?',
+              session[:customer_type], session[:customer_id], Date.today ]),
+          :id, :name_with_dates) %>
 		<% end %>
   </div>
   <div class="field">

@@ -66,14 +66,16 @@ class TaxiBookingsController < ApplicationController
   def new
 		if session[:trip_id]
 			@taxi_booking.trip_id = session[:trip_id]
+    end
 
+    if session[:customer_id]
       respond_to do |format|
         format.html # new.html.erb
         format.json { render json: @taxi_booking }
       end
     else
-      redirect_to taxi_bookings_url, 
-        alert: 'New taxi bookings can only be created after selecting a trip.'
+      redirect_to guests_url,
+        alert: 'New taxi bookings can only be created after selecting a guest / agency.'
 		end
   end
 
@@ -86,6 +88,8 @@ class TaxiBookingsController < ApplicationController
   def create
     respond_to do |format|
       if @taxi_booking.save
+        store_trip_in_session(@taxi_booking.trip_id)
+
         format.html { redirect_to @taxi_booking, notice: 'Taxi booking was successfully created.' }
         format.json { render json: @taxi_booking, status: :created, location: @taxi_booking }
       else

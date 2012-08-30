@@ -67,14 +67,16 @@ class PaymentsController < ApplicationController
       trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
 			@payment.trip_id = trip.id
       @payment.payee_name = trip.customer.name_with_title
+    end
 
+    if session[:customer_id]
       respond_to do |format|
         format.html # new.html.erb
         format.json { render json: @payment }
       end
     else
-      redirect_to payments_url, 
-        alert: 'New payments can only be created after selecting a trip.'
+      redirect_to guests_url,
+        alert: 'New payments can only be created after selecting a guest / agency.'
     end
   end
 
@@ -87,6 +89,8 @@ class PaymentsController < ApplicationController
   def create
     respond_to do |format|
       if @payment.save
+        store_trip_in_session(@payment.trip_id)
+
         format.html { redirect_to @payment, notice: 'Payment was successfully created.' }
         format.json { render json: @payment, status: :created, location: @payment }
       else
