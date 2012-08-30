@@ -54,7 +54,7 @@ class Payment < ActiveRecord::Base
 		end
 
     def set_payee_name
-      self.payee_name = trip.customer.name_with_title if payee_name == '' or payee_name is nil
+      self.payee_name = trip.customer.name_with_title if payee_name == '' or payee_name == nil
     end
 
 		def titleize
