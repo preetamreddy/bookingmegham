@@ -1,5 +1,5 @@
 <%= form_tag payments_path, :method => "get" do %>
-	<%= label_tag :from_date, "From" %>
+	<%= label_tag :from_date, "Starting from" %>
 	<%= select_date @from_date, :prefix => 'from_date' %>
 	<%= label_tag :number_of_days, "For days" %>
 	<%= number_field_tag :number_of_days, @number_of_days, min: 1, max: 99 %>
