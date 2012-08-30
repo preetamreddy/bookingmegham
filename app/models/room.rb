@@ -8,7 +8,7 @@ class Room < ActiveRecord::Base
 
 	before_validation :set_defaults_if_nil,
                     :update_check_in_date, :update_number_of_nights,
-										:update_check_out_date
+										:update_check_out_date, :update_account_id
 	validates :occupancy, :number_of_adults, :number_of_rooms, presence: true
 	validates :occupancy, inclusion: ROOM_OCCUPANCY_TYPES
 	validates :number_of_adults,
@@ -34,6 +34,8 @@ class Room < ActiveRecord::Base
 	before_update :update_room_rate,
 								:update_total_price,
 								:update_service_tax
+
+	before_destroy :ensure_payments_are_not_made
 
 	def cancelled
 		booking.cancelled
@@ -84,6 +86,12 @@ class Room < ActiveRecord::Base
 		def update_check_out_date
 			if check_in_date and number_of_nights
 				self.check_out_date = check_in_date + number_of_nights
+			end
+		end
+
+		def update_account_id
+			if booking_id
+				self.account_id = booking.account_id
 			end
 		end
 
@@ -143,10 +151,10 @@ class Room < ActiveRecord::Base
 		end
 
 		def update_line_items
-      if number_of_rooms
+      if !new_record?
 		    delete_line_items
-		    create_line_items
       end
+		  create_line_items
 		end
 	
 		def create_line_items
@@ -160,6 +168,15 @@ class Room < ActiveRecord::Base
 					line_item.save!
 					date += 1
 				end
+			end
+		end
+
+		def ensure_payments_are_not_made
+			if booking.trip.payment_status == Trip::NOT_PAID
+				return true
+			else
+				errors.add(:base, "Could not delete room booking as payments have been made for the trip")
+				return false
 			end
 		end
 end
