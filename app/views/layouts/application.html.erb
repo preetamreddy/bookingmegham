@@ -21,7 +21,7 @@
 		<% if user_signed_in? %>
 			<div id="side">
 				<%= hidden_div_if(!(session[:customer_id]), id: 'session_info') do %>
-					<table>
+					<table class="session_table">
 						<tr>
 							<th class="heading" colspan=2>Bookings for</th>
 							<th class="clear"><%= link_to 'Clear', 

@@ -144,6 +144,10 @@
 	}
 }
 
+.session_table {
+  table-layout: fixed;
+}
+
 .new_form, .edit_form, .search_form {
 	fieldset {
 		legend {
