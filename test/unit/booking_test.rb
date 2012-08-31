@@ -44,8 +44,8 @@ class BookingTest < ActiveSupport::TestCase
 
 	test "cancellation charge is total price for cancelled bookings" do
 		assert_equal 23400, @sangla_booking.reload.total_price	
-		@sangla_booking.update_attributes(:cancelled => 1,
+		@room.update_attributes(:cancelled => 1,
 			:cancellation_charge => 11200)
-		assert_equal 11200, @sangla_booking.reload.total_price	
+		assert_equal 12200, @sangla_booking.reload.total_price	
 	end
 end
