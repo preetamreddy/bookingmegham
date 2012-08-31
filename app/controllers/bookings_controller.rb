@@ -110,6 +110,8 @@ class BookingsController < ApplicationController
           end	
         end
 
+        @cannot_edit_rooms = false
+
 	      respond_to do |format|
 	        format.html # new.html.erb
 	        format.json { render json: @booking }
@@ -126,11 +128,11 @@ class BookingsController < ApplicationController
 
   # GET /bookings/1/edit
   def edit
-		if params[:cancel_booking].to_i == 1
-			@cancel_booking = params[:cancel_booking].to_i
-		else
-			@cancel_booking = 0
-		end
+    if @booking.trip.payment_status == Trip::NOT_PAID
+      @cannot_edit_rooms = false 
+    else
+      @cannot_edit_rooms = true 
+    end
   end
 
   # POST /bookings

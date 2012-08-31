@@ -48,8 +48,13 @@
 				</td>
 		    <td class="text">
 					<% booking.rooms.each do |room| %>
-						<span class="nowrap"><%= pluralize(room.number_of_rooms, room.room_type.room_type) %> @ 
-						<%= room.all_guests_per_room %> / room<br/></span>
+            <% if room.cancelled == 0 %>
+						  <span class="nowrap"><%= pluralize(room.number_of_rooms, room.room_type.room_type) %> @ 
+						  <%= room.all_guests_per_room %> / room<br/></span>
+            <% else %>
+						  <span class="strikethrough"><%= pluralize(room.number_of_rooms, room.room_type.room_type) %> @ 
+						  <%= room.all_guests_per_room %> / room<br/></span>
+            <% end %>
 					<% end %>
 					<span class="nowrap">Meal plan: <%= booking.meal_plan %></span>
 				</td>
@@ -60,26 +65,14 @@
 					<% end %>
 				</td>
 		    <td class="text"><%= booking.medical_constraints %></td>
-				<td>
-					<% if booking.cancelled == 0 %>
-						<span class="nowrap">Price: <%= number_to_currency(booking.total_price) %></span>
-					<% elsif booking.cancelled == 1 %>
-						<span class="text">Cancelled</span><br/>
-						<span class="nowrap">Price: <%= number_to_currency(booking.total_price) %></span><br/>
-						<span class="nowrap">Cancellation Chg: <%= number_to_currency(booking.cancellation_charge) %></span>
-					<% end %>
-				</td>
+				<td><span class="nowrap">Price: <%= number_to_currency(booking.total_price) %></span></td>
 		
 		    <td class='link'>
 					<%= link_to 'Show details', booking %><br/>
+		    	<%= link_to 'Edit', edit_booking_path(booking) %><br/>
 					<% if booking.trip.payment_status == Trip::NOT_PAID %>
-		    		<%= link_to 'Edit', edit_booking_path(booking) %><br/>
 		    		<%= link_to 'Destroy', booking, confirm: 'Are you sure?', 
 									method: :delete %>
-					<% else %>
-						<% if booking.cancelled == 0 %>
-							<%= link_to 'Cancel booking', edit_booking_path(booking, :cancel_booking => 1) %>
-						<% end %>
 					<% end %>
 				</td>
 		  </tr>

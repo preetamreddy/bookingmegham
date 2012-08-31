@@ -36,13 +36,11 @@
   <div class="field">
     <%= f.label :start_date %><br />
    	<%= f.date_select :start_date, :start_year => Time.now.year,
-			:end_year => Time.now.year + 1, :prompt => true, 
-			:disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
+        :end_year => Time.now.year + 1, :prompt => true %>
   </div>
 	<div class="field">
     <%= f.label :number_of_days, "Days" %><br />
-    <%= f.number_field :number_of_days, :min => 1, 
-			:disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
+    <%= f.number_field :number_of_days, :min => 1 %>
 	</div>
 
 	<div class="field">
@@ -50,13 +48,11 @@
 	</div>
 	<div class="nested_form">
 		<%= f.fields_for :trip_rooms %>
-		<% if (@trip.payment_status == Trip::NOT_PAID or @trip.new_record?) %>
-			<%= f.link_to_add "Add new", :trip_rooms %><br/>
-		<% end %>
+		<%= f.link_to_add "Add new", :trip_rooms %><br/>
 	</div>
 
 	<div class="field">
-		<%= f.label :value_added_services %>
+		<%= f.label :value_added_services, "Other services" %>
 	</div>
 	<div class="nested_form">
 		<%= f.fields_for :vas_bookings %>

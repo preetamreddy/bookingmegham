@@ -28,14 +28,14 @@
 		form {
 			.field {
 				label {
-					width: 10em;
+					width: 6.7em;
 				}
 			}
 		}
 	}
 
 	.nested_form {
-		padding-left: 10.8em;
+		padding-left: 7.5em;
 	}
 
 	.properties_table {
@@ -62,4 +62,9 @@
 			}
 		}
 	}
+
+  .strikethrough {
+    text-decoration: line-through;
+    color: red;
+  }
 }

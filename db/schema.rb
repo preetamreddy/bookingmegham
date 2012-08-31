@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120827153729) do
+ActiveRecord::Schema.define(:version => 20120831094513) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -189,6 +189,8 @@ ActiveRecord::Schema.define(:version => 20120827153729) do
     t.date     "check_in_date"
     t.date     "check_out_date"
     t.integer  "number_of_nights"
+    t.integer  "cancelled",                                 :default => 0
+    t.integer  "cancellation_charge",                       :default => 0
   end
 
   add_index "rooms", ["account_id"], :name => "index_rooms_on_account_id"

@@ -1,5 +1,5 @@
 class Room < ActiveRecord::Base
-	ROOM_OCCUPANCY_TYPES = [ "Single", "Double" ]
+	ROOM_OCCUPANCY_TYPES = [ "Double", "Single" ]
 
 	belongs_to :booking
 	belongs_to :room_type
@@ -37,10 +37,6 @@ class Room < ActiveRecord::Base
 
 	before_destroy :ensure_payments_are_not_made
 
-	def cancelled
-		booking.cancelled
-	end
-
 	def guests_per_room
 		if number_of_children_between_5_and_12_years == 0
 			" " + number_of_adults.to_s
@@ -59,11 +55,9 @@ class Room < ActiveRecord::Base
 		end
 	end
 
-	def delete_line_items
-		if line_items.any?
-			line_items.destroy_all
-		end
-	end
+  def price_for_rooms
+    cancelled == 1 ? 0 : room_rate * number_of_rooms * number_of_nights
+  end
 
 	private
 		def set_defaults_if_nil
@@ -128,6 +122,33 @@ class Room < ActiveRecord::Base
 			end
 		end
 
+		def update_line_items
+      if !new_record?
+		    delete_line_items
+      end
+			if room_type.ensure_availability_before_booking == 1 and cancelled == 0
+		    create_line_items
+      end
+		end
+	
+	  def delete_line_items
+		  if line_items.any?
+			  line_items.destroy_all
+		  end
+	  end
+
+		def create_line_items
+			date = check_in_date
+			while date < check_out_date do
+				line_item = line_items.build(room_type_id: room_type_id,
+					date: date,
+					booked_rooms: number_of_rooms,
+           account_id: account_id)
+				line_item.save!
+				date += 1
+			end
+		end
+
 		def update_service_tax_per_room_night
 			self.service_tax_per_room_night = room_type.service_tax
 		end
@@ -143,32 +164,15 @@ class Room < ActiveRecord::Base
 		end
 
 		def update_total_price
-			self.total_price = room_rate * number_of_rooms * number_of_nights
+      if cancelled == 1
+        self.total_price = cancellation_charge
+      else
+			  self.total_price = price_for_rooms
+      end
 		end
 
 		def update_service_tax
 			self.service_tax = service_tax_per_room_night * number_of_rooms * number_of_nights
-		end
-
-		def update_line_items
-      if !new_record?
-		    delete_line_items
-      end
-		  create_line_items
-		end
-	
-		def create_line_items
-			if room_type.ensure_availability_before_booking == 1
-				date = check_in_date
-				while date < check_out_date do
-					line_item = line_items.build(room_type_id: room_type_id,
-						date: date,
-						booked_rooms: number_of_rooms,
-            account_id: account_id)
-					line_item.save!
-					date += 1
-				end
-			end
 		end
 
 		def ensure_payments_are_not_made

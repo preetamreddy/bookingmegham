@@ -1,30 +1,22 @@
 <div class="nested_form_row">
 	<fieldset>
-		<%= f.radio_button :occupancy, 'Single',
-			:disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
+    <%= f.radio_button :occupancy, 'Single' %>
 		<%= f.label :single, "Single" %>
-		<%= f.radio_button :occupancy, 'Double',
-			:disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
+    <%= f.radio_button :occupancy, 'Double' %>
 		<%= f.label :double, "Double" %>
 	</fieldset>
 	
 	<%= f.label :number_of_rooms, "#" %>
-	<%= f.number_field :number_of_rooms, min: 1, max: 99,
-			:disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
+  <%= f.number_field :number_of_rooms, min: 1, max: 99 %>
 
 	<%= f.label :number_of_adults, "Adults" %>
-	<%= f.number_field :number_of_adults, min: 1, max: 4,
-			:disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
+  <%= f.number_field :number_of_adults, min: 1, max: 4 %>
 	
 	<%= f.label :number_of_children_between_5_and_12_years, "Children" %>
-	<%= f.number_field :number_of_children_between_5_and_12_years, 
-			min: 0, max: 2, :disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
+  <%= f.number_field :number_of_children_between_5_and_12_years %>
 	
 	<%= f.label :number_of_children_below_5_years, "Infants" %>
-	<%= f.number_field :number_of_children_below_5_years, cols: 1,
-			min: 0, max: 2, :disabled => (@trip.payment_status != Trip::NOT_PAID and !@trip.new_record?) %>
+  <%= f.number_field :number_of_children_below_5_years, cols: 1 %>
 	
-	<% if (@trip.payment_status == Trip::NOT_PAID or @trip.new_record?) %>
-		<%= f.link_to_remove "x" %>
-	<% end %>
+	<%= f.link_to_remove "x" %>
 </div>

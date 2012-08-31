@@ -1,35 +1,47 @@
 <div class="nested_form_row">
+  <% cannot_edit_room = ((f.object.cancelled == 1 or @cannot_edit_rooms) and !f.object.new_record?) %> 
+  <% can_edit_room = !cannot_edit_room %>
 	<fieldset>
-    <%= f.radio_button :occupancy, 'Single', :required => true %>
-		<%= f.label :single, "Single" %>
-		<%= f.radio_button :occupancy, 'Double' %>
-		<%= f.label :double, "Double" %>
+    <%= f.radio_button :occupancy, 'Single', :required => true, 
+          :disabled => cannot_edit_room %>
+		<%= f.label :single, "Sgl" %>
+    <%= f.radio_button :occupancy, 'Double', 
+          :disabled => cannot_edit_room %>
+		<%= f.label :double, "Dbl" %>
 	</fieldset>
 	
-	<%= f.label :room_type_id, "Room type" %>
 	<% if @booking.property_id %>
   	<%= f.collection_select(:room_type_id,
 					RoomType.scoped_by_account_id(current_user.account_id).
-					find_all_by_property_id(@booking.property_id), :id, :room_type) %>
-	<% else %>
-  	<%= f.collection_select(:room_type_id,
-					RoomType.scoped_by_account_id(current_user.account_id).
-					find(:all), :id, :long_name) %>
+            find_all_by_property_id(@booking.property_id),
+          :id, :room_type, {}, 
+          { :disabled => cannot_edit_room } ) %>
 	<% end %>
 
 	<%= f.label :number_of_rooms, "#" %>
-  <%= f.number_field :number_of_rooms, min: 1, max: 99, :required => true %>
+  <%= f.number_field :number_of_rooms, min: 1, max: 99, :required => true,
+			  :disabled => cannot_edit_room %>
 
 	<%= f.label :number_of_adults, "Adults" %>
-  <%= f.number_field :number_of_adults, min: 1, max: 4, :required => true %>
-	
+  <%= f.number_field :number_of_adults, min: 1, max: 4, :required => true,
+			  :disabled => cannot_edit_room %>
+		
 	<%= f.label :number_of_children_between_5_and_12_years, "Children" %>
-	<%= f.number_field :number_of_children_between_5_and_12_years, 
-				min: 0, max: 2 %>
-	
+  <%= f.number_field :number_of_children_between_5_and_12_years, min: 0, max: 2,
+			  :disabled => cannot_edit_room %>
+		
 	<%= f.label :number_of_children_below_5_years, "Infants" %>
-	<%= f.number_field :number_of_children_below_5_years, 
-				min: 0, max: 2 %>
-	
-	<%= f.link_to_remove "x" %>
+  <%= f.number_field :number_of_children_below_5_years, min: 0, max: 2,
+			  :disabled => cannot_edit_room %>
+ 
+  <% if can_edit_room %> 
+	  <%= f.link_to_remove "x" %>
+  <% end %>
+
+  <% if cannot_edit_room %> 
+    <%= f.label :cancelled, "CXL" %>
+    <%= f.check_box :cancelled, :disabled => (f.object.cancelled == 1) %>
+	  <%= f.label :cancellation_charge, "CXL Fee" %>
+    <%= f.number_field :cancellation_charge, min: 0, max: 999999 %>
+  <% end %>
 </div>

@@ -39,26 +39,30 @@
 	<b>Rooms:</b>
 	<table class="nested_table">
 		<tr>
-			<th class="text">Single / Double</th>
-			<th class="text">Room type</th>
-			<th class="number">Number of rooms</th>
+			<th class="text">Occupancy</th>
+			<th class="nowrap">Room type</th>
+			<th class="number"># rooms</th>
 			<th class="number">Adults / room</th>
 			<th class="number">Children / room</th>
 			<th class="number">Infants / room</th>
-			<th class="number">Room rate / night</th>
-			<th class="number">Total price</th>
+			<th class="currency">Room rate</th>
+			<th class="currency">Price for rooms</th>
+      <th class="text">Cancelled?</th>
+			<th class="currency">Cancellation fee</th>
 		</tr>
 
 		<% @booking.rooms.each do |room| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 				<td class="text"><%= room.occupancy %></td>
-				<td class="text"><%= room.room_type.room_type %></td>
+				<td class="nowrap"><%= room.room_type.room_type %></td>
 				<td class="number"><%= room.number_of_rooms %></td>
 				<td class="number"><%= room.number_of_adults %></td>
 				<td class="number"><%= room.number_of_children_between_5_and_12_years %></td>
 				<td class="number"><%= room.number_of_children_below_5_years %></td>
-				<td class="number"><%= number_to_currency(room.room_rate) %></td>
-				<td class="number"><%= number_to_currency(room.total_price) %></td>
+				<td class="currency"><%= number_to_currency(room.room_rate) %></td>
+				<td class="currency"><%= number_to_currency(room.price_for_rooms) %></td>
+				<td class="text"><%= room.cancelled.to_english %></td>
+				<td class="currency"><%= number_to_currency(room.cancellation_charge) %></td>
 			</tr>
 		<% end %>
 	</table>
@@ -69,7 +73,7 @@
 </p>
 
 <% if @booking.vas_bookings.any? %>
-	<b>Value Added Services:</b>
+	<b>Other Services:</b>
 	<table class="nested_table">
 		<tr>
 			<th class="text">Name</th>
@@ -116,11 +120,6 @@
   <span class="saved_value"><%= number_to_currency(@booking.service_tax) if @booking.service_tax %></span>
 </p>
 
-<%= hidden_p_unless(@booking.cancelled == 1) do %>
-  <b>Cancellation charge:</b>
-  <span class="saved_value"><%= number_to_currency(@booking.cancellation_charge) %></span>
-<% end %>
-
 <b>Billing instructions:</b>
 <table class="nested_table">
 	<tr>
@@ -152,11 +151,7 @@
 </p>
 
 <div class="action_container">
-	<% if @booking.trip.payment_status == Trip::NOT_PAID %>
-		<%= link_to 'Edit', edit_booking_path(@booking) %>
-  <% else %>
-    &nbsp;
-	<% end %>
+	<%= link_to 'Edit', edit_booking_path(@booking) %>
 </div>
 
 <%= link_to 'Back to Booking Listing', bookings_path, :class => "back_link" %>

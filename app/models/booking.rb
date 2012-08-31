@@ -30,8 +30,6 @@ class Booking < ActiveRecord::Base
 		:ensure_does_not_have_rooms,
     :ensure_does_not_have_vas_bookings
 
-  after_update :delete_line_items_for_cancelled_bookings
-
 	def ensure_availability_before_booking
 		property.ensure_availability_before_booking
 	end
@@ -146,11 +144,7 @@ class Booking < ActiveRecord::Base
 		end
 
 		def update_total_price
-			if cancelled == 0
-				self.total_price = price_for_rooms + price_for_vas
-			else
-				self.total_price = cancellation_charge
-			end
+			self.total_price = price_for_rooms + price_for_vas
 		end
 
 		def ensure_payments_are_not_made
@@ -179,12 +173,4 @@ class Booking < ActiveRecord::Base
 				return false
 			end
 		end
-
-    def delete_line_items_for_cancelled_bookings
-		  if cancelled_changed? and cancelled == 1
-        rooms.all.each do |room|
-			    room.delete_line_items
-        end
-		  end
-    end
 end
