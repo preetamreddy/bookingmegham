@@ -138,7 +138,7 @@
 					<tr>
 						<td class="left" colspan=4>Room bookings</td>
 					</tr>
-					<% booking.rooms.each do |room| %>
+          <% booking.rooms.find(:all, :conditions => [ 'cancelled != ?', 1 ]).each do |room| %>
 						<tr>
 							<td colspan=2><li><%= room.room_type.room_type %> - <%= room.occupancy %> occupancy @ <%= room.guests_per_room %> / room</li></td>
 							<td colspan=2>Number of rooms: <%= room.number_of_rooms %></td>
