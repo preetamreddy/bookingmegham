@@ -5,6 +5,8 @@ class Account < ActiveRecord::Base
 	validates :name, presence: true
 	validates :subdomain, :phone_number_1, :email, :url,
 		presence: true, :uniqueness => { :case_sensitive => false }
+  validates :phone_number_1,
+    :format => { :with => /^[\+]?[\d\s]*$/, :message => "is not valid" }
 
 	before_destroy :ensure_not_referenced_by_agencies,
     :ensure_not_referenced_by_guests,

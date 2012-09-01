@@ -4,9 +4,10 @@ class Agency < ActiveRecord::Base
 	has_many :guests
 
 	validates :name, presence: true
-	validates_uniqueness_of :email_id, :phone_number, :scope => :account_id, 
+	validates_uniqueness_of :email_id, :phone_number, :phone_number_2, :scope => :account_id, 
 		:allow_nil => true, :allow_blank => true, :case_sensitive => false
-	validates :phone_number, :format => { :with => /^[\+]?[\d\s]*$/, :message => "is not valid" }
+	validates :phone_number, :phone_number_2,
+    :format => { :with => /^[\+]?[\d\s]*$/, :message => "is not valid" }
 
 	before_save :titleize, :strip_whitespaces
 
