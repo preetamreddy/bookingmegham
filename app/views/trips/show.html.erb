@@ -87,20 +87,20 @@
   <span class="saved_value"><%= number_to_currency(@trip.total_price) %>
 </p>
 
-<p>
+<%= hidden_p_unless(@trip.is_direct_booking?) do %>
   <b>Discount:</b>
   <span class="saved_value"><%= number_to_currency(@trip.discount) %>
-</p>
+<% end %>
 
-<p>
+<%= hidden_p_unless(!@trip.is_direct_booking?) do %>
   <b>TAC:</b>
   <span class="saved_value"><%= number_to_currency(@trip.tac) %>
-</p>
+<% end %>
 
-<p>
+<%= hidden_p_unless(!@trip.is_direct_booking?) do %>
   <b>TDS on TAC:</b>
   <span class="saved_value"><%= number_to_currency(@trip.tds) %>
-</p>
+<% end %>
 
 <p>
   <b>Final price:</b>

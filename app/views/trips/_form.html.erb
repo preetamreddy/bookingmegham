@@ -31,7 +31,7 @@
   <div class="field">
     <%= f.label :name, "Trip tag" %><br />
     <%= f.text_field :name, 
-      :placeholder => @trip.customer_type == Trip::GUEST ? 'Trip name' : 'Guest name', size: 30 %>
+      :placeholder => @trip.is_direct_booking? ? 'Trip name' : 'Guest name', size: 30 %>
   </div>
   <div class="field">
     <%= f.label :start_date %><br />
@@ -71,15 +71,15 @@
 			<%= number_to_currency(@trip.total_price) %>
 		</span></p>
 	<% end %>
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+	<%= hidden_div_if((@trip.new_record? or !@trip.is_direct_booking?), class: "field") do %>
     <%= f.label :discount, "Discount" %><br />
    	<%= f.number_field :discount, :min => 0 %>
 	<% end %>
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+	<%= hidden_div_if((@trip.new_record? or @trip.is_direct_booking?), class: "field") do %>
     <%= f.label :tac, "TAC" %><br />
    	<%= f.number_field :tac, :min => 0 %>
 	<% end %>
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+	<%= hidden_div_if((@trip.new_record? or @trip.is_direct_booking?), class: "field") do %>
     <%= f.label :tds, "TDS on TAC" %><br />
 		<p><span class="highlight">
 			<%= number_to_currency(@trip.tds) %>

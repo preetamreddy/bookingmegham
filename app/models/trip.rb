@@ -94,12 +94,16 @@ class Trip < ActiveRecord::Base
 		return guests
 	end
 
+  def is_direct_booking?
+    customer_type == GUEST ? true : false
+  end
+
   def guest_name
-    customer_type == GUEST ? customer.name_with_title : name
+    is_direct_booking? ? customer.name_with_title : name
   end
 
   def guest_name_with_agency
-    customer_type == GUEST ? customer.name : customer.name + ' - ' + name
+    is_direct_booking? ? customer.name : customer.name + ' - ' + name
   end
 
   def guest_phone_number
