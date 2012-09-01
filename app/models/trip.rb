@@ -28,6 +28,8 @@ class Trip < ActiveRecord::Base
 	validates_numericality_of :customer_id, :number_of_days,
 						only_integer: true, greater_than: 0, allow_nil: true,
 						message: "should be a number greater than 0"
+  validates :phone_number, allow_nil: true,
+        :format => { :with => /^[\+]?[\d\s]*$/, :message => "is not valid" }
 
 	before_save :strip_whitespaces, :titleize,
 							:update_end_date, :ensure_end_date_is_greater_than_start_date,
@@ -107,12 +109,8 @@ class Trip < ActiveRecord::Base
   end
 
   def guest_phone_number
-    customer.phone_number
+    is_direct_booking? ? customer.phone_number : phone_number
   end
-
-	def long_name
-		customer.name + ' - ' + name
-	end
 
   def name_with_dates
     name + " (" + start_date.to_s(:short) + " to " + end_date.to_s(:short) + ")"

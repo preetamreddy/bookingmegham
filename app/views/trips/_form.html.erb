@@ -33,6 +33,10 @@
     <%= f.text_field :name, 
       :placeholder => @trip.is_direct_booking? ? 'Trip name' : 'Guest name', size: 30 %>
   </div>
+	<%= hidden_div_if(@trip.is_direct_booking?, class: "field") do %>
+    <%= f.label :phone_number, "Guest phone number" %><br />
+   	<%= f.text_field :phone_number %>
+	<% end %>
   <div class="field">
     <%= f.label :start_date %><br />
    	<%= f.date_select :start_date, :start_year => Time.now.year,
@@ -127,10 +131,6 @@
 	<div class="field">
     <%= f.label :medical_constraints, "Medical constraints" %><br />
     <%= f.text_field :medical_constraints %>
-  </div>
-	<div class="field">
-    <%= f.label :email_ids, "Dist. email id(s)" %><br />
-    <%= f.text_field :email_ids %>
   </div>
   <div class="field">
     <%= f.label :remarks, "Notes" %><br />

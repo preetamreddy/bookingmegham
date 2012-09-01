@@ -16,6 +16,11 @@
   <span class="saved_value"><%= @trip.name %>
 </p>
 
+<%= hidden_p_unless(!@trip.is_direct_booking?) do %>
+  <b>Guest phone number:</b>
+  <span class="saved_value"><%= @trip.phone_number %>
+<% end %>
+
 <p>
   <b>Start date:</b>
   <span class="saved_value"><%= l @trip.start_date %>
@@ -145,11 +150,6 @@
 <p>
   <b>Medical constraints:</b>
   <span class="saved_value"><%= @trip.medical_constraints %>
-</p>
-
-<p>
-  <b>Dist. email id(s):</b>
-  <span class="saved_value"><%= @trip.email_ids %>
 </p>
 
 <p>

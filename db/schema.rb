@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120831094513) do
+ActiveRecord::Schema.define(:version => 20120901081452) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -267,7 +267,6 @@ ActiveRecord::Schema.define(:version => 20120831094513) do
     t.string   "medical_constraints"
     t.integer  "agency_id"
     t.integer  "advisor_id"
-    t.string   "email_ids"
     t.date     "invoice_date"
     t.integer  "direct_booking",      :default => 1
     t.integer  "tac",                 :default => 0
@@ -279,6 +278,7 @@ ActiveRecord::Schema.define(:version => 20120831094513) do
     t.integer  "paid",                :default => 0
     t.string   "customer_type"
     t.integer  "customer_id"
+    t.string   "phone_number"
   end
 
   add_index "trips", ["account_id"], :name => "index_trips_on_account_id"
