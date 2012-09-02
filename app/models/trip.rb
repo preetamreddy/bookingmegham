@@ -2,7 +2,6 @@ class Trip < ActiveRecord::Base
 	NOT_PAID = 'Not Paid'
 	PARTIALLY_PAID = 'Partially Paid'
 	FULLY_PAID = 'Fully Paid'
-	CONFIRMED_NOT_PAID = "Confirmed Not Paid"
 	TDS_PERCENT = 10
   GUEST = "Guest"
 

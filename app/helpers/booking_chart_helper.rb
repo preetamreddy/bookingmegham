@@ -6,8 +6,6 @@ module BookingChartHelper
 			attributes["class"] = "partially_paid"
 		elsif payment_status == Trip::FULLY_PAID
 			attributes["class"] = "fully_paid"
-		elsif payment_status == Trip::CONFIRMED_NOT_PAID
-			attributes["class"] = "confirmed_not_paid"
     else
       attributes["class"] = "text" 
 		end
