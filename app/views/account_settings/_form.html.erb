@@ -1,0 +1,57 @@
+<%= form_for(@account_setting) do |f| %>
+  <% if @account_setting.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@account_setting.errors.count, "error") %> prohibited this account_setting from being saved:</h2>
+
+      <ul>
+      <% @account_setting.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :registered_name %><br />
+    <%= f.text_field :registered_name %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :name_abbreviation %><br />
+    <%= f.text_field :name_abbreviation %>
+  </div>
+  <div class="field">
+    <%= f.label :phone_number_1, "Phone number" %><br />
+    <%= f.text_field :phone_number_1 %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :postal_address %><br />
+    <%= f.text_area :postal_address, rows: 6 %>
+  </div>
+  <div class="field">
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </div>
+  <div class="field">
+    <%= f.label :pan %><br />
+    <%= f.text_field :pan %>
+  </div>
+  <div class="field">
+    <%= f.label :service_tax_number %><br />
+    <%= f.text_field :service_tax_number %>
+  </div>
+  <div class="field">
+    <%= f.label :tds_percent %><br />
+    <%= f.number_field :tds_percent %>
+  </div>
+  <div class="action_container">
+    <%= f.submit %>
+  </div>
+<% end %>

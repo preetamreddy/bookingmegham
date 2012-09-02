@@ -1,0 +1,57 @@
+<h1>Account Settings</h1>
+
+<div class="show_saved_record">
+<p>
+  <b>Registered name:</b>
+  <span class="saved_value"><%= @account_setting.registered_name %></span>
+</p>
+
+<p>
+  <b>Name:</b>
+  <span class="saved_value"><%= @account_setting.name %></span>
+</p>
+
+<p>
+  <b>Name abbreviation:</b>
+  <span class="saved_value"><%= @account_setting.name_abbreviation %></span>
+</p>
+
+<p>
+  <b>Phone number:</b>
+  <span class="saved_value"><%= @account_setting.phone_number_1 %></span>
+</p>
+
+<p>
+  <b>Email:</b>
+  <span class="saved_value"><%= @account_setting.email %></span>
+</p>
+
+<p>
+  <b>Postal address:</b>
+  <span class="saved_value"><%= @account_setting.postal_address %></span>
+</p>
+
+<p>
+  <b>Url:</b>
+  <span class="saved_value"><%= @account_setting.url %></span>
+</p>
+
+<p>
+  <b>Pan:</b>
+  <span class="saved_value"><%= @account_setting.pan %></span>
+</p>
+
+<p>
+  <b>Service tax number:</b>
+  <span class="saved_value"><%= @account_setting.service_tax_number %></span>
+</p>
+
+<p>
+  <b>Tds percent:</b>
+  <span class="saved_value"><%= @account_setting.tds_percent %></span>
+</p>
+</div>
+
+<div class="action_container">
+    <%= link_to 'Edit', edit_account_setting_path(@account_setting) %>
+</div>

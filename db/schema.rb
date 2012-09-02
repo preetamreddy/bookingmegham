@@ -11,7 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120901081452) do
+ActiveRecord::Schema.define(:version => 20120902173833) do
+
+  create_table "account_settings", :force => true do |t|
+    t.string   "registered_name"
+    t.string   "name"
+    t.string   "name_abbreviation"
+    t.string   "phone_number_1"
+    t.string   "email"
+    t.text     "postal_address"
+    t.string   "url"
+    t.string   "pan"
+    t.string   "service_tax_number"
+    t.integer  "tds_percent"
+    t.integer  "account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "accounts", :force => true do |t|
     t.string   "name"

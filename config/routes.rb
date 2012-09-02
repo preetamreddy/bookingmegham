@@ -1,5 +1,7 @@
 Bookingmegham::Application.routes.draw do
 
+  resources :account_settings, :only => [:show, :edit, :update]
+
   resources :accounts
 
 	authenticated :user do
