@@ -13,7 +13,7 @@ class AccountSetting < ActiveRecord::Base
 
   private
     def set_defaults_if_nil
-      self.tds_percent ||= 10
+      self.tds_percent ||= 0
     end
 
 		def strip_whitespaces

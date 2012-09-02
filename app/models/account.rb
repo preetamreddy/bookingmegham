@@ -25,6 +25,7 @@ class Account < ActiveRecord::Base
                             :email => email,
                             :postal_address => postal_address,
                             :url => url,
+                            :tds_percent => 10,
                             :account_id => id)
     end
 
