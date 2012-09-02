@@ -192,7 +192,7 @@
 					<tr>
 						<td colspan=3></td>
 						<td class="text">T.D.S.</td>
-						<td class="text"><%= Trip::TDS_PERCENT%>%</td>
+						<td class="text"><%= @trip.tds_percent %>%</td>
 						<td class="number"> <%= number_to_currency_wo_symbol(@trip.tds) %></td>
 					</tr>
 				<% end %>

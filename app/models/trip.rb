@@ -2,7 +2,6 @@ class Trip < ActiveRecord::Base
 	NOT_PAID = 'Not Paid'
 	PARTIALLY_PAID = 'Partially Paid'
 	FULLY_PAID = 'Fully Paid'
-	TDS_PERCENT = 10
   GUEST = "Guest"
 
 	belongs_to :customer, :polymorphic => true
@@ -119,8 +118,12 @@ class Trip < ActiveRecord::Base
 		price_for_vas + price_for_transport + price_for_rooms
 	end
 
+  def tds_percent
+    AccountSetting.find_by_account_id(account_id).tds_percent
+  end
+
 	def tds
-		(tac * TDS_PERCENT / 100.0).round
+		(tac * tds_percent / 100.0).round
 	end
 
 	def final_price
