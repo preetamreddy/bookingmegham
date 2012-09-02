@@ -1,7 +1,5 @@
 class TaxiBookingNotifier < ActionMailer::Base
-	ACCOUNTS_EMAIL_ID = "accounts@banjaracamps.com"
-
-	default from: "Banjara Camps <banjaracamps@ezbook.in>"
+  default from: "EZBook <info@ezbook.in>"
 
   def details(taxi_booking)
 		@taxi_booking = taxi_booking

@@ -1,9 +1,7 @@
 class PaymentNotifier < ActionMailer::Base
 	add_template_helper(ApplicationHelper)
 
-	ACCOUNTS_EMAIL_ID = "accounts@banjaracamps.com"
-
-	default from: "Banjara Camps <banjaracamps@ezbook.in>"
+  default from: "EZBook <info@ezbook.in>"
 
   def receipt(payment, user_id)
 		@payment = payment
