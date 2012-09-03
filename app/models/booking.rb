@@ -25,6 +25,8 @@ class Booking < ActiveRecord::Base
 	before_save :strip_whitespaces, :titleize,
 							:update_total_price
 
+  before_create :set_counter
+
 	before_destroy :ensure_payments_are_not_made,
 		:ensure_does_not_have_rooms,
     :ensure_does_not_have_vas_bookings
@@ -137,6 +139,10 @@ class Booking < ActiveRecord::Base
 		def update_total_price
 			self.total_price = price_for_rooms + price_for_vas
 		end
+
+    def set_counter
+      self.counter = trip.bookings_counter + 1
+    end
 
 		def ensure_payments_are_not_made
 			if trip.payment_status == Trip::NOT_PAID

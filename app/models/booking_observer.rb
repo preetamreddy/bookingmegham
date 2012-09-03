@@ -3,6 +3,7 @@ class BookingObserver < ActiveRecord::Observer
 		delta_total_price = booking.total_price
 		delta_service_tax = booking.service_tax
 		update_price_for_rooms_and_service_tax(booking.trip_id, delta_total_price, delta_service_tax)
+    Trip.update_counters booking.trip_id, :bookings_count => 1
 	end
 
 	def after_update(booking)

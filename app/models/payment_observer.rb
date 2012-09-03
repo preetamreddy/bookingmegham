@@ -2,6 +2,7 @@ class PaymentObserver < ActiveRecord::Observer
 	def after_create(payment)
 		delta_amount = payment.amount
 		update_paid_amount(payment.trip_id, delta_amount)
+    Trip.update_counters payment.trip_id, :payments_count => 1
 	end
 
 	def after_update(payment)

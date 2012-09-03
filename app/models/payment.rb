@@ -10,6 +10,8 @@ class Payment < ActiveRecord::Base
 
 	before_save :set_defaults_if_nil, :set_payee_name, :titleize
 
+  before_create :set_counter
+
 	def receipt_number
 		"BCRPL/#{trip_id}/#{id}"
 	end
@@ -62,4 +64,8 @@ class Payment < ActiveRecord::Base
 				self.payee_name = payee_name.titleize
 			end
 		end
+
+    def set_counter
+      self.counter = trip.payments_count + 1
+    end
 end
