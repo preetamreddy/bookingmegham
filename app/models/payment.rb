@@ -66,6 +66,6 @@ class Payment < ActiveRecord::Base
 		end
 
     def set_counter
-      self.counter = trip.payments_count + 1
+      self.counter = trip.payments_counter + 1
     end
 end

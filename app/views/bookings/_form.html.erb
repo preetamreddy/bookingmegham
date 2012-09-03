@@ -11,12 +11,6 @@
     </div>
   <% end %>
 
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
-		<%= f.label :id, "Booking ID" %><br />
-		<p><span class="highlight">
-			<%= @booking.id %>
-		</span></p>
-	<% end %>
   <div class="field">
    	<%= f.label :trip_id %><br />
 		<% if @booking.trip_id %>

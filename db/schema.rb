@@ -297,8 +297,8 @@ ActiveRecord::Schema.define(:version => 20120903112644) do
     t.string   "customer_type"
     t.integer  "customer_id"
     t.string   "phone_number"
-    t.integer  "payments_count",      :default => 0
-    t.integer  "bookings_count",      :default => 0
+    t.integer  "payments_counter",    :default => 0
+    t.integer  "bookings_counter",    :default => 0
   end
 
   add_index "trips", ["account_id"], :name => "index_trips_on_account_id"

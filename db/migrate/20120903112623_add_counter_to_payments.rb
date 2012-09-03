@@ -4,12 +4,8 @@ class AddCounterToPayments < ActiveRecord::Migration
 
     Payment.reset_column_information
 
-    Trip.find(:all).each do |trip|
-      counter = 1
-      trip.payments.order(:created_at).find(:all).each do |payment|
-        payment.update_column(:counter, counter)
-        counter += 1
-      end
+    Payment.find(:all).each do |payment|
+      payment.update_column(:counter, payment.id)
     end
   end
 
