@@ -6,12 +6,13 @@ class TripNotifier < ActionMailer::Base
   def itinerary(trip, user_id)
 		@trip = trip
 		@user = User.find(user_id)
+    @account_setting = AccountSetting.find_by_account_id(@user.account_id)
 
 		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
-				subject: "Itinerary for your trip #{@trip.id}-#{@trip.name}") do |format|
+				subject: "Itinerary for your trip, ##{@trip.id} (ref: #{@trip.name})") do |format|
 			format.text
 			format.pdf do
-				attachments["Itinerary #{@trip.id}-#{@trip.name}.pdf"] = WickedPdf.new.pdf_from_string(
+				attachments["Itinerary #{@trip.itinerary_number} (ref: #{@trip.name}).pdf"] = WickedPdf.new.pdf_from_string(
 					render_to_string(:pdf => "itinerary", 
 					:template 						=> 'trip_notifier/itinerary.pdf.erb',
 					:layout								=> 'layouts/default.html.erb'))
@@ -22,12 +23,13 @@ class TripNotifier < ActionMailer::Base
   def invoice(trip, user_id)
 		@trip = trip
 		@user = User.find(user_id)
+    @account_setting = AccountSetting.find_by_account_id(@user.account_id)
 
 		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
-				subject: "Invoice for trip #{@trip.id}-#{@trip.name}") do |format|
+				subject: "Invoice for your trip, ##{@trip.id} (ref: #{@trip.name})") do |format|
 			format.text
 			format.pdf do
-				attachments["Invoice #{@trip.customer.name} (ref #{@trip.id}-#{@trip.name}).pdf"] = 
+				attachments["Invoice #{@trip.invoice_number} (ref: #{@trip.name}).pdf"] = 
 					WickedPdf.new.pdf_from_string(
 					render_to_string(:pdf => "invoice", 
 					:template 						=> 'trip_notifier/invoice.pdf.erb',
@@ -39,12 +41,13 @@ class TripNotifier < ActionMailer::Base
   def vouchers(trip, user_id)
 		@trip = trip
 		@user = User.find(user_id)
+    @account_setting = AccountSetting.find_by_account_id(@user.account_id)
 
 		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
-				subject: "Vouchers for trip #{@trip.id}-#{@trip.name}") do |format|
+				subject: "Vouchers for your trip, ##{@trip.id} (ref: #{@trip.name})") do |format|
 			format.text
 			format.pdf do
-				attachments["Vouchers #{@trip.id}-#{@trip.name}.pdf"] = 
+				attachments["Vouchers #{@trip.voucher_number} (ref: #{@trip.name}).pdf"] = 
 					WickedPdf.new.pdf_from_string(
 					render_to_string(:pdf => "vouchers", 
 					:template 						=> 'trip_notifier/vouchers.pdf.erb',

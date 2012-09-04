@@ -82,14 +82,10 @@ class Trip < ActiveRecord::Base
 	end
 
 	def guests
-		guests = "(" + number_of_adults.to_s
-		if number_of_children_between_5_and_12_years != 0
-			guests = guests + " + " + number_of_children_between_5_and_12_years.to_s
+		guests = number_of_adults.to_s
+		if number_of_children != 0
+			guests = guests + " + " + number_of_children.to_s
 		end
-		if number_of_children_below_5_years != 0
-			guests = guests + " + " + number_of_children_below_5_years.to_s
-		end
-		guests = guests + ")"
 
 		return guests
 	end
@@ -149,6 +145,21 @@ class Trip < ActiveRecord::Base
 	def net_after_taxes
 		final_price - tds - service_tax
 	end
+
+  def itinerary_number
+    account_name_abbreviation = AccountSetting.find_by_account_id(account_id).name_abbreviation
+    "#{account_name_abbreviation}/#{id}"
+  end
+
+  def invoice_number
+    account_name_abbreviation = AccountSetting.find_by_account_id(account_id).name_abbreviation
+    "#{account_name_abbreviation}/#{start_date.to_s(:year)}/#{id}"
+  end
+
+  def voucher_number
+    account_name_abbreviation = AccountSetting.find_by_account_id(account_id).name_abbreviation
+    "#{account_name_abbreviation}/#{id}"
+  end
 
 	private
 		def init

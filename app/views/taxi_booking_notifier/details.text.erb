@@ -1,19 +1,14 @@
-to: <%= @taxi_booking.taxi.agency.email_id %>
-cc: <%= @trip.advisor.email_id %>
+TO: <%= @taxi_booking.taxi.agency.email_id %>
 
-Greetings from Banjara Camps!
+Greetings from <%= @account_setting.name %>!
 
-We have a requirement to arrange transportation for a guest as below:
+We have a requirement to arrange transportation for a guest. Please find the necessary details below:
 
 <%= pluralize(@taxi_booking.number_of_vehicles, @taxi_booking.taxi.model) %> starting <%= l @taxi_booking.start_date %> for <%= pluralize(@taxi_booking.number_of_days, "day") %>, ending on <%= l @taxi_booking.end_date %>.
 
 Guest Name: <%= @trip.guest_name %>
 Phone Number: <%= @trip.guest_phone_number %>
-<% if @trip.number_of_children == 0 %>
-Number of people: <%= @trip.number_of_adults %>
-<% else %>
-Number of people: <%= @trip.number_of_adults %> + <%= @trip.number_of_children %>
-<% end %>
+Number of people: <%= @trip.guests %>
 
 Pickup address: <%= @taxi_booking.pickup_address %>
 Pickup time: <%= l @taxi_booking.pickup_time, :format => :short if @taxi_booking.pickup_time %>
@@ -30,9 +25,9 @@ Itinerary:
 <% end %>		
 
 With warm regards,
-<%= @taxi_booking.trip.advisor.name %>
-<%= @taxi_booking.trip.advisor.email_id %>
-<%= @taxi_booking.trip.advisor.account.phone_number_1 %>
-<%= @taxi_booking.trip.advisor.account.name %>
-<%= @taxi_booking.trip.advisor.account.postal_address %>
-<%= @taxi_booking.trip.advisor.account.url %>
+<%= @trip.advisor.name %>
+<%= @trip.advisor.email_id %>
+<%= @account_setting.phone_number_1 %>
+<%= @account_setting.name %>
+<%= @account_setting.postal_address %>
+<%= @account_setting.url %>

@@ -81,6 +81,11 @@ class Booking < ActiveRecord::Base
 		end
 	end
 
+  def voucher_number
+    account_name_abbreviation = AccountSetting.find_by_account_id(account_id).name_abbreviation
+    "#{account_name_abbreviation}/#{trip_id}/#{counter}"
+  end
+
 	private
     def set_defaults_if_nil
       self.remarks ||= trip.remarks

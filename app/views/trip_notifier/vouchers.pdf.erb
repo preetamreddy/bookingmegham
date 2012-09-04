@@ -106,7 +106,7 @@
 						<td colspan=2>
 							<%= wicked_pdf_image_tag Account.find(@trip.account_id).logo_file_name	%>
 						</td>
-						<td colspan=2 class="agency_address"><%= @trip.advisor.account.name %><br/><%= @trip.advisor.account.postal_address %><br/>Phone: <%= @trip.advisor.account.phone_number_1 %></td>
+						<td colspan=2 class="agency_address"><%= @account_setting.name %><br/><%= @account_setting.postal_address %><br/>Phone: <%= @account_setting.phone_number_1 %></td>
 						<td colspan=2 class="property_address">
 							The Manager
 							<%= booking.property.address %>
@@ -116,7 +116,7 @@
 				</table>
 				<table class="table">
 					<tr>
-						<td class="left">Voucher: <span class="bold"><%= @trip.id%>/<%= booking.id %></span></td>
+						<td class="left">Voucher: <span class="bold"><%= booking.voucher_number %></span></td>
 						<td class="right">Date: <%= l Date.today %></td>
 					</tr>
 				</table>
@@ -161,7 +161,7 @@
 						<td colspan=2>Departure to: <%= booking.departure_destination %></td>
 					</tr>
 					<tr>
-						<td colspan=4>In case of delay, please inform camp / retreat directly.</td>
+						<td colspan=4>In case of delay, please inform the resort directly.</td>
 					</tr>
 					<tr>
 						<td class="left" colspan=4><span class="bold">Billing Instructions</span></td>
@@ -179,7 +179,7 @@
 						<td colspan=2><%= booking.collect_for_driver_and_help.to_english %></td>
 					</tr>
 					<tr>
-						<td colspan=2><li>Please bill Banjara H.O. on EPAI / CPAI / MAPAI / APAI</li></td>
+          <td colspan=2><li>Please bill <%= @account_setting.name %> on EPAI / CPAI / MAPAI / APAI</li></td>
 						<td colspan=2><%= booking.bill_agent_on_chosen_plan.to_english %></td>
 					</tr>
 				</table>	

@@ -1,16 +1,15 @@
-to: <%= @trip.customer.email_id %>
-cc: <%= @trip.advisor.email_id %>, <%= TripNotifier::ACCOUNTS_EMAIL_ID %>
+To: <%= @trip.customer.email_id %>
 
 Dear <%= @trip.customer.last_name_with_title %>
 
-Thank you for planning your holiday with Banjara Camps and Retreats.
+Thank you for planning your holiday with <%= @account_setting.name %>.
 
-The vouchers for your trip '<%= @trip.name %>' are attached with this email.
+Attached are the vouchers for your trip, #<%= @trip.id %>, (ref: <%= @trip.name %>).
 
 With warm regards,
 <%= @user.advisor.name %>
 <%= @user.advisor.email_id %>
-<%= @user.account.phone_number_1 %>
-<%= @user.account.name %>
-<%= @user.account.postal_address %>
-<%= @user.account.url %>
+<%= @account_setting.phone_number_1 %>
+<%= @account_setting.name %>
+<%= @account_setting.postal_address %>
+<%= @account_setting.url %>

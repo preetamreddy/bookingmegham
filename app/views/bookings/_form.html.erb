@@ -109,7 +109,7 @@
 		<%= f.check_box :collect_for_driver_and_help, default: 1 %>
 		<%= f.label :collect_for_driver_and_help, "Collect for driver and help" %><br/>
 		<%= f.check_box :bill_agent_on_chosen_plan, default: 1 %>
-		<%= f.label :bill_agent_on_chosen_plan, "Bill Banjara H.O. on chosen plan" %><br/>
+    <%= f.label :bill_agent_on_chosen_plan, "Bill #{AccountSetting.find_by_account_id(@booking.account_id).name} on chosen plan" %><br/>
 	</div>
 	<div class="field">
     <%= f.label :reservation_reference, "Res Ref." %><br />

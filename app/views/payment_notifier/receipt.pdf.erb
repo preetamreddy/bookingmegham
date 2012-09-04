@@ -71,24 +71,24 @@
 					</td>
 					<td colspan=4 class="address">
 						<span class="bold">
-							<%= @trip.advisor.account.name %>
-							<%= @trip.advisor.account.postal_address %>
-							Phone: <%= @trip.advisor.account.phone_number_1 %>
+							<%= @account_setting.name %>
+							<%= @account_setting.postal_address %>
+							Phone: <%= @account_setting.phone_number_1 %>
 						</span>
-						PAN No. : <%= @trip.advisor.account.pan %>
-						S. Tax No. : AACCB0246JST001
+						PAN No. : <%= @account_setting.pan %>
+            S. Tax No. : <%= @account_setting.service_tax_number %>
 					</td>
 				</tr>
 			</table>
 			<table class="table">
 				<tr>
-					<td class="left">Receipt No: <span class="bold">BCRPL/<%= @trip.id%>/<%= @payment.id %></span></td>
+					<td class="left">Receipt No: <span class="bold"><%= @payment.receipt_number %></span></td>
 					<td class="right">Date: <%= l @payment.date_received %></td>
 				</tr>
 			</table>
 			<hr>
 			<p>
-				<span class="italics">Received</span> with thanks from <%= @payment.payee_name %> a sum of Rupees <%= @payment.amount.to_words %> vide <%= @payment.details %> towards the trip, '<%= @trip.name %>'.</td>
+      <span class="italics">Received</span> with thanks from <%= @payment.payee_name %> a sum of Rupees <%= @payment.amount.to_words %> vide <%= @payment.details %> towards your trip, #<%= @trip.id %> (ref: <%= @trip.name %>).</td>
 			</p>
 			<% if @trip.balance_payment > 0 %>
 				<% if @trip.pay_by_date > Date.today %>

@@ -26,9 +26,8 @@
 <% else %>
 	<table class="index_table" border="1">
 	  <tr>
-	    <th class="number">#</th>
-	    <th class="text">Guest</th>
 	    <th class="text">Receipt No</th>
+	    <th class="text">Guest</th>
 	    <th class="text">Payee name</th>
 	    <th class="currency">Amount</th>
 	    <th class="text">Date received</th>
@@ -39,12 +38,11 @@
 
 		<% @payments.each do |payment| %>
 		  <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-        <td class="number"><%= payment.counter %></td>
+		    <td class="text"><%= payment.receipt_number %></td>
 		    <td class="text">
 					<span class="nowrap"><%= payment.trip.guest_name %></span><br/>
 		    	<span class="nowrap"><%= payment.trip.guest_phone_number %></span>
 				</td>
-		    <td class="text"><%= "BCRPL/#{payment.trip_id}/#{payment.id}" %></td>
 		    <td class="text"><%= payment.payee_name %></td>
 		    <td class="currency"><%= number_to_currency(payment.amount) %></td>
 		    <td class="text"><%= l payment.date_received %></td>

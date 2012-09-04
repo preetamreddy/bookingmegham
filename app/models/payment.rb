@@ -13,7 +13,8 @@ class Payment < ActiveRecord::Base
   before_create :set_counter
 
 	def receipt_number
-		"BCRPL/#{trip_id}/#{id}"
+    account_name_abbreviation = AccountSetting.find_by_account_id(account_id).name_abbreviation
+		"#{account_name_abbreviation}/#{trip_id}/#{counter}"
 	end
 
 	def customer_name

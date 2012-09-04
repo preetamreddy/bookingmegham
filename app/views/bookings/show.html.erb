@@ -130,7 +130,7 @@
 		<td><%= @booking.collect_for_driver_and_help.to_english %></td>
 	</tr>
 	<tr>
-  	<td>Bill Banjara H.O. on chosen plan</td>
+    <td>Bill <%= AccountSetting.find_by_account_id(@booking.account_id).name %> on chosen plan</td>
 		<td><%= @booking.bill_agent_on_chosen_plan.to_english %></td>
 	</tr>
 </table>
