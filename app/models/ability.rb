@@ -9,19 +9,21 @@ class Ability
 		end
 
 		if user.is? "Super admin"
+      cannot :manage, AccountSetting
 			cannot :destroy, Advisor, :id => user.advisor_id
 			cannot :destroy, User, :id => user.id
 		end
 
 		if user.is? "Account admin"
 			cannot :manage, Account
+			cannot [:create, :destroy], AccountSetting
 			cannot :destroy, Advisor, :id => user.advisor_id
 			cannot :become, User
 			cannot :destroy, User, :id => user.id
 		end
 
 		if user.is? "Advisor"
-			cannot :manage, [Account, Advisor, User]
+			cannot :manage, [Account, AccountSetting, Advisor, User]
 		end
 	end
 end
