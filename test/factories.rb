@@ -1,18 +1,6 @@
 FactoryGirl.define do
-	factory :account do
-		id 3
-		name { Faker::Company.name }
-		subdomain { Faker::Company.name }
-	  phone_number_1 { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
-	  email { Faker::Internet.email }
-		postal_address { "#{Faker::Address.secondary_address}, #{Faker::Address.street_name}" }
-		url { Faker::Internet.url }
-		logo_file_name { "#{Faker::Company.name}.jpg" }
-    pan "ABCDE1234F"
-	end
-
 	factory :agency do
-		account_id 3
+		account_id 1
 	  registered_name { Faker::Company.name }
 	  name { Faker::Company.name }
 	  phone_number { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
@@ -25,14 +13,14 @@ FactoryGirl.define do
 	end
 
 	factory :advisor do
-		account_id 3
+		account_id 1
 		name { Faker::Name.name }
 	  phone_number_1 { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
 	  email_id { Faker::Internet.email }
 	end
 
 	factory :property do
-		account_id 3
+		account_id 1
 	  name { Faker::Address.city }
 	  price_for_driver 500
 	  ensure_availability_before_booking 1
@@ -44,7 +32,7 @@ FactoryGirl.define do
 	end
 
 	factory :room_type do
-		account_id 3
+		account_id 1
 		property
 		room_type { Faker::Lorem.words(1).first }
 		price_for_single_occupancy 4700
@@ -57,7 +45,7 @@ FactoryGirl.define do
 	end
 
 	factory :taxi do
-		account_id 3
+		account_id 1
 		agency
 		model "Toyota Innova"
 		max_passengers 7
@@ -65,7 +53,7 @@ FactoryGirl.define do
 	end
 
 	factory :guest do
-		account_id 3
+		account_id 1
 		name { Faker::Name.name }
 	  phone_number { Faker::PhoneNumber.phone_number.gsub(/[^\d\s]/, '') }
 		email_id { Faker::Internet.email }
@@ -75,7 +63,7 @@ FactoryGirl.define do
 	end
 
 	factory :trip do
-		account_id 3
+		account_id 1
     association :customer, :factory => :guest
 		name { Faker::Lorem.words(1).first }
 		start_date { Date.today + 30.days }
@@ -84,7 +72,7 @@ FactoryGirl.define do
 	end
 
 	factory :booking do
-		account_id 3
+		account_id 1
 		trip
 		property
 		check_in_date { Date.today + 30.days }
@@ -93,7 +81,7 @@ FactoryGirl.define do
 	end
 
 	factory :room do
-		account_id 3
+		account_id 1
 		booking
 		room_type
 		occupancy "Double"
@@ -104,7 +92,7 @@ FactoryGirl.define do
 	end
 
 	factory :vas_booking do
-		account_id 3
+		account_id 1
 		value_added_service { Faker::Lorem.words(1).first }
 		unit_price 1000
 		number_of_units 1
@@ -120,7 +108,7 @@ FactoryGirl.define do
 	end
 
 	factory :taxi_booking do
-		account_id 3
+		account_id 1
 		trip
 		taxi
 		number_of_vehicles 1
@@ -129,7 +117,7 @@ FactoryGirl.define do
 	end
 
 	factory :payment do
-		account_id 3
+		account_id 1
 		trip
 		payee_name { Faker::Lorem.words(1).first }
 		date_received { Date.today }

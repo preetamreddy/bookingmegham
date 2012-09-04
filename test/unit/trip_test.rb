@@ -16,6 +16,10 @@ class TripTest < ActiveSupport::TestCase
 							:number_of_units => 1)
 	end
 
+  test "tds percent is set" do
+    assert_equal @himachal_trip.tds_percent, 10
+  end
+
   test "trip should belong to a valid customer" do
 		new_trip = FactoryGirl.build(:trip,
 								:customer_type => nil,

@@ -1,0 +1,25 @@
+banjara_settings:
+  id: 1
+  account_id: 1
+  registered_name: Banjara Camps And Retreats Pvt. Ltd.
+  name: Banjara Camps
+  phone_number_1: +91 11 2685 5152
+  email: info@banjaracamps.com
+  postal_address: |
+    1A, Hauz Khas Village,
+    New Delhi-110 016 India
+  url: www.banjaracamps.com
+  tds_percent: 10
+
+himalayanvillage_settings:
+  id: 2
+  account_id: 2
+  registered_name: Himalayan Village
+  name: Himalayan Village
+  phone_number_1: +91 80063 00100
+  email: ashish@himalayanvillage.com
+  postal_address: |
+    Sonapani,
+    Uttarakhand, India
+  url: www.himalayanvillage.com
+  tds_percent: 10
