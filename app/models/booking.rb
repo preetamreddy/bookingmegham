@@ -11,7 +11,8 @@ class Booking < ActiveRecord::Base
 	accepts_nested_attributes_for :vas_bookings, :reject_if => :all_blank,
 		:allow_destroy => true
 
-	before_validation :set_defaults_if_nil, :update_check_out_date, :update_number_of_rooms
+	before_validation :set_defaults_if_nil, 
+    :update_check_out_date, :update_number_of_rooms
 
 	validates :trip_id, :check_in_date, :check_out_date, :meal_plan,
 											presence: true
@@ -19,8 +20,9 @@ class Booking < ActiveRecord::Base
 		only_integer: true, greater_than: 0, allow_nil: true, 
 		message: "should be a number greater than 0"
 
-	validate	:ensure_property_exists,
+  validate	:ensure_property_exists,
 						:ensure_trip_exists,
+            :ensure_booking_is_not_for_past_dates,
             :ensure_booking_is_within_trip_dates
 
 	before_save :strip_whitespaces, :titleize,
@@ -111,6 +113,13 @@ class Booking < ActiveRecord::Base
 			self.number_of_rooms = num_rooms
 		end
 
+    def ensure_booking_is_not_for_past_dates
+      if check_out_date < Date.today
+        errors.add(:base, "Could not create Booking for past dates")
+        return false
+      end
+    end
+
 		def ensure_property_exists
 			begin
 				property = Property.find(property_id)
@@ -134,8 +143,7 @@ class Booking < ActiveRecord::Base
 		end
 
     def ensure_booking_is_within_trip_dates
-      if (check_in_date < trip.start_date or check_in_date >= trip.end_date) or
-            (check_out_date <= trip.start_date or check_out_date > trip.end_date)
+      if check_in_date < trip.start_date or check_out_date > trip.end_date
         errors.add(:base, "Could not create booking as it is not within the trip dates")
         return false
       end
