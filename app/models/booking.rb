@@ -20,7 +20,8 @@ class Booking < ActiveRecord::Base
 		message: "should be a number greater than 0"
 
 	validate	:ensure_property_exists,
-						:ensure_trip_exists
+						:ensure_trip_exists,
+            :ensure_booking_is_within_trip_dates
 
 	before_save :strip_whitespaces, :titleize,
 							:update_total_price
@@ -131,6 +132,14 @@ class Booking < ActiveRecord::Base
         return true
 			end
 		end
+
+    def ensure_booking_is_within_trip_dates
+      if (check_in_date < trip.start_date or check_in_date >= trip.end_date) or
+            (check_out_date <= trip.start_date or check_out_date > trip.end_date)
+        errors.add(:base, "Could not create booking as it is not within the trip dates")
+        return false
+      end
+    end
 
 		def strip_whitespaces
 			self.remarks = remarks.to_s.strip
