@@ -30,6 +30,12 @@
             find(:all, :conditions => [ 'customer_type = ? and customer_id = ? and end_date >= ?',
               session[:customer_type], session[:customer_id], Date.today ]),
           :id, :name_with_dates) %>
+    <% else %>
+      <%= f.collection_select(:trip_id,
+            Trip.scoped_by_account_id(current_user.account_id).order('name').
+              find(:all, :conditions => [ 'end_date > ?',
+                Date.today ]),
+          :id, :name_with_dates) %>
 		<% end %>
   </div>
   <div class="field">

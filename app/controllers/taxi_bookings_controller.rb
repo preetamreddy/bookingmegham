@@ -65,15 +65,10 @@ class TaxiBookingsController < ApplicationController
 			@taxi_booking.trip_id = session[:trip_id]
     end
 
-    if session[:customer_id]
-      respond_to do |format|
-        format.html # new.html.erb
-        format.json { render json: @taxi_booking }
-      end
-    else
-      redirect_to guests_url,
-        alert: 'New taxi bookings can only be created after selecting a guest / agency.'
-		end
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @taxi_booking }
+    end
   end
 
   # GET /taxi_bookings/1/edit

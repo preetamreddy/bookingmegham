@@ -88,42 +88,37 @@ class BookingsController < ApplicationController
     room_type = find_room_type
     property = room_type ? room_type.property : find_property 
 
-    if session[:trip_id]
-			trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
-			@booking.trip_id = trip.id
-			@booking.add_rooms_from_trip(trip)
-    else
-      @booking.rooms.build
-    end
+		if property
+      if session[:trip_id]
+			  trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
+			  @booking.trip_id = trip.id
+			  @booking.add_rooms_from_trip(trip)
+      else
+        @booking.rooms.build
+      end
 
-    if session[:customer_id]
-			if property
-				@booking.property_id = property.id
-			
-        if params[:check_in_date]
-          @booking.check_in_date = Date.strptime(params[:check_in_date], "%Y-%m-%d")
-        end
+			@booking.property_id = property.id
 
-        if room_type
-          @booking.rooms.each do |room|
-            room.room_type_id = room_type.id
-          end	
-        end
+      if room_type
+        @booking.rooms.each do |room|
+          room.room_type_id = room_type.id
+        end	
+      end
 
-        @cannot_edit_rooms = false
+      if params[:check_in_date]
+        @booking.check_in_date = Date.strptime(params[:check_in_date], "%Y-%m-%d")
+      end
 
-	      respond_to do |format|
-	        format.html # new.html.erb
-	        format.json { render json: @booking }
-	      end
-			else
-	      @properties = Property.scoped_by_account_id(current_user.account_id).
-	        order('ensure_availability_before_booking desc, name').all
-			end
-    else
-      redirect_to guests_url,
-        alert: 'New bookings can only be created after selecting a guest / agency.'
-    end
+      @cannot_edit_rooms = false
+
+	    respond_to do |format|
+	      format.html # new.html.erb
+	      format.json { render json: @booking }
+	    end
+	  else
+	    @properties = Property.scoped_by_account_id(current_user.account_id).
+	      order('ensure_availability_before_booking desc, name').all
+		end
   end
 
   # GET /bookings/1/edit
