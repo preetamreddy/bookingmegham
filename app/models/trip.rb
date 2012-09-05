@@ -110,7 +110,7 @@ class Trip < ActiveRecord::Base
   end
 
   def name_with_dates
-    name + " (" + start_date.to_s(:short) + " to " + end_date.to_s(:short) + ")"
+    name + " (" + start_date.to_s(:ddmonyy) + " to " + end_date.to_s(:ddmonyy) + ")"
   end
 
 	def total_price

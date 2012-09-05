@@ -18,11 +18,11 @@ class TripsController < ApplicationController
 		else
 			if params[:payment_status]
     		@trips = @trips.paginate(page: params[:page], per_page: 10).
-									order("pay_by_date ASC, start_date DESC, end_date DESC").
+									order("start_date DESC, end_date DESC").
 									find_all_by_payment_status(params[:payment_status])
 			elsif params[:payment_overdue]
     		@trips = @trips.paginate(page: params[:page], per_page: 10).
-									order('pay_by_date ASC, start_date DESC, end_date DESC').
+									order('start_date DESC, end_date DESC').
 									find(:all, :conditions => [
 										'payment_status != ? and pay_by_date < ?',
 										Trip::FULLY_PAID, Date.today ])

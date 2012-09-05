@@ -27,21 +27,18 @@ class TaxiBookingsController < ApplicationController
 
 		if session[:trip_id]
 			@taxi_bookings = @taxi_bookings.paginate(page: params[:page], per_page: 10).
-										      order("start_date").
-													find_all_by_trip_id(session[:trip_id])
+        order("start_date desc, end_date desc").find_all_by_trip_id(session[:trip_id])
 		elsif session[:customer_id]
 			trips = Trip.scoped_by_account_id(current_user.account_id).
-        find(:all, :conditions => [
-             'customer_type = ? and customer_id = ?',
-             session[:customer_type], session[:customer_id] ])
+        find(:all, :conditions => [ 'customer_type = ? and customer_id = ?',
+          session[:customer_type], session[:customer_id] ])
 			@taxi_bookings = @taxi_bookings.paginate(page: params[:page], per_page: 10).
-			  order("start_date").find_all_by_trip_id(trips)
+        order("start_date desc, end_date desc").find_all_by_trip_id(trips)
 		else
 			@taxi_bookings = @taxi_bookings.paginate(page: params[:page], per_page: 10).
-													order("start_date").
-													find(:all, :conditions => [
-														'start_date >= ? and start_date < ?',
-														@start_date, @upto_date ])
+        order("start_date desc, end_date desc").
+				find(:all, :conditions => [ 'start_date >= ? and start_date < ?',
+					@start_date, @upto_date ])
 		end
 
 		@records_returned = @taxi_bookings.count

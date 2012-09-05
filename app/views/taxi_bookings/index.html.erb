@@ -46,7 +46,7 @@
         <td class="text"><%= taxi_booking.taxi.agency.name %></td>
         <td class="text">
           <span class="nowrap"><%= pluralize(taxi_booking.number_of_vehicles, taxi_booking.taxi.model) %></span><br/>
-          <span class="nowrap"><%= l taxi_booking.start_date, :format => :short %> to <%= l taxi_booking.end_date, :format => :short %></span><br/>
+          <span class="nowrap"><%= l taxi_booking.start_date %> to <%= l taxi_booking.end_date %></span><br/>
           <span class="nowrap">(<%= pluralize(taxi_booking.number_of_days, "day") %>)</span>
         </td>
         <td class="text">

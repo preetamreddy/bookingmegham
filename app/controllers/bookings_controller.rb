@@ -33,7 +33,7 @@ class BookingsController < ApplicationController
 
 		if session[:trip_id]
 			@bookings = @bookings.paginate(page: params[:page], per_page: 10).
-										order("check_in_date, check_out_date").
+										order("check_in_date desc, check_out_date desc").
 										find_all_by_trip_id(session[:trip_id])
 		elsif session[:customer_id]
 			trips = Trip.scoped_by_account_id(current_user.account_id).
@@ -41,12 +41,12 @@ class BookingsController < ApplicationController
              'customer_type = ? and customer_id = ?',
              session[:customer_type], session[:customer_id] ])
 			@bookings = @bookings.paginate(page: params[:page], per_page: 10).
-										order("check_in_date, check_out_date").
+										order("check_in_date desc, check_out_date desc").
 										find_all_by_trip_id(trips)
 		else
 			if @property_id > 0
 				@bookings = @bookings.paginate(page: params[:page], per_page: 10).
-											order("check_in_date, check_out_date").
+											order("check_in_date desc, check_out_date desc").
 											find(:all, :conditions => [
 												'property_id = ? and check_in_date >= ? and
 												check_in_date < ?',
@@ -54,7 +54,7 @@ class BookingsController < ApplicationController
 												@check_in_date_last ])
 			else
 				@bookings = @bookings.paginate(page: params[:page], per_page: 10).
-											order("check_in_date, check_out_date").
+											order("check_in_date desc, check_out_date desc").
 											find(:all, :conditions => [
 												'check_in_date >= ? and check_in_date < ?',
 												@check_in_date_first, @check_in_date_last ])
