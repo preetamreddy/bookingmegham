@@ -1,0 +1,54 @@
+<h1> Price List Details</h1>
+
+<div class="show_saved_record">
+<p>
+  <b>Room type:</b>
+  <span class="saved_value"><%= @price_list.room_type.long_name %></span>
+</p>
+
+<p>
+  <b>Start date:</b>
+  <span class="saved_value"><%= l @price_list.start_date if @price_list.start_date %></span>
+</p>
+
+<p>
+  <b>End date:</b>
+  <span class="saved_value"><%= l @price_list.end_date if @price_list.end_date%></span>
+</p>
+
+<p>
+  <b>Meal plan:</b>
+  <span class="saved_value"><%= @price_list.meal_plan %></span>
+</p>
+
+<p>
+  <b>Price for single occupancy:</b>
+  <span class="saved_value"><%= number_to_currency(@price_list.price_for_single_occupancy) %></span>
+</p>
+
+<p>
+  <b>Price for double occupancy:</b>
+  <span class="saved_value"><%= number_to_currency(@price_list.price_for_double_occupancy) %></span>
+</p>
+
+<p>
+  <b>Price for extra adults:</b>
+  <span class="saved_value"><%= number_to_currency(@price_list.price_for_extra_adults) %></span>
+</p>
+
+<p>
+  <b>Price for children:</b>
+  <span class="saved_value"><%= number_to_currency(@price_list.price_for_children) %></span>
+</p>
+
+<p>
+  <b>Price for infants:</b>
+  <span class="saved_value"><%= number_to_currency(@price_list.price_for_infants) %></span>
+</p>
+</div>
+
+<div class="action_container">
+  <%= link_to 'Edit', edit_price_list_path(@price_list) %>
+</div>
+
+<%= link_to 'Back to Price List', price_lists_path, :class => "back_link" %>

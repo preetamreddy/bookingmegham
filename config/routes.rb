@@ -1,5 +1,7 @@
 Bookingmegham::Application.routes.draw do
 
+  resources :price_lists
+
   resources :account_settings, :only => [:show, :edit, :update]
 
   resources :accounts
@@ -53,7 +55,11 @@ Bookingmegham::Application.routes.draw do
 
   resources :room_types
 
-  resources :properties
+  resources :properties do
+    member do
+      get :room_types_by_property
+    end
+  end
 
   resources :bookings
 

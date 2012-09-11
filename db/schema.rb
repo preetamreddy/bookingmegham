@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120903112644) do
+ActiveRecord::Schema.define(:version => 20120906102651) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -151,6 +151,21 @@ ActiveRecord::Schema.define(:version => 20120903112644) do
   end
 
   add_index "payments", ["account_id"], :name => "index_payments_on_account_id"
+
+  create_table "price_lists", :force => true do |t|
+    t.integer  "room_type_id"
+    t.integer  "account_id"
+    t.integer  "price_for_single_occupancy", :default => 0
+    t.integer  "price_for_double_occupancy", :default => 0
+    t.integer  "price_for_extra_adults",     :default => 0
+    t.integer  "price_for_children",         :default => 0
+    t.integer  "price_for_infants",          :default => 0
+    t.string   "meal_plan"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "properties", :force => true do |t|
     t.string   "name"

@@ -14,9 +14,9 @@
 		<th class="number">Rooms</th>
     <th class="number">Single occupancy</th>
     <th class="number">Double occupancy</th>
-    <th class="number">Third adult</th>
-    <th class="number">Children btw 5 & 12</th>
-    <th class="number">Children below 5</th>
+    <th class="number">Extra adult</th>
+    <th class="number">Children</th>
+    <th class="number">Infants</th>
     <th class="number">Lodging price</th>
     <th class="number">Service tax</th>
 		<th></th>
@@ -37,8 +37,8 @@
     <td>
     	<%= link_to 'Show details', room_type %></br>
     	<%= link_to 'Edit', edit_room_type_path(room_type) %></br>
-    	<%= link_to 'Destroy', room_type, confirm: 'Are you sure?', 
-				method: :delete %></br>
+    	<%= link_to 'Destroy', room_type, confirm: 'Are you sure?', method: :delete %></br>
+      <%= link_to 'Price List', price_lists_path(:room_type_id => room_type.id) %></br>
 		</td>
   </tr>
 <% end %>

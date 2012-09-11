@@ -82,4 +82,17 @@ class PropertiesController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  def room_types_by_property
+    if params[:id].present?
+      property_id = params[:id].to_i
+      @room_types = Property.find(property_id).room_types
+    else
+      @room_types = []
+    end
+
+    respond_to do |format|
+      format.js
+    end
+  end
 end

@@ -1,0 +1,64 @@
+<%= form_for(@price_list) do |f| %>
+  <% if @price_list.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@price_list.errors.count, "error") %> prohibited this price_list from being saved:</h2>
+
+      <ul>
+      <% @price_list.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :room_type_id, "Room type" %><br />
+    <% if @price_list.room_type_id %>
+      <%= f.collection_select(:room_type_id,
+            RoomType.scoped_by_account_id(current_user.account_id).
+              find_all_by_id(@price_list.room_type_id), :id, :long_name) %>
+    <% else %>
+      <%= f.collection_select(:room_type_id,
+            RoomType.scoped_by_account_id(current_user.account_id).order('property_id').
+              find_all_by_property_id(session[:property_id]), :id, :long_name) %>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= f.label :start_date %><br />
+    <%= f.date_select :start_date, :start_year => Time.now.year,
+        :end_year => Time.now.year + 1, :prompt => true %>
+  </div>
+  <div class="field">
+    <%= f.label :end_date %><br />
+    <%= f.date_select :end_date, :start_year => Time.now.year,
+        :end_year => Time.now.year + 1, :prompt => true %>
+  </div>
+  <div class="field">
+    <%= f.label :meal_plan %><br />
+    <%= f.select :meal_plan, Booking::MEAL_PLANS,
+          :prompt => 'Select a meal plan' %>
+  </div>
+  <div class="field">
+    <%= f.label :price_for_single_occupancy, "Single occupancy" %><br />
+    <%= f.number_field :price_for_single_occupancy %>
+  </div>
+  <div class="field">
+    <%= f.label :price_for_double_occupancy, "Double occupancy" %><br />
+    <%= f.number_field :price_for_double_occupancy %>
+  </div>
+  <div class="field">
+    <%= f.label :price_for_extra_adults %><br />
+    <%= f.number_field :price_for_extra_adults %>
+  </div>
+  <div class="field">
+    <%= f.label :price_for_children %><br />
+    <%= f.number_field :price_for_children %>
+  </div>
+  <div class="field">
+    <%= f.label :price_for_infants %><br />
+    <%= f.number_field :price_for_infants %>
+  </div>
+  <div class="action_container">
+    <%= f.submit %>
+  </div>
+<% end %>

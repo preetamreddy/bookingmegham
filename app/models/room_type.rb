@@ -2,6 +2,7 @@ class RoomType < ActiveRecord::Base
 	belongs_to :property
 
 	has_many :rooms
+  has_many :price_lists, :dependent => :destroy
 
 	validates :property_id, :room_type, presence: true
 	validates_numericality_of :number_of_rooms,

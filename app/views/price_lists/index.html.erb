@@ -1,0 +1,50 @@
+<h1>Listing Price Lists</h1>
+
+<div class="action_container">
+  <%= render 'search' %>
+</div>
+
+<%= link_to 'New Price List', new_price_list_path, :class => "new_link" %>
+
+<% if @price_lists.count > 0 %>
+<table class="index_table" border="1">
+  <tr>
+    <th>Room type</th>
+    <th>Start date</th>
+    <th>End date</th>
+    <th>Meal plan</th>
+    <th>Single occupancy</th>
+    <th>Double occupancy</th>
+    <th>Extra adult</th>
+    <th>Children</th>
+    <th>Infants</th>
+    <th></th>
+  </tr>
+
+<% @price_lists.each do |price_list| %>
+  <tr>
+    <td><%= price_list.room_type.long_name %></td>
+    <td><%= l price_list.start_date if price_list.start_date %></td>
+    <td><%= l price_list.end_date if price_list.end_date %></td>
+    <td><%= price_list.meal_plan %></td>
+    <td><%= number_to_currency(price_list.price_for_single_occupancy) %></td>
+    <td><%= number_to_currency(price_list.price_for_double_occupancy) %></td>
+    <td><%= number_to_currency(price_list.price_for_extra_adults) %></td>
+    <td><%= number_to_currency(price_list.price_for_children) %></td>
+    <td><%= number_to_currency(price_list.price_for_infants) %></td>
+    <td>
+      <%= link_to 'Show details', price_list %></br>
+      <%= link_to 'Edit', edit_price_list_path(price_list) %></br>
+      <%= link_to 'Destroy', price_list, confirm: 'Are you sure?', method: :delete %>
+   </td>
+  </tr>
+<% end %>
+</table>
+<% else %>
+  <div id="error_explanation">
+    <h2>Price lists not found</h2>
+    <ul>
+      <li>Click 'New Price list' link to create a new price list</li>
+    </ul>
+  </div>
+<% end %>

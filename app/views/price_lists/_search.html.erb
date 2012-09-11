@@ -1,0 +1,14 @@
+<%= form_tag price_lists_path, :method => "get" do %>
+  <div id="price_list_search">
+  </div>
+  <%= select_tag(:property_id, 
+        options_for_select(@properties.collect { |p| [p.name, p.id] }, @property_id),
+        {:prompt => 'Select Property'}) %>
+  <%= select_tag(:room_type_id, 
+        options_for_select(@room_types.collect { |r| [r.room_type, r.id] }, @room_type_id),
+        {:prompt => 'Select Roomtype'}) %>
+  <%= label_tag :meal_plan %>
+  <%= select_tag(:meal_plan, options_for_select(Booking::MEAL_PLANS, @meal_plan),
+        {:prompt => 'Select Meal plan'})%>
+	<%= submit_tag "Search", :name => nil %>
+<% end %>

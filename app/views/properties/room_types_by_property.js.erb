@@ -1,0 +1,6 @@
+var options = new Array();
+options.push(new Option('Select Roomtype', 0));
+<% for room_type in @room_types -%>
+  options.push(new Option('<%=h room_type.room_type %>', <%= room_type.id %>));
+<% end -%>
+$("#room_type_id").html(options);
