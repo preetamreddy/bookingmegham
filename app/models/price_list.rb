@@ -1,16 +1,15 @@
 class PriceList < ActiveRecord::Base
   belongs_to :room_type
 
-  validates :room_type_id, :account_id, :meal_plan, :start_date, :end_date,
+  validates :room_type_id, :meal_plan, :start_date, :end_date,
     :price_for_single_occupancy, :price_for_double_occupancy,
     :price_for_extra_adults, :price_for_children, :price_for_infants,
     :presence => true
-  validates_numericality_of :room_type_id, :account_id, 
-    :price_for_single_occupancy, :price_for_double_occupancy,
-    :price_for_extra_adults,
+  validates_numericality_of :room_type_id,
     :allow_nil => true, :only_integer => true, :greater_than => 0,
     message: "should be a number greater than 0"
-  validates_numericality_of :price_for_children, :price_for_infants,
+  validates_numericality_of :price_for_single_occupancy, :price_for_double_occupancy,
+    :price_for_extra_adults, :price_for_children, :price_for_infants,
     :allow_nil => true, :only_integer => true, :greater_than_or_equal_to => 0,
     message: "should be a number greater than or equal to 0"
 

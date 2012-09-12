@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120906102651) do
+ActiveRecord::Schema.define(:version => 20120912122638) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -155,11 +155,11 @@ ActiveRecord::Schema.define(:version => 20120906102651) do
   create_table "price_lists", :force => true do |t|
     t.integer  "room_type_id"
     t.integer  "account_id"
-    t.integer  "price_for_single_occupancy", :default => 0
-    t.integer  "price_for_double_occupancy", :default => 0
-    t.integer  "price_for_extra_adults",     :default => 0
-    t.integer  "price_for_children",         :default => 0
-    t.integer  "price_for_infants",          :default => 0
+    t.integer  "price_for_single_occupancy"
+    t.integer  "price_for_double_occupancy"
+    t.integer  "price_for_extra_adults"
+    t.integer  "price_for_children"
+    t.integer  "price_for_infants"
     t.string   "meal_plan"
     t.date     "start_date"
     t.date     "end_date"
@@ -196,9 +196,9 @@ ActiveRecord::Schema.define(:version => 20120906102651) do
     t.datetime "updated_at"
     t.integer  "number_of_rooms"
     t.integer  "price_for_lodging"
-    t.integer  "price_for_triple_occupancy",                :default => 0
-    t.integer  "price_for_children_between_5_and_12_years", :default => 0
-    t.integer  "price_for_children_below_5_years",          :default => 0
+    t.integer  "price_for_triple_occupancy"
+    t.integer  "price_for_children_between_5_and_12_years"
+    t.integer  "price_for_children_below_5_years"
     t.integer  "account_id"
   end
 

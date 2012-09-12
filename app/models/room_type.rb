@@ -4,14 +4,17 @@ class RoomType < ActiveRecord::Base
 	has_many :rooms
   has_many :price_lists, :dependent => :destroy
 
-	validates :property_id, :room_type, presence: true
+	validates :property_id, :room_type, 
+		:price_for_single_occupancy, :price_for_double_occupancy,
+    :price_for_triple_occupancy, :price_for_children_between_5_and_12_years,
+    :price_for_children_below_5_years, :price_for_lodging,
+    presence: true
 	validates_numericality_of :number_of_rooms,
-														:price_for_single_occupancy,
-														:price_for_double_occupancy,
-														:price_for_lodging,
-														allow_nil: true, only_integer: true,
-														greater_than_or_equal_to: 0,
-														message: "should be a number greater than or equal to 0"
+		:price_for_single_occupancy, :price_for_double_occupancy,
+    :price_for_triple_occupancy, :price_for_children_between_5_and_12_years,
+    :price_for_children_below_5_years, :price_for_lodging,
+		allow_nil: true, only_integer: true, greater_than_or_equal_to: 0,
+		message: "should be a number greater than or equal to 0"
 	
 	before_save :capitalize, :set_defaults_if_nil,
 							:strip_whitespaces
