@@ -6,8 +6,10 @@ propertySelected = ->
       .remove()
       .end()
       .hide()
+      $("label[for='room_type_id']").hide()
   else
     $('#room_type_id').show()
+    $("label[for='room_type_id']").show()
 
 $ ->
   if $('#price_list_search').length > 0

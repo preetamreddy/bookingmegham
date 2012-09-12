@@ -24,19 +24,19 @@
     <% end %>
   </div>
   <div class="field">
+    <%= f.label :meal_plan %><br />
+    <%= f.select :meal_plan, Booking::MEAL_PLANS,
+          :prompt => 'Select a meal plan' %>
+  </div>
+  <div class="field">
     <%= f.label :start_date %><br />
     <%= f.date_select :start_date, :start_year => Time.now.year,
-        :end_year => Time.now.year + 1, :prompt => true %>
+      :end_year => Time.now.year + 1, :prompt => true %>
   </div>
   <div class="field">
     <%= f.label :end_date %><br />
     <%= f.date_select :end_date, :start_year => Time.now.year,
-        :end_year => Time.now.year + 1, :prompt => true %>
-  </div>
-  <div class="field">
-    <%= f.label :meal_plan %><br />
-    <%= f.select :meal_plan, Booking::MEAL_PLANS,
-          :prompt => 'Select a meal plan' %>
+      :end_year => Time.now.year + 1, :prompt => true %>
   </div>
   <div class="field">
     <%= f.label :price_for_single_occupancy, "Single occupancy" %><br />
