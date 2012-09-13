@@ -2,6 +2,11 @@
 
 <div class="show_saved_record">
 <p>
+  <b>Receipt No:</b>
+	<span class="saved_value"><%= @payment.receipt_number %></span>
+</p>
+
+<p>
   <b>Customer:</b>
   <span class="saved_value"><%= @payment.trip.customer.name %></span>
 </p>
@@ -9,11 +14,6 @@
 <p>
   <b>Trip:</b>
   <span class="saved_value"><%= @payment.trip.name %></span>
-</p>
-
-<p>
-  <b>Receipt No:</b>
-	<span class="saved_value"><%= @payment.receipt_number %></span>
 </p>
 
 <p>

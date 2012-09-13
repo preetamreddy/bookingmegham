@@ -11,6 +11,12 @@
     </div>
   <% end %>
 
+  <%= hidden_div_if(@payment.new_record?, class: "field") do %>
+    <%= f.label :receipt_no, "Receipt No" %><br/>
+    <p><span class="highlight">
+      <%= @payment.receipt_number %>
+    </span></p>
+  <% end %>
   <div class="field">
    	<%= f.label :trip_id %><br />
 		<% if @payment.trip_id %>

@@ -18,6 +18,13 @@ class TaxiBooking < ActiveRecord::Base
 	before_save :strip_whitespaces, :titleize,
 							:update_unit_price, :update_total_price
 
+  before_create :set_counter
+
+  def taxi_booking_number
+    account_name_abbreviation = AccountSetting.find_by_account_id(account_id).name_abbreviation
+    "#{account_name_abbreviation}/#{trip_id}/#{counter}"
+  end
+
 	private
 		def update_end_date
 			self.end_date = start_date + number_of_days - 1
@@ -54,4 +61,9 @@ class TaxiBooking < ActiveRecord::Base
 		def update_total_price
 			self.total_price = unit_price * number_of_vehicles * number_of_days
 		end
+
+    def set_counter
+      self.counter = trip.taxi_bookings_counter + 1
+    end
+
 end

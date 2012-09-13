@@ -22,7 +22,7 @@
 <% else %>  
   <table class="index_table" border="1">
     <tr>
-      <th class="number">ID</th>
+      <th class="text">Taxi Booking No</th>
       <th class="text">Guest</th>
       <th class="text">Operator</th>
       <th class="text">Taxi</th>
@@ -36,8 +36,8 @@
   
     <% @taxi_bookings.each do |taxi_booking| %>
       <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-        <td class="number">
-          <%= taxi_booking.id %>
+        <td class="text">
+          <%= taxi_booking.taxi_booking_number %>
         </td>
         <td class="text">
           <span class="nowrap"><%= taxi_booking.trip.guest_name %></span><br/>

@@ -11,6 +11,12 @@
     </div>
   <% end %>
 
+  <%= hidden_div_if(@booking.new_record?, class: "field") do %>
+    <%= f.label :voucher_no, "Voucher No" %><br/>
+    <p><span class="highlight">
+      <%= @booking.voucher_number %>
+    </span></p>
+  <% end %>
   <div class="field">
    	<%= f.label :trip_id %><br />
 		<% if @booking.trip_id %>

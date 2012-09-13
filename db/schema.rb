@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120913100844) do
+ActiveRecord::Schema.define(:version => 20120913113722) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -251,6 +251,7 @@ ActiveRecord::Schema.define(:version => 20120913100844) do
     t.date     "end_date"
     t.integer  "account_id"
     t.integer  "total_price"
+    t.integer  "counter"
   end
 
   add_index "taxi_bookings", ["account_id"], :name => "index_taxi_bookings_on_account_id"
@@ -309,19 +310,20 @@ ActiveRecord::Schema.define(:version => 20120913100844) do
     t.integer  "agency_id"
     t.integer  "advisor_id"
     t.date     "invoice_date"
-    t.integer  "direct_booking",      :default => 1
-    t.integer  "tac",                 :default => 0
+    t.integer  "direct_booking",        :default => 1
+    t.integer  "tac",                   :default => 0
     t.integer  "account_id"
-    t.integer  "price_for_vas",       :default => 0
-    t.integer  "price_for_transport", :default => 0
-    t.integer  "price_for_rooms",     :default => 0
-    t.integer  "service_tax",         :default => 0
-    t.integer  "paid",                :default => 0
+    t.integer  "price_for_vas",         :default => 0
+    t.integer  "price_for_transport",   :default => 0
+    t.integer  "price_for_rooms",       :default => 0
+    t.integer  "service_tax",           :default => 0
+    t.integer  "paid",                  :default => 0
     t.string   "customer_type"
     t.integer  "customer_id"
     t.string   "phone_number"
-    t.integer  "payments_counter",    :default => 0
-    t.integer  "bookings_counter",    :default => 0
+    t.integer  "payments_counter",      :default => 0
+    t.integer  "bookings_counter",      :default => 0
+    t.integer  "taxi_bookings_counter", :default => 0
   end
 
   add_index "trips", ["account_id"], :name => "index_trips_on_account_id"

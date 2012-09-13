@@ -12,9 +12,9 @@
   <% end %>
 
 	<%= hidden_div_if(@taxi_booking.new_record?, class: "field") do %>
-		<%= f.label :id, "Taxi Booking ID" %><br />
+		<%= f.label :taxi_booking_no, "Taxi booking No" %><br />
 		<p><span class="highlight">
-			<%= @taxi_booking.id %>
+			<%= @taxi_booking.taxi_booking_number %>
 		</span></p>
 	<% end %>
 
