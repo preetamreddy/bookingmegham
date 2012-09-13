@@ -113,6 +113,10 @@ class Trip < ActiveRecord::Base
     name + " (" + start_date.to_s(:ddmonyy) + " to " + end_date.to_s(:ddmonyy) + ")"
   end
 
+  def guest_name_with_agency_and_dates
+    guest_name_with_agency + " (" + start_date.to_s(:ddmonyy) + " to " + end_date.to_s(:ddmonyy) + ")"
+  end
+
 	def total_price
 		price_for_vas + price_for_transport + price_for_rooms
 	end

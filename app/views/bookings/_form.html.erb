@@ -16,19 +16,25 @@
 		<% if @booking.trip_id %>
     	<%= f.collection_select(:trip_id, 
 						Trip.scoped_by_account_id(current_user.account_id).
-							find_all_by_id(@booking.trip_id), :id, :name_with_dates) %>
+							find_all_by_id(@booking.trip_id), :id, :guest_name_with_agency_and_dates) %>
     <% elsif session[:customer_id] %>
       <%= f.collection_select(:trip_id,
             Trip.scoped_by_account_id(current_user.account_id).order('name').
               find(:all, :conditions => [ 'customer_type = ? and customer_id = ? and end_date > ?',
                 session[:customer_type], session[:customer_id], Date.today ]),
-          :id, :name_with_dates) %>
+          :id, :guest_name_with_agency_and_dates) %>
+    <% elsif @booking.check_in_date %>
+      <%= f.collection_select(:trip_id,
+            Trip.scoped_by_account_id(current_user.account_id).order('name').
+              find(:all, :conditions => [ 'start_date <= ? and end_date > ?',
+                @booking.check_in_date, @booking.check_in_date ]),
+          :id, :guest_name_with_agency_and_dates) %>
     <% else %>
       <%= f.collection_select(:trip_id,
             Trip.scoped_by_account_id(current_user.account_id).order('name').
               find(:all, :conditions => [ 'end_date > ?',
                 Date.today ]),
-          :id, :name_with_dates) %>
+          :id, :guest_name_with_agency_and_dates) %>
 		<% end %>
   </div>
 	<div class="field">
