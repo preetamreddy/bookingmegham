@@ -1,4 +1,4 @@
-<%= form_for(@account_setting) do |f| %>
+<%= nested_form_for(@account_setting) do |f| %>
   <% if @account_setting.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@account_setting.errors.count, "error") %> prohibited this account_setting from being saved:</h2>
@@ -51,6 +51,15 @@
     <%= f.label :tds_percent %><br />
     <%= f.number_field :tds_percent %>
   </div>
+
+	<div class="field">
+		<%= f.label :payment_modes %><br />
+	</div>
+	<div class="nested_form">
+    <%= f.fields_for :payment_modes %>
+		<%= f.link_to_add "Add new", :payment_modes %><br/>
+	</div>
+
   <div class="action_container">
     <%= f.submit %>
   </div>

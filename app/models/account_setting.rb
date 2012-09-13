@@ -1,6 +1,10 @@
 class AccountSetting < ActiveRecord::Base
   belongs_to :account
 
+  has_many :payment_modes, dependent: :destroy
+		accepts_nested_attributes_for :payment_modes, :reject_if => :all_blank,
+		:allow_destroy => true
+
   before_validation :set_defaults_if_nil, :strip_whitespaces
 
 	validates :registered_name, :name, :account_id, presence: true

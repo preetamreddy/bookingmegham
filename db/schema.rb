@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120912122638) do
+ActiveRecord::Schema.define(:version => 20120913100844) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -136,6 +136,14 @@ ActiveRecord::Schema.define(:version => 20120912122638) do
   end
 
   add_index "line_items", ["account_id"], :name => "index_line_items_on_account_id"
+
+  create_table "payment_modes", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "account_setting_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "payments", :force => true do |t|
     t.integer  "trip_id"

@@ -1,6 +1,4 @@
 class Payment < ActiveRecord::Base
-	PAYMENT_MODE = [ "Axis", "S.C.B.", "Cheque / DD", "Cash" ]
-
 	belongs_to :trip
 
 	validate :date_received, :amount, presence: true

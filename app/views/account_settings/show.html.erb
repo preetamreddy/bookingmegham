@@ -50,6 +50,17 @@
   <b>Tds percent:</b>
   <span class="saved_value"><%= @account_setting.tds_percent %></span>
 </p>
+
+<% if @account_setting.payment_modes.any? %>
+	<b>Payment modes:</b>
+	<table class="nested_table">
+		<% @account_setting.payment_modes.each do |payment_mode| %>
+			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+				<td class="text"><%= payment_mode.name %></td>
+			</tr>
+		<% end %>
+	</table>
+<% end %>
 </div>
 
 <div class="action_container">
