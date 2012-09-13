@@ -25,35 +25,33 @@ class RoomType < ActiveRecord::Base
 		(price_for_lodging * property.service_tax_rate.to_f / 100.0).round
 	end
 
-	def RoomType.price(id, occupancy, number_of_adults, number_of_children_between_5_and_12_years,
-											number_of_children_below_5_years)
-		room_type = RoomType.find(id)
+	def price(occupancy, number_of_adults, number_of_children_between_5_and_12_years,
+											number_of_children_below_5_years, check_in_date, meal_plan)
+    rates = get_rates(meal_plan, check_in_date)
 
 		room_rate = 0
 		if occupancy == 'Single'
-			room_rate = room_type.price_for_single_occupancy
+			room_rate = rates[:price_for_single_occupancy]
 			if number_of_adults > 1
 				extra_adults = (number_of_adults - 1)
 			end
 		else
-			room_rate = room_type.price_for_double_occupancy
+			room_rate = rates[:price_for_double_occupancy]
 			if number_of_adults > 2
 				extra_adults = (number_of_adults - 2)
 			end
 		end
 
 		if extra_adults
-			room_rate += extra_adults * room_type.price_for_triple_occupancy
+			room_rate += extra_adults * rates[:price_for_extra_adults]
 		end
 
 		if number_of_children_between_5_and_12_years > 0
-			room_rate += number_of_children_between_5_and_12_years *
-				room_type.price_for_children_between_5_and_12_years
+			room_rate += number_of_children_between_5_and_12_years * rates[:price_for_children]
 		end	
 
 		if number_of_children_below_5_years > 0
-			room_rate += number_of_children_below_5_years *
-				room_type.price_for_children_below_5_years
+			room_rate += number_of_children_below_5_years * rates[:price_for_infants]
 		end	
 
 		return room_rate
@@ -91,7 +89,28 @@ class RoomType < ActiveRecord::Base
 		return availability_status
 	end
 
-	private
+  private
+    def get_rates(meal_plan, check_in_date)
+      price_list = PriceList.where('room_type_id = :room_type_id and meal_plan = :meal_plan and
+                                    start_date <= :check_in_date and end_date >= :check_in_date',
+                                  { :room_type_id => id, :meal_plan => meal_plan,
+                                    :check_in_date => check_in_date })
+
+      if price_list.count == 1
+        { :price_for_single_occupancy => price_list.first.price_for_single_occupancy,
+          :price_for_double_occupancy => price_list.first.price_for_double_occupancy,
+          :price_for_extra_adults     => price_list.first.price_for_extra_adults, 
+          :price_for_children         => price_list.first.price_for_children,
+          :price_for_infants          => price_list.first.price_for_infants }
+      else
+        { :price_for_single_occupancy => price_for_single_occupancy,
+          :price_for_double_occupancy => price_for_double_occupancy,
+          :price_for_extra_adults     => price_for_triple_occupancy, 
+          :price_for_children         => price_for_children_between_5_and_12_years,
+          :price_for_infants          => price_for_children_below_5_years }
+      end
+    end
+
 		def capitalize
 			self.room_type = room_type.capitalize
 		end

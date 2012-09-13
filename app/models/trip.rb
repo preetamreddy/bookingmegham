@@ -194,7 +194,7 @@ class Trip < ActiveRecord::Base
           return false
         end
       end
-      taxi_bookings.each do |booking|
+      taxi_bookings.each do |taxi_booking|
         if taxi_booking.start_date < start_date or taxi_booking.end_date > end_date
           errors.add(:base, "Could not save Trip as taxi bookings exist outside the trip dates")
           return false

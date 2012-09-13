@@ -44,6 +44,19 @@ FactoryGirl.define do
 	  price_for_children_between_5_and_12_years 1200
 	end
 
+	factory :price_list do
+		account_id 1
+		room_type
+    meal_plan 'APAI'
+    start_date Date.today
+    end_date Date.today + 365
+		price_for_single_occupancy 470
+		price_for_double_occupancy 560
+	  price_for_infants 0
+	  price_for_extra_adults 200
+	  price_for_children 120
+	end
+
 	factory :taxi do
 		account_id 1
 		agency
@@ -77,7 +90,7 @@ FactoryGirl.define do
 		property
 		check_in_date { Date.today + 30.days }
 		number_of_nights 4
-		meal_plan "EPAI"
+		meal_plan "APAI"
 	end
 
 	factory :room do

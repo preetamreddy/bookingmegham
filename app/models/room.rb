@@ -37,6 +37,10 @@ class Room < ActiveRecord::Base
 
 	before_destroy :ensure_payments_are_not_made
 
+  def meal_plan
+    booking.meal_plan
+  end
+
 	def guests_per_room
 		if number_of_children_between_5_and_12_years == 0
 			" " + number_of_adults.to_s
@@ -155,11 +159,12 @@ class Room < ActiveRecord::Base
 
 		def update_room_rate
 			if booking.trip.payment_status == Trip::NOT_PAID or room_rate == nil
-				self.room_rate = RoomType.price(room_type_id,
-													occupancy,
+				self.room_rate = room_type.price(occupancy,
 													number_of_adults,
 													number_of_children_between_5_and_12_years,
-													number_of_children_below_5_years)
+													number_of_children_below_5_years,
+                          check_in_date,
+                          meal_plan)
 			end
 		end
 
