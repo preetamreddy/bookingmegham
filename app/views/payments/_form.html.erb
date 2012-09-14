@@ -47,7 +47,7 @@
     <%= f.label :payment_mode %><br />
    	<%= f.collection_select(:payment_mode, 
 						PaymentMode.scoped_by_account_id(current_user.account_id),
-						:name, :name) %>
+            :name, :name, :prompt => 'Select Payment mode') %>
   </div>
   <div class="field">
     <%= f.label :details %><br />
