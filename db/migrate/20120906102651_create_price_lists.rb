@@ -1,5 +1,5 @@
 class CreatePriceLists < ActiveRecord::Migration
-  def change
+  def up
     create_table :price_lists do |t|
       t.integer :room_type_id
       t.integer :account_id
@@ -14,5 +14,11 @@ class CreatePriceLists < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index "price_lists", ["account_id"], :name => "index_price_lists_on_account_id"
+  end
+
+  def down
+    drop_table :price_lists
   end
 end

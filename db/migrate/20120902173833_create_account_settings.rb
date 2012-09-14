@@ -16,6 +16,8 @@ class CreateAccountSettings < ActiveRecord::Migration
       t.timestamps
     end
 
+    add_index "account_settings", ["account_id"], :name => "index_account_settings_on_account_id"
+
     Account.all.each do |account|
       AccountSetting.create(:registered_name => account.name,
                             :name => account.name,

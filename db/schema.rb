@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(:version => 20120913113722) do
     t.datetime "updated_at"
   end
 
+  add_index "account_settings", ["account_id"], :name => "index_account_settings_on_account_id"
+
   create_table "accounts", :force => true do |t|
     t.string   "name"
     t.string   "subdomain"
@@ -145,6 +147,8 @@ ActiveRecord::Schema.define(:version => 20120913113722) do
     t.datetime "updated_at"
   end
 
+  add_index "payment_modes", ["account_id"], :name => "index_payment_modes_on_account_id"
+
   create_table "payments", :force => true do |t|
     t.integer  "trip_id"
     t.date     "date_received"
@@ -174,6 +178,8 @@ ActiveRecord::Schema.define(:version => 20120913113722) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "price_lists", ["account_id"], :name => "index_price_lists_on_account_id"
 
   create_table "properties", :force => true do |t|
     t.string   "name"
@@ -230,8 +236,8 @@ ActiveRecord::Schema.define(:version => 20120913113722) do
     t.date     "check_in_date"
     t.date     "check_out_date"
     t.integer  "number_of_nights"
-    t.integer  "cancelled",                                 :default => 0
     t.integer  "cancellation_charge",                       :default => 0
+    t.integer  "cancelled",                                 :default => 0
   end
 
   add_index "rooms", ["account_id"], :name => "index_rooms_on_account_id"
