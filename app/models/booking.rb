@@ -22,7 +22,7 @@ class Booking < ActiveRecord::Base
 
   validate	:ensure_property_exists,
 						:ensure_trip_exists,
-            :ensure_booking_is_not_for_past_dates,
+#            :ensure_booking_is_not_for_past_dates,
             :ensure_booking_is_within_trip_dates
 
 	before_save :strip_whitespaces, :titleize,
@@ -115,7 +115,7 @@ class Booking < ActiveRecord::Base
 
     def ensure_booking_is_not_for_past_dates
       if check_out_date < Date.today
-        errors.add(:base, "Could not create Booking for past dates")
+        errors.add(:base, "Could not save Booking as the dates are in the past.")
         return false
       end
     end
