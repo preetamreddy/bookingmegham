@@ -21,14 +21,14 @@ class PriceListsController < ApplicationController
     if session[:room_type_id]
       @price_lists = @price_lists.order('start_date desc, meal_plan asc').
         where("meal_plan like :meal_plan and end_date > :date and room_type_id = :room_type_id",
-          {:meal_plan => "%" + session[:meal_plan] + "%", :date => Date.today,
+          {:meal_plan => "%" + session[:meal_plan].to_s + "%", :date => Date.today,
             :room_type_id => session[:room_type_id]})
     elsif session[:property_id]
       room_types = Property.scoped_by_account_id(current_user.account_id).
         find(session[:property_id]).room_types.collect {|r| [r.id]}
       @price_lists = @price_lists.order('start_date desc, meal_plan asc').
         where("meal_plan like :meal_plan and end_date > :date",
-          {:meal_plan => "%" + session[:meal_plan] + "%", :date => Date.today}).
+          {:meal_plan => "%" + session[:meal_plan].to_s + "%", :date => Date.today}).
         find_all_by_room_type_id(room_types)
     else
       @price_lists = []
