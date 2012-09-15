@@ -22,7 +22,7 @@ class Booking < ActiveRecord::Base
 
   validate	:ensure_property_exists,
 						:ensure_trip_exists,
-#            :ensure_booking_is_not_for_past_dates,
+            :ensure_booking_is_not_for_past_dates,
             :ensure_booking_is_within_trip_dates
 
 	before_save :strip_whitespaces, :titleize,
