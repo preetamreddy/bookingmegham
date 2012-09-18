@@ -77,3 +77,6 @@ gem "cancan"
 group :development do
   gem 'ruby-debug19'
 end
+
+# For client side validations
+gem 'client_side_validations'
