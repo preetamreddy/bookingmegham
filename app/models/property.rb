@@ -3,16 +3,16 @@ class Property < ActiveRecord::Base
 	has_many :bookings
 
 	validates_uniqueness_of :name, :scope => :account_id, :case_sensitive => false
-	validates :url, :name, presence: true
+	validates :name, :url, :price_for_driver, :service_tax_rate, presence: true
 	validates_numericality_of :price_for_driver,
-														allow_nil: true, only_integer: true,
-														greater_than_or_equal_to: 0,
-														message: "should be a number greater than or equal to 0"
-	validates :phone_number, :phone_number_2, allow_nil: true,
-		:format => { :with => /^[\+]?[\d\s]*$/, :message => "is not valid" }
+		only_integer: true, greater_than_or_equal_to: 0,
+		message: "should be a number greater than or equal to 0"
+	validates_numericality_of :service_tax_rate, allow_nil: true, greater_than_or_equal_to: 0,
+		message: "should be a number greater than or equal to 0"
+	validates :phone_number, :phone_number_2,
+		:format => { :with => /^[\+]?[\d\s]*$/, :allow_blank => true, :message => "is not valid" }
 	
-	before_save :titleize, :set_defaults_if_nil,
-							:strip_whitespaces
+	before_save :titleize, :strip_whitespaces
 
 	before_destroy 	:ensure_does_not_have_room_types,
     :ensure_does_not_have_bookings
@@ -32,10 +32,6 @@ class Property < ActiveRecord::Base
 			self.name = name.titleize 
 		end
 
-		def set_defaults_if_nil
-			self.price_for_driver ||= 0	
-		end
-	
 		def strip_whitespaces
 			self.address = address.to_s.strip
 			self.suggested_activities = suggested_activities.to_s.strip
@@ -45,7 +41,7 @@ class Property < ActiveRecord::Base
 			if room_types.empty?
 				return true
 			else
-				errors.add(:base, "Destroy failed because #{name} has Room Types")
+				errors.add(:base, "Destroy failed because #{name} has rooms")
 				return false
 			end
 		end
@@ -54,7 +50,7 @@ class Property < ActiveRecord::Base
 			if bookings.empty?
 				return true
 			else
-				errors.add(:base, "Destroy failed because #{name} has Bookings")
+				errors.add(:base, "Destroy failed because #{name} has bookings")
 				return false
 			end
 		end

@@ -1,5 +1,5 @@
 <%= form_tag properties_path, :method => "get" do %>
 	<%= text_field_tag :name, params[:name], :placeholder => "Name" %>
-	<%= text_field_tag :city, params[:city], :placeholder => "City / Village" %>
+	<%= text_field_tag :city, params[:city], :placeholder => "Location" %>
 	<%= submit_tag "Search", :name => nil %>
 <% end %>

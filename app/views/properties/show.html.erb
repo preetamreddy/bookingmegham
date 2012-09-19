@@ -6,12 +6,29 @@
   <span class="saved_value"><%= @property.name %></span>
 </p>
 <p>
-  <b>City / Village:</b>
+  <b>Location:</b>
   <span class="saved_value"><%= @property.city %></span>
 </p>
 <p>
   <b>Own property?:</b>
   <span class="saved_value"><%= @property.ensure_availability_before_booking.to_english %></span>
+</p>
+<p>
+  <b>Service tax rate:</b>
+	<span class="saved_value"><%= number_to_percentage(@property.service_tax_rate,
+						:strip_insignificant_zeros => true) %></span>
+</p>
+<p>
+  <b>Price for driver:</b>
+  <span class="saved_value"><%= number_to_currency(@property.price_for_driver) %></span>
+</p>
+<p>
+  <b>URL:</b>
+  <span class="saved_value"><%= @property.url %></span>
+</p>
+<p>
+  <b>Email:</b>
+  <span class="saved_value"><%= @property.email %></span>
 </p>
 <p>
   <b>Phone number:</b>
@@ -20,23 +37,6 @@
 <p>
   <b>Alt. Phone number:</b>
   <span class="saved_value"><%= @property.phone_number_2 %></span>
-</p>
-<p>
-  <b>Email:</b>
-  <span class="saved_value"><%= @property.email %></span>
-</p>
-<p>
-  <b>URL:</b>
-  <span class="saved_value"><%= @property.url %></span>
-</p>
-<p>
-  <b>Price for driver:</b>
-  <span class="saved_value"><%= number_to_currency(@property.price_for_driver) %></span>
-</p>
-<p>
-  <b>Service tax rate:</b>
-	<span class="saved_value"><%= number_to_percentage(@property.service_tax_rate, :precision => 2, 
-						:strip_insignificant_zeros => true) %></span>
 </p>
 <p>
   <b>Address:</b>

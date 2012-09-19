@@ -78,7 +78,7 @@ class PropertiesController < ApplicationController
     @property.destroy
 
     respond_to do |format|
-      format.html { redirect_to properties_url, alert: @property.errors[:base][0] }
+      format.html { redirect_to :back, alert: @property.errors[:base][0] }
       format.json { head :ok }
     end
   end

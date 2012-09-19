@@ -22,7 +22,7 @@ class RoomType < ActiveRecord::Base
 	before_destroy :ensure_does_not_have_rooms
 
 	def service_tax
-		(price_for_lodging * property.service_tax_rate.to_f / 100.0).round
+		(price_for_lodging * property.service_tax_rate / 100.0).round
 	end
 
 	def price(occupancy, number_of_adults, number_of_children_between_5_and_12_years,

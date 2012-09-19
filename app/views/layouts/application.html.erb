@@ -81,8 +81,15 @@
 			</div>
 		<% end %>
 		<div id="main">
+      <% if alert %>
+        <div id="error_explanation">
+          <h2>Action could not be completed</h2>
+          <ul>
+            <li><%= alert %></li>
+          </ul>
+        </div>
+      <% end %>
 			<p id="notice"><%= notice %></p>
-			<p id="error"><%= alert %></p>
 			<%= yield %>
 		</div>
 	</div>
