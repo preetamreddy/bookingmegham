@@ -2,8 +2,8 @@ class Property < ActiveRecord::Base
 	has_many :room_types
 	has_many :bookings
 
-	validates_uniqueness_of :name, :scope => :account_id, :case_sensitive => false
 	validates :name, :url, :price_for_driver, :service_tax_rate, presence: true
+	validates_uniqueness_of :name, :scope => :account_id, :case_sensitive => false
 	validates_numericality_of :price_for_driver,
 		only_integer: true, greater_than_or_equal_to: 0,
 		message: "should be a number greater than or equal to 0"
