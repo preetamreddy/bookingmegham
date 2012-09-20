@@ -1,4 +1,9 @@
 Bookingmegham::Application.routes.draw do
+  resources :tooltips do
+    collection do
+      get 'tooltip_content'
+    end
+  end
 
   resources :price_lists
 

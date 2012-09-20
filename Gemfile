@@ -80,3 +80,6 @@ end
 
 # For client side validations
 gem 'client_side_validations'
+
+# For tooltips
+gem 'simple-tooltip'
