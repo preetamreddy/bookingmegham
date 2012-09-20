@@ -4,7 +4,7 @@ class RoomType < ActiveRecord::Base
 	has_many :rooms
   has_many :price_lists, :dependent => :destroy
 
-	validates :property_id, :room_type, 
+	validates :property_id, :room_type, :number_of_rooms,
 		:price_for_single_occupancy, :price_for_double_occupancy,
     :price_for_triple_occupancy, :price_for_children_between_5_and_12_years,
     :price_for_children_below_5_years, :price_for_lodging,
@@ -16,10 +16,9 @@ class RoomType < ActiveRecord::Base
 		allow_nil: true, only_integer: true, greater_than_or_equal_to: 0,
 		message: "should be a number greater than or equal to 0"
 	
-	before_save :capitalize, :set_defaults_if_nil,
-							:strip_whitespaces
+	before_save :capitalize, :strip_whitespaces
 
-	before_destroy :ensure_does_not_have_rooms
+	before_destroy :ensure_does_not_have_booked_rooms
 
 	def service_tax
 		(price_for_lodging * property.service_tax_rate / 100.0).round
@@ -115,22 +114,15 @@ class RoomType < ActiveRecord::Base
 			self.room_type = room_type.capitalize
 		end
 	
-		def set_defaults_if_nil
-			self.price_for_single_occupancy ||= 0
-			self.price_for_double_occupancy ||= 0
-			self.price_for_lodging ||= 0
-			self.number_of_rooms ||= 0
-		end
-
 		def strip_whitespaces
 			self.description = description.to_s.strip
 		end
 
-		def ensure_does_not_have_rooms
+		def ensure_does_not_have_booked_rooms
 			if rooms.empty?
 				return true
 			else
-				errors.add(:base, "Destroy failed because #{room_type} has bookings")
+				errors.add(:base, "Destroy failed because #{long_name} has booked rooms")
 				return false
 			end
 		end
