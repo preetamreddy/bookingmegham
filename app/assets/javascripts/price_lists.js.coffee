@@ -12,6 +12,16 @@ propertySelected = ->
     $("label[for='room_type_id']").show()
 
 $ ->
+  $('#price_list_start_date').datepicker(
+    dateFormat: 'dd-M-yy'
+    onClose: ->
+      this.focus()
+  )
+  $('#price_list_end_date').datepicker(
+    dateFormat: 'dd-M-yy'
+    onClose: ->
+      this.focus()
+  )
   if $('#price_list_search').length > 0
     propertySelected()
     $('#property_id').change ->
