@@ -5,10 +5,8 @@ class Advisor < ActiveRecord::Base
 	has_one :user
 
 	validates :name, presence: true
-	validates :email_id, presence: true, :uniqueness => { :case_sensitive => false }
-	validates :phone_number_1, :phone_number_2, 
-		:format => { :with => /^[\+]?[\d\s]*$/,
-		:message => "is not valid" }
+	validates :email_id, presence: true, :uniqueness => { :case_sensitive => false }, :email_format => true
+	validates :phone_number_1, :phone_number_2, :phone_number_format => true
 
 	before_save :titleize
 

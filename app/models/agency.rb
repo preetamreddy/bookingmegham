@@ -3,11 +3,15 @@ class Agency < ActiveRecord::Base
 	has_many :taxis
 	has_many :guests
 
-	validates :name, presence: true
-	validates_uniqueness_of :email_id, :phone_number, :phone_number_2, :scope => :account_id, 
-		:allow_nil => true, :allow_blank => true, :case_sensitive => false
-	validates :phone_number, :phone_number_2,
-    :format => { :with => /^[\+]?[\d\s]*$/, :message => "is not valid" }
+	validates :registered_name, :name, presence: true
+  validates :email_id,
+    :uniqueness => {:scope => :account_id, :allow_blank => true, :allow_nil => true, :case_sensitive => false},
+    :email_format => true
+  validates :email_id_2, :email_format => true
+  validates :phone_number,
+    :uniqueness => {:scope => :account_id, :allow_blank => true, :allow_nil => true, :case_sensitive => false},
+    :phone_number_format => true
+	validates :phone_number_2, :phone_number_format => true
 
 	before_save :titleize, :strip_whitespaces
 
@@ -40,7 +44,7 @@ class Agency < ActiveRecord::Base
 			if trips.empty?
 				return true
 			else
-				errors.add(:base, "Destroy failed because #{name} has Trips")
+				errors.add(:base, "Destroy failed because #{name} has trips")
 				return false
 			end
 		end

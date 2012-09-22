@@ -80,7 +80,7 @@ class AgenciesController < ApplicationController
 		end
 
     respond_to do |format|
-      format.html { redirect_to agencies_url, alert: @agency.errors[:base][0] }
+      format.html { redirect_to :back, alert: @agency.errors[:base][0] }
       format.json { head :ok }
     end
   end

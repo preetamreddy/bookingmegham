@@ -3,25 +3,21 @@
 <% if @advisors.count > 0 %>
 <table class="index_table" border="1">
   <tr>
-		<% if current_user.is? "Super admin" %>
-			<th>Account</th>
-		<% end %>
+		<th>Account</th>
     <th>Name</th>
+    <th>Email</th>
     <th>Phone number 1</th>
     <th>Phone number 2</th>
-    <th>Email</th>
     <th></th>
   </tr>
 
 <% @advisors.each do |advisor| %>
 	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-		<% if current_user.is? "Super admin" %>
-    	<td><%= advisor.account.subdomain if advisor.account_id %></td>
-		<% end %>
+   	<td><%= advisor.account.name if advisor.account_id %></td>
     <td><%= advisor.name %></td>
+    <td><%= advisor.email_id %></td>
     <td><%= advisor.phone_number_1 %></td>
     <td><%= advisor.phone_number_2 %></td>
-    <td><%= advisor.email_id %></td>
     <td>
     	<%= link_to 'Edit', edit_advisor_path(advisor) %><br />
 			<% if can? :destroy, advisor %>
