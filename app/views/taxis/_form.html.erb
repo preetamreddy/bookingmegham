@@ -1,4 +1,4 @@
-<%= form_for(@taxi) do |f| %>
+<%= form_for(@taxi, :validate => true) do |f| %>
   <% if @taxi.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@taxi.errors.count, "error") %> prohibited this taxi from being saved:</h2>

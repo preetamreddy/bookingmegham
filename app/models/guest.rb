@@ -6,10 +6,14 @@ class Guest < ActiveRecord::Base
 	has_many :trips, :as => :customer
 
 	validates :name, presence: true
-	validates_uniqueness_of :phone_number, :email_id, :scope => :account_id,
-		:allow_nil => true, :allow_blank => true, :case_sensitive => false
-	validates :phone_number, :phone_number_2, allow_nil: true,
-		:format => { :with => /^[\+]?[\d\s]*$/, :message => "is not valid" }
+  validates :email_id,
+    :uniqueness => {:scope => :account_id, :allow_blank => true, :allow_nil => true, :case_sensitive => false},
+    :email_format => true
+  validates :email_id_2, :email_format => true
+  validates :phone_number,
+    :uniqueness => {:scope => :account_id, :allow_blank => true, :allow_nil => true, :case_sensitive => false},
+    :phone_number_format => true
+	validates :phone_number_2, :phone_number_format => true
 
 	before_save :titleize, :strip_whitespaces
 
