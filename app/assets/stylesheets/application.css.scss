@@ -190,6 +190,12 @@
 	margin-bottom: 10px;
 	padding-left: 10.8em;
 
+  .field_with_errors {
+    .message {
+      display: none;
+     }
+  }
+
 	.add_nested_fields {
 		float: left;
 	}

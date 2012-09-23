@@ -174,7 +174,7 @@ class BookingsController < ApplicationController
     @booking.destroy
 
     respond_to do |format|
-      format.html { redirect_to bookings_url, alert: @booking.errors[:base][0] }
+      format.html { redirect_to :back, alert: @booking.errors[:base][0] }
       format.json { head :ok }
     end
   end

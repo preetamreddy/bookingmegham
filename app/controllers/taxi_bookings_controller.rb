@@ -111,7 +111,7 @@ class TaxiBookingsController < ApplicationController
     @taxi_booking.destroy
 
     respond_to do |format|
-      format.html { redirect_to taxi_bookings_url, alert: @taxi_booking.errors[:base][0] }
+      format.html { redirect_to :back, alert: @taxi_booking.errors[:base][0] }
       format.json { head :ok }
     end
   end

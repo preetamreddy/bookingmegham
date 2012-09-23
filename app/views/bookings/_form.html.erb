@@ -1,4 +1,4 @@
-<%= nested_form_for(@booking) do |f| %>
+<%= nested_form_for(@booking, :validate => true) do |f| %>
   <% if @booking.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this Booking from being saved:</h2>
@@ -53,28 +53,20 @@
 	</div>
   <div class="field">
     <%= f.label :check_in_date, "Check-in" %><br />
-		<% if @booking.new_record? %>
-    	<%= f.date_select :check_in_date, :start_year => Time.now.year, 
-        :end_year => Time.now.year + 1, :prompt => true %>
-		<% else %>
-    	<%= f.date_select :check_in_date, :start_year => Time.now.year, 
-				:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
-		<% end %>
+    <%= f.text_field :check_in_date, size: 10, 
+      :value => (@booking.check_in_date.to_s(:ddmonyyyy) if @booking.check_in_date),
+      :disabled => !@booking.new_record? %>
   </div>
 	<div class="field">
 		<%= f.label :number_of_nights, "Nights" %>
-		<% if @booking.new_record? %>
-      <%= f.number_field :number_of_nights, min: 1, :required => true %>
-		<% else %>
-			<%= f.number_field :number_of_nights, :disabled => true %>
-		<% end %>
+    <%= f.number_field :number_of_nights, min: 1, max: 99, :disabled => !@booking.new_record? %>
 	</div>
 
 	<div class="field">
 		<%= f.label :rooms %>
 	</div>
 	<div class="nested_form">
-		<%= f.fields_for :rooms %>
+    <%= f.fields_for :rooms, :validate => false %>
 		<%= f.link_to_add "Add new", :rooms %><br/>
 	</div>
 
@@ -88,7 +80,7 @@
 		<%= f.label :value_added_services, "Other services" %>
 	</div>
 	<div class="nested_form">
-		<%= f.fields_for :vas_bookings %>
+    <%= f.fields_for :vas_bookings, :validate => false %>
 		<%= f.link_to_add "Add new", :vas_bookings %><br/>
 	</div>
 

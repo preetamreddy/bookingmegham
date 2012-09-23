@@ -5,8 +5,7 @@ class TripRoom < ActiveRecord::Base
 
 	before_validation :set_defaults_if_nil
 
-	validates :occupancy, :number_of_rooms, :number_of_adults, 
-    :number_of_children_between_5_and_12_years, presence: true
+	validates :occupancy, :number_of_rooms, :number_of_adults, presence: true
 	validates :occupancy, :inclusion => { :in => ROOM_OCCUPANCY_TYPES,
     :message => ": \"%{value}\" is not a valid option" }
 	validates :number_of_adults, allow_nil: true,

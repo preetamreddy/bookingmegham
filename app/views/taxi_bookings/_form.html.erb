@@ -1,4 +1,4 @@
-<%= nested_form_for(@taxi_booking) do |f| %>
+<%= nested_form_for(@taxi_booking, :validate => true) do |f| %>
   <% if @taxi_booking.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@taxi_booking.errors.count, "error") %> prohibited this taxi_booking from being saved:</h2>
@@ -51,8 +51,8 @@
   </div>
 	<div class="field">
 		<%= f.label :start_date %><br />
-		<%= f.date_select :start_date, :start_year => Time.now.year,
-					:end_year => Time.now.year + 1, :prompt => true %>
+    <%= f.text_field :start_date, size: 10, 
+      :value => (@taxi_booking.start_date.to_s(:ddmonyyyy) if @taxi_booking.start_date) %>
 	</div>
   <div class="field">
     <%= f.label :number_of_days %><br />
@@ -75,7 +75,7 @@
 		<%= f.label :taxi_details %><br />
 	</div>
 	<div class="nested_form">
-		<%= f.fields_for :taxi_details %>
+    <%= f.fields_for :taxi_details, :validate => false %>
 		<%= f.link_to_add "Add new", :taxi_details %><br/>
 	</div>
 
