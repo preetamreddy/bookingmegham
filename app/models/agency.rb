@@ -1,7 +1,6 @@
 class Agency < ActiveRecord::Base
 	has_many :trips, :as => :customer
 	has_many :taxis
-	has_many :guests
 
 	validates :registered_name, :name, presence: true
   validates :email_id,

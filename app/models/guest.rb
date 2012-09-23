@@ -1,8 +1,6 @@
 class Guest < ActiveRecord::Base
 	TITLE = [ "Mr", "Ms", "Mrs", "Dr." ]
 
-	belongs_to :agency
-
 	has_many :trips, :as => :customer
 
 	validates :name, presence: true
