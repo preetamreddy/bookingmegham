@@ -1,6 +1,8 @@
 class PaymentMode < ActiveRecord::Base
   belongs_to :account_setting
 
+  validates :name, :presence => true
+
   before_create :set_account_id
 
   private
