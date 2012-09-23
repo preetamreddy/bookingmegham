@@ -1,4 +1,4 @@
-<%= nested_form_for(@trip) do |f| %>
+<%= nested_form_for(@trip, :validate => true) do |f| %>
   <% if @trip.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@trip.errors.count, "error") %> prohibited this Trip from being saved:</h2>
@@ -39,8 +39,8 @@
 	<% end %>
   <div class="field">
     <%= f.label :start_date %><br />
-   	<%= f.date_select :start_date, :start_year => Time.now.year,
-        :end_year => Time.now.year + 1, :prompt => true %>
+    <%= f.text_field :start_date, size: 10,
+      :value => (@trip.start_date.to_s(:ddmonyyyy) if @trip.start_date) %>
   </div>
 	<div class="field">
     <%= f.label :number_of_days, "Days" %><br />
@@ -51,15 +51,15 @@
 		<%= f.label :rooms %>
 	</div>
 	<div class="nested_form">
-		<%= f.fields_for :trip_rooms %>
+    <%= f.fields_for :trip_rooms, :validate => false %>
 		<%= f.link_to_add "Add new", :trip_rooms %><br/>
 	</div>
 
 	<div class="field">
-		<%= f.label :value_added_services, "Other services" %>
+		<%= f.label :value_added_services, "Value added services" %>
 	</div>
 	<div class="nested_form">
-		<%= f.fields_for :vas_bookings %>
+    <%= f.fields_for :vas_bookings, :validate => false %>
 		<%= f.link_to_add "Add new", :vas_bookings %><br/>
 	</div>
 
@@ -120,8 +120,8 @@
 	<% end %>
 	<div class="field">
    	<%= f.label :invoice_date %><br />
-   	<%= f.date_select :invoice_date, :start_year => Time.now.year,
-			:end_year => Time.now.year + 1, :prompt => true %>
+    <%= f.text_field :invoice_date, size: 10,
+      :value => (@trip.invoice_date.to_s(:ddmonyyyy) if @trip.invoice_date) %>
 	</div>
 
 	<div class="field">

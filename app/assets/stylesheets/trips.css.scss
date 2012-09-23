@@ -11,6 +11,11 @@
 
 	.nested_form {
 		padding-left: 10.8em;
+    .field_with_errors {
+      .message {
+        display: none;
+      }
+    }
 	}
 
 	table th:nth-last-child(2) {

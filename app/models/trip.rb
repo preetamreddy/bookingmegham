@@ -21,16 +21,12 @@ class Trip < ActiveRecord::Base
 
 	before_validation :set_defaults_if_nil
 
-	validates :customer_type, :customer_id, :name, :start_date, :number_of_days, 
+	validates :customer_type, :customer_id, :advisor_id, :name, :start_date, :number_of_days, 
 						presence: true
-	validates_numericality_of :customer_id,
-						only_integer: true, greater_than: 0, allow_nil: true,
-						message: "should be a number greater than 0"
 	validates_numericality_of :number_of_days,
 						only_integer: true, greater_than: 1, allow_nil: true,
 						message: "should be a number greater than 1"
-  validates :phone_number, allow_nil: true,
-        :format => { :with => /^[\+]?[\d\s]*$/, :message => "is not valid" }
+  validates :phone_number, allow_nil: true, :allow_blank => true, :phone_number_format => true
 
 	before_save :strip_whitespaces, :titleize,
 							:update_end_date, :ensure_booking_dates_are_within_trip_dates,
