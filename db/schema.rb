@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120920055928) do
+ActiveRecord::Schema.define(:version => 20120923085339) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -222,7 +222,7 @@ ActiveRecord::Schema.define(:version => 20120920055928) do
   create_table "rooms", :force => true do |t|
     t.string   "occupancy"
     t.integer  "number_of_adults"
-    t.integer  "number_of_children_between_5_and_12_years"
+    t.integer  "number_of_children_between_5_and_12_years", :default => 0
     t.integer  "number_of_rooms"
     t.integer  "booking_id"
     t.datetime "created_at"
@@ -302,7 +302,7 @@ ActiveRecord::Schema.define(:version => 20120920055928) do
     t.string   "occupancy"
     t.integer  "number_of_rooms"
     t.integer  "number_of_adults"
-    t.integer  "number_of_children_between_5_and_12_years"
+    t.integer  "number_of_children_between_5_and_12_years", :default => 0
     t.integer  "number_of_children_below_5_years",          :default => 0
     t.integer  "account_id"
     t.datetime "created_at"
