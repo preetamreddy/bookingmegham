@@ -14,14 +14,13 @@
   <div class="field">
     <%= f.label :property_id %><br />
 		<% if @room_type.property_id %>
-    	<%= f.collection_select(:property_id,
-						Property.scoped_by_account_id(current_user.account_id).
-							find_all_by_id(@room_type.property_id), :id, :name) %>
+		  <p><span class="highlight">
+			  <%= @room_type.property.name %>
+		  </span></p>
 		<% else %>
-    	<%= f.collection_select(:property_id,
-						Property.scoped_by_account_id(current_user.account_id).
-							order('name').find_all, :id, :name) %>
+      <%= autocomplete_field_tag 'property', '', autocomplete_property_name_room_types_path, :id_element => "#room_type_property_id" %>
 		<% end %>
+    <%= f.text_field :property_id, :hidden => true %>
   </div>
   <div class="field">
     <%= f.label :room_type, "Name" %><br />
