@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120923145318) do
+ActiveRecord::Schema.define(:version => 20120925194113) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(:version => 20120923145318) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "pan_number"
-    t.integer  "operates_taxis",  :default => 0
     t.string   "name"
     t.integer  "account_id"
     t.string   "phone_number_2"

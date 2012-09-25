@@ -10,7 +10,6 @@ banjara:
   city: New Delhi
   url: www.banjaracamps.com
   pan_number: AACCB0246J
-  operates_taxis: 0
 
 great_escape:
   account_id: 1
@@ -20,7 +19,6 @@ great_escape:
   email_id: greatescaperoutes@gmail.com 
   city: Shimla
   pan_number: ABCDE1234F
-  operates_taxis: 0
 
 himalayanvillage:
   account_id: 2
@@ -34,4 +32,3 @@ himalayanvillage:
   city: Sonapani
   url: www.himalayanvillage.com
   pan_number: AACCH0123J
-  operates_taxis: 0
