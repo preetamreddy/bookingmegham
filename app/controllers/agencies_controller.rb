@@ -1,5 +1,8 @@
 class AgenciesController < ApplicationController
 	load_and_authorize_resource
+
+  autocomplete :agency, :name, :full => true
+
   # GET /agencies
   # GET /agencies.json
   def index
@@ -83,5 +86,9 @@ class AgenciesController < ApplicationController
       format.html { redirect_to :back, alert: @agency.errors[:base][0] }
       format.json { head :ok }
     end
+  end
+
+  def get_autocomplete_items(parameters)
+    super(parameters).where("account_id = ?", current_user.account_id)
   end
 end

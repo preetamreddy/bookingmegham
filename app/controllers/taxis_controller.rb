@@ -3,30 +3,28 @@ class TaxisController < ApplicationController
   # GET /taxis
   # GET /taxis.json
   def index
-		if params[:taxi_operator_name]
-			taxi_operator_name = params[:taxi_operator_name].downcase
-		elsif session[:taxi_operator_name]
-			taxi_operator_name = session[:taxi_operator_name].downcase
-		end
+    taxi_operator_id = params[:taxi_operator_id].to_i
 
-		if taxi_operator_name
-			taxi_operators = Agency.scoped_by_account_id(current_user.account_id).
-				find(:all, :conditions => [ 'lower(name) like ?', "%" + taxi_operator_name + "%" ])
+    if taxi_operator_id != 0
+      if Agency.scoped_by_account_id(current_user.account_id).find_all_by_id(taxi_operator_id).any?
+        session[:taxi_operator_id] = taxi_operator_id
+      end
+    elsif params[:taxi_operator_id] == 'All'
+      session[:taxi_operator_id] = nil
+    end
 
-			if taxi_operators.count == 1
-				session[:taxi_operator_name] = taxi_operators.first.name
-			else
-				session[:taxi_operator_name] = nil
-			end
-	
+    if session[:taxi_operator_id]
+      taxi_operator = Agency.scoped_by_account_id(current_user.account_id).find(session[:taxi_operator_id])
+      @taxi_operator_name = taxi_operator.name
+    end
+
+    if session[:taxi_operator_id]
 			@taxis = @taxis.paginate(page: params[:page], per_page: 10).
         order('agency_id, unit_price').
-				find_all_by_agency_id(taxi_operators)
+				find_all_by_agency_id(session[:taxi_operator_id])
 		else
 			@taxis = @taxis.paginate(page: params[:page], per_page: 10).
         order('agency_id, unit_price')
-		
-			session[:taxi_operator_name] = nil
 		end
 
     respond_to do |format|
@@ -47,10 +45,7 @@ class TaxisController < ApplicationController
   # GET /taxis/new
   # GET /taxis/new.json
   def new
-    if session[:taxi_operator_name]
-      @taxi.agency_id = Agency.scoped_by_account_id(current_user.account_id).
-        find_by_name(session[:taxi_operator_name]).id
-    end
+    @taxi.agency_id = session[:taxi_operator_id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -67,8 +62,8 @@ class TaxisController < ApplicationController
   def create
     respond_to do |format|
       if @taxi.save
-        session[:taxi_operator_name] = Agency.scoped_by_account_id(current_user.account_id).
-          find(@taxi.agency_id).name
+        session[:taxi_operator_id] = @taxi.agency_id
+
         format.html { redirect_to @taxi, notice: 'Taxi was successfully created.' }
         format.json { render json: @taxi, status: :created, location: @taxi }
       else
@@ -83,8 +78,8 @@ class TaxisController < ApplicationController
   def update
     respond_to do |format|
       if @taxi.update_attributes(params[:taxi])
-        session[:taxi_operator_name] = Agency.scoped_by_account_id(current_user.account_id).
-          find(@taxi.agency_id).name
+        session[:taxi_operator_id] = @taxi.agency_id
+
         format.html { redirect_to @taxi, notice: 'Taxi was successfully updated.' }
         format.json { head :ok }
       else

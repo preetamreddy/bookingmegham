@@ -1,7 +1,14 @@
+<%= render 'search' %>
+
 <h1>Listing Taxis</h1>
 
 <div class="action_container">
-	<%= render 'search' %>
+  <% if session[:taxi_operator_id] %>
+    <%= @taxi_operator_name %>
+    <%= link_to 'x', taxis_path(:taxi_operator_id => 'All') %>
+  <% else %>
+    &nbsp;
+  <% end %>
 </div>
 
 <%= link_to 'New Taxi', new_taxi_path, :class => "new_link" %>

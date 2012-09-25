@@ -18,7 +18,8 @@
 			  <%= @room_type.property.name %>
 		  </span></p>
 		<% else %>
-      <%= autocomplete_field_tag 'property', '', autocomplete_property_name_properties_path, :id_element => "#room_type_property_id" %>
+      <%= autocomplete_field_tag 'property', '', autocomplete_property_name_properties_path,
+        :id_element => "#room_type_property_id" %>
 		<% end %>
     <%= f.text_field :property_id, :hidden => true %>
   </div>

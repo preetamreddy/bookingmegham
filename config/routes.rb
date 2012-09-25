@@ -48,7 +48,9 @@ Bookingmegham::Application.routes.draw do
 
   resources :advisors
 
-  resources :agencies
+  resources :agencies do
+    get :autocomplete_agency_name, :on => :collection
+  end
 
 	resources :trips do
 		get :email, :on => :member

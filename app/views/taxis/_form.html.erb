@@ -14,14 +14,14 @@
   <div class="field">
     <%= f.label :agency_id, "Operator" %><br />
 		<% if @taxi.agency_id %>
-			<%= f.collection_select(:agency_id,
-				Agency.scoped_by_account_id(current_user.account_id).
-					order('name').find_all_by_id(@taxi.agency_id), :id, :name) %>
+		  <p><span class="highlight">
+			  <%= @taxi.agency.name %>
+		  </span></p>
 		<% else %>
-			<%= f.collection_select(:agency_id,
-				Agency.scoped_by_account_id(current_user.account_id).
-					order('name').find_all_by_operates_taxis(1), :id, :name) %>
+      <%= autocomplete_field_tag 'agency', '', autocomplete_agency_name_agencies_path,
+        :id_element => "#taxi_agency_id" %>
 		<% end %>
+    <%= f.text_field :agency_id, :hidden => true %>
   </div>
   <div class="field">
     <%= f.label :model %><br />

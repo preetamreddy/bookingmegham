@@ -98,6 +98,6 @@ class PropertiesController < ApplicationController
   end
 
   def get_autocomplete_items(parameters)
-    super(parameters).where(:account_id => current_user.account_id)
+    super(parameters).where("account_id = ?", current_user.account_id)
   end
 end
