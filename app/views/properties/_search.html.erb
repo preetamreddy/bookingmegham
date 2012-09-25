@@ -1,6 +1,6 @@
 <%= form_tag properties_path, :method => "get" do %>
-  <%= label_tag :property %>
-  <%= autocomplete_field_tag 'property', '', autocomplete_property_name_properties_path, :id_element => "#properties_search_id" %>
+  <%= autocomplete_field_tag 'property', '', autocomplete_property_name_properties_path,
+    :id_element => "#properties_search_id", :placeholder => 'Property name' %>
   <%= text_field_tag :id, '', :id => "properties_search_id", :hidden => true %>
 	<%= submit_tag "Search", :name => nil %>
 <% end %>

@@ -1,6 +1,6 @@
 <%= form_tag room_types_path, :method => "get" do %>
-	<%= text_field_tag :property_name, 
-		params[:property_name] ? params[:property_name] : session[:property_name],
-		:placeholder => "Property Name" %>
+  <%= autocomplete_field_tag 'property', '', autocomplete_property_name_properties_path, 
+    :id_element => "#room_types_search_property_id", :placeholder => 'Property name' %>
+    <%= text_field_tag :property_id, '', :id => "room_types_search_property_id", :hidden => true %>
 	<%= submit_tag "Search", :name => nil %>
 <% end %>
