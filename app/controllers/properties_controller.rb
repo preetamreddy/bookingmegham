@@ -6,18 +6,16 @@ class PropertiesController < ApplicationController
   # GET /properties
   # GET /properties.json
   def index
-		property_name = params[:name]
-		property_name ||= ''
-		property_name = property_name.downcase
+    id = params[:id].to_i
 
-		city = params[:city]
-		city ||= ''
-		city = city.downcase
-
-    @properties = @properties.paginate(page: params[:page], per_page: 10).
-      order('ensure_availability_before_booking desc, name').
-			find(:all, :conditions => [ 'lower(name) like ? and lower(city) like ?',
-				"%" + property_name + "%", "%" + city + "%" ])
+    if id != 0
+      @properties = @properties.paginate(page: params[:page], per_page: 10).
+        order('ensure_availability_before_booking desc, name').
+        find_all_by_id(id)
+    else
+      @properties = @properties.paginate(page: params[:page], per_page: 10).
+        order('ensure_availability_before_booking desc, name').find(:all)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
