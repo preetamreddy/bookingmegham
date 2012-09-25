@@ -1,8 +1,6 @@
 class RoomTypesController < ApplicationController
 	load_and_authorize_resource
 
-  autocomplete :property, :name, :full => true
-
   # GET /room_types
   # GET /room_types.json
   def index
@@ -121,9 +119,5 @@ class RoomTypesController < ApplicationController
       format.html { redirect_to :back, alert: @room_type.errors[:base][0] }
       format.json { head :ok }
     end
-  end
-
-  def get_autocomplete_items(parameters)
-    super(parameters).where(:account_id => current_user.account_id)
   end
 end

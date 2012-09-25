@@ -1,5 +1,8 @@
 class PropertiesController < ApplicationController
 	load_and_authorize_resource
+
+  autocomplete :property, :name, :full => true
+  #
   # GET /properties
   # GET /properties.json
   def index
@@ -94,5 +97,9 @@ class PropertiesController < ApplicationController
     respond_to do |format|
       format.js
     end
+  end
+
+  def get_autocomplete_items(parameters)
+    super(parameters).where(:account_id => current_user.account_id)
   end
 end
