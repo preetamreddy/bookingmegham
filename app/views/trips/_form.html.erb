@@ -23,10 +23,11 @@
  	<div class="field">
    	<%= f.label :customer_id, "Customer" %><br />
 		<% if @trip.customer_id %>
-    	<%= f.collection_select(:customer_id, 
-						@trip.customer_type.classify.constantize.scoped_by_account_id(current_user.account_id).
-							find_all_by_id(@trip.customer_id), :id, :name) %>
+		  <p><span class="highlight">
+			  <%= @trip.customer.name %>
+		  </span></p>
 		<% end %>
+    <%= f.text_field :customer_id, :hidden => true %>
   </div>
   <div class="field">
     <%= f.label :name, "Trip tag" %><br />
@@ -138,9 +139,12 @@
   </div>
   <div class="field">
    	<%= f.label :advisor_id, "Advisor" %><br />
-    <%= f.collection_select(:advisor_id,
-					Advisor.scoped_by_account_id(current_user.account_id).
-						order('name').find_all_by_id(@trip.advisor_id), :id, :name) %>
+		<% if @trip.advisor_id %>
+		  <p><span class="highlight">
+			  <%= @trip.advisor.name %>
+		  </span></p>
+		<% end %>
+    <%= f.text_field :advisor_id, :hidden => true %>
   </div>
   <div class="action_container">
     <%= f.submit %>
