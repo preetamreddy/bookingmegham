@@ -1,6 +1,6 @@
 <%= form_tag taxis_path, :method => "get" do %>
   <%= autocomplete_field_tag 'taxi_operator', '', autocomplete_agency_name_agencies_path,
     :id_element => "#taxis_search_taxi_operator_id", :placeholder => 'Taxi operator name' %>
-  <%= text_field_tag :taxi_operator_id, '', :id => "taxis_search_taxi_operator_id" %>
+  <%= text_field_tag :taxi_operator_id, '', :id => "taxis_search_taxi_operator_id", :hidden => true %>
 	<%= submit_tag "Search", :name => nil %>
 <% end %>

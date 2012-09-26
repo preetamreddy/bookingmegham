@@ -27,8 +27,7 @@
     <% @agencies.each do |agency| %>
       <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
         <td>
-          <span class="nowrap"><%= agency.registered_name %></span><br />
-          <span class="nowrap">(<%= agency.name %>)</span>
+          <span class="nowrap"><%= agency.name %></span>
         </td>
         <td class="nowrap"><%= agency.city %></td>
         <td>

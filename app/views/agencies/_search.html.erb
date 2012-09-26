@@ -1,6 +1,6 @@
 <%= form_tag agencies_path, :method => "get" do %>
-	<div class="search">
-		<%= text_field_tag :name, params[:name], :placeholder => "Name" %>
-		<%= submit_tag "Search", :name => nil %>
-	</div>
+  <%= autocomplete_field_tag 'agency', '', autocomplete_agency_name_agencies_path,
+    :id_element => "#agencies_search_agency_id", :placeholder => 'Agency name' %>
+    <%= text_field_tag :id, '', :id => "agencies_search_agency_id", :hidden => true %>
+	<%= submit_tag "Search", :name => nil %>
 <% end %>

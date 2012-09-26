@@ -6,13 +6,13 @@ class AgenciesController < ApplicationController
   # GET /agencies
   # GET /agencies.json
   def index
-		agency_name = params[:name]
-		agency_name ||= ''
-		agency_name = agency_name.downcase
+    id = params[:id].to_i
 
-   	@agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).
-			find(:all, :conditions => [ 'lower(name) like ? or lower(registered_name) like ?',
-           "%" + agency_name + "%", "%" + agency_name + "%" ])
+    if id != 0
+   	  @agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).find_all_by_id(id)
+    else
+   	  @agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).find(:all)
+    end
 
 		@records_returned = @agencies.count
 
