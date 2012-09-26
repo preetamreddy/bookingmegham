@@ -2,6 +2,7 @@ class Trip < ActiveRecord::Base
 	NOT_PAID = 'Not Paid'
 	PARTIALLY_PAID = 'Partially Paid'
 	FULLY_PAID = 'Fully Paid'
+  PAYMENT_OVERDUE = 'Payment Overdue'
   GUEST = "Guest"
 
 	belongs_to :customer, :polymorphic => true

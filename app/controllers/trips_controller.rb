@@ -16,11 +16,11 @@ class TripsController < ApplicationController
                      'customer_type = ? and customer_id = ?',
                      session[:customer_type], session[:customer_id] ])
 		else
-			if params[:payment_status]
+			if params[:payment_status] == Trip::NOT_PAID or params[:payment_status] == Trip::PARTIALLY_PAID
     		@trips = @trips.paginate(page: params[:page], per_page: 10).
 									order("start_date DESC, end_date DESC").
 									find_all_by_payment_status(params[:payment_status])
-			elsif params[:payment_overdue]
+			elsif params[:payment_status] == Trip::PAYMENT_OVERDUE
     		@trips = @trips.paginate(page: params[:page], per_page: 10).
 									order('start_date DESC, end_date DESC').
 									find(:all, :conditions => [
@@ -31,6 +31,16 @@ class TripsController < ApplicationController
 									order("start_date DESC, end_date DESC").all
 			end
 		end
+
+    if session[:customer_id]
+      customer = session[:customer_type].classify.constantize.
+        scoped_by_account_id(current_user.account_id).find(session[:customer_id])
+      @customer_name = customer.name
+    end
+
+    if params[:payment_status]
+      @payment_status = params[:payment_status]
+    end
 
 		@records_returned = @trips.count
 
