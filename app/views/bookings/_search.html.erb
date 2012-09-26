@@ -1,11 +1,14 @@
 <%= form_tag bookings_path, :method => "get" do %>
-	<%= label_tag :property_id, "For property" %>
-	<%= select_tag(:property_id, options_for_select(
-				Property.scoped_by_account_id(current_user.account_id).order('name').collect { |p| [p.name, p.id] }.insert(0, 'All'), 
-					@property_id)) %>
-	<%= label_tag :check_in_date_first, "Starting from" %>
-	<%= select_date @check_in_date_first, :prefix => 'check_in_date_first' %>
-	<%= label_tag :number_of_days, "For days" %>
-	<%= number_field_tag :number_of_days, @number_of_days, min: 1, max: 999 %>
-	<%= submit_tag "Search", :name => nil %>
+  <span class="search_title">Show check-ins </span>
+	<%= label_tag :check_in_date_first, "From *" %>
+  <%= text_field_tag :check_in_date_first, (@check_in_date_first.to_s(:ddmonyyyy) if @check_in_date_first),
+    :required => true %>
+	<%= label_tag :number_of_days, "For days *" %>
+  <%= number_field_tag :number_of_days, @number_of_days, min: 1, max: 999, :required => true %>
+	<%= label_tag :property, "For property" %>
+  <%= autocomplete_field_tag 'property_name', '', 
+    autocomplete_property_name_properties_path, :id_element => "#bookings_search_property_id",
+    :placeholder => 'Property name' %>
+    <%= text_field_tag :property_id, '', :id => "bookings_search_property_id", :hidden => true %>
+	<%= submit_tag "Go", :name => nil %>
 <% end %>

@@ -10,15 +10,16 @@ class BookingsController < ApplicationController
 			
 		if params[:property_id]
 			@property_id = params[:property_id].to_i
+      properties = Property.scoped_by_account_id(current_user.account_id).find_all_by_id(@property_id)
+      if properties.any?
+        @property_name = properties.first.name
+      end
 		else
 			@property_id = 0
 		end
 
 		if params[:check_in_date_first]
-			@check_in_date_first = Date.civil(
-															params[:check_in_date_first][:year].to_i,
-															params[:check_in_date_first][:month].to_i,
-															params[:check_in_date_first][:day].to_i)
+			@check_in_date_first = params[:check_in_date_first].to_date
 		else
 			@check_in_date_first = Date.today
 		end
@@ -60,6 +61,16 @@ class BookingsController < ApplicationController
 												@check_in_date_first, @check_in_date_last ])
 			end
 		end
+
+    if session[:trip_id]
+      trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
+      @trip_name = trip.name
+      @customer_name = trip.customer.name
+    elsif session[:customer_id]
+      customer = session[:customer_type].classify.constantize.
+        scoped_by_account_id(current_user.account_id).find(session[:customer_id])
+      @customer_name = customer.name
+    end
 
 		@records_returned = @bookings.count
 

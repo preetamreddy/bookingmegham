@@ -1,9 +1,14 @@
-<h1>Listing Room Bookings</h1>
-
 <% if !(session[:customer_id]) %>
-	<div id="search">
-		<%= render 'search' %>
-	</div>
+  <div class="action_container">
+    <%= render 'search' %>
+  </div>
+  <h2>
+    <%= "Check-ins > #{@check_in_date_first.to_s(:ddmonyy)} to #{@check_in_date_last.to_s(:ddmonyy)} > #{@property_name || "All properties"}" %>
+  </h2>
+<% else %>
+  <h2>
+    <%= "Room Bookings > #{@customer_name} > #{@trip_name || "All trips"}" %>
+  </h2>
 <% end %>
 
 <% if @records_returned == 0 %>
