@@ -1,13 +1,17 @@
-<h1>Listing Payments</h1>
-
 <% if !(session[:customer_id]) %>
-	<div id="search">
+	<div class="action_container">
 		<%= render 'search' %>
 	</div>
-
 	<div id="download">
 		<%= render 'download' %>
 	</div>
+  <h2>
+    <%= "Payments > #{@from_date.to_s(:ddmonyy)} to #{@to_date.to_s(:ddmonyy)}" %>
+  </h2>
+<% else %>
+  <h2>
+    <%= "Payments > #{@customer_name} > #{@trip_name || "All trips"}" %>
+  </h2>
 <% end %>
 
 <% if @records_returned == 0 %>

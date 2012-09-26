@@ -9,10 +9,7 @@ class PaymentsController < ApplicationController
 		end
 
 		if params[:from_date]
-			@from_date = Date.civil(
-										params[:from_date][:year].to_i,
-										params[:from_date][:month].to_i,
-										params[:from_date][:day].to_i)
+			@from_date = params[:from_date].to_date
 		else
 			@from_date = Date.today - 30
 		end
@@ -41,6 +38,16 @@ class PaymentsController < ApplicationController
 											'date_received >= ? and date_received <= ?',
 											@from_date, @to_date ])
 		end
+
+    if session[:trip_id]
+      trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
+      @trip_name = trip.name
+      @customer_name = trip.customer.name
+    elsif session[:customer_id]
+      customer = session[:customer_type].classify.constantize.
+        scoped_by_account_id(current_user.account_id).find(session[:customer_id])
+      @customer_name = customer.name
+    end
 
 		@records_returned = @payments.count
 
