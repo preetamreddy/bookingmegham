@@ -47,7 +47,7 @@ class BookingsController < ApplicationController
 		else
 			if @property_id > 0
 				@bookings = @bookings.paginate(page: params[:page], per_page: 10).
-											order("check_in_date desc, check_out_date desc").
+											order("check_in_date asc, check_out_date asc").
 											find(:all, :conditions => [
 												'property_id = ? and check_in_date >= ? and
 												check_in_date < ?',
@@ -55,7 +55,7 @@ class BookingsController < ApplicationController
 												@check_in_date_last ])
 			else
 				@bookings = @bookings.paginate(page: params[:page], per_page: 10).
-											order("check_in_date desc, check_out_date desc").
+											order("check_in_date asc, check_out_date asc").
 											find(:all, :conditions => [
 												'check_in_date >= ? and check_in_date < ?',
 												@check_in_date_first, @check_in_date_last ])

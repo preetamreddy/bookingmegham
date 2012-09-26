@@ -9,10 +9,7 @@ class TaxiBookingsController < ApplicationController
 		end
 
 		if params[:start_date]
-			@start_date = Date.civil(
-											params[:start_date][:year].to_i,
-											params[:start_date][:month].to_i,
-											params[:start_date][:day].to_i)
+			@start_date = params[:start_date].to_date
 		else
 			@start_date = Date.today
 		end
@@ -36,10 +33,20 @@ class TaxiBookingsController < ApplicationController
         order("start_date desc, end_date desc").find_all_by_trip_id(trips)
 		else
 			@taxi_bookings = @taxi_bookings.paginate(page: params[:page], per_page: 10).
-        order("start_date desc, end_date desc").
+        order("start_date asc, end_date asc").
 				find(:all, :conditions => [ 'start_date >= ? and start_date < ?',
 					@start_date, @upto_date ])
 		end
+
+    if session[:trip_id]
+      trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
+      @trip_name = trip.name
+      @customer_name = trip.customer.name
+    elsif session[:customer_id]
+      customer = session[:customer_type].classify.constantize.
+        scoped_by_account_id(current_user.account_id).find(session[:customer_id])
+      @customer_name = customer.name
+    end
 
 		@records_returned = @taxi_bookings.count
 
