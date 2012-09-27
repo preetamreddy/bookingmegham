@@ -1,6 +1,6 @@
 <% if !(session[:customer_id]) %>
-	<div class="action_container">
-    <span class="search_title">Show</span>
+  <span class="search_title">Show</span>
+	<div class="search_container">
 		<%= link_to 'Not Paid Trips', 
 					trips_path(:payment_status => Trip::NOT_PAID) %>
 		<%= link_to 'Partially Paid Trips', 

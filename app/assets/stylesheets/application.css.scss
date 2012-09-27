@@ -92,6 +92,12 @@
 	padding: 8px;
 	border-radius: 10px;
 	display: inline-block;
+
+	a {
+		font-size: 1.1em;
+		margin-left: 0.5em;
+		margin-right: 0.5em;
+	}
 }
 
 .show_saved_record {
