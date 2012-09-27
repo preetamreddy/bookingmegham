@@ -14,29 +14,28 @@ class PaymentsController < ApplicationController
 			@from_date = Date.today - 30
 		end
 
-		if params[:number_of_days]
-			@number_of_days = params[:number_of_days].to_i
+		if params[:to_date]
+			@to_date = params[:to_date].to_date
 		else
-			@number_of_days = 30 
+			@to_date = Date.today
 		end
 
-		@to_date = @from_date + @number_of_days
-
 		if session[:trip_id]
-			@payments = @payments.order("trip_id, date_received, id").find(:all, :conditions => [
-											'trip_id = ?', session[:trip_id] ])
+			@payments = @payments.paginate(page: params[:page], per_page: 20).
+        order("date_received desc, trip_id desc, counter asc").
+        find(:all, :conditions => ['trip_id = ?', session[:trip_id]])
 		elsif session[:customer_id]
 			trips = Trip.scoped_by_account_id(current_user.account_id).
         find(:all, :conditions => [
              'customer_type = ? and customer_id = ?',
              session[:customer_type], session[:customer_id] ])
-			@payments = @payments.paginate(page: params[:page], per_page: 10).
-        order("trip_id, date_received, id").
+			@payments = @payments.paginate(page: params[:page], per_page: 20).
+        order("date_received desc, trip_id desc, counter asc").
 				find_all_by_trip_id(trips)
 		else
-			@payments = @payments.order("trip_id, date_received, id").find(:all, :conditions => [
-											'date_received >= ? and date_received <= ?',
-											@from_date, @to_date ])
+			@payments = @payments.paginate(page: params[:page], per_page: 20).
+        order("date_received asc, trip_id asc, counter asc").find(:all, :conditions => [
+					'date_received >= ? and date_received <= ?', @from_date, @to_date ])
 		end
 
     if session[:trip_id]

@@ -1,10 +1,10 @@
 <%= form_tag bookings_path, :method => "get" do %>
-  <span class="search_title">Show check-ins </span>
 	<%= label_tag :check_in_date_first, "From *" %>
   <%= text_field_tag :check_in_date_first, (@check_in_date_first.to_s(:ddmonyyyy) if @check_in_date_first),
     :required => true %>
-	<%= label_tag :number_of_days, "For days *" %>
-  <%= number_field_tag :number_of_days, @number_of_days, min: 1, max: 999, :required => true %>
+	<%= label_tag :check_in_date_last, "To *" %>
+  <%= text_field_tag :check_in_date_last, (@check_in_date_last.to_s(:ddmonyyyy) if @check_in_date_last),
+    :required => true %>
 	<%= label_tag :property, "For property" %>
   <%= autocomplete_field_tag 'property_name', '', 
     autocomplete_property_name_properties_path, :id_element => "#bookings_search_property_id",

@@ -1,10 +1,11 @@
 <% if !(session[:customer_id]) %>
-  <div class="action_container">
+  <span class="search_title">Show check-ins</span>
+  <div class="search_container">
     <%= render 'search' %>
   </div>
-  <h2>
+  <h3>
     <%= "Check-ins > #{@check_in_date_first.to_s(:ddmonyy)} to #{@check_in_date_last.to_s(:ddmonyy)} > #{@property_name || "All properties"}" %>
-  </h2>
+  </h3>
 <% else %>
   <h2>
     <%= "Room Bookings > #{@customer_name} > #{@trip_name || "All trips"}" %>

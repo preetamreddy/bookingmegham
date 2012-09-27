@@ -24,13 +24,11 @@ class BookingsController < ApplicationController
 			@check_in_date_first = Date.today
 		end
 
-		if params[:number_of_days]
-			@number_of_days = params[:number_of_days].to_i
+		if params[:check_in_date_last]
+			@check_in_date_last = params[:check_in_date_last].to_date
 		else
-			@number_of_days = 7
+			@check_in_date_last = Date.today + 7
 		end
-
-		@check_in_date_last = @check_in_date_first + @number_of_days
 
 		if session[:trip_id]
 			@bookings = @bookings.paginate(page: params[:page], per_page: 10).

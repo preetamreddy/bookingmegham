@@ -1,9 +1,9 @@
 <%= form_tag taxi_bookings_path, :method => "get" do %>
-  <span class="search_title">Show taxi bookings </span>
-	<%= label_tag :start_date, "From *" %>
-  <%= text_field_tag :start_date, (@start_date.to_s(:ddmonyyyy) if @start_date),
-    :id => "taxi_bookings_search_start_date", :required => true %>
-	<%= label_tag :number_of_days, "For days *" %>
-  <%= number_field_tag :number_of_days, @number_of_days, min: 1, max: 999, :required => true %>
+	<%= label_tag :from_date, "From *" %>
+  <%= text_field_tag :from_date, (@from_date.to_s(:ddmonyyyy) if @from_date),
+    :id => "taxi_bookings_search_from_date", :required => true %>
+  <%= label_tag :to_date, "To *" %>
+  <%= text_field_tag :to_date, (@to_date.to_s(:ddmonyyyy) if @to_date),
+    :id => "taxi_bookings_search_to_date", :required => true %>
 	<%= submit_tag "Go", :name => nil %>
 <% end %>

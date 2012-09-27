@@ -8,19 +8,17 @@ class TaxiBookingsController < ApplicationController
       store_trip_in_session(params[:trip_id].to_i)
 		end
 
-		if params[:start_date]
-			@start_date = params[:start_date].to_date
+		if params[:from_date]
+			@from_date = params[:from_date].to_date
 		else
-			@start_date = Date.today
+			@from_date = Date.today
 		end
 
-		if params[:number_of_days]
-			@number_of_days = params[:number_of_days].to_i
+    if params[:to_date]
+      @to_date = params[:to_date].to_date
 		else
-			@number_of_days = 7
+      @to_date = Date.today + 7
 		end
-
-		@upto_date = @start_date + @number_of_days
 
 		if session[:trip_id]
 			@taxi_bookings = @taxi_bookings.paginate(page: params[:page], per_page: 10).
@@ -35,7 +33,7 @@ class TaxiBookingsController < ApplicationController
 			@taxi_bookings = @taxi_bookings.paginate(page: params[:page], per_page: 10).
         order("start_date asc, end_date asc").
 				find(:all, :conditions => [ 'start_date >= ? and start_date < ?',
-					@start_date, @upto_date ])
+					@from_date, @to_date ])
 		end
 
     if session[:trip_id]

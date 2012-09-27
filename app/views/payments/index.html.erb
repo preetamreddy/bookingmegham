@@ -1,13 +1,14 @@
 <% if !(session[:customer_id]) %>
-	<div class="action_container">
+  <span class="search_title">Show payments</span>
+	<div class="search_container">
 		<%= render 'search' %>
 	</div>
 	<div id="download">
 		<%= render 'download' %>
 	</div>
-  <h2>
+  <h3>
     <%= "Payments > #{@from_date.to_s(:ddmonyy)} to #{@to_date.to_s(:ddmonyy)}" %>
-  </h2>
+  </h3>
 <% else %>
   <h2>
     <%= "Payments > #{@customer_name} > #{@trip_name || "All trips"}" %>
@@ -67,3 +68,4 @@
 		<%= link_to 'New Payment', new_payment_path %>
 	</div>
 <% end %>
+<p><%= will_paginate @taxi_bookings %></p>

@@ -9,3 +9,8 @@ $ ->
     onClose: ->
       this.focus()
   )
+  $('#check_in_date_last').datepicker(
+    dateFormat: 'dd-M-yy'
+    onClose: ->
+      this.focus()
+  )

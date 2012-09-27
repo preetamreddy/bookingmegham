@@ -1,10 +1,11 @@
 <% if !(session[:customer_id]) %>
-  <div class="action_container">
+  <span class="search_title">Show taxi bookings</span>
+  <div class="search_container">
     <%= render 'search' %>
   </div>
-  <h2>
-    <%= "Taxi Bookings > #{@start_date.to_s(:ddmonyy)} to #{@upto_date.to_s(:ddmonyy)}" %>
-  </h2>
+  <h3>
+    <%= "Taxi Bookings > #{@from_date.to_s(:ddmonyy)} to #{@to_date.to_s(:ddmonyy)}" %>
+  </h3>
 <% else %>
   <h2>
     <%= "Taxi Bookings > #{@customer_name} > #{@trip_name || "All trips"}" %>

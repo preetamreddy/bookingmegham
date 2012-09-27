@@ -9,3 +9,8 @@ $ ->
     onClose: ->
       this.focus()
   )
+  $('#payments_search_to_date').datepicker(
+    dateFormat: 'dd-M-yy'
+    onClose: ->
+      this.focus()
+  )
