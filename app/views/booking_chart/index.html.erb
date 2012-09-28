@@ -1,11 +1,13 @@
-<h1>Booking Chart</h1>
-
 <div id="booking_chart">
 </div>
 
-<div id="search">
+<span class="search_title">Show chart</span>
+<div class="search_container">
 	<%= render 'search' %>
 </div>
+<h2>
+  <%= "Booking Chart > #{@chart_start_date.to_s(:ddmonyy)} to #{@chart_end_date.to_s(:ddmonyy)} > #{@property_name}" %>
+</h2>
 
 <% if @booking_chart.count > 0 %>
 	<table class="chart">

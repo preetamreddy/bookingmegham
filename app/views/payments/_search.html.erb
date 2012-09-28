@@ -1,9 +1,9 @@
 <%= form_tag payments_path, :method => "get" do %>
 	<%= label_tag :from_date, "From *" %>
   <%= text_field_tag :from_date, (@from_date.to_s(:ddmonyyyy) if @from_date),
-    :id => "payments_search_from_date", :required => true %>
+    :id => "payments_search_from_date", :readonly => true, :required => true %>
 	<%= label_tag :to_date, "To *" %>
   <%= text_field_tag :to_date, (@to_date.to_s(:ddmonyyyy) if @to_date),
-    :id => "payments_search_to_date", :required => true %>
+    :id => "payments_search_to_date", :readonly => true, :required => true %>
 	<%= submit_tag "Go", :name => nil %>
 <% end %>

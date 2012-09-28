@@ -3,9 +3,9 @@
   <div class="search_container">
     <%= render 'search' %>
   </div>
-  <h3>
+  <h2>
     <%= "Taxi Bookings > #{@from_date.to_s(:ddmonyy)} to #{@to_date.to_s(:ddmonyy)}" %>
-  </h3>
+  </h2>
 <% else %>
   <h2>
     <%= "Taxi Bookings > #{@customer_name} > #{@trip_name || "All trips"}" %>

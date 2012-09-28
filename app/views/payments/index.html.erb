@@ -6,9 +6,9 @@
 	<div id="download">
 		<%= render 'download' %>
 	</div>
-  <h3>
+  <h2>
     <%= "Payments > #{@from_date.to_s(:ddmonyy)} to #{@to_date.to_s(:ddmonyy)}" %>
-  </h3>
+  </h2>
 <% else %>
   <h2>
     <%= "Payments > #{@customer_name} > #{@trip_name || "All trips"}" %>

@@ -1,9 +1,11 @@
 <%= form_tag availability_chart_path, :method => "get" do %>
-		<%= label_tag :rooms_required, "For rooms" %>
-		<%= number_field_tag :rooms_required, @rooms_required, min: 1, max: 99 %>
-		<%= label_tag :chart_start_date, "Starting from" %>
-		<%= select_date @chart_start_date, :prefix => 'chart_start_date_arr' %>
-		<%= label_tag :number_of_days, "Show Days" %>
-		<%= number_field_tag :number_of_days, @number_of_days, min: 1, max: 99 %>
-		<%= submit_tag "Show", :name => nil %>
+	<%= label_tag :chart_start_date, "From *" %>
+  <%= text_field_tag :chart_start_date, (@chart_start_date.to_s(:ddmonyyyy) if @chart_start_date),
+    :id => "availability_chart_start_date", :readonly => true, :required => true %>
+	<%= label_tag :chart_end_date, "To *" %>
+  <%= text_field_tag :chart_end_date, (@chart_end_date.to_s(:ddmonyyyy) if @chart_end_date),
+    :id => "availability_chart_end_date", :readonly => true, :required => true %>
+	<%= label_tag :rooms_required, "For rooms *" %>
+	<%= number_field_tag :rooms_required, @rooms_required, min: 1, max: 99 %>
+  <%= submit_tag "Show", :name => nil %>
 <% end %>

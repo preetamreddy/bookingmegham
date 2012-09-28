@@ -3,9 +3,9 @@
   <div class="search_container">
     <%= render 'search' %>
   </div>
-  <h3>
+  <h2>
     <%= "Check-ins > #{@check_in_date_first.to_s(:ddmonyy)} to #{@check_in_date_last.to_s(:ddmonyy)} > #{@property_name || "All properties"}" %>
-  </h3>
+  </h2>
 <% else %>
   <h2>
     <%= "Room Bookings > #{@customer_name} > #{@trip_name || "All trips"}" %>
