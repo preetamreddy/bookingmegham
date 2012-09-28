@@ -9,5 +9,5 @@
   <%= autocomplete_field_tag 'property_name', '', 
     autocomplete_property_name_properties_path, :id_element => "#booking_chart_search_property_id" %>
   <%= text_field_tag :property_id, '', :id => "booking_chart_search_property_id", :hidden => true %>
-	<%= submit_tag "Show", :name => nil %>
+  <%= submit_tag "Go", :name => nil, :class => "button black" %>
 <% end %>

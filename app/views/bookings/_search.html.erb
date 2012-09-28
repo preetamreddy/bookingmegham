@@ -9,6 +9,6 @@
   <%= autocomplete_field_tag 'property_name', '', 
     autocomplete_property_name_properties_path, :id_element => "#bookings_search_property_id",
     :placeholder => 'Property name' %>
-    <%= text_field_tag :property_id, '', :id => "bookings_search_property_id", :hidden => true %>
-	<%= submit_tag "Go", :name => nil %>
+  <%= text_field_tag :property_id, '', :id => "bookings_search_property_id", :hidden => true %>
+  <%= submit_tag "Go", :name => nil, :class => "button black" %>
 <% end %>

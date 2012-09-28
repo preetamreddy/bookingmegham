@@ -7,5 +7,5 @@
     :id => "availability_chart_end_date", :readonly => true, :required => true, size: 10 %>
 	<%= label_tag :rooms_required, "For rooms *" %>
 	<%= number_field_tag :rooms_required, @rooms_required, min: 1, max: 99, size: 2 %>
-  <%= submit_tag "Show", :name => nil %>
+  <%= submit_tag "Go", :name => nil, :class => "button black" %>
 <% end %>
