@@ -1,10 +1,10 @@
 <%= form_tag booking_chart_path, :method => "get" do %>
 	<%= label_tag :chart_start_date, "From *" %>
   <%= text_field_tag :chart_start_date, (@chart_start_date.to_s(:ddmonyyyy) if @chart_start_date),
-    :id => "booking_chart_start_date", :readonly => true, :required => true %>
+    :id => "booking_chart_start_date", :readonly => true, :required => true, size: 10 %>
 	<%= label_tag :chart_end_date, "To *" %>
   <%= text_field_tag :chart_end_date, (@chart_end_date.to_s(:ddmonyyyy) if @chart_end_date),
-    :id => "booking_chart_end_date", :readonly => true, :required => true %>
+    :id => "booking_chart_end_date", :readonly => true, :required => true, size: 10 %>
 	<%= label_tag :property_id, "For property" %>
   <%= autocomplete_field_tag 'property_name', '', 
     autocomplete_property_name_properties_path, :id_element => "#booking_chart_search_property_id" %>
