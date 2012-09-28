@@ -1,6 +1,7 @@
 <%= form_tag room_types_path, :method => "get" do %>
+  <%= label_tag :property, "For property" %>
   <%= autocomplete_field_tag 'property', '', autocomplete_property_name_properties_path, 
-    :id_element => "#room_types_search_property_id", :placeholder => 'Property name' %>
-    <%= text_field_tag :property_id, '', :id => "room_types_search_property_id", :hidden => true %>
-	<%= submit_tag "Search", :name => nil %>
+    :id_element => "#room_types_search_property_id" %>
+  <%= text_field_tag :property_id, '', :id => "room_types_search_property_id", :hidden => true %>
+  <%= submit_tag "Go", :name => nil, :class => "button black" %>
 <% end %>

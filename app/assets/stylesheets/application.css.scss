@@ -86,6 +86,11 @@
 	}
 }
 
+.search_title {
+  font-weight: bold;
+  padding-right: 5px;
+} 
+
 .search_container {
 	background-color: #F4F3F8;
 	padding: 3px 8px;
@@ -107,6 +112,12 @@
 		margin-left: 0.5em;
 		margin-right: 0.5em;
 	}
+}
+
+.x_link {
+  margin-left: 5px;
+  font-size: 15px;
+	font-weight: normal;
 }
 
 .show_saved_record {
@@ -367,11 +378,6 @@
 }
 
 #ui-datepicker-div { display:none }
-
-.search_title {
-  font-weight: bold;
-  padding-right: 5px;
-} 
 
 hr {
   height: 1px;

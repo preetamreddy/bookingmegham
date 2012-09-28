@@ -85,9 +85,10 @@
 	</table>
 <% end %>
 
+<p><%= will_paginate @bookings %></p>
+
 <% if session[:customer_id] %>
 	<div class="action_container">
 		<%= link_to 'New Room Booking', new_booking_path %>
 	</div>
 <% end %>
-<p><%= will_paginate @bookings %></p>

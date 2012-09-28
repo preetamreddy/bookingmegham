@@ -1,17 +1,17 @@
-<%= render 'search' %>
-
-<h1>Listing Taxis</h1>
-
-<div class="action_container">
-  <% if session[:taxi_operator_id] %>
-    <%= @taxi_operator_name %>
-    <%= link_to 'x', taxis_path(:taxi_operator_id => 'All') %>
-  <% else %>
-    &nbsp;
-  <% end %>
+<span class="search_title">Show taxis</span>
+<div class="search_container">
+  <%= render 'search' %>
 </div>
+<hr>
 
-<%= link_to 'New Taxi', new_taxi_path, :class => "new_link" %>
+<% if session[:taxi_operator_id] %>
+  <h2>
+    <%= "Taxis > #{@taxi_operator_name}" %>
+    <%= link_to 'x', taxis_path(:taxi_operator_id => 'All'), :class => "x_link" %>
+  </h2>
+<% else %>
+  <h2>Taxis > All Agencies</h2>
+<% end %>
 
 <% if @taxis.count > 0 %>
 <table class="index_table" border="1">
@@ -49,3 +49,7 @@
 <% end %>
 
 <p><%= will_paginate @taxis %></p>
+
+<div class="action_container">
+<%= link_to 'New Taxi', new_taxi_path %>
+</div>

@@ -64,9 +64,10 @@
 	</table>
 <% end %>
 
+<p><%= will_paginate @taxi_bookings %></p>
+
 <% if session[:customer_id] %>
 	<div class="action_container">
 		<%= link_to 'New Payment', new_payment_path %>
 	</div>
 <% end %>
-<p><%= will_paginate @taxi_bookings %></p>
