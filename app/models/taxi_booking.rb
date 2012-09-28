@@ -15,8 +15,7 @@ class TaxiBooking < ActiveRecord::Base
 		allow_nil: true, only_integer: true, greater_than: 0,
 		message: ": %{value} should be a number greater than 0"
 
-  validate  :ensure_booking_is_not_for_past_dates,
-            :ensure_taxi_booking_is_within_trip_dates
+  validate :ensure_taxi_booking_is_within_trip_dates
 
 	before_save :strip_whitespaces, :titleize,
 							:update_unit_price, :update_total_price
@@ -32,13 +31,6 @@ class TaxiBooking < ActiveRecord::Base
 		def update_end_date
 			self.end_date = start_date + number_of_days - 1
 		end
-
-    def ensure_booking_is_not_for_past_dates
-      if end_date < Date.today
-        errors.add(:base, "Could not isave Taxi Booking with past dates")
-        return false
-      end
-    end
 
     def ensure_taxi_booking_is_within_trip_dates
       if start_date < trip.start_date or end_date > trip.end_date
