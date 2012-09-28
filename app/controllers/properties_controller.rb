@@ -12,6 +12,9 @@ class PropertiesController < ApplicationController
       @properties = @properties.paginate(page: params[:page], per_page: 10).
         order('ensure_availability_before_booking desc, name').
         find_all_by_id(id)
+      if @properties.any?
+        @property_name = @properties.first.name
+      end
     else
       @properties = @properties.paginate(page: params[:page], per_page: 10).
         order('ensure_availability_before_booking desc, name').find(:all)

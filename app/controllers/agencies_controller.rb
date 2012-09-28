@@ -10,6 +10,9 @@ class AgenciesController < ApplicationController
 
     if id != 0
    	  @agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).find_all_by_id(id)
+      if @agencies.any?
+        @agency_name = @agencies.first.name
+      end
     else
    	  @agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).find(:all)
     end

@@ -1,10 +1,14 @@
-<h1>Listing Agencies</h1>
-
-<div class="action_container">
+<span class="search_title">Show</span>
+<div class="search_container">
   <%= render 'search' %>
 </div>
-
-<%= link_to 'New Agency', new_agency_path, :class => "new_link" %>
+<hr>
+<h2>
+  Agencies > <%= @agency_name || "All" %>
+  <% if @agency_name %>
+    <%= link_to "x", agencies_path, :class => "x_link" %>
+  <% end %>
+</h2>
 
 <% if @records_returned == 0 %>
   <div id="error_explanation">
@@ -53,3 +57,7 @@
 <% end %>
 
 <p><%= will_paginate @agencies %></p>
+
+<div class="action_container">
+  <%= link_to 'New Agency', new_agency_path %>
+</div>
