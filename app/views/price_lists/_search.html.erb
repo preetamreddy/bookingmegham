@@ -12,5 +12,5 @@
   <%= label_tag :meal_plan %>
   <%= select_tag(:meal_plan, options_for_select(Booking::MEAL_PLANS, @meal_plan),
         {:prompt => 'Select Meal plan'})%>
-	<%= submit_tag "Search", :name => nil %>
+  <%= submit_tag "Go", :name => nil, :class => "button black" %>
 <% end %>

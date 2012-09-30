@@ -6,10 +6,14 @@ propertySelected = ->
       .remove()
       .end()
       .hide()
-      $("label[for='room_type_id']").hide()
+    $("label[for='room_type_id']").hide()
+    $('#meal_plan').hide()
+    $("label[for='meal_plan']").hide()
   else
     $('#room_type_id').show()
     $("label[for='room_type_id']").show()
+    $('#meal_plan').show()
+    $("label[for='meal_plan']").show()
 
 $ ->
   $('#price_list_start_date').datepicker(

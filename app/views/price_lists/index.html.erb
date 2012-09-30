@@ -1,12 +1,9 @@
-<h1>Price List</h1>
-
-<div class="action_container">
+<span class="search_title">Show price list for</span>
+<div class="search_container">
   <%= render 'search' %>
 </div>
-
-<% if session[:property_id] %>
-  <%= link_to 'New Price List', new_price_list_path, :class => "new_link" %>
-<% end %>
+<hr>
+<h2>Price List</h2>
 
 <% if @price_lists.count > 0 %>
 <table class="index_table" border="1">
@@ -47,5 +44,11 @@
     <ul>
       <li>Change your seacrh conditions or create a new price list</li>
     </ul>
+  </div>
+<% end %>
+
+<% if session[:property_id] %>
+  <div class="action_container">
+    <%= link_to 'New Price List', new_price_list_path %>
   </div>
 <% end %>
