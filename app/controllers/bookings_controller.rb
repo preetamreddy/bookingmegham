@@ -201,6 +201,8 @@ class BookingsController < ApplicationController
     def find_property
       if Property.scoped_by_account_id(current_user.account_id).find_all_by_id(params[:property_id].to_i).any?
 	      Property.find(params[:property_id].to_i) 
+      elsif Property.scoped_by_account_id(current_user.account_id).find(:all).count == 1
+        Property.scoped_by_account_id(current_user.account_id).find(:all).first
       else
         nil
       end
