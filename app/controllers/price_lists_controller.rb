@@ -3,46 +3,76 @@ class PriceListsController < ApplicationController
   # GET /price_lists
   # GET /price_lists.json
   def index
-		if RoomType.scoped_by_account_id(current_user.account_id).
-        find_all_by_id(params[:room_type_id].to_i).any?
-		  room_type = RoomType.scoped_by_account_id(current_user.account_id).find(params[:room_type_id].to_i)
-		  session[:room_type_id] = room_type.id
-		  session[:property_id] = room_type.property_id
-		elsif Property.scoped_by_account_id(current_user.account_id).
-        find_all_by_id(params[:property_id].to_i).any?
-			session[:room_type_id] = nil
-			session[:property_id] = params[:property_id].to_i
+    property_id = params[:property_id].to_i
+    room_type_id = params[:room_type_id].to_i
+
+		if room_type_id != 0 and RoomType.scoped_by_account_id(current_user.account_id).find_all_by_id(room_type_id).any?
+      room_type = RoomType.scoped_by_account_id(current_user.account_id).find(room_type_id)
+		  @room_type_id = room_type.id
+      @heading = room_type.long_name
+		  @property_id = room_type.property_id
+		elsif property_id != 0 and Property.scoped_by_account_id(current_user.account_id).find_all_by_id(property_id).any?
+      property = Property.scoped_by_account_id(current_user.account_id).find(property_id)
+			@room_type_id = nil
+			@property_id = property.id
+      @heading = property.name
     end
 
-    if params[:meal_plan]
-      session[:meal_plan] = params[:meal_plan]
-    end
-
-    if session[:room_type_id]
-      @price_lists = @price_lists.order('start_date desc, meal_plan asc').
-        where("meal_plan like :meal_plan and end_date > :date and room_type_id = :room_type_id",
-          {:meal_plan => "%" + session[:meal_plan].to_s + "%", :date => Date.today,
-            :room_type_id => session[:room_type_id]})
-    elsif session[:property_id]
-      room_types = Property.scoped_by_account_id(current_user.account_id).
-        find(session[:property_id]).room_types.collect {|r| [r.id]}
-      @price_lists = @price_lists.order('start_date desc, meal_plan asc').
-        where("meal_plan like :meal_plan and end_date > :date",
-          {:meal_plan => "%" + session[:meal_plan].to_s + "%", :date => Date.today}).
-        find_all_by_room_type_id(room_types)
+    @meal_plan = params[:meal_plan].to_s
+    if params[:for_date]
+      @for_date = params[:for_date].to_date
     else
-      @price_lists = []
+      @for_date = nil
     end
 
-    @property_id = session[:property_id]
-    @room_type_id = session[:room_type_id]
-    @meal_plan = session[:meal_plan]
+    if @room_type_id
+      if @for_date
+        @price_lists = @price_lists.order('start_date desc, meal_plan asc').
+          where("room_type_id = :room_type_id and
+                  meal_plan like :meal_plan and start_date <= :date and end_date >= :date",
+            {:meal_plan => "%" + @meal_plan + "%", :date => @for_date, :room_type_id => @room_type_id})
+      else
+        @price_lists = @price_lists.order('start_date desc, meal_plan asc').
+          where("room_type_id = :room_type_id and meal_plan like :meal_plan",
+            {:meal_plan => "%" + @meal_plan + "%", :room_type_id => @room_type_id})
+      end
+    elsif @property_id
+      room_types = Property.scoped_by_account_id(current_user.account_id).
+        find(@property_id).room_types.collect {|r| [r.id]}
+      if @for_date
+        @price_lists = @price_lists.order('room_type_id asc, start_date desc, meal_plan asc').
+          where("meal_plan like :meal_plan and start_date <= :date and end_date >= :date",
+            {:meal_plan => "%" + @meal_plan + "%", :date => @for_date}).
+          find_all_by_room_type_id(room_types)
+      else
+        @price_lists = @price_lists.order('room_type_id asc, start_date desc, meal_plan asc').
+          where("meal_plan like :meal_plan", {:meal_plan => "%" + @meal_plan + "%"}).
+          find_all_by_room_type_id(room_types)
+      end
+    else
+      if @for_date
+        @price_lists = @price_lists.order('room_type_id asc, start_date desc, meal_plan asc').
+          where("meal_plan like :meal_plan and start_date <= :date and end_date >= :date",
+            {:meal_plan => "%" + @meal_plan + "%", :date => @for_date}).
+          find(:all)
+      else
+        @price_lists = @price_lists.order('room_type_id asc, start_date desc, meal_plan asc').
+          where("meal_plan like :meal_plan", {:meal_plan => "%" + @meal_plan + "%"}).find(:all)
+      end
+    end
+
+    if @for_date
+      @heading = @heading ? (@heading + ", " + @for_date.to_s(:ddmonyy)) : @for_date.to_s(:ddmonyy)
+    end
+    if @meal_plan != ''
+      @heading = @heading ? (@heading + ", " + @meal_plan) : @meal_plan
+    end
 
     @properties = Property.scoped_by_account_id(current_user.account_id).order('name')
 
-    if session[:property_id]
+    if @property_id
       @room_types = Property.scoped_by_account_id(current_user.account_id).
-        find(session[:property_id]).room_types
+        find(@property_id).room_types
     else
       @room_types = []
     end
@@ -65,12 +95,12 @@ class PriceListsController < ApplicationController
   # GET /price_lists/new
   # GET /price_lists/new.json
   def new
-    if session[:room_type_id]
-      @price_list.room_type_id = session[:room_type_id]
+    if params[:room_type_id]
+      @price_list.room_type_id = params[:room_type_id]
     end
 
-    if session[:meal_plan]
-      @price_list.meal_plan = session[:meal_plan]
+    if params[:meal_plan]
+      @price_list.meal_plan = params[:meal_plan]
     end
 
     respond_to do |format|
@@ -117,20 +147,9 @@ class PriceListsController < ApplicationController
     @price_list.destroy
 
     respond_to do |format|
-      format.html { redirect_to price_lists_url }
+      format.html { redirect_to price_lists_url(
+        :room_type_id => @price_list.room_type_id, :meal_plan => @price_list.meal_plan) }
       format.json { head :ok }
     end
   end
-
-  private
-    def store_room_type_in_session(room_type_id)
-			if RoomType.scoped_by_account_id(current_user.account_id).find_all_by_id(room_type_id).any?
-			  room_type = RoomType.scoped_by_account_id(current_user.account_id).find(room_type_id)
-			  session[:room_type_id] = room_type.id
-			  session[:property_id] = room_type.property_id
-      else
-			  session[:room_type_id] = nil
-			  session[:property_id] = nil
-      end
-    end
 end
