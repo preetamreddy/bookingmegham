@@ -61,11 +61,11 @@ class PriceListsController < ApplicationController
       end
     end
 
-    if @for_date
-      @heading = @heading ? (@heading + ", " + @for_date.to_s(:ddmonyy)) : @for_date.to_s(:ddmonyy)
-    end
     if @meal_plan != ''
       @heading = @heading ? (@heading + ", " + @meal_plan) : @meal_plan
+    end
+    if @for_date
+      @heading = @heading ? (@heading + ", " + @for_date.to_s(:ddmonyy)) : @for_date.to_s(:ddmonyy)
     end
 
     @properties = Property.scoped_by_account_id(current_user.account_id).order('name')

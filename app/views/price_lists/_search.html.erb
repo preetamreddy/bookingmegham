@@ -9,11 +9,11 @@
   <%= select_tag(:room_type_id, 
         options_for_select(@room_types.collect { |r| [r.room_type, r.id] }, @room_type_id),
         {:prompt => 'Select Roomtype'}) %>
-	<%= label_tag :for_date, "For" %>
-  <%= text_field_tag :for_date, (@for_date.to_s(:ddmonyyyy) if @for_date),
-    :id => "price_list_search_for_date", :readonly => true, size: 10 %>
   <%= label_tag :meal_plan %>
   <%= select_tag(:meal_plan, options_for_select(Booking::MEAL_PLANS, @meal_plan),
         {:prompt => 'Select meal plan'})%>
+	<%= label_tag :for_date, "For" %>
+  <%= text_field_tag :for_date, (@for_date.to_s(:ddmonyyyy) if @for_date),
+    :id => "price_list_search_for_date", :readonly => true, size: 10 %>
   <%= submit_tag "Go", :name => nil, :class => "button black" %>
 <% end %>
