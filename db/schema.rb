@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120925194113) do
+ActiveRecord::Schema.define(:version => 20121002104810) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -84,7 +84,6 @@ ActiveRecord::Schema.define(:version => 20120925194113) do
     t.date     "check_in_date"
     t.date     "check_out_date"
     t.integer  "trip_id"
-    t.integer  "number_of_rooms"
     t.integer  "property_id"
     t.integer  "number_of_nights"
     t.integer  "service_tax",                 :default => 0
