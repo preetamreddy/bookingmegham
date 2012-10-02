@@ -10,7 +10,7 @@ class PaymentNotifier < ActionMailer::Base
     @account_setting = AccountSetting.find_by_account_id(@user.account_id)
 
 		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
-				subject: "Receipt for your payment towards the trip, ##{@payment.trip_id} (ref: #{@payment.trip.name})") do |format|
+				subject: "Receipt for payment towards the trip, #{@trip.customer.name} ##{@payment.trip_id} (ref: #{@payment.trip.name})") do |format|
 			format.text
 			format.pdf do
 				attachments["Receipt #{@payment.receipt_number} (ref: #{@trip.name}).pdf"] = 

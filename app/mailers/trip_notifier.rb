@@ -9,7 +9,7 @@ class TripNotifier < ActionMailer::Base
     @account_setting = AccountSetting.find_by_account_id(@user.account_id)
 
 		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
-				subject: "Itinerary for your trip, ##{@trip.id} (ref: #{@trip.name})") do |format|
+				subject: "Itinerary for trip, #{@trip.customer.name} ##{@trip.id} (ref: #{@trip.name})") do |format|
 			format.text
 			format.pdf do
 				attachments["Itinerary #{@trip.itinerary_number} (ref: #{@trip.name}).pdf"] = WickedPdf.new.pdf_from_string(
@@ -26,7 +26,7 @@ class TripNotifier < ActionMailer::Base
     @account_setting = AccountSetting.find_by_account_id(@user.account_id)
 
 		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
-				subject: "Invoice for your trip, ##{@trip.id} (ref: #{@trip.name})") do |format|
+				subject: "Invoice for trip, #{@trip.customer.name} ##{@trip.id} (ref: #{@trip.name})") do |format|
 			format.text
 			format.pdf do
 				attachments["Invoice #{@trip.invoice_number} (ref: #{@trip.name}).pdf"] = 
@@ -44,7 +44,7 @@ class TripNotifier < ActionMailer::Base
     @account_setting = AccountSetting.find_by_account_id(@user.account_id)
 
 		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
-				subject: "Vouchers for your trip, ##{@trip.id} (ref: #{@trip.name})") do |format|
+				subject: "Vouchers for trip, #{@trip.customer.name} ##{@trip.id} (ref: #{@trip.name})") do |format|
 			format.text
 			format.pdf do
 				attachments["Vouchers #{@trip.voucher_number} (ref: #{@trip.name}).pdf"] = 
