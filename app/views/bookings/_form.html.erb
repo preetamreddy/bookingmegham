@@ -55,7 +55,7 @@
     <%= f.label :check_in_date, "Check-in" %><br />
     <%= f.text_field :check_in_date, size: 10, 
       :value => (@booking.check_in_date.to_s(:ddmonyyyy) if @booking.check_in_date),
-      :disabled => !@booking.new_record? %>
+      :readonly => true, :disabled => !@booking.new_record? %>
   </div>
 	<div class="field">
 		<%= f.label :number_of_nights, "Nights" %>

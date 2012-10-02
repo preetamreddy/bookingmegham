@@ -41,7 +41,8 @@
   </div>
   <div class="field">
     <%= f.label :date_received %><br />
-    <%= f.text_field :date_received, :value => (@payment.date_received.to_s(:ddmonyyyy) if !@payment.new_record?) %>
+    <%= f.text_field :date_received, :value => (@payment.date_received.to_s(:ddmonyyyy) if !@payment.new_record?),
+          :readonly => true %>
   </div>
   <div class="field">
     <%= f.label :payment_mode %><br />

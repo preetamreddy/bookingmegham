@@ -31,12 +31,14 @@
   <div class="field">
     <%= f.label :start_date %><br />
     <%= f.text_field :start_date, size: 10,
-      :value => (@price_list.start_date.to_s(:ddmonyyyy) if @price_list.start_date) %>
+      :value => (@price_list.start_date.to_s(:ddmonyyyy) if @price_list.start_date),
+      :readonly => true %>
   </div>
   <div class="field">
     <%= f.label :end_date %><br />
     <%= f.text_field :end_date, size: 10, 
-      :value => (@price_list.end_date.to_s(:ddmonyyyy) if @price_list.end_date) %>
+      :value => (@price_list.end_date.to_s(:ddmonyyyy) if @price_list.end_date),
+      :readonly => true %>
   </div>
   <div class="field">
     <%= f.label :price_for_single_occupancy, "Single occupancy" %><br />

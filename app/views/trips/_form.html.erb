@@ -41,7 +41,8 @@
   <div class="field">
     <%= f.label :start_date %><br />
     <%= f.text_field :start_date, size: 10,
-      :value => (@trip.start_date.to_s(:ddmonyyyy) if @trip.start_date) %>
+      :value => (@trip.start_date.to_s(:ddmonyyyy) if @trip.start_date),
+      :readonly => true %>
   </div>
 	<div class="field">
     <%= f.label :number_of_days, "Days" %><br />
@@ -122,7 +123,8 @@
 	<div class="field">
    	<%= f.label :invoice_date %><br />
     <%= f.text_field :invoice_date, size: 10,
-      :value => (@trip.invoice_date.to_s(:ddmonyyyy) if @trip.invoice_date) %>
+      :value => (@trip.invoice_date.to_s(:ddmonyyyy) if @trip.invoice_date),
+      :readonly => true %>
 	</div>
 
 	<div class="field">

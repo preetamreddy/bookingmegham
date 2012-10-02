@@ -52,7 +52,8 @@
 	<div class="field">
 		<%= f.label :start_date %><br />
     <%= f.text_field :start_date, size: 10, 
-      :value => (@taxi_booking.start_date.to_s(:ddmonyyyy) if @taxi_booking.start_date) %>
+      :value => (@taxi_booking.start_date.to_s(:ddmonyyyy) if @taxi_booking.start_date),
+      :readonly => true %>
 	</div>
   <div class="field">
     <%= f.label :number_of_days %><br />
