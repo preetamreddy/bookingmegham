@@ -15,8 +15,7 @@ class Agency < ActiveRecord::Base
 	before_save :titleize, :strip_whitespaces
 
 	before_destroy 	:ensure_does_not_have_trips,
-									:ensure_does_not_have_taxis,
-									:ensure_does_not_have_guests
+									:ensure_does_not_have_taxis
 
   def title
     ""
@@ -53,15 +52,6 @@ class Agency < ActiveRecord::Base
 				return true
 			else
 				errors.add(:base, "Destroy failed because #{name} has taxis")
-				return false
-			end
-		end
-
-		def ensure_does_not_have_guests
-			if guests.empty?
-				return true
-			else
-				errors.add(:base, "Destroy failed because #{name} has guests")
 				return false
 			end
 		end
