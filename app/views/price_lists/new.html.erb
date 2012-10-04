@@ -4,6 +4,7 @@
 
     <%= render 'form' %>
 
-    <%= link_to 'Cancel', price_lists_path, :class => "cancel_link" %>
+    <%= link_to 'Cancel', price_lists_path(
+      :room_type_id => @price_list.room_type_id, :meal_plan => @price_list.meal_plan), :class => "cancel_link" %>
   </fieldset>
 </div>

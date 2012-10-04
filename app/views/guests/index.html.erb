@@ -1,10 +1,11 @@
-<h1>Listing Guests</h1>
-
-<div class="action_container">
+<span class="search_title">Search guests by</span>
+<div class="search_container">
 	<%= render 'search' %>
 </div>
 
-<%= link_to 'New Guest', new_guest_path, :class => "new_link" %>
+<hr>
+
+<h2>Guests</h2>
 
 <% if @records_returned == 0 %>
 	<div id="error_explanation">
@@ -46,4 +47,9 @@
 		<% end %>
 	</table>
 <% end %>
+
 <p><%= will_paginate @guests %></p>
+
+<div class="action_container">
+  <%= link_to 'New Guest', new_guest_path %>
+</div>

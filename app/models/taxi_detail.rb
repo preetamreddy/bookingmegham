@@ -8,8 +8,7 @@ class TaxiDetail < ActiveRecord::Base
 	validates :registration_number, :driver_name, :driver_phone_number,
 		presence: true
 
-	validates :driver_phone_number, allow_nil: true,
-		:format => { :with => /^[\+]?[\d\s]*$/, :message => "is not valid" }
+	validates :driver_phone_number, allow_nil: true, :phone_number_format => true
 
 	private
 		def upcase

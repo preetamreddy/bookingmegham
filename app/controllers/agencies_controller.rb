@@ -1,15 +1,21 @@
 class AgenciesController < ApplicationController
 	load_and_authorize_resource
+
+  autocomplete :agency, :name, :full => true
+
   # GET /agencies
   # GET /agencies.json
   def index
-		agency_name = params[:name]
-		agency_name ||= ''
-		agency_name = agency_name.downcase
+    id = params[:id].to_i
 
-   	@agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).
-			find(:all, :conditions => [ 'lower(name) like ? or lower(registered_name) like ?',
-           "%" + agency_name + "%", "%" + agency_name + "%" ])
+    if id != 0
+   	  @agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).find_all_by_id(id)
+      if @agencies.any?
+        @agency_name = @agencies.first.name
+      end
+    else
+   	  @agencies = @agencies.paginate(page: params[:page], per_page: 10).order(:name).find(:all)
+    end
 
 		@records_returned = @agencies.count
 
@@ -80,8 +86,12 @@ class AgenciesController < ApplicationController
 		end
 
     respond_to do |format|
-      format.html { redirect_to agencies_url, alert: @agency.errors[:base][0] }
+      format.html { redirect_to :back, alert: @agency.errors[:base][0] }
       format.json { head :ok }
     end
+  end
+
+  def get_autocomplete_items(parameters)
+    super(parameters).where("account_id = ?", current_user.account_id)
   end
 end

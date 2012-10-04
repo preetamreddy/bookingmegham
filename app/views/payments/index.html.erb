@@ -1,13 +1,19 @@
-<h1>Listing Payments</h1>
-
 <% if !(session[:customer_id]) %>
-	<div id="search">
+  <span class="search_title">Show payments</span>
+	<div class="search_container">
 		<%= render 'search' %>
 	</div>
-
 	<div id="download">
 		<%= render 'download' %>
 	</div>
+  <hr>
+  <h2>
+    <%= "Payments > #{@from_date.to_s(:ddmonyy)} to #{@to_date.to_s(:ddmonyy)}" %>
+  </h2>
+<% else %>
+  <h2>
+    <%= "Payments > #{@customer_name} > #{@trip_name || "All trips"}" %>
+  </h2>
 <% end %>
 
 <% if @records_returned == 0 %>
@@ -57,6 +63,8 @@
 		<% end %>
 	</table>
 <% end %>
+
+<p><%= will_paginate @taxi_bookings %></p>
 
 <% if session[:customer_id] %>
 	<div class="action_container">

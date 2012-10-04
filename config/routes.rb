@@ -1,4 +1,9 @@
 Bookingmegham::Application.routes.draw do
+  resources :tooltips do
+    collection do
+      get 'tooltip_content'
+    end
+  end
 
   resources :price_lists
 
@@ -43,7 +48,9 @@ Bookingmegham::Application.routes.draw do
 
   resources :advisors
 
-  resources :agencies
+  resources :agencies do
+    get :autocomplete_agency_name, :on => :collection
+  end
 
 	resources :trips do
 		get :email, :on => :member
@@ -56,9 +63,8 @@ Bookingmegham::Application.routes.draw do
   resources :room_types
 
   resources :properties do
-    member do
-      get :room_types_by_property
-    end
+    get :room_types_by_property, :on => :member
+    get :autocomplete_property_name, :on => :collection
   end
 
   resources :bookings

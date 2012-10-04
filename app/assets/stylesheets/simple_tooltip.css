@@ -1,0 +1,28 @@
+
+.simple-tooltip-help-icon {
+	text-decoration: none;
+}
+
+.simple-tooltip-help-icon>img {
+	vertical-align: middle;
+	border: none;
+}
+
+.simple-tooltip-help-icon:hover {
+	background: none;
+}
+
+.simple-tooltip-close {
+	text-align: right;
+}
+
+#simple-tooltip {
+	position:   absolute;
+	border:     1px solid #333;
+	background: #ffffd8;
+	padding:    2px 5px;
+	color:      #000;
+	display:    none;
+	text-align: left;
+}
+

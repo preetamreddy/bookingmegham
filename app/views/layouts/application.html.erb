@@ -2,8 +2,8 @@
 <html>
 <head>
   <title>My Bookings</title>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/redmond/jquery-ui.css", "application" %>
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js", "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body class='<%= controller.controller_name %>'>
@@ -50,7 +50,7 @@
           <dd><%= link_to 'Travel Agencies', agencies_path %></dd>
 					<dd><%= link_to 'Trips', trips_path %></dd>
 					<dd><%= link_to 'Room Bookings', bookings_path %></dd>
-					<dd><%= link_to 'Transport', taxi_bookings_path %></dd>
+					<dd><%= link_to 'Taxi Bookings', taxi_bookings_path %></dd>
 					<dd><%= link_to 'Payments', payments_path %></dd>
 					<dd><%= link_to 'Availability Chart', availability_chart_path %></dd>
 					<dd><%= link_to 'Booking Chart', booking_chart_path %></dd>
@@ -73,16 +73,28 @@
 							<dd><%= link_to 'Users', users_path %></dd>
 						<% end %>
 					<% end %>
-					<% if can? :manage, Account %>
+					<% if can? :manage, Account or can? :manage, Tooltip %>
 						<dt>Site Admin</dt>
-						<dd><%= link_to 'Accounts', accounts_path %></dd>
+					  <% if can? :manage, Account %>
+						  <dd><%= link_to 'Accounts', accounts_path %></dd>
+            <% end %>
+					  <% if can? :manage, Tooltip %>
+						  <dd><%= link_to 'Tooltips', tooltips_path %></dd>
+            <% end %>
 					<% end %>
 				</dl>
 			</div>
 		<% end %>
 		<div id="main">
+      <% if alert %>
+        <div id="error_explanation">
+          <h2>Action could not be completed</h2>
+          <ul>
+            <li><%= alert %></li>
+          </ul>
+        </div>
+      <% end %>
 			<p id="notice"><%= notice %></p>
-			<p id="error"><%= alert %></p>
 			<%= yield %>
 		</div>
 	</div>

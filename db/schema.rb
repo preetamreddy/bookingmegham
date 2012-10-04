@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120913113722) do
+ActiveRecord::Schema.define(:version => 20121002104810) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -66,10 +66,8 @@ ActiveRecord::Schema.define(:version => 20120913113722) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "pan_number"
-    t.integer  "operates_taxis",  :default => 0
     t.string   "name"
     t.integer  "account_id"
-    t.integer  "is_account",      :default => 0
     t.string   "phone_number_2"
     t.string   "email_id_2"
   end
@@ -86,7 +84,6 @@ ActiveRecord::Schema.define(:version => 20120913113722) do
     t.date     "check_in_date"
     t.date     "check_out_date"
     t.integer  "trip_id"
-    t.integer  "number_of_rooms"
     t.integer  "property_id"
     t.integer  "number_of_nights"
     t.integer  "service_tax",                 :default => 0
@@ -98,8 +95,6 @@ ActiveRecord::Schema.define(:version => 20120913113722) do
     t.string   "meal_plan"
     t.string   "reservation_reference"
     t.string   "booking_status",              :default => "Booked"
-    t.integer  "cancellation_charge",         :default => 0
-    t.integer  "cancelled",                   :default => 0
     t.integer  "account_id"
     t.integer  "price_for_rooms",             :default => 0
     t.integer  "price_for_vas",               :default => 0
@@ -113,21 +108,18 @@ ActiveRecord::Schema.define(:version => 20120913113722) do
     t.string   "phone_number"
     t.string   "email_id"
     t.string   "city"
-    t.text     "other_information"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "phone_number_2"
     t.string   "email_id_2"
     t.text     "postal_address"
     t.string   "title"
-    t.integer  "agency_id"
     t.integer  "account_id"
   end
 
   add_index "guests", ["account_id"], :name => "index_guests_on_account_id"
 
   create_table "line_items", :force => true do |t|
-    t.integer  "booking_id"
     t.integer  "room_type_id"
     t.date     "date"
     t.datetime "created_at"
@@ -193,9 +185,9 @@ ActiveRecord::Schema.define(:version => 20120913113722) do
     t.text     "suggested_activities"
     t.string   "url"
     t.integer  "account_id"
-    t.string   "service_tax_rate",                   :default => "0"
     t.string   "email"
     t.string   "city"
+    t.float    "service_tax_rate"
   end
 
   add_index "properties", ["account_id"], :name => "index_properties_on_account_id"
@@ -221,7 +213,7 @@ ActiveRecord::Schema.define(:version => 20120913113722) do
   create_table "rooms", :force => true do |t|
     t.string   "occupancy"
     t.integer  "number_of_adults"
-    t.integer  "number_of_children_between_5_and_12_years"
+    t.integer  "number_of_children_between_5_and_12_years", :default => 0
     t.integer  "number_of_rooms"
     t.integer  "booking_id"
     t.datetime "created_at"
@@ -236,8 +228,8 @@ ActiveRecord::Schema.define(:version => 20120913113722) do
     t.date     "check_in_date"
     t.date     "check_out_date"
     t.integer  "number_of_nights"
-    t.integer  "cancellation_charge",                       :default => 0
     t.integer  "cancelled",                                 :default => 0
+    t.integer  "cancellation_charge",                       :default => 0
   end
 
   add_index "rooms", ["account_id"], :name => "index_rooms_on_account_id"
@@ -287,12 +279,21 @@ ActiveRecord::Schema.define(:version => 20120913113722) do
 
   add_index "taxis", ["account_id"], :name => "index_taxis_on_account_id"
 
+  create_table "tooltips", :force => true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.string   "markup",     :default => "markdown"
+    t.string   "locale"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "trip_rooms", :force => true do |t|
     t.integer  "trip_id"
     t.string   "occupancy"
     t.integer  "number_of_rooms"
     t.integer  "number_of_adults"
-    t.integer  "number_of_children_between_5_and_12_years"
+    t.integer  "number_of_children_between_5_and_12_years", :default => 0
     t.integer  "number_of_children_below_5_years",          :default => 0
     t.integer  "account_id"
     t.datetime "created_at"
@@ -300,7 +301,6 @@ ActiveRecord::Schema.define(:version => 20120913113722) do
   end
 
   create_table "trips", :force => true do |t|
-    t.integer  "guest_id"
     t.date     "start_date"
     t.date     "end_date"
     t.string   "food_preferences"
@@ -313,10 +313,8 @@ ActiveRecord::Schema.define(:version => 20120913113722) do
     t.string   "payment_status"
     t.integer  "number_of_days"
     t.string   "medical_constraints"
-    t.integer  "agency_id"
     t.integer  "advisor_id"
     t.date     "invoice_date"
-    t.integer  "direct_booking",        :default => 1
     t.integer  "tac",                   :default => 0
     t.integer  "account_id"
     t.integer  "price_for_vas",         :default => 0

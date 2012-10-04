@@ -1,9 +1,16 @@
-<h1>Listing Transport Bookings</h1>
-
 <% if !(session[:customer_id]) %>
-  <div id="search">
+  <span class="search_title">Show taxi bookings</span>
+  <div class="search_container">
     <%= render 'search' %>
   </div>
+  <hr>
+  <h2>
+    <%= "Taxi Bookings > #{@from_date.to_s(:ddmonyy)} to #{@to_date.to_s(:ddmonyy)}" %>
+  </h2>
+<% else %>
+  <h2>
+    <%= "Taxi Bookings > #{@customer_name} > #{@trip_name || "All trips"}" %>
+  </h2>
 <% end %>
 
 <% if @records_returned == 0 %>
@@ -69,9 +76,10 @@
   </table>
 <% end %>
 
+<p><%= will_paginate @taxi_bookings %></p>
+
 <% if session[:customer_id] %>
   <div class="action_container">
-    <%= link_to 'New Transport Booking', new_taxi_booking_path %>
+    <%= link_to 'New Taxi Booking', new_taxi_booking_path %>
   </div>
 <% end %>
-<p><%= will_paginate @taxi_bookings %></p>

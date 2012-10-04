@@ -1,20 +1,24 @@
-<h1>Listing Properties</h1>
-
-<div class="action_container">
+<span class="search_title">Show</span>
+<div class="search_container">
 	<%= render 'search' %>
 </div>
-
-<%= link_to 'New Property', new_property_path, :class => "new_link" %>
+<hr>
+<h2>
+  Properties > <%= @property_name || "All" %>
+  <% if @property_name %>
+    <%= link_to "x", properties_path, :class => "x_link" %>
+  <% end %>
+</h2>
 
 <% if @properties.count > 0 %>
 <table class="index_table" border="1">
   <tr>
    	<th class="text">Property</th>
-   	<th class="text">City / Village</th>
+   	<th class="text">Location</th>
 		<th class="text">Own property?</th>
-   	<th class="text">Email</th>
-   	<th class="number">Driver</th>
    	<th class="number">Service tax rate</th>
+   	<th class="number">Driver price</th>
+   	<th class="text">Email</th>
 		<th></th>
   </tr>
 
@@ -27,18 +31,17 @@
 		</td>
     <td class="text"><%= property.city %></td>
     <td class="text"><%= property.ensure_availability_before_booking.to_english %></td>
-    <td class="text"><%= property.email %></td>
-    <td class="currency"><%= number_to_currency(property.price_for_driver) %></td>
     <td class="number">
-			<%= number_to_percentage(property.service_tax_rate, :precision => 2, 
-						:strip_insignificant_zeros => true) %>
+			<%= number_to_percentage(property.service_tax_rate, :strip_insignificant_zeros => true) %>
 		</td>
+    <td class="currency"><%= number_to_currency(property.price_for_driver) %></td>
+    <td class="text"><%= property.email %></td>
     <td>
     	<%= link_to 'Show details', property %></br>
     	<%= link_to 'Edit', edit_property_path(property) %></br>
     	<%= link_to 'Destroy', property, confirm: 'Are you sure?', 
 						method: :delete %></br>
-			<%= link_to 'Room Types', room_types_path(:property_name => property.name) %>
+			<%= link_to 'Room Types', room_types_path(:property_id => property.id) %>
 		</td>
   </tr>
 <% end %>
@@ -53,3 +56,7 @@
 <% end %>
 
 <p><%= will_paginate @properties %></p>
+
+<div class="action_container">
+  <%= link_to 'New Property', new_property_path %>
+</div>

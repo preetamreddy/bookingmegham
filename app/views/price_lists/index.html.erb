@@ -1,51 +1,57 @@
-<h1>Price List</h1>
-
-<div class="action_container">
+<span class="search_title">Show price list</span>
+<div class="search_container">
   <%= render 'search' %>
 </div>
-
-<% if session[:property_id] %>
-  <%= link_to 'New Price List', new_price_list_path, :class => "new_link" %>
-<% end %>
+<hr>
+<h2>
+  Price List > <%= @heading || "All" %>
+  <%= (link_to 'x', price_lists_path, :class => "x_link") if @heading %>
+</h2>
 
 <% if @price_lists.count > 0 %>
-<table class="index_table" border="1">
-  <tr>
-    <th>Room type</th>
-    <th class="nowrap">Meal plan</th>
-    <th class="nowrap">Start date</th>
-    <th class="nowrap">End date</th>
-    <th class="number">Single occupancy</th>
-    <th class="number">Double occupancy</th>
-    <th class="number">Extra adult</th>
-    <th class="number">Children</th>
-    <th class="number">Infants</th>
-    <th></th>
-  </tr>
-
-<% @price_lists.each do |price_list| %>
-  <tr>
-    <td><%= price_list.room_type.long_name %></td>
-    <td class="nowrap"><%= price_list.meal_plan %></td>
-    <td class="nowrap"><%= l price_list.start_date if price_list.start_date %></td>
-    <td class="nowrap"><%= l price_list.end_date if price_list.end_date %></td>
-    <td class="number"><%= number_to_currency(price_list.price_for_single_occupancy) %></td>
-    <td class="number"><%= number_to_currency(price_list.price_for_double_occupancy) %></td>
-    <td class="number"><%= number_to_currency(price_list.price_for_extra_adults) %></td>
-    <td class="number"><%= number_to_currency(price_list.price_for_children) %></td>
-    <td class="number"><%= number_to_currency(price_list.price_for_infants) %></td>
-    <td>
-      <%= link_to 'Edit', edit_price_list_path(price_list) %></br>
-      <%= link_to 'Destroy', price_list, confirm: 'Are you sure?', method: :delete %>
-   </td>
-  </tr>
-<% end %>
-</table>
+	<table class="index_table" border="1">
+	  <tr>
+	    <th>Room type</th>
+	    <th class="nowrap">Meal plan</th>
+	    <th class="nowrap">Start date</th>
+	    <th class="nowrap">End date</th>
+	    <th class="number">Single occupancy</th>
+	    <th class="number">Double occupancy</th>
+	    <th class="number">Extra adult</th>
+	    <th class="number">Children</th>
+	    <th class="number">Infants</th>
+	    <th></th>
+	  </tr>
+	
+	<% @price_lists.each do |price_list| %>
+	  <tr>
+	    <td><%= price_list.room_type.long_name %></td>
+	    <td class="nowrap"><%= price_list.meal_plan %></td>
+	    <td class="nowrap"><%= l price_list.start_date if price_list.start_date %></td>
+	    <td class="nowrap"><%= l price_list.end_date if price_list.end_date %></td>
+	    <td class="number"><%= number_to_currency(price_list.price_for_single_occupancy) %></td>
+	    <td class="number"><%= number_to_currency(price_list.price_for_double_occupancy) %></td>
+	    <td class="number"><%= number_to_currency(price_list.price_for_extra_adults) %></td>
+	    <td class="number"><%= number_to_currency(price_list.price_for_children) %></td>
+	    <td class="number"><%= number_to_currency(price_list.price_for_infants) %></td>
+	    <td>
+	      <%= link_to 'Edit', edit_price_list_path(price_list) %></br>
+	      <%= link_to 'Destroy', price_list, confirm: 'Are you sure?', method: :delete %>
+	   </td>
+	  </tr>
+	<% end %>
+	</table>
 <% else %>
   <div id="error_explanation">
     <h2>Price list not found</h2>
     <ul>
       <li>Change your seacrh conditions or create a new price list</li>
     </ul>
+  </div>
+<% end %>
+	
+<% if @room_type_id %>
+  <div class="action_container">
+    <%= link_to 'New Price List', new_price_list_path(:room_type_id => @room_type_id, :meal_plan => @meal_plan) %>
   </div>
 <% end %>

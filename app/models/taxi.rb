@@ -4,6 +4,12 @@ class Taxi < ActiveRecord::Base
 	has_many :taxi_bookings
 
 	validates :agency_id, :model, :max_passengers, :unit_price, presence: true
+	validates_numericality_of :max_passengers, allow_nil: true,
+		only_integer: true, greater_than: 0,
+		message: "should be a number greater than 0"
+	validates_numericality_of :unit_price, allow_nil: true,
+		only_integer: true, greater_than_or_equal_to: 0,
+		message: "should be a number greater than or equal to 0"
 
 	before_save :strip_whitespaces, :titleize
 

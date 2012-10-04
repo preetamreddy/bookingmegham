@@ -1,12 +1,12 @@
 class Payment < ActiveRecord::Base
 	belongs_to :trip
 
-	validate :date_received, :amount, presence: true
+	validates :trip_id, :date_received, :amount, :payment_mode, presence: true
 	validates_numericality_of :amount,
-		only_integer: true, greater_than_or_equal_to: 0, allow_nil: true,
+		only_integer: true, greater_than: 0, allow_nil: true,
 		message: "should be a number greater than 0"
 
-	before_save :set_defaults_if_nil, :set_payee_name, :titleize
+	before_save :set_payee_name, :titleize
 
   before_create :set_counter
 
@@ -50,10 +50,6 @@ class Payment < ActiveRecord::Base
 	end
 
 	private
-		def set_defaults_if_nil
-			self.amount ||= 0
-		end
-
     def set_payee_name
       self.payee_name = trip.customer.name_with_title if payee_name == '' or payee_name == nil
     end

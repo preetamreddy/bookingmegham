@@ -1,10 +1,14 @@
-<h1>Listing Agencies</h1>
-
-<div class="action_container">
+<span class="search_title">Show</span>
+<div class="search_container">
   <%= render 'search' %>
 </div>
-
-<%= link_to 'New Agency', new_agency_path, :class => "new_link" %>
+<hr>
+<h2>
+  Agencies > <%= @agency_name || "All" %>
+  <% if @agency_name %>
+    <%= link_to "x", agencies_path, :class => "x_link" %>
+  <% end %>
+</h2>
 
 <% if @records_returned == 0 %>
   <div id="error_explanation">
@@ -17,25 +21,28 @@
   <table class="index_table" border="1">
     <tr>
       <th>Agency</th>
-      <th>Operates taxis?</th>
       <th>City</th>
+      <th>Phone numbers</th>
       <th>Email</th>
+      <th>PAN</th>
       <th>Url</th>
       <th></th>
     </tr>
     <% @agencies.each do |agency| %>
       <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
         <td>
-          <span class="nowrap"><%= agency.name %></span><br />
+          <span class="nowrap"><%= agency.name %></span>
+        </td>
+        <td class="nowrap"><%= agency.city %></td>
+        <td>
           <span class="nowrap"><%= agency.phone_number %></span><br />
           <span class="nowrap"><%= agency.phone_number_2 %></span>
         </td>
-        <td class="nowrap"><%= agency.operates_taxis.to_english %></td>
-        <td class="nowrap"><%= agency.city %></td>
         <td class="text">
           <%= agency.email_id %><br />
           <%= agency.email_id_2 %>
         </td>
+        <td class="nowrap"><%= agency.pan_number %></td>
         <td class="nowrap"><%= agency.url %></td>
         <td>
           <%= link_to 'Show details', agency %><br />
@@ -50,3 +57,7 @@
 <% end %>
 
 <p><%= will_paginate @agencies %></p>
+
+<div class="action_container">
+  <%= link_to 'New Agency', new_agency_path %>
+</div>

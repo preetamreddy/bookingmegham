@@ -1,20 +1,24 @@
 class PropertiesController < ApplicationController
 	load_and_authorize_resource
+
+  autocomplete :property, :name, :full => true
+  #
   # GET /properties
   # GET /properties.json
   def index
-		property_name = params[:name]
-		property_name ||= ''
-		property_name = property_name.downcase
+    id = params[:id].to_i
 
-		city = params[:city]
-		city ||= ''
-		city = city.downcase
-
-    @properties = @properties.paginate(page: params[:page], per_page: 10).
-      order('ensure_availability_before_booking desc, name').
-			find(:all, :conditions => [ 'lower(name) like ? and lower(city) like ?',
-				"%" + property_name + "%", "%" + city + "%" ])
+    if id != 0
+      @properties = @properties.paginate(page: params[:page], per_page: 10).
+        order('ensure_availability_before_booking desc, name').
+        find_all_by_id(id)
+      if @properties.any?
+        @property_name = @properties.first.name
+      end
+    else
+      @properties = @properties.paginate(page: params[:page], per_page: 10).
+        order('ensure_availability_before_booking desc, name').find(:all)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -78,7 +82,7 @@ class PropertiesController < ApplicationController
     @property.destroy
 
     respond_to do |format|
-      format.html { redirect_to properties_url, alert: @property.errors[:base][0] }
+      format.html { redirect_to :back, alert: @property.errors[:base][0] }
       format.json { head :ok }
     end
   end
@@ -94,5 +98,9 @@ class PropertiesController < ApplicationController
     respond_to do |format|
       format.js
     end
+  end
+
+  def get_autocomplete_items(parameters)
+    super(parameters).where("account_id = ?", current_user.account_id)
   end
 end

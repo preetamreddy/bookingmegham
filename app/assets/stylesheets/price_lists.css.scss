@@ -6,4 +6,12 @@
 	table td:nth-last-child(1) {
 		width: auto;
 	}
+  
+  .search_container {
+    select {
+      height: 25px;
+      font: 14px/100% Arial, Helvetica, sans-serif;
+      margin-right: 10px;
+    }
+  }
 }

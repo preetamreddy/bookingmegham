@@ -1,12 +1,14 @@
-<h1>Availability Chart</h1>
-
-<div id="new_booking"></div>
-
-<div id="search">
-	<p>
-		<%= render 'search' %>
-	</p>
+<div id="availability_chart">
 </div>
+
+<span class="search_title">Show chart</span>
+<div class="search_container">
+  <%= render 'search' %>
+</div>
+<hr>
+<h2>
+  <%= "Availability Chart > #{@chart_start_date.to_s(:ddmonyy)} to #{@chart_end_date.to_s(:ddmonyy)} > #{pluralize(@rooms_required, "room")}" %>
+</h2>
 
 <div id="chart">
 	<%= render 'availability_chart' %>

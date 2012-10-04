@@ -1,4 +1,8 @@
 .agencies {
+	table th:nth-last-child(2) {
+		width: auto;
+	}
+
 	.show_saved_record {
 		b {
 			width: 21%;

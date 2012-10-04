@@ -7,7 +7,7 @@
 </p>
 
 <p>
-  <b>Room type:</b>
+  <b>Name:</b>
   <span class="saved_value"><%= @room_type.room_type %>
 </p>
 
@@ -17,17 +17,17 @@
 </p>
 
 <p>
-  <b>Price for single occupancy:</b>
+  <b>Single occupancy:</b>
   <span class="saved_value"><%= number_to_currency(@room_type.price_for_single_occupancy) %>
 </p>
 
 <p>
-  <b>Price for double occupancy:</b>
+  <b>Double occupancy:</b>
   <span class="saved_value"><%= number_to_currency(@room_type.price_for_double_occupancy) %>
 </p>
 
 <p>
-  <b>Price for extra adult:</b>
+  <b>Price for extra adults:</b>
   <span class="saved_value"><%= number_to_currency(@room_type.price_for_triple_occupancy) %>
 </p>
 
@@ -47,7 +47,7 @@
 </p>
 
 <p>
-  <b>Service tax per room:</b>
+  <b>Service tax / night:</b>
   <span class="saved_value"><%= number_to_currency(@room_type.service_tax) %>
 </p>
 

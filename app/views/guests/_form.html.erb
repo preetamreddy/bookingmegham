@@ -1,4 +1,4 @@
-<%= form_for(@guest) do |f| %>
+<%= form_for(@guest, :validate => true) do |f| %>
   <% if @guest.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@guest.errors.count, "error") %> prohibited this guest from being saved:</h2>
@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :title %><br />
-    <%= f.select :title, Guest::TITLE, prompt: 'Title', :include_blank => true %>
+    <%= f.select :title, Guest::TITLE, :include_blank => true %>
   </div>
   <div class="field">
     <%= f.label :name %><br />
@@ -21,12 +21,12 @@
   </div>
   <div class="field">
     <%= f.label :phone_number, "Phone numbers" %><br />
-    <%= f.text_field :phone_number %>
+    <%= f.text_field :phone_number, :validate => { :uniqueness => false } %>
     <%= f.text_field :phone_number_2 %>
   </div>
   <div class="field">
     <%= f.label :email_id, "Email IDs" %><br />
-    <%= f.text_field :email_id %>
+    <%= f.text_field :email_id, :validate => { :uniqueness => false } %>
     <%= f.text_field :email_id_2 %>
   </div>
   <div class="field">

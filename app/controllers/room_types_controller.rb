@@ -1,32 +1,31 @@
 class RoomTypesController < ApplicationController
 	load_and_authorize_resource
+
   # GET /room_types
   # GET /room_types.json
   def index
-		if params[:property_name]
-			property_name = params[:property_name].downcase
-		elsif session[:property_name]
-			property_name = session[:property_name].downcase
-		end
+    property_id = params[:property_id].to_i
 
-		if property_name
-			properties = Property.scoped_by_account_id(current_user.account_id).
-				find(:all, :conditions => [ 'lower(name) like ?', "%" + property_name + "%" ])
+    if property_id != 0
+      if Property.scoped_by_account_id(current_user.account_id).find_all_by_id(property_id).any?
+        session[:property_id] = property_id
+      end
+    elsif params[:property_id] == 'All'
+      session[:property_id] = nil
+    end
 
-			if properties.count == 1
-				session[:property_name] = properties.first.name
-			else
-				session[:property_name] = nil
-			end
-	
+    if session[:property_id]
+      property = Property.scoped_by_account_id(current_user.account_id).find(session[:property_id])
+      @property_name = property.name
+    end
+
+    if session[:property_id]
 			@room_types = @room_types.paginate(page: params[:page], per_page: 10).
 				order('property_id, price_for_double_occupancy').
-				find_all_by_property_id(properties)
+				find_all_by_property_id(session[:property_id])
 		else
 			@room_types = @room_types.paginate(page: params[:page], per_page: 10).
 				order('property_id, price_for_double_occupancy')
-
-			session[:property_name] = nil
 		end
 
     respond_to do |format|
@@ -47,10 +46,7 @@ class RoomTypesController < ApplicationController
   # GET /room_types/new
   # GET /room_types/new.json
   def new
-		if session[:property_name]
-			@room_type.property_id = Property.scoped_by_account_id(current_user.account_id).
-				find_by_name(session[:property_name]).id
-		end
+		@room_type.property_id = session[:property_id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -66,9 +62,9 @@ class RoomTypesController < ApplicationController
   # POST /room_types.json
   def create
     respond_to do |format|
-      session[:property_name] = Property.scoped_by_account_id(current_user.account_id).
-        find(@room_type.property_id).name
       if @room_type.save
+        session[:property_id] = @room_type.property_id
+
         format.html { redirect_to @room_type, notice: 'Room type was successfully created.' }
         format.json { render json: @room_type, status: :created, location: @room_type }
       else
@@ -81,10 +77,10 @@ class RoomTypesController < ApplicationController
   # PUT /room_types/1
   # PUT /room_types/1.json
   def update
-      session[:property_name] = Property.scoped_by_account_id(current_user.account_id).
-        find(@room_type.property_id).name
     respond_to do |format|
       if @room_type.update_attributes(params[:room_type])
+        session[:property_id] = @room_type.property_id
+
         format.html { redirect_to @room_type, notice: 'Room type was successfully updated.' }
         format.json { head :ok }
       else
@@ -100,7 +96,7 @@ class RoomTypesController < ApplicationController
     @room_type.destroy
 
     respond_to do |format|
-      format.html { redirect_to room_types_url, alert: @room_type.errors[:base][0] }
+      format.html { redirect_to :back, alert: @room_type.errors[:base][0] }
       format.json { head :ok }
     end
   end

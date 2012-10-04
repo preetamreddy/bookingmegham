@@ -7,7 +7,9 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require autocomplete-rails
 //= require_tree .
+//= require rails.validations
 jQuery.ajaxSetup({
     'beforeSend': function(xhr) { xhr.setRequestHeader("Accept", "text/javascript") }
 });

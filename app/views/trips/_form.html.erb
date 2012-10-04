@@ -1,4 +1,4 @@
-<%= nested_form_for(@trip) do |f| %>
+<%= nested_form_for(@trip, :validate => true) do |f| %>
   <% if @trip.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@trip.errors.count, "error") %> prohibited this Trip from being saved:</h2>
@@ -23,10 +23,11 @@
  	<div class="field">
    	<%= f.label :customer_id, "Customer" %><br />
 		<% if @trip.customer_id %>
-    	<%= f.collection_select(:customer_id, 
-						@trip.customer_type.classify.constantize.scoped_by_account_id(current_user.account_id).
-							find_all_by_id(@trip.customer_id), :id, :name) %>
+		  <p><span class="highlight">
+			  <%= @trip.customer.name %>
+		  </span></p>
 		<% end %>
+    <%= f.text_field :customer_id, :hidden => true %>
   </div>
   <div class="field">
     <%= f.label :name, "Trip tag" %><br />
@@ -39,8 +40,9 @@
 	<% end %>
   <div class="field">
     <%= f.label :start_date %><br />
-   	<%= f.date_select :start_date, :start_year => Time.now.year,
-        :end_year => Time.now.year + 1, :prompt => true %>
+    <%= f.text_field :start_date, size: 10,
+      :value => (@trip.start_date.to_s(:ddmonyyyy) if @trip.start_date),
+      :readonly => true %>
   </div>
 	<div class="field">
     <%= f.label :number_of_days, "Days" %><br />
@@ -51,15 +53,15 @@
 		<%= f.label :rooms %>
 	</div>
 	<div class="nested_form">
-		<%= f.fields_for :trip_rooms %>
+    <%= f.fields_for :trip_rooms, :validate => false %>
 		<%= f.link_to_add "Add new", :trip_rooms %><br/>
 	</div>
 
 	<div class="field">
-		<%= f.label :value_added_services, "Other services" %>
+		<%= f.label :value_added_services, "Value added services" %>
 	</div>
 	<div class="nested_form">
-		<%= f.fields_for :vas_bookings %>
+    <%= f.fields_for :vas_bookings, :validate => false %>
 		<%= f.link_to_add "Add new", :vas_bookings %><br/>
 	</div>
 
@@ -120,8 +122,9 @@
 	<% end %>
 	<div class="field">
    	<%= f.label :invoice_date %><br />
-   	<%= f.date_select :invoice_date, :start_year => Time.now.year,
-			:end_year => Time.now.year + 1, :prompt => true %>
+    <%= f.text_field :invoice_date, size: 10,
+      :value => (@trip.invoice_date.to_s(:ddmonyyyy) if @trip.invoice_date),
+      :readonly => true %>
 	</div>
 
 	<div class="field">
@@ -138,9 +141,12 @@
   </div>
   <div class="field">
    	<%= f.label :advisor_id, "Advisor" %><br />
-    <%= f.collection_select(:advisor_id,
-					Advisor.scoped_by_account_id(current_user.account_id).
-						order('name').find_all_by_id(@trip.advisor_id), :id, :name) %>
+		<% if @trip.advisor_id %>
+		  <p><span class="highlight">
+			  <%= @trip.advisor.name %>
+		  </span></p>
+		<% end %>
+    <%= f.text_field :advisor_id, :hidden => true %>
   </div>
   <div class="action_container">
     <%= f.submit %>

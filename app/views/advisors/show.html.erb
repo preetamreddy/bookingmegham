@@ -1,16 +1,19 @@
 <h1>Advisor details</h1>
 
 <div class="show_saved_record">
-<% if current_user.is? "Super admin" %>
 <p>
   <b>Account:</b>
-  <span class="saved_value"><%= @advisor.account.subdomain if @advisor.account_id %></span>
+  <span class="saved_value"><%= @advisor.account.name if @advisor.account_id %></span>
 </p>
-<% end %>
 
 <p>
   <b>Name:</b>
   <span class="saved_value"><%= @advisor.name %></span>
+</p>
+
+<p>
+  <b>Email:</b>
+  <span class="saved_value"><%= @advisor.email_id %></span>
 </p>
 
 <p>
@@ -21,11 +24,6 @@
 <p>
   <b>Phone number 2:</b>
   <span class="saved_value"><%= @advisor.phone_number_2 %></span>
-</p>
-
-<p>
-  <b>Email:</b>
-  <span class="saved_value"><%= @advisor.email_id %></span>
 </p>
 
 <div class="action_container">

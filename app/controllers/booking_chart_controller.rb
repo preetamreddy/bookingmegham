@@ -5,33 +5,33 @@ class BookingChartController < ApplicationController
     end
 
 		if params[:property_id]
-			@property_id = params[:property_id].to_i
+      property_id = params[:property_id].to_i
+      if Property.scoped_by_account_id(current_user.account_id).find_all_by_id(property_id).any?
+        @property_name = Property.scoped_by_account_id(current_user.account_id).find(property_id).name
+			  @property_id = property_id
+      end
 		else
 			properties = Property.scoped_by_account_id(current_user.account_id).order("name").
 				find_all_by_ensure_availability_before_booking(1)
 			@property_id = properties.first.id if properties.count > 0
+			@property_name = properties.first.name if properties.count > 0
 		end
 
 		if params[:chart_start_date]
-			@chart_start_date = Date.civil(
-				params[:chart_start_date][:year].to_i,
-				params[:chart_start_date][:month].to_i,
-				params[:chart_start_date][:day].to_i)
+			@chart_start_date = params[:chart_start_date].to_date
     elsif session[:trip_id]
       @chart_start_date = trip.start_date
 		else
 			@chart_start_date = Date.today
 		end
 
-		if params[:number_of_days]
-			@number_of_days = params[:number_of_days].to_i
+		if params[:chart_end_date]
+			@chart_end_date = params[:chart_end_date].to_date
     elsif session[:trip_id]
-      @number_of_days = trip.number_of_days - 1
+      @chart_end_date = trip.end_date
 		else
-			@number_of_days = 10 
+			@chart_end_date = Date.today + 10
 		end
-
-		@chart_end_date = @chart_start_date + @number_of_days - 1
 
 		@chart_date_range = @chart_start_date..@chart_end_date
     @chart_date_range_short = (@chart_start_date..@chart_end_date).to_a.collect { |date| l date, :format => :short }

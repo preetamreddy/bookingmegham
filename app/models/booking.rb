@@ -11,14 +11,10 @@ class Booking < ActiveRecord::Base
 	accepts_nested_attributes_for :vas_bookings, :reject_if => :all_blank,
 		:allow_destroy => true
 
-	before_validation :set_defaults_if_nil, 
-    :update_check_out_date, :update_number_of_rooms
+	before_validation :set_defaults_if_nil, :update_check_out_date
 
-	validates :trip_id, :check_in_date, :check_out_date, :meal_plan,
+	validates :trip_id, :property_id, :check_in_date, :number_of_nights, :meal_plan,
 											presence: true
-	validates_numericality_of :trip_id,
-		only_integer: true, greater_than: 0, allow_nil: true, 
-		message: "should be a number greater than 0"
 
   validate	:ensure_property_exists,
 						:ensure_trip_exists,
@@ -100,16 +96,6 @@ class Booking < ActiveRecord::Base
 				errors.add(:base, "Please input check in date / number of nights.")
 				return false
 			end
-		end
-
-		def update_number_of_rooms
-			if rooms.any?
-				num_rooms = rooms.to_a.sum { |room| room.number_of_rooms }
-			else
-				num_rooms = 0
-			end
-	
-			self.number_of_rooms = num_rooms
 		end
 
 		def ensure_property_exists

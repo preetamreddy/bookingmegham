@@ -1,27 +1,21 @@
-<% if session[:customer_id] %>
-  <h1>Listing Trips for <%= session[:customer_type].classify.constantize.
-        scoped_by_account_id(current_user.account_id).
-				find(session[:customer_id]).name %></h1>
-<% else %>
-	<% if params[:payment_status] %>
-		<h1>Listing <%= params[:payment_status] %> Trips</h1>
-	<% elsif params[:payment_overdue] %>
-		<h1>Listing Trips with payment overdue</h1>
-	<% else %>
-		<h1>Listing all Trips</h1>
-	<% end %>
-<% end %>
-
 <% if !(session[:customer_id]) %>
-	<div class="action_container">
-		Show <%= link_to 'Not Paid Trips', 
-								trips_path(:payment_status => Trip::NOT_PAID) %>
+  <span class="search_title">Show</span>
+	<div class="search_container">
+		<%= link_to 'Not Paid Trips', 
+					trips_path(:payment_status => Trip::NOT_PAID) %>
 		<%= link_to 'Partially Paid Trips', 
 					trips_path(:payment_status => Trip::PARTIALLY_PAID) %> 
 		<%= link_to 'Trips with payment overdue', 
-					trips_path(:payment_overdue => 1) %>
+					trips_path(:payment_status => Trip::PAYMENT_OVERDUE) %>
 		<%= link_to 'All trips', trips_path %>
 	</div>
+<% end %>
+
+<% if session[:customer_id] %>
+  <h2><%= "Trips > #{@customer_name}" %></h2>
+<% else %>
+  <hr>
+  <h2><%= "Trips > #{params[:payment_status] || 'All'}" %></h2>
 <% end %>
 
 <% if @records_returned == 0 %>
@@ -95,9 +89,10 @@
 	</table>
 <% end %>
 
+<p><%= will_paginate @trips %></p>
+
 <% if session[:customer_id] %>
 	<div class="action_container">
 		<%= link_to 'New Trip', new_trip_path %>
 	</div>
 <% end %>
-<p><%= will_paginate @trips %></p>

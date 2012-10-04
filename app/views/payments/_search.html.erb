@@ -1,7 +1,9 @@
 <%= form_tag payments_path, :method => "get" do %>
-	<%= label_tag :from_date, "Starting from" %>
-	<%= select_date @from_date, :prefix => 'from_date' %>
-	<%= label_tag :number_of_days, "For days" %>
-	<%= number_field_tag :number_of_days, @number_of_days, min: 1, max: 99 %>
-	<%= submit_tag "Search", :name => nil %>
+	<%= label_tag :from_date, "From *" %>
+  <%= text_field_tag :from_date, (@from_date.to_s(:ddmonyyyy) if @from_date),
+    :id => "payments_search_from_date", :readonly => true, :required => true, size: 10 %>
+	<%= label_tag :to_date, "To *" %>
+  <%= text_field_tag :to_date, (@to_date.to_s(:ddmonyyyy) if @to_date),
+    :id => "payments_search_to_date", :readonly => true, :required => true, size: 10 %>
+  <%= submit_tag "Go", :name => nil, :class => "button black" %>
 <% end %>

@@ -2,7 +2,13 @@ class VasBooking < ActiveRecord::Base
 	belongs_to :trip
 	belongs_to :booking
 
-	validates :unit_price, :number_of_units, presence: true
+	validates :value_added_service, :unit_price, :number_of_units, presence: true
+	validates_numericality_of :unit_price,
+		allow_nil: true, only_integer: true, greater_than_or_equal_to: 0,
+		message: ": %{value} should be a number greater than or equal to 0"
+	validates_numericality_of :number_of_units,
+		allow_nil: true, only_integer: true, greater_than: 0,
+		message: ": %{value} should be a number greater than 0"
 
 	before_save :update_total_price
 

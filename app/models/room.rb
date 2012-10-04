@@ -9,18 +9,20 @@ class Room < ActiveRecord::Base
 	before_validation :set_defaults_if_nil,
                     :update_check_in_date, :update_number_of_nights,
 										:update_check_out_date, :update_account_id
-	validates :occupancy, :number_of_adults, :number_of_rooms, presence: true
-	validates :occupancy, inclusion: ROOM_OCCUPANCY_TYPES
-	validates :number_of_adults,
+
+	validates :occupancy, :number_of_rooms, :number_of_adults, presence: true
+	validates :occupancy, :inclusion => { :in => ROOM_OCCUPANCY_TYPES,
+    :message => ": \"%{value}\" is not a valid option" }
+	validates :number_of_adults, allow_nil: true,
 		:inclusion => { :in => [1, 2, 3, 4],
-		:message => "%{value} is not a valid option for number of adults / room" }
-	validates :number_of_children_between_5_and_12_years, 
-		:number_of_children_below_5_years, allow_nil: true,
-		:inclusion => { :in => [0, 1, 2, 3],
-		:message => "%{value} is not a valid option for number of children / room" }
+		:message => ": %{value} is not a valid option" }
 	validates_numericality_of :number_of_rooms,
-		only_integer: true, greater_than: 0,
-		message: "%{value} should be a number greater than 0"
+		allow_nil: true, only_integer: true, greater_than: 0,
+		message: ": %{value} should be a number greater than 0"
+	validates :number_of_children_between_5_and_12_years, 
+	  :number_of_children_below_5_years, allow_nil: true,
+		:inclusion => { :in => [0, 1, 2, 3],
+		:message => ": %{value} is not a valid option" }
 
 	validate :ensure_room_type_exists, :ensure_room_availability
 
@@ -107,7 +109,7 @@ class Room < ActiveRecord::Base
 		end
 
 		def ensure_room_availability
-			if room_type_id
+			if errors.blank? and room_type_id
 				if new_record? or room_type_id_changed?
 					rooms_required = number_of_rooms
 				else
@@ -127,11 +129,13 @@ class Room < ActiveRecord::Base
 		end
 
 		def update_line_items
-      if !new_record?
-		    delete_line_items
-      end
-			if room_type.ensure_availability_before_booking == 1 and cancelled == 0
-		    create_line_items
+      if errors.blank?
+        if !new_record?
+		      delete_line_items
+        end
+			  if room_type.ensure_availability_before_booking == 1 and cancelled == 0
+		      create_line_items
+        end
       end
 		end
 	

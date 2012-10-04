@@ -77,3 +77,12 @@ gem "cancan"
 group :development do
   gem 'ruby-debug19'
 end
+
+# For client side validations
+gem 'client_side_validations'
+
+# For tooltips
+gem 'simple-tooltip'
+
+# For autocomplete
+gem 'rails3-jquery-autocomplete'

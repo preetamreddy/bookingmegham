@@ -1,23 +1,29 @@
-<h1>Listing Room Types</h1>
-
-<div class="action_container">
-	<%= render 'search' %>
+<span class="search_title">Show room types</span>
+<div class="search_container">
+  <%= render 'search' %>
 </div>
-
-<%= link_to 'New Room type', new_room_type_path, :class => "new_link" %>
+<hr>
+<% if session[:property_id] %>
+  <h2>
+    <%= "Room Types > #{@property_name}" %>
+    <%= link_to 'x', room_types_path(:property_id => 'All'), :class => "x_link" %>
+  </h2>
+<% else %>
+  <h2>Room Types > All Properties</h2>
+<% end %>
 
 <% if @room_types.count > 0 %>
 <table class="index_table" border="1">
   <tr>
     <th class="text">Property</th>
-    <th class="text">Room type</th>
+    <th class="text">Name</th>
 		<th class="number">Rooms</th>
     <th class="number">Single occupancy</th>
     <th class="number">Double occupancy</th>
-    <th class="number">Extra adult</th>
+    <th class="number">Extra adults</th>
     <th class="number">Children</th>
     <th class="number">Infants</th>
-    <th class="number">Lodging price</th>
+    <th class="number">Lodging</th>
     <th class="number">Service tax</th>
 		<th></th>
   </tr>
@@ -53,3 +59,7 @@
 <% end %>
 
 <p><%= will_paginate @room_types %></p>
+
+<div class="action_container">
+  <%= link_to 'New Room type', new_room_type_path %>
+</div>

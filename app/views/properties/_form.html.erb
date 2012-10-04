@@ -1,4 +1,4 @@
-<%= form_for(@property) do |f| %>
+<%= form_for(@property, :validate => true) do |f| %>
   <% if @property.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@property.errors.count, "error") %> prohibited this Property from being saved:</h2>
@@ -16,7 +16,7 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :city, "City / Village" %><br />
+    <%= f.label :city, "Location" %><br />
     <%= f.text_field :city %>
   </div>
 	<div class="field">
@@ -24,28 +24,26 @@
 		<%= f.check_box :ensure_availability_before_booking %>
 	</div>
   <div class="field">
-    <%= f.label :phone_number %><br />
-    <%= f.text_field :phone_number %>
-  </div>
-  <div class="field">
-    <%= f.label :phone_number_2, "Alt. Phone number" %><br />
-    <%= f.text_field :phone_number_2 %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :url, "URL" %><br />
-    <%= f.text_field :url %>
+    <%= f.label :service_tax_rate %><br />
+    <%= f.number_field :service_tax_rate %>
+    <%= tooltip('Service tax rate', :hover) %>
   </div>
   <div class="field">
     <%= f.label :price_for_driver %><br />
     <%= f.number_field :price_for_driver, :min => 0 %>
   </div>
   <div class="field">
-    <%= f.label :service_tax_rate %><br />
-    <%= f.text_field :service_tax_rate %>
+    <%= f.label :url, "URL" %><br />
+    <%= f.text_field :url %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :phone_number, "Phone numbers" %><br />
+    <%= f.text_field :phone_number %>
+    <%= f.text_field :phone_number_2 %>
   </div>
   <div class="field">
     <%= f.label :address %><br />
@@ -54,6 +52,7 @@
   <div class="field">
     <%= f.label :suggested_activities, "Activities" %><br />
     <%= f.text_area :suggested_activities, rows: 6 %>
+    <%= tooltip('Activities', :hover) %>
   </div>
   <div class="action_container">
     <%= f.submit %>

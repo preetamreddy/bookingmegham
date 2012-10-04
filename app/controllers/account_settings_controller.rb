@@ -58,15 +58,4 @@ class AccountSettingsController < ApplicationController
       end
     end
   end
-
-  # DELETE /account_settings/1
-  # DELETE /account_settings/1.json
-  def destroy
-    @account_setting.destroy
-
-    respond_to do |format|
-      format.html { redirect_to account_settings_url }
-      format.json { head :ok }
-    end
-  end
 end

@@ -10,26 +10,25 @@ class BookingsController < ApplicationController
 			
 		if params[:property_id]
 			@property_id = params[:property_id].to_i
+      properties = Property.scoped_by_account_id(current_user.account_id).find_all_by_id(@property_id)
+      if properties.any?
+        @property_name = properties.first.name
+      end
 		else
 			@property_id = 0
 		end
 
 		if params[:check_in_date_first]
-			@check_in_date_first = Date.civil(
-															params[:check_in_date_first][:year].to_i,
-															params[:check_in_date_first][:month].to_i,
-															params[:check_in_date_first][:day].to_i)
+			@check_in_date_first = params[:check_in_date_first].to_date
 		else
 			@check_in_date_first = Date.today
 		end
 
-		if params[:number_of_days]
-			@number_of_days = params[:number_of_days].to_i
+		if params[:check_in_date_last]
+			@check_in_date_last = params[:check_in_date_last].to_date
 		else
-			@number_of_days = 7
+			@check_in_date_last = Date.today + 7
 		end
-
-		@check_in_date_last = @check_in_date_first + @number_of_days
 
 		if session[:trip_id]
 			@bookings = @bookings.paginate(page: params[:page], per_page: 10).
@@ -46,7 +45,7 @@ class BookingsController < ApplicationController
 		else
 			if @property_id > 0
 				@bookings = @bookings.paginate(page: params[:page], per_page: 10).
-											order("check_in_date desc, check_out_date desc").
+											order("check_in_date asc, check_out_date asc").
 											find(:all, :conditions => [
 												'property_id = ? and check_in_date >= ? and
 												check_in_date < ?',
@@ -54,12 +53,22 @@ class BookingsController < ApplicationController
 												@check_in_date_last ])
 			else
 				@bookings = @bookings.paginate(page: params[:page], per_page: 10).
-											order("check_in_date desc, check_out_date desc").
+											order("check_in_date asc, check_out_date asc").
 											find(:all, :conditions => [
 												'check_in_date >= ? and check_in_date < ?',
 												@check_in_date_first, @check_in_date_last ])
 			end
 		end
+
+    if session[:trip_id]
+      trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
+      @trip_name = trip.name
+      @customer_name = trip.customer.name
+    elsif session[:customer_id]
+      customer = session[:customer_type].classify.constantize.
+        scoped_by_account_id(current_user.account_id).find(session[:customer_id])
+      @customer_name = customer.name
+    end
 
 		@records_returned = @bookings.count
 
@@ -174,7 +183,7 @@ class BookingsController < ApplicationController
     @booking.destroy
 
     respond_to do |format|
-      format.html { redirect_to bookings_url, alert: @booking.errors[:base][0] }
+      format.html { redirect_to :back, alert: @booking.errors[:base][0] }
       format.json { head :ok }
     end
   end
@@ -192,6 +201,8 @@ class BookingsController < ApplicationController
     def find_property
       if Property.scoped_by_account_id(current_user.account_id).find_all_by_id(params[:property_id].to_i).any?
 	      Property.find(params[:property_id].to_i) 
+      elsif Property.scoped_by_account_id(current_user.account_id).find(:all).count == 1
+        Property.scoped_by_account_id(current_user.account_id).find(:all).first
       else
         nil
       end
