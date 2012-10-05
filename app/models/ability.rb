@@ -24,6 +24,7 @@ class Ability
 
 		if user.is? "Advisor"
 			cannot :manage, [Account, AccountSetting, Advisor, User, Tooltip]
+      can [:change_password, :update_password], User
 		end
 	end
 end
