@@ -13,7 +13,7 @@
 	<% if @booking.property_id %>
   	<%= f.collection_select(:room_type_id,
 					RoomType.scoped_by_account_id(current_user.account_id).
-            find_all_by_property_id(@booking.property_id),
+            find_all_by_property_id_and_deleted(@booking.property_id, 0),
           :id, :room_type, {}, 
           { :disabled => cannot_edit_room } ) %>
 	<% end %>

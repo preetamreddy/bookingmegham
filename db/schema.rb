@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121002104810) do
+ActiveRecord::Schema.define(:version => 20121008101022) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(:version => 20121002104810) do
     t.integer  "price_for_children_between_5_and_12_years"
     t.integer  "price_for_children_below_5_years"
     t.integer  "account_id"
+    t.integer  "deleted",                                   :default => 0
   end
 
   add_index "room_types", ["account_id"], :name => "index_room_types_on_account_id"

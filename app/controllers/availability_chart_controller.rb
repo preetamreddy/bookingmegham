@@ -50,7 +50,7 @@ class AvailabilityChartController < ApplicationController
 
 		@room_types = RoomType.scoped_by_account_id(current_user.account_id).
 										order(:property_id, :price_for_double_occupancy).
-										find_all_by_property_id(@properties)
+										find_all_by_property_id_and_deleted(@properties, 0)
 		@room_types.each do |room_type|
 			@chart_date_range.each do |date|
 				@availability.store([:room_type, room_type.id, date], 

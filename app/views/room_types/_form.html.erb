@@ -61,6 +61,10 @@
     <%= f.label :description %><br />
     <%= f.text_area :description, rows: 6 %>
   </div>
+  <%= hidden_div_if(@room_type.new_record?, class: "field") do %>
+		<%= f.label :deleted %>
+		<%= f.check_box :deleted %>
+  <% end %>
   <div class="action_container">
     <%= f.submit %>
   </div>
