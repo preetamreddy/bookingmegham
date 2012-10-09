@@ -13,8 +13,8 @@
 			<td class="number"><%= property.number_of_rooms %></td>
 			<% @chart_date_range.each do |date| %>
 				<%= show_availability_with_color_codes(
-					:property, @availability[[:property, property.id, date]], 
-					@rooms_required, { id: 'availability' }) do %>
+          :property, @availability[[:property, property.id, date]], @rooms_required, 
+          { property_id: property.id, room_type_id: '', date: date, id: 'availability' }) do %>
 					<%= @availability[[:property, property.id, date]] %>
 				<% end %>
 			<% end %>
@@ -27,8 +27,8 @@
 					<td class="number"><%= room_type.number_of_rooms %></td>
 					<% @chart_date_range.each do |date| %>
 						<%= show_availability_with_color_codes(
-							:room_type, @availability[[:room_type, room_type.id, date]], 
-							@rooms_required, { id: 'availability' }) do %>
+              :room_type, @availability[[:room_type, room_type.id, date]], @rooms_required,
+              { property_id: '', room_type_id: room_type.id, date: date, id: 'availability' }) do %>
 								<%= @availability[[:room_type, room_type.id, date]] %>
 						<% end %>
 					<% end %>
