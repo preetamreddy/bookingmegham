@@ -114,8 +114,8 @@ class PropertiesController < ApplicationController
 
     rooms = params[:rooms].to_i
     @rooms = rooms == 0 ? '' : rooms
-    if rooms > 99
-      @response = 'Availability check cannot be performed for more than 99 rooms'
+    if rooms > 3
+      @response = 'Availability check cannot be performed for more than 3 rooms'
     end
 
     if params[:check_in] 
@@ -129,8 +129,7 @@ class PropertiesController < ApplicationController
       property = Property.find(id)
       if property.allow_online_availability_check == 1
         response = property.availability(check_in, check_out, rooms)
-        @response = property.name + ": " + (response ? 'Available' : 'Sold out') +
-          " @ " + DateTime.current.to_s(:short)
+        @response = (response ? 'Available' : 'Sold out') + " as of " + DateTime.current.to_s(:short)
       end
     end
 
