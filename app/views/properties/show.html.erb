@@ -14,6 +14,10 @@
   <span class="saved_value"><%= @property.ensure_availability_before_booking.to_english %></span>
 </p>
 <p>
+  <b>Allow online avl check:</b>
+  <span class="saved_value"><%= @property.allow_online_availability_check.to_english %></span>
+</p>
+<p>
   <b>Service tax rate:</b>
 	<span class="saved_value"><%= number_to_percentage(@property.service_tax_rate,
 						:strip_insignificant_zeros => true) %></span>

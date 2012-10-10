@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121008101022) do
+ActiveRecord::Schema.define(:version => 20121010113518) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -188,6 +188,7 @@ ActiveRecord::Schema.define(:version => 20121008101022) do
     t.string   "email"
     t.string   "city"
     t.float    "service_tax_rate"
+    t.integer  "allow_online_availability_check",    :default => 0
   end
 
   add_index "properties", ["account_id"], :name => "index_properties_on_account_id"

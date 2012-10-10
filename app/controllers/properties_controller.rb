@@ -1,8 +1,6 @@
 class PropertiesController < ApplicationController
-	#load_and_authorize_resource :except => 'check_availability'
-	#skip_before_filter :authenticate_user!, :only => 'check_availability'
-
-	load_and_authorize_resource
+	load_and_authorize_resource :except => 'check_availability'
+	skip_before_filter :authenticate_user!, :only => 'check_availability'
 
   autocomplete :property, :name, :full => true
   #
@@ -126,12 +124,14 @@ class PropertiesController < ApplicationController
       @check_in = check_in
     end
 
-    @properties = Property.scoped_by_account_id(current_user.account_id).find_all_by_id(id)
+    @properties = Property.find_all_by_id(id)
     if @properties.any? and check_in and check_out and @response == ''
-      property = Property.scoped_by_account_id(current_user.account_id).find(id)
-      response = property.availability(check_in, check_out, rooms)
-      @response = property.name + ": " + (response ? 'Available' : 'Sold out') +
-        " @ " + DateTime.current.to_s(:short)
+      property = Property.find(id)
+      if property.allow_online_availability_check == 1
+        response = property.availability(check_in, check_out, rooms)
+        @response = property.name + ": " + (response ? 'Available' : 'Sold out') +
+          " @ " + DateTime.current.to_s(:short)
+      end
     end
 
     respond_to do |format|
