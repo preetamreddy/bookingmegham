@@ -27,6 +27,19 @@ class Property < ActiveRecord::Base
 		room_types.to_a.sum { |room_type| room_type.available_rooms(date) }
 	end
 
+	def availability(start_date, end_date, rooms_required)
+		availability_status = true
+		if ensure_availability_before_booking == 1
+			(start_date...end_date).each do |date|
+				if available_rooms(date) < rooms_required
+					availability_status = false
+				end
+			end
+		end
+		
+		return availability_status
+	end
+
 	private
 		def titleize
 			self.name = name.titleize 

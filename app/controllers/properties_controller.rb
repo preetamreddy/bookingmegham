@@ -1,4 +1,7 @@
 class PropertiesController < ApplicationController
+	#load_and_authorize_resource :except => 'check_availability'
+	#skip_before_filter :authenticate_user!, :only => 'check_availability'
+
 	load_and_authorize_resource
 
   autocomplete :property, :name, :full => true
@@ -97,6 +100,43 @@ class PropertiesController < ApplicationController
 
     respond_to do |format|
       format.js
+    end
+  end
+
+  def check_availability
+    @response = ''
+
+    id = params[:id].to_i
+
+    nights = params[:nights].to_i
+    @nights = nights == 0 ? '' : nights
+    if nights > 9
+      @response = 'Availability check cannot be performed for more than 9 nights'
+    end
+
+    rooms = params[:rooms].to_i
+    @rooms = rooms == 0 ? '' : rooms
+    if rooms > 99
+      @response = 'Availability check cannot be performed for more than 99 rooms'
+    end
+
+    if params[:check_in] 
+      check_in = params[:check_in].to_date
+      check_out = check_in + nights
+      @check_in = check_in
+    end
+
+    @properties = Property.scoped_by_account_id(current_user.account_id).find_all_by_id(id)
+    if @properties.any? and check_in and check_out and @response == ''
+      property = Property.scoped_by_account_id(current_user.account_id).find(id)
+      response = property.availability(check_in, check_out, rooms)
+      @response = property.name + ": " + (response ? 'Available' : 'Sold out') +
+        " @ " + DateTime.current.to_s(:short)
+    end
+
+    respond_to do |format|
+      format.html # check_availability.html.erb
+      format.json { render :json => @response }
     end
   end
 

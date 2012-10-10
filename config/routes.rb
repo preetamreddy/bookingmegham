@@ -64,6 +64,7 @@ Bookingmegham::Application.routes.draw do
 
   resources :properties do
     get :room_types_by_property, :on => :member
+    get :check_availability, :on => :member
     get :autocomplete_property_name, :on => :collection
   end
 

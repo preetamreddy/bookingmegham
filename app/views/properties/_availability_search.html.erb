@@ -1,0 +1,10 @@
+<%= form_tag check_availability_property_path, :method => "get" do %>
+	<%= label_tag :check_in, "Check-in" %>
+  <%= text_field_tag :check_in, (@check_in.to_s(:ddmonyyyy) if @check_in),
+    :readonly => true, :required => true, size: 10 %>
+	<%= label_tag :nights, "Nights" %>
+  <%= number_field_tag :nights, @nights, min: 1, max: 9, :required => true %>
+	<%= label_tag :rooms, "Rooms" %>
+  <%= number_field_tag :rooms, @rooms, min: 1, max: 99, :required => true %>
+  <%= submit_tag "Go", :name => nil, :class => "button black" %>
+<% end %>
