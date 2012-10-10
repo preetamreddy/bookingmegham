@@ -86,3 +86,6 @@ gem 'simple-tooltip'
 
 # For autocomplete
 gem 'rails3-jquery-autocomplete'
+
+# For recaptcha
+gem "recaptcha", :require => "recaptcha/rails"
