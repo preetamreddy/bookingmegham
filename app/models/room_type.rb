@@ -18,6 +18,8 @@ class RoomType < ActiveRecord::Base
 	
 	before_save :capitalize, :strip_whitespaces
 
+  before_update :set_rooms_to_zero_for_soft_deleted_room_types
+
 	before_destroy :ensure_does_not_have_booked_rooms
 
 	def service_tax
@@ -117,6 +119,12 @@ class RoomType < ActiveRecord::Base
 		def strip_whitespaces
 			self.description = description.to_s.strip
 		end
+
+    def set_rooms_to_zero_for_soft_deleted_room_types
+      if deleted == 1
+        self.number_of_rooms = 0
+      end
+    end
 
 		def ensure_does_not_have_booked_rooms
 			if rooms.empty?
