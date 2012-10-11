@@ -109,15 +109,13 @@ class PropertiesController < ApplicationController
     id = params[:id].to_i
 
     nights = params[:nights].to_i
-    @nights = nights
+    @nights = nights == 0 ? '' : nights
     if nights > 9
       @response = 'Availability check cannot be performed for more than 9 nights'
-    elsif nights < 1
-      @response = 'Availability check cannot be performed for less than 1 night'
     end
 
     rooms = params[:rooms].to_i
-    @rooms = rooms
+    @rooms = rooms == 0 ? '' : rooms
     if rooms > 3
       @response = 'Availability check cannot be performed for more than 3 rooms'
     end

@@ -4,6 +4,51 @@
  *= require_tree . 
 */
 
+#public_banner {
+	height: 4.5em;
+	background: #000000;
+	img {
+		float: left;
+		height: 4.5em;
+	}
+}
+
+#public_columns {
+	#public_main {
+		margin-left: 1em;
+		padding-top: 0.4em;
+		background: white;
+	}
+}
+
+.public_form {
+	form {
+		margin-left: 1em;
+		margin-top: 0.5em;
+		.field {
+			label {
+				width: 4em;
+				float: left;
+				text-align: right;
+				padding-top: 0.1em;
+				margin-right: 0.7em;
+				display: block;
+			}
+			select, textarea, input {
+				margin-right: 0.5em;
+			}
+		}
+	}
+}
+
+.public_highlight {
+  font-size: 1.5em;
+}
+
+#public_error {
+	color: red;
+}
+
 #banner {
 	font: small-caps 40px/60px "Trebuchet MS" sans-serif;
 	height: 60px;
