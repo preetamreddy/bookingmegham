@@ -126,7 +126,7 @@ class PropertiesController < ApplicationController
         check_out = check_in + nights
         @check_in = check_in
       rescue
-        @response = 'Please enter date as DD-MON-YY'
+        @response = 'Please enter date as DD-MON-YYYY'
       end
     end
 
