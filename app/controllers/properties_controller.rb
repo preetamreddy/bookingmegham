@@ -3,7 +3,9 @@ class PropertiesController < ApplicationController
 	skip_before_filter :authenticate_user!, :only => 'check_availability'
 
   autocomplete :property, :name, :full => true
-  #
+
+  layout :choose_layout
+
   # GET /properties
   # GET /properties.json
   def index
@@ -141,5 +143,14 @@ class PropertiesController < ApplicationController
 
   def get_autocomplete_items(parameters)
     super(parameters).where("account_id = ?", current_user.account_id)
+  end
+
+  def choose_layout
+    case action_name
+    when 'check_availability'
+      'public'
+    else
+      'application'
+    end
   end
 end

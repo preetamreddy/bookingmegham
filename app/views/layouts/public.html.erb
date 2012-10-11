@@ -2,17 +2,17 @@
 <html>
 <head>
   <title>EZBook</title>
-  <%= stylesheet_link_tag    "application" %>
+  <%= stylesheet_link_tag    "public" %>
   <%= csrf_meta_tags %>
 </head>
 <body class='<%= controller.controller_name %>'>
-	<div id="banner">
+	<div id="public_banner">
 		<%= image_tag("EZBook.jpg") %>
 	</div>
-	<div id="columns">
-		<div id="main">
+	<div id="public_columns">
+		<div id="public_main">
 			<p id="notice"><%= notice %></p>
-			<p id="error"><%= alert %></p>
+			<p id="public_error"><%= alert %></p>
 			<%= yield %>
 		</div>
 	</div>
