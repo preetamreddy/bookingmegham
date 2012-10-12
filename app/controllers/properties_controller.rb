@@ -139,9 +139,12 @@ class PropertiesController < ApplicationController
       end
     end
 
+    response_json = {"response" => @response}
+
     respond_to do |format|
       format.html # check_availability.html.erb
-      format.json { render :json => @response }
+      format.json { render :json => response_json }
+      format.js { render :json => response_json, :callback => params[:callback] }
     end
   end
 
