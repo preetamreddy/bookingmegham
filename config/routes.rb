@@ -1,4 +1,12 @@
 Bookingmegham::Application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      resources :properties do
+        get :check_availability, :on => :member
+      end
+    end
+  end
+
   resources :tooltips do
     collection do
       get 'tooltip_content'
