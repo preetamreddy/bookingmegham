@@ -12,23 +12,33 @@
 
 <% if @booking_chart.count > 0 %>
 	<table class="chart">
-		<col width="130px" />
-		<% @chart_date_range_short.each do |date| %>
-			<col width="80px" />
+		<col width="80px" />
+		<% @room_types.each do |room_type| %>
+      <% (1..room_type.number_of_rooms).each do |room_number| %>
+			  <col width="80px" />
+      <% end %>
 		<% end %>
 		<tr>
-			<th class="text">Room Type</th>
-			<% @chart_date_range_short.each do |date| %>
-				<th><%= date %></th>
+			<th class="text"></th>
+			<% @room_types.each do |room_type| %>
+        <th colspan=<%= room_type.number_of_rooms %>><%= room_type.room_type %></th>
+			<% end %>
+	  </tr>
+		<tr>
+			<th class="text">Date</th>
+			<% @room_types.each do |room_type| %>
+        <% (1..room_type.number_of_rooms).each do |room_number| %>
+          <th><%= room_number %></th>
+        <% end %>
 			<% end %>
 	  </tr>
 
-		<% @room_types.each do |room_type| %>	
+		<% @chart_date_range.each do |date| %>	
 			<% tr_class = cycle('list_line_odd', 'list_line_even') %>
-			<% (1..room_type.number_of_rooms).each do |room_number| %>
-	  		<tr class=<%= tr_class %>>
-	    		<td class="nowrap"><%= room_type.room_type %></td>
-					<% @chart_date_range.each do |date| %>
+	  	<tr class=<%= tr_class %>>
+	 		  <td class="nowrap"><%= date.to_s(:ddmonyy) %></td>
+			  <% @room_types.each do |room_type| %>
+			    <% (1..room_type.number_of_rooms).each do |room_number| %>
             <%= show_allocation_with_color_code(@booking_chart[[room_type.id, room_number, date]][2], 
                  title: @booking_chart[[room_type.id, room_number, date]][0],
                  booking_id: @booking_chart[[room_type.id, room_number, date]][3], 
@@ -37,8 +47,8 @@
 							<% @booking_chart[[room_type.id, room_number, date]][1] %>
 						<% end %>
 					<% end %>
-				</tr>
-			<% end %>
+				<% end %>
+			</tr>
 		<% end %>
 	</table>
 <% else %>
