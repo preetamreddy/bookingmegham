@@ -25,6 +25,7 @@
 	form {
 		margin-left: 1em;
 		margin-top: 0.5em;
+
 		.field {
 			label {
 				width: 5em;
@@ -34,6 +35,7 @@
 				margin-right: 0.7em;
 				display: block;
 			}
+
 			select, textarea, input {
 				margin-right: 0.5em;
 			}
@@ -78,11 +80,9 @@
 		float: right;
 		height: 60px;
 	}
-
 }
 
 #columns {
-
 	#main {
 		margin-left: 16.5em;
 		padding-top: 0.4em;
@@ -109,6 +109,7 @@
 
 			dd {
 				margin: 0;
+
 				&:before {
 					padding-right: 5px;
 					content: "»";
@@ -141,11 +142,13 @@
 	padding: 3px 8px;
 	border-radius: 10px;
 	display: inline-block;
+
   input[type="text"] {
     height: 20px;
     font: 14px/100% Arial, Helvetica, sans-serif;
     margin-right: 10px;
   }
+
   input[type="number"] {
     height: 20px;
     font: 14px/100% Arial, Helvetica, sans-serif;
@@ -166,9 +169,16 @@
 }
 
 .show_saved_record {
+  h2 {
+    margin: 8px 0;
+    padding: 4px;
+    background-color: #BCEBD6; 
+		border-radius: 5px;
+  }
 
 	p {
 		overflow: hidden;
+    margin: 6px;
 	}
 
 	b {
@@ -182,8 +192,8 @@
 	.saved_value {
 		display: block;
 		color: green;
-		width: 60%;
 		float: left;
+    padding-right: 10px;
 		white-space: pre-wrap;
 	}
 }
@@ -236,6 +246,7 @@
 			font-size: 1.1em;
 			padding: 0.2em 1em;
 		}
+
 		form {
 			margin-top: 0.5em;
 			.field {
@@ -247,6 +258,7 @@
           float: none;
           display: inline;
 	      }
+
 				label {
 					width: 10em;
 					float: left;
@@ -255,9 +267,11 @@
 					margin-right: 0.7em;
 					display: block;
 				}
+
 				select, textarea, input {
 					margin-right: 0.5em;
 				}
+
 				br {
 					display: none;
 				}
@@ -333,7 +347,6 @@
 }
 
 .nested_table {
-	margin-top: 1em;
 	border-spacing: 0;
 	border-collapse: collapse;
 	border-color: #CFCCCA;
@@ -345,14 +358,14 @@
 		padding: 5px;
 		background: #605C59;
 		color: #FFF;
-		border: 1px solid grey;
+		border: 1px, 0 solid grey;
 	}
 
 	td {
 		color: green;
 		padding: 2px 4px;
 		vertical-align: top;
-		border: 1px solid grey;
+		border: 1px, 0 solid grey;
 	}
 }
 
@@ -367,16 +380,19 @@
 			text-align: left;
 			font-size: 12px;
 		}
+
 		.clear {
 			text-align: right;
 			font-size: 10px;
 		}
+
 		th {
 			line-height: 1.2em;
 			width: 4.5em;
 			white-space: nowrap;
 			overflow: hidden;
 		}
+
 		td {
 			line-height: 1.2em;
 			color: #036339; 
@@ -393,7 +409,6 @@
 }
 
 .heading_table {
-
 	h1 {
 		margin-bottom: 0;
 	}
@@ -404,6 +419,7 @@
 		padding-left: 0.5em;
 	}
 }
+
 #error {
 	color: red;
 }
@@ -422,11 +438,19 @@
 	font-family: 'WebRupee';
 }
 
-#ui-datepicker-div { display:none }
+#ui-datepicker-div {
+  display:none
+}
 
 hr {
   height: 1px;
   background-color: #605C59;
+}
+
+#accordion {
+  h3 {
+    padding-left: 30px;
+  }
 }
 
 .button {
@@ -445,13 +469,16 @@ hr {
   -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
   box-shadow: 0 1px 2px rgba(0,0,0,.2);
 }
+
 .button:hover {
   text-decoration: none;
 }
+
 .button:active {
   position: relative;
   top: 1px;
 }
+
 .black {
   color: #d7d7d7;
   border: solid 1px #333;
@@ -460,12 +487,14 @@ hr {
   background: -moz-linear-gradient(top,  #666,  #000);
   filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#666666', endColorstr='#000000');
 }
+
 .black:hover {
   background: #000;
   background: -webkit-gradient(linear, left top, left bottom, from(#444), to(#000));
   background: -moz-linear-gradient(top,  #444,  #000);
   filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444', endColorstr='#000000');
 }
+
 .black:active {
   color: #666;
   background: -webkit-gradient(linear, left top, left bottom, from(#000), to(#444));

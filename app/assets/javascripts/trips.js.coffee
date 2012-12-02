@@ -9,3 +9,6 @@ $ ->
     onClose: ->
       this.focus()
   )
+  $('#accordion').accordion(
+    { heightStyle: "content" }
+  )

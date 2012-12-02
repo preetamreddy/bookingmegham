@@ -1,0 +1,34 @@
+<div class="show_saved_record">
+  <h2>
+    Payments
+    <%= link_to "new", new_payment_path(:trip_id => @trip.id), :class => "x_link" %>
+  </h2>
+  <% @trip.payments.order('date_received asc').each do |payment| %>
+    <p>
+      <b><%= payment.receipt_number %>:</b>
+      <span class="saved_value"><%= number_to_currency(payment.amount) %> on <%= l payment.date_received %> through <%= payment.payment_mode %> <%= "(#{payment.details})" if payment.details != '' %></span>
+      <%= link_to "edit", edit_payment_path(payment) %> | 
+    	<%= link_to 'destroy', payment, confirm: 'Are you sure?', method: :delete %>
+    </p>
+  <% end %>
+
+	<p>
+	  <b>Total Paid:</b>
+    <span class="saved_value"><%= number_to_currency(@trip.paid) %></span>
+	</p>
+	
+	<p>
+	  <b>Balance payment:</b>
+    <span class="saved_value"><%= number_to_currency(@trip.balance_payment) %></span>
+	</p>
+	
+	<%= hidden_p_unless(@trip.pay_by_date) do %>
+	  <b>Pay by:</b>
+    <span class="saved_value"><%= l @trip.pay_by_date if @trip.pay_by_date %></span>
+	<% end %>
+
+	<%= hidden_p_unless(@trip.refund_amount > 0) do %>
+	  <b>Refund amount:</b>
+    <span class="saved_value"><%= number_to_currency(@trip.refund_amount) %></span>
+	<% end %>
+</div>

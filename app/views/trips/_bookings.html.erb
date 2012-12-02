@@ -1,0 +1,134 @@
+<div class="show_saved_record">
+  <h2>
+    Room Bookings
+    <%= link_to "new", new_booking_path(:trip_id => @trip.id), :class => "x_link" %>
+  </h2>
+
+  <% if @trip.bookings.empty? %>
+    <br/>
+  <% end %>
+</div>
+
+<div id="accordion">
+	<% @trip.bookings.order('check_in_date asc').each do |booking| %>
+    <h3>
+      <%= booking.property.name %>
+		  <span class="dates"><%= l booking.check_in_date %> to <%= l booking.check_out_date %> (<%= pluralize(booking.number_of_nights, "night") %>)</span>
+    </h3>
+		
+    <div class="show_saved_record">
+			<% if booking.rooms.any? %>
+			  <b>Rooms:</b>
+			  <table class="nested_table">
+			    <tr>
+				    <th class="text">Occupancy</th>
+				    <th class="nowrap">Room type</th>
+						<th class="number">Rooms</th>
+						<th class="number">Adults</th>
+						<th class="number">Children</th>
+						<th class="number">Infants</th>
+						<th class="currency">Room rate</th>
+						<th class="currency">Price for rooms</th>
+			      <th class="text">Cancelled?</th>
+						<th class="currency">Cancellation fee</th>
+					</tr>
+			
+					<% booking.rooms.order(:cancelled).each do |room| %>
+						<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+							<td class="text"><%= room.occupancy %></td>
+							<td class="nowrap"><%= room.room_type.room_type %></td>
+							<td class="number"><%= room.number_of_rooms %></td>
+							<td class="number"><%= room.number_of_adults %></td>
+							<td class="number"><%= room.number_of_children_between_5_and_12_years %></td>
+							<td class="number"><%= room.number_of_children_below_5_years %></td>
+							<td class="currency"><%= number_to_currency(room.room_rate) %></td>
+							<td class="currency"><%= number_to_currency(room.price_for_rooms) %></td>
+							<td class="text"><%= room.cancelled.to_english %></td>
+							<td class="currency"><%= number_to_currency(room.cancellation_charge) %></td>
+						</tr>
+					<% end %>
+			  </table>
+			<% end %>
+			
+			<p>
+			  <b>Meal plan:</b>
+			  <span class="saved_value"><%= booking.meal_plan %></span>
+			</p>
+			
+			<%= hidden_p_unless((booking.guests_arriving_from != '' or booking.guests_arrival_time)) do %>
+			  <b>Arrival:</b>
+			  <span class="saved_value"><%= booking.guests_arriving_from %><%= "@ #{l booking.guests_arrival_time, :format => :short}" if booking.guests_arrival_time %></span>
+			<% end %>
+			
+			<%= hidden_p_unless(booking.departure_destination != '') do %>
+			  <b>Departure:</b>
+			  <span class="saved_value"><%= booking.departure_destination %></span>
+			<% end %>
+			
+			<b>Billing instructions:</b>
+			<table class="nested_table">
+				<tr>
+			  	<td>Collect for all extras</td>
+					<td><%= booking.collect_for_all_extras.to_english %></td>
+				</tr>
+				<tr>
+			  	<td>Collect for children</td>
+					<td><%= booking.collect_for_children.to_english %></td>
+				</tr>
+				<tr>
+			  	<td>Collect for driver and help</td>
+					<td><%= booking.collect_for_driver_and_help.to_english %></td>
+				</tr>
+				<tr>
+			    <td>Bill us on EPAI / CPAI / MAPAI / APAI</td>
+					<td><%= booking.bill_agent_on_chosen_plan.to_english %></td>
+				</tr>
+			</table>
+			
+			<%= hidden_p_unless(booking.reservation_reference != '') do %>
+			  <b>Reservation Reference:</b>
+			  <span class="saved_value"><%= booking.reservation_reference %></span>
+			<% end %>
+			
+			<%= hidden_p_unless(booking.remarks != '') do %>
+			  <b>Notes:</b>
+			  <span class="saved_value"><%= booking.remarks %></span>
+			<% end %>
+			
+			<% if booking.vas_bookings.any? %>
+				<b>Services:</b>
+				<table class="nested_table">
+					<tr>
+						<th class="text">Name</th>
+						<th class="text">All days</th>
+						<th class="number">Unit price</th>
+						<th class="number">#</th>
+						<th class="number">Total price</th>
+					</tr>
+				
+					<% booking.vas_bookings.each do |vas_booking| %>
+						<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+							<td class="text"><%= vas_booking.value_added_service %></td>
+							<td class="text"><%= vas_booking.every_day.to_english %></td>
+							<td class="number"><%= number_to_currency(vas_booking.unit_price) %></td>
+							<td class="number"><%= vas_booking.number_of_units %></td>
+							<td class="number"><%= number_to_currency(vas_booking.total_price) %></td>
+						</tr>
+					<% end %>
+				</table>
+			<% end %>
+			
+			<%= hidden_p_unless(booking.total_price) do %>
+			  <b>Total price:</b>
+			  <span class="saved_value"><%= number_to_currency(booking.total_price) if booking.total_price %></span>
+			<% end %>
+			
+			<%= hidden_p_unless(booking.service_tax) do %>
+			  <b>Service tax:</b>
+			  <span class="saved_value"><%= number_to_currency(booking.service_tax) if booking.service_tax %></span>
+			<% end %>
+
+      <%= link_to 'edit', edit_booking_path(booking), :class => "x_link" %>
+	  </div>
+	<% end %>
+</div>

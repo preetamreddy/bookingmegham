@@ -16,4 +16,10 @@
 	table th:nth-last-child(2) {
 		width: auto;
 	}
+
+  .dates {
+	  float: right;
+	  display: inline-block;
+    font-size: 12px;
+  }
 }
