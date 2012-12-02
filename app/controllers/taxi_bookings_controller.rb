@@ -66,6 +66,10 @@ class TaxiBookingsController < ApplicationController
   # GET /taxi_bookings/new
   # GET /taxi_bookings/new.json
   def new
+		if params[:trip_id]
+      store_trip_in_session(params[:trip_id].to_i)
+		end
+
 		if session[:trip_id]
 			@taxi_booking.trip_id = session[:trip_id]
     end
@@ -101,6 +105,8 @@ class TaxiBookingsController < ApplicationController
   def update
     respond_to do |format|
       if @taxi_booking.update_attributes(params[:taxi_booking])
+        store_trip_in_session(@taxi_booking.trip_id)
+
         format.html { redirect_to @taxi_booking, notice: 'Taxi booking was successfully updated.' }
         format.json { head :ok }
       else
@@ -130,14 +136,4 @@ class TaxiBookingsController < ApplicationController
       format.json { render json: @taxi_booking, status: :sent, location: @taxi_booking }
 		end
 	end
-
-  private
-    def store_trip_in_session(trip_id)
-			if Trip.scoped_by_account_id(current_user.account_id).find_all_by_id(trip_id).any?
-			  trip = Trip.scoped_by_account_id(current_user.account_id).find(trip_id)
-			  session[:trip_id] = trip.id
-			  session[:customer_type] = trip.customer_type
-			  session[:customer_id] = trip.customer_id
-      end
-    end
 end

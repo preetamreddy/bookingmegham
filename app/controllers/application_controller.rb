@@ -33,6 +33,15 @@ class ApplicationController < ActionController::Base
 		end
 
 	private
+    def store_trip_in_session(trip_id)
+			if Trip.scoped_by_account_id(current_user.account_id).find_all_by_id(trip_id).any?
+			  trip = Trip.scoped_by_account_id(current_user.account_id).find(trip_id)
+			  session[:trip_id] = trip.id
+			  session[:customer_type] = trip.customer_type
+			  session[:customer_id] = trip.customer_id
+      end
+    end
+
 		def after_sign_in_path_for(resource)
 			stored_location_for(resource) || root_path
 		end

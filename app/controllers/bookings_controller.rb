@@ -168,6 +168,8 @@ class BookingsController < ApplicationController
   def update
     respond_to do |format|
       if @booking.update_attributes(params[:booking])
+        store_trip_in_session(@booking.trip_id)
+
         format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
         format.json { head :ok }
       else
@@ -189,15 +191,6 @@ class BookingsController < ApplicationController
   end
 
   private
-    def store_trip_in_session(trip_id)
-			if Trip.scoped_by_account_id(current_user.account_id).find_all_by_id(trip_id).any?
-			  trip = Trip.scoped_by_account_id(current_user.account_id).find(trip_id)
-			  session[:trip_id] = trip.id
-			  session[:customer_type] = trip.customer_type
-			  session[:customer_id] = trip.customer_id
-      end
-    end
-
     def find_property
       if Property.scoped_by_account_id(current_user.account_id).find_all_by_id(params[:property_id].to_i).any?
 	      Property.find(params[:property_id].to_i) 

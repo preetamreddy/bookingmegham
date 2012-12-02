@@ -69,6 +69,10 @@ class PaymentsController < ApplicationController
   # GET /payments/new
   # GET /payments/new.json
   def new
+		if params[:trip_id]
+      store_trip_in_session(params[:trip_id].to_i)
+		end
+
 		if session[:trip_id]
       trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
 			@payment.trip_id = trip.id
@@ -111,6 +115,8 @@ class PaymentsController < ApplicationController
   def update
     respond_to do |format|
       if @payment.update_attributes(params[:payment])
+        store_trip_in_session(@payment.trip_id)
+
         format.html { redirect_to @payment, notice: 'Payment was successfully updated.' }
         format.json { head :ok }
       else
@@ -140,14 +146,4 @@ class PaymentsController < ApplicationController
 			format.json { render json: payment, status: :sent, location: payment }
 		end
 	end
-
-  private
-    def store_trip_in_session(trip_id)
-			if Trip.scoped_by_account_id(current_user.account_id).find_all_by_id(trip_id).any?
-			  trip = Trip.scoped_by_account_id(current_user.account_id).find(trip_id)
-			  session[:trip_id] = trip.id
-			  session[:customer_type] = trip.customer_type
-			  session[:customer_id] = trip.customer_id
-      end
-    end
 end
