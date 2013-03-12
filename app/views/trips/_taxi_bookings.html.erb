@@ -1,0 +1,50 @@
+<div class="show_saved_record">
+  <h2>
+    Taxi Bookings
+    <%= link_to "new", new_taxi_booking_path(:trip_id => @trip.id), :class => "x_link" %>
+  </h2>
+  <% if @trip.taxi_bookings.any? %>
+		<b>Booked Taxis:</b>
+		<table class="nested_table">
+		  <tr>
+        <th class="nowrap">Taxi Booking No</th>
+        <th class="text">Operator</th>
+        <th class="text">Taxi</th>
+        <th class="text">Pickup time</th>
+        <th class="text">Pickup address</th>
+        <th class="text">Dropoff city</th>
+        <th class="number">Unit price</th>
+        <th class="number">Total price</th>
+        <th></th>
+			</tr>
+
+      <% @trip.taxi_bookings.order('start_date asc').each do |taxi_booking| %>
+			  <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+          <td class="text">
+            <%= taxi_booking.taxi_booking_number %>
+          </td>
+	        <td class="nowrap"><%= taxi_booking.taxi.agency.name %></td>
+	        <td class="text">
+	          <span class="nowrap"><%= pluralize(taxi_booking.number_of_vehicles, taxi_booking.taxi.model) %></span><br/>
+	          <span class="nowrap"><%= l taxi_booking.start_date %> to <%= l taxi_booking.end_date %></span><br/>
+	          <span class="nowrap">(<%= pluralize(taxi_booking.number_of_days, "day") %>)</span>
+	        </td>
+	        <td class="text">
+	        <% if taxi_booking.pickup_time %>
+	          <%= l taxi_booking.pickup_time, :format => :short %>
+	        <% end %>
+	        </td>
+	        <td class="text"><%= taxi_booking.pickup_address %></td>
+	        <td class="text"><%= taxi_booking.drop_off_city %></td>
+	        <td class="nowrap"><%= number_to_currency(taxi_booking.unit_price) %></td>
+	        <td class="nowrap"><%= number_to_currency(taxi_booking.total_price) %></td>
+	        <td class="nowrap">
+	          <%= link_to 'edit', edit_taxi_booking_path(taxi_booking) %> |
+	          <%= link_to 'destroy', taxi_booking, confirm: 'Are you sure?', 
+	                method: :delete %>
+	        </td>
+			  </tr>
+			<% end %>
+	  </table>
+  <% end %>
+</div>

@@ -3,7 +3,7 @@
     Payments
     <%= link_to "new", new_payment_path(:trip_id => @trip.id), :class => "x_link" %>
   </h2>
-  <% @trip.payments.order('date_received asc').each do |payment| %>
+  <% @trip.payments.order('date_received asc, counter asc').each do |payment| %>
     <p>
       <b><%= payment.receipt_number %>:</b>
       <span class="saved_value"><%= number_to_currency(payment.amount) %> on <%= l payment.date_received %> through <%= payment.payment_mode %> <%= "(#{payment.details})" if payment.details != '' %></span>
