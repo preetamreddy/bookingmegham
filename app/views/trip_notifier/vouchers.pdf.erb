@@ -18,6 +18,11 @@
 				font-family: helvetica, verdana, arial, sans-serif;
 				font-size: 12px;
 			}	
+			.footnote_bold {
+				font-family: helvetica, verdana, arial, sans-serif;
+				font-size: 12px;
+				font-weight: bold;
+			}	
 			.signature {
 				font-family: helvetica, verdana, arial, sans-serif;
 				font-size: 12px;
@@ -190,6 +195,11 @@
 				<p class="footnote">
 					This confirmation is issued irrevocably for the period specified and guests are liable for the entire period irrespective of late arrival and early departure.	
 				</p>
+			  <% if booking.property.ensure_availability_before_booking == 1 %>
+				  <p class="footnote_bold">
+            Note: Banjara Camps and Retreats has introduced a 3% SERVICE CHARGE on its room tariffs per night. The same needs to be paid by the guest in cash directly on site.
+				  </p>
+        <% end %>  
 				<p class="signature">
 					** This is a computer generated voucher. No signature required **
 				</p>

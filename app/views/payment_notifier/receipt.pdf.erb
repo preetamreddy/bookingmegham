@@ -14,6 +14,11 @@
 				font-weight: bold;
 				text-align: left;
 			}	
+			.footnote_bold {
+				font-family: helvetica, verdana, arial, sans-serif;
+				font-size: 16px;
+				font-weight: bold;
+			}	
 			.signature {
 				font-family: helvetica, verdana, arial, sans-serif;
 				font-size: 16px;
@@ -102,6 +107,9 @@
 			<% end %>
 			<p>
 				<span class="amount">Rs. <%= number_to_currency_wo_symbol(@payment.amount) %></span> only.
+			</p>
+			<p class="footnote_bold">
+			  Note: Banjara Camps and Retreats has introduced a 3% service charge on its own properties in Himachal. This is payable directly on site.	
 			</p>
 			<p class="signature">
 				** This is a computer generated receipt. No signature required **
