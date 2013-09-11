@@ -1,7 +1,7 @@
 <%= form_tag "payments.csv", :method => "get", class: "download_button" do %>
 	<%= hidden_div_if(true) do %>
-		<%= select_date @from_date, :prefix => 'from_date', :hidden => true %>
-		<%= number_field_tag :number_of_days, @number_of_days, min: 1, max: 99 %>
+    <%= text_field_tag :from_date, (@from_date.to_s(:ddmonyyyy) if @from_date), :hidden => true %>
+    <%= text_field_tag :to_date, (@to_date.to_s(:ddmonyyyy) if @to_date), :hidden => true %>
 	<% end %>
 	<%= submit_tag "Download as CSV", :name => nil %>
 <% end %>
