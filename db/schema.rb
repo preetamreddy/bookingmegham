@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121010113518) do
+ActiveRecord::Schema.define(:version => 20141029135446) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20121010113518) do
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "service_charge",     :default => 0
   end
 
   add_index "account_settings", ["account_id"], :name => "index_account_settings_on_account_id"

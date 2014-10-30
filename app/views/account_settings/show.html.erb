@@ -51,6 +51,11 @@
   <span class="saved_value"><%= @account_setting.tds_percent %></span>
 </p>
 
+<p>
+  <b>Service charge:</b>
+  <span class="saved_value"><%= @account_setting.service_charge %></span>
+</p>
+
 <% if @account_setting.payment_modes.any? %>
 	<b>Payment modes:</b>
 	<table class="nested_table">

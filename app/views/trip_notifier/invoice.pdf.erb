@@ -106,8 +106,8 @@
 						<% if @trip.payments.any? %>Receipt No: <%= @trip.payments.order(:date_received).last.receipt_number %>/<%= l @trip.payments.order(:date_received).last.date_received %><% end %>
 						Ref: <%= @trip.name %>
 						Invoice No: <%= @trip.invoice_number %>
-						PAN No: <%= @account_setting.pan %>
-						S Tax No: <%= @account_setting.service_tax_number %>
+            <%= "PAN No: #{@account_setting.pan}" if @account_setting.pan != "" %>
+            <%= "S Tax No: #{@account_setting.service_tax_number}" if @account_setting.service_tax_number != "" %>
 					</td>
 				</tr>
 			</table>
@@ -230,7 +230,7 @@
 				</p>
 			<% end %>	
 			<p class="footnote_bold">
-			  Note: Banjara Camps and Retreats has introduced a 5% service charge on its own properties in Himachal. This is payable directly on site.	
+        <%= "Note: #{@account_setting.name} has introduced a #{@account_setting.service_charge}% service charge on its own properties. This is payable directly on site." if @account_setting.service_charge != 0 %>
 			</p>
 			<p class="signature">
 				** This is a computer generated invoice. No signature required **
