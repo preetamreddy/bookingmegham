@@ -80,8 +80,8 @@
 							<%= @account_setting.postal_address %>
 							Phone: <%= @account_setting.phone_number_1 %>
 						</span>
-						PAN No. : <%= @account_setting.pan %>
-            S. Tax No. : <%= @account_setting.service_tax_number %>
+            <%= "PAN No: #{@account_setting.pan}" if @account_setting.pan != "" %>
+            <%= "S Tax No: #{@account_setting.service_tax_number}" if @account_setting.service_tax_number != "" %>
 					</td>
 				</tr>
 			</table>
@@ -109,7 +109,7 @@
 				<span class="amount">Rs. <%= number_to_currency_wo_symbol(@payment.amount) %></span> only.
 			</p>
 			<p class="footnote_bold">
-			  Note: Banjara Camps and Retreats has introduced a 5% service charge on its own properties in Himachal. This is payable directly on site.	
+        <%= "Note: #{@account_setting.name} has introduced a #{@account_setting.service_charge}% service charge on its own properties. This is payable directly on site." if @account_setting.service_charge != 0 %>
 			</p>
 			<p class="signature">
 				** This is a computer generated receipt. No signature required **
