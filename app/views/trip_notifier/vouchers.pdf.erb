@@ -111,7 +111,9 @@
 						<td colspan=2>
 							<%= wicked_pdf_image_tag Account.find(@trip.account_id).logo_file_name	%>
 						</td>
-						<td colspan=2 class="agency_address"><%= @account_setting.name %><br/><%= @account_setting.postal_address %><br/>Phone: <%= @account_setting.phone_number_1 %></td>
+			      <% if @account_setting.service_charge != 0 %>
+						  <td colspan=2 class="agency_address"><%= @account_setting.name %><br/><%= @account_setting.postal_address %><br/>Phone: <%= @account_setting.phone_number_1 %></td>
+            <% end %>  
 						<td colspan=2 class="property_address">
 							The Manager
 							<%= booking.property.address %>
@@ -197,7 +199,7 @@
 				</p>
 			  <% if booking.property.ensure_availability_before_booking == 1 %>
 				  <p class="footnote_bold">
-            Note: Banjara Camps and Retreats has introduced a 5% SERVICE CHARGE on its room tariffs per night. The same needs to be paid by the guest in cash directly on site.
+          <%= "Note: #{@account_setting.name} has introduced a #{@account_setting.service_charge}% SERVICE CHARGE on its room tariffs per night. The same needs to be paid by the guest in cash directly on site." if @account_setting.service_charge != 0 %>
 				  </p>
         <% end %>  
 				<p class="signature">
