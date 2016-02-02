@@ -112,7 +112,7 @@
 	<%= hidden_div_if(@trip.pay_by_date == nil, class: "field") do %>
    	<%= f.label :pay_by_date, "Pay balance by" %><br />
    	<%= f.date_select :pay_by_date, :start_year => Time.now.year,
-			:end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
+      :end_year => Time.now.year + 1, :prompt => true, :disabled => true %>
 	<% end %>
 	<%= hidden_div_if(@trip.refund_amount == 0, class: "field") do %>
     <%= f.label :refund_amount %><br />
