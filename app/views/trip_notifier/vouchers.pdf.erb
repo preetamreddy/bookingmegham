@@ -203,7 +203,7 @@
 				  </p>
         <% end %>  
 
-	<% if @account_setting.id == 3 %>
+	<% if @account_setting.id == 3 and booking.property.ensure_availability_before_booking == 1 %>
 		<p class="footnote_bold">
 			Important Retreat information for your perusal:
 		</p>
