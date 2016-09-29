@@ -165,6 +165,7 @@ class Trip < ActiveRecord::Base
 		def init
 			self.discount ||= 0
 			self.tac ||= 0
+			self.tds ||= 0
 			self.payment_status ||= NOT_PAID
 		end
 
