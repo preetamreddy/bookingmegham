@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141029135446) do
+ActiveRecord::Schema.define(:version => 20160929082416) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -331,6 +331,7 @@ ActiveRecord::Schema.define(:version => 20141029135446) do
     t.integer  "payments_counter",      :default => 0
     t.integer  "bookings_counter",      :default => 0
     t.integer  "taxi_bookings_counter", :default => 0
+    t.integer  "tds",                   :default => 0
   end
 
   add_index "trips", ["account_id"], :name => "index_trips_on_account_id"

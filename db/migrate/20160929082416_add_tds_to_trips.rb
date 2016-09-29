@@ -2,7 +2,7 @@ class AddTdsToTrips < ActiveRecord::Migration
   def up
     add_column :trips, :tds, :integer, :default => 0
 
-    trips.all.each do |trip|
+    Trip.all.each do |trip|
       trip.update_column(:tds, trip.tac * 0.1)
     end
 
