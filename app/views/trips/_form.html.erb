@@ -81,17 +81,15 @@
     <%= f.label :discount, "Discount" %><br />
    	<%= f.number_field :discount, :min => 0 %>
 	<% end %>
-	<%= hidden_div_if((@trip.new_record? or @trip.is_direct_booking?), class: "field") do %>
+	<%= hidden_div_if((@trip.new_record?), class: "field") do %>
     <%= f.label :tac, "TAC" %><br />
    	<%= f.number_field :tac, :min => 0 %>
 	<% end %>
 	<%= hidden_div_if((@trip.new_record? or @trip.is_direct_booking?), class: "field") do %>
     <%= f.label :tds, "TDS on TAC" %><br />
-		<p><span class="highlight">
-			<%= number_to_currency(@trip.tds) %>
-		</span></p>
+   	<%= f.number_field :tds, :min => 0 %>
 	<% end %>
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+	<%= hidden_div_if((@trip.new_record? or @trip.is_direct_booking?), class: "field") do %>
     <%= f.label :final_price %><br />
 		<p><span class="highlight">
 			<%= number_to_currency(@trip.final_price) %>

@@ -122,10 +122,6 @@ class Trip < ActiveRecord::Base
     AccountSetting.find_by_account_id(account_id).tds_percent
   end
 
-	def tds
-		(tac * tds_percent / 100.0).round
-	end
-
 	def final_price
 		total_price - discount - tac + tds
 	end
