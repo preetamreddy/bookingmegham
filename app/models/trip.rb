@@ -33,7 +33,7 @@ class Trip < ActiveRecord::Base
 							:update_end_date, :ensure_booking_dates_are_within_trip_dates,
               :ensure_customer_exists
 
-	before_update :update_payment_status_and_pay_by_date
+	before_update :update_payment_status_and_pay_by_date, :update_tds
 
 	before_destroy 	:ensure_does_not_have_bookings,
 									:ensure_does_not_have_taxi_bookings,
@@ -254,5 +254,9 @@ class Trip < ActiveRecord::Base
 				errors.add(:base, "Destroy failed because #{name} has payments")
 				return false
 			end
+		end
+
+		def update_tds
+			self.tds = tac * tds_percent / 100
 		end
 end
