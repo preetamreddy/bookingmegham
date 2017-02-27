@@ -18,8 +18,18 @@
   <span class="saved_value"><%= @property.allow_online_availability_check.to_english %></span>
 </p>
 <p>
+  <b>VAT rate:</b>
+	<span class="saved_value"><%= number_to_percentage(@property.vat_rate,
+						:strip_insignificant_zeros => true) %></span>
+</p>
+<p>
   <b>Service tax rate:</b>
 	<span class="saved_value"><%= number_to_percentage(@property.service_tax_rate,
+						:strip_insignificant_zeros => true) %></span>
+</p>
+<p>
+  <b>Luxury tax rate:</b>
+	<span class="saved_value"><%= number_to_percentage(@property.luxury_tax_rate,
 						:strip_insignificant_zeros => true) %></span>
 </p>
 <p>

@@ -58,7 +58,7 @@
 	</div>
 
 	<div class="field">
-		<%= f.label :value_added_services, "Value added services" %>
+		<%= f.label :value_added_services, "Other Services" %>
 	</div>
 	<div class="nested_form">
     <%= f.fields_for :vas_bookings, :validate => false %>
@@ -76,6 +76,18 @@
 		<p><span class="highlight">
 			<%= number_to_currency(@trip.total_price) %>
 		</span></p>
+	<% end %>
+	<%= hidden_div_if((@trip.account_id != 1), class: "field") do %>
+    		<%= f.label :banjara_vat, "VAT" %><br />
+    		<%= f.number_field :banjara_vat, :min => 0 %>
+	<% end %>
+	<%= hidden_div_if((@trip.account_id != 1), class: "field") do %>
+    		<%= f.label :banjara_service_tax, "Service Tax" %><br />
+    		<%= f.number_field :banjara_service_tax, :min => 0 %>
+	<% end %>
+	<%= hidden_div_if((@trip.account_id != 1), class: "field") do %>
+    		<%= f.label :banjara_luxury_tax, "Luxury Tax" %><br />
+    		<%= f.number_field :banjara_luxury_tax, :min => 0 %>
 	<% end %>
 	<%= hidden_div_if((@trip.new_record?), class: "field") do %>
     <%= f.label :discount, "Discount" %><br />

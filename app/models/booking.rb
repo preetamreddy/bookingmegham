@@ -41,6 +41,30 @@ class Booking < ActiveRecord::Base
 		trip.medical_constraints
 	end
 
+	def vat_vas
+		if vas_bookings.empty?
+			0
+		else
+			vas_bookings.to_a.sum { |vas_booking| vas_booking.vat }
+		end
+	end
+
+	def total_vat
+		vat + vat_vas
+	end
+
+	def service_tax_vas
+		if vas_bookings.empty?
+			0
+		else
+			vas_bookings.to_a.sum { |vas_booking| vas_booking.service_tax }
+		end
+	end
+
+	def total_service_tax
+		service_tax + service_tax_vas
+	end
+
 	def number_of_adults
 		if rooms.empty?
 			0
@@ -86,6 +110,8 @@ class Booking < ActiveRecord::Base
 
 	private
     def set_defaults_if_nil
+      self.vat ||= 0
+      self.luxury_tax ||= 0
       self.remarks ||= trip.remarks
     end
 

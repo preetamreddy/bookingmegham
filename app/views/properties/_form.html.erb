@@ -19,18 +19,28 @@
     <%= f.label :city, "Location" %><br />
     <%= f.text_field :city %>
   </div>
-	<div class="field">
-		<%= f.label :ensure_availability_before_booking, "Own property?" %>
-		<%= f.check_box :ensure_availability_before_booking %>
-	</div>
-	<div class="field">
-		<%= f.label :allow_online_availability_check, "Allow online avl check" %>
-		<%= f.check_box :allow_online_availability_check %>
-	</div>
+  <div class="field">
+	<%= f.label :ensure_availability_before_booking, "Own property?" %>
+	<%= f.check_box :ensure_availability_before_booking %>
+  </div>
+  <div class="field">
+	<%= f.label :allow_online_availability_check, "Online avl check?" %>
+	<%= f.check_box :allow_online_availability_check %>
+  </div>
+  <div class="field">
+    <%= f.label :vat_rate %><br />
+    <%= f.number_field :vat_rate %>
+    <%= tooltip('Vat rate', :hover) %>
+  </div>
   <div class="field">
     <%= f.label :service_tax_rate %><br />
     <%= f.number_field :service_tax_rate %>
     <%= tooltip('Service tax rate', :hover) %>
+  </div>
+  <div class="field">
+    <%= f.label :luxury_tax_rate %><br />
+    <%= f.number_field :luxury_tax_rate %>
+    <%= tooltip('Luxury tax rate', :hover) %>
   </div>
   <div class="field">
     <%= f.label :price_for_driver %><br />

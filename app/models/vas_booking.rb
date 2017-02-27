@@ -1,8 +1,13 @@
 class VasBooking < ActiveRecord::Base
+	VAT = 'VAT'
+	ST = 'ST'
+
+	TAX_TYPES = [VAT, ST]
+
 	belongs_to :trip
 	belongs_to :booking
 
-	validates :value_added_service, :unit_price, :number_of_units, presence: true
+	validates :value_added_service, :unit_price, :number_of_units, :tax_type, presence: true
 	validates_numericality_of :unit_price,
 		allow_nil: true, only_integer: true, greater_than_or_equal_to: 0,
 		message: ": %{value} should be a number greater than or equal to 0"
@@ -13,6 +18,26 @@ class VasBooking < ActiveRecord::Base
 	before_save :update_total_price
 
 	before_create :set_account_id
+
+	def vat
+		if tax_type == VAT
+			vat_rate = AccountSetting.find_by_account_id(account_id).vat_rate.to_f / 100.0
+
+			((total_price / (1 + vat_rate)) * vat_rate).ceil
+		else
+			0
+		end
+	end
+
+	def service_tax
+		if tax_type == ST
+			service_tax_rate = AccountSetting.find_by_account_id(account_id).service_tax_rate.to_f / 100.0
+
+			((total_price / (1 + service_tax_rate)) * service_tax_rate).ceil
+		else
+			0
+		end
+	end
 
 	private
 		def number_of_days

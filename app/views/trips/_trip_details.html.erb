@@ -32,20 +32,26 @@
 		<b>Services:</b>
 		<table class="nested_table">
 			<tr>
+				<th class="text">Tax Type</th>
 				<th class="text">Name</th>
 				<th class="text">All days</th>
 				<th class="number">Unit price</th>
 				<th class="number">#</th>
 				<th class="number">Total price</th>
+				<th class="number">VAT</th>
+				<th class="number">Service tax</th>
 			</tr>
 	
 			<% @trip.vas_bookings.each do |vas_booking| %>
 				<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+					<td class="text"><%= vas_booking.tax_type %></td>
 					<td class="text"><%= vas_booking.value_added_service %></td>
 					<td class="text"><%= vas_booking.every_day.to_english %></td>
 					<td class="number"><%= number_to_currency(vas_booking.unit_price) %></td>
 					<td class="number"><%= vas_booking.number_of_units %></td>
 					<td class="number"><%= number_to_currency(vas_booking.total_price) %></td>
+					<td class="number"><%= number_to_currency(vas_booking.vat) %></td>
+					<td class="number"><%= number_to_currency(vas_booking.service_tax) %></td>
 				</tr>
 			<% end %>
 		</table>
@@ -66,6 +72,11 @@
     <span class="saved_value"><%= number_to_currency(@trip.tac) %></span>
 	<% end %>
 	
+	<p>
+		<b>Discount and TAC Percent:</b>
+    		<span class="saved_value"><%= number_to_percentage(@trip.discount_and_tac_percent) %></span>
+	</p>
+	
 	<%= hidden_p_unless(!@trip.is_direct_booking?) do %>
 	  <b>TDS on TAC:</b>
     <span class="saved_value"><%= number_to_currency(@trip.tds) %></span>
@@ -77,8 +88,33 @@
 	</p>
 	
 	<p>
-	  <b>Service tax:</b>
-    <span class="saved_value"><%= number_to_currency(@trip.service_tax) %></span>
+		<b>VAT:</b>
+		<% if @trip.account_id == 1 %>
+			<b>Banjara VAT:</b>
+    			<span class="saved_value"><%= number_to_currency(@trip.banjara_vat) %></span>
+			<b>Calc VAT:</b>
+		<% end %>
+    		<span class="saved_value"><%= number_to_currency(@trip.total_vat) %></span>
+	</p>
+
+	<p>
+		<b>Service Tax:</b>
+		<% if @trip.account_id == 1 %>
+			<b>Banjara Service tax:</b>
+    			<span class="saved_value"><%= number_to_currency(@trip.banjara_service_tax) %></span>
+			<b>Calc Service tax:</b>
+		<% end %>
+   		<span class="saved_value"><%= number_to_currency(@trip.total_service_tax) %></span>
+	</p>
+
+	<p>
+		<b>Luxury Tax:</b>
+		<% if @trip.account_id == 1 %>
+			<b>Banjara Luxury Tax:</b>
+    			<span class="saved_value"><%= number_to_currency(@trip.banjara_luxury_tax) %></span>
+			<b>Calc Luxury Tax:</b>
+		<% end %>
+    		<span class="saved_value"><%= number_to_currency(@trip.total_luxury_tax) %></span>
 	</p>
 
 	<p>

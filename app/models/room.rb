@@ -28,20 +28,41 @@ class Room < ActiveRecord::Base
 
   after_validation :update_line_items
 
-	before_create :update_service_tax_per_room_night,
-								:update_room_rate,
-								:update_total_price,
-								:update_service_tax
+	before_create :update_room_rate, :update_total_price, :update_service_tax, :update_luxury_tax, :update_vat
 
-	before_update :update_room_rate,
-								:update_total_price,
-								:update_service_tax
+	before_update :update_room_rate, :update_total_price, :update_service_tax, :update_luxury_tax, :update_vat
 
 	before_destroy :ensure_payments_are_not_made
 
   def meal_plan
     booking.meal_plan
   end
+
+	def food_charges
+		if cancelled == 1
+			0
+		else
+			((number_of_adults * room_type.price_for_triple_occupancy) +
+			(number_of_children_between_5_and_12_years * room_type.price_for_children_between_5_and_12_years) +
+			(number_of_children_below_5_years * room_type.price_for_children_below_5_years)) * number_of_nights * number_of_rooms
+		end
+	end
+
+	def transportation_and_guide_charges
+		if cancelled == 1
+			0
+		else
+			room_type.price_for_transportation_and_guide * number_of_nights * number_of_rooms
+		end
+	end
+
+	def lodging_charges
+		if cancelled == 1
+			0
+		else
+			total_price - transportation_and_guide_charges - food_charges
+		end
+	end
 
 	def guests_per_room
 		if number_of_children_between_5_and_12_years == 0
@@ -69,6 +90,9 @@ class Room < ActiveRecord::Base
 		def set_defaults_if_nil
 			self.number_of_children_between_5_and_12_years ||= 0
 			self.number_of_children_below_5_years ||= 0
+			self.vat ||= 0
+			self.service_tax ||= 0
+			self.luxury_tax ||= 0
 		end
 
     def update_check_in_date
@@ -157,10 +181,6 @@ class Room < ActiveRecord::Base
 			end
 		end
 
-		def update_service_tax_per_room_night
-			self.service_tax_per_room_night = room_type.service_tax
-		end
-
 		def update_room_rate
 			if booking.trip.payment_status == Trip::NOT_PAID or room_rate == nil
 				self.room_rate = room_type.price(occupancy,
@@ -180,9 +200,31 @@ class Room < ActiveRecord::Base
       end
 		end
 
-		def update_service_tax
-			self.service_tax = service_tax_per_room_night * number_of_rooms * number_of_nights
-		end
+	def update_vat
+		vat_rate = room_type.property.vat_rate.to_f / 100.0
+
+		self.vat = ((food_charges / (1 + vat_rate)) * vat_rate).ceil
+	end
+
+	def update_luxury_tax
+		luxury_tax_rate = room_type.property.luxury_tax_rate.to_f / 100.0
+		service_tax_rate = room_type.property.service_tax_rate.to_f / 100.0
+
+		total_lodging_tax_rate = luxury_tax_rate + service_tax_rate
+
+		self.luxury_tax = ((lodging_charges / (1 + total_lodging_tax_rate)) * luxury_tax_rate).ceil
+	end
+
+	def update_service_tax
+		luxury_tax_rate = room_type.property.luxury_tax_rate.to_f / 100.0
+		service_tax_rate = room_type.property.service_tax_rate.to_f / 100.0
+		tour_operator_service_tax_rate = AccountSetting.find_by_account_id(account_id).tour_operator_service_tax_rate.to_f / 100.0
+
+		total_lodging_tax_rate = luxury_tax_rate + service_tax_rate
+
+		self.service_tax = (((lodging_charges / (1 + total_lodging_tax_rate)) * service_tax_rate) +
+		((transportation_and_guide_charges / (1 + tour_operator_service_tax_rate)) * tour_operator_service_tax_rate)).ceil
+	end
 
 		def ensure_payments_are_not_made
 			if booking.trip.payment_status == Trip::NOT_PAID

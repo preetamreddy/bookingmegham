@@ -1,4 +1,9 @@
 class AccountSetting < ActiveRecord::Base
+  FIXED = 'Fixed'
+  ADJUST = 'Adjust'
+
+  TAX_SETTING = [FIXED, ADJUST]
+
   belongs_to :account
 
   has_many :payment_modes, dependent: :destroy

@@ -53,6 +53,11 @@
     <%= f.number_field :price_for_children_below_5_years, :min => 0 %>
   </div>
   <div class="field">
+    <%= f.label :price_for_transportation_and_guide, "Transportion & Guide" %><br />
+    <%= f.number_field :price_for_transportation_and_guide, :min => 0 %>
+    <%= tooltip('Transportation and Guide Services', :hover) %>
+  </div>
+  <div class="field">
     <%= f.label :price_for_lodging, "Price for lodging" %><br />
     <%= f.number_field :price_for_lodging, :min => 0 %>
     <%= tooltip('Lodging', :hover) %>

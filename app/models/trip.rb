@@ -39,6 +39,66 @@ class Trip < ActiveRecord::Base
 									:ensure_does_not_have_taxi_bookings,
 									:ensure_does_not_have_payments
 
+	def discount_and_tac_percent
+    		if AccountSetting.find_by_account_id(account_id).tax_setting == AccountSetting::FIXED
+			0
+		else
+			((tac + discount).to_f / price_for_rooms) * 100
+		end
+	end
+
+	def vat_vas
+		if bookings.empty?
+			vat_vas = 0
+		else
+			vat_vas = bookings.to_a.sum { |booking| booking.vat_vas }
+		end
+
+		if vas_bookings.empty?
+			vat_vas += 0
+		else
+			vat_vas += vas_bookings.to_a.sum { |vas_booking| vas_booking.vat }
+		end
+
+		vat_vas
+	end
+
+	def total_vat
+		(vat * (100 - discount_and_tac_percent) / 100.0).ceil + vat_vas
+	end
+
+	def total_luxury_tax
+		(luxury_tax * (100 - discount_and_tac_percent) / 100.0).ceil
+	end
+
+	def service_tax_vas
+		if bookings.empty?
+			service_tax_vas = 0
+		else
+			service_tax_vas = bookings.to_a.sum { |booking| booking.service_tax_vas }
+		end
+
+		if vas_bookings.empty?
+			service_tax_vas += 0
+		else
+			service_tax_vas += vas_bookings.to_a.sum { |vas_booking| vas_booking.service_tax }
+		end
+
+		service_tax_vas
+	end
+
+	def service_tax_taxi
+		if taxi_bookings.empty?
+			0
+		else
+			taxi_bookings.to_a.sum { |taxi_booking| taxi_booking.service_tax }
+		end
+	end
+
+	def total_service_tax
+		(service_tax * (100 - discount_and_tac_percent) / 100.0).ceil + service_tax_vas + service_tax_taxi
+	end
+
 	def number_of_rooms
 		if trip_rooms.empty?
 			return 0
@@ -167,6 +227,11 @@ class Trip < ActiveRecord::Base
 			self.tac ||= 0
 			self.tds ||= 0
 			self.payment_status ||= NOT_PAID
+			self.vat ||= 0
+			self.luxury_tax ||= 0
+			self.banjara_vat ||= 0
+			self.banjara_service_tax ||= 0
+			self.banjara_luxury_tax ||= 0
 		end
 
 		def set_defaults_if_nil

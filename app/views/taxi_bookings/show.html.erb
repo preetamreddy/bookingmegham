@@ -52,6 +52,11 @@
 </p>
 
 <p>
+  <b>Service tax:</b>
+  <span class="saved_value"><%= number_to_currency(@taxi_booking.service_tax) %></span>
+</p>
+
+<p>
   <b>Pickup time:</b>
   <span class="saved_value"><%= l @taxi_booking.pickup_time, :format => :short if @taxi_booking.pickup_time %></span>
 </p>

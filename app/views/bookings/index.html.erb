@@ -70,7 +70,12 @@
 					<% end %>
 				</td>
 		    <td class="text"><%= booking.medical_constraints %></td>
-				<td><span class="nowrap">Price: <%= number_to_currency(booking.total_price) %></span></td>
+		    <td>
+			<span class="nowrap">Price: <%= number_to_currency(booking.total_price) %><br/></span>
+			<span class="nowrap">VAT: <%= number_to_currency(booking.total_vat) %><br/></span>
+			<span class="nowrap">Service tax: <%= number_to_currency(booking.total_service_tax) %><br/></span>
+			<span class="nowrap">Luxury tax: <%= number_to_currency(booking.luxury_tax) %></span>
+		    </td>
 		
 		    <td class='link'>
 					<%= link_to 'Show details', booking %><br/>

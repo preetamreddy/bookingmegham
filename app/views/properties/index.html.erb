@@ -17,7 +17,9 @@
    	<th class="text">Location</th>
 		<th class="text">Own property?</th>
 		<th class="text">Allow online avl check</th>
+   	<th class="number">VAT rate</th>
    	<th class="number">Service tax rate</th>
+   	<th class="number">Luxury tax rate</th>
    	<th class="number">Driver price</th>
    	<th class="text">Email</th>
 		<th></th>
@@ -33,9 +35,9 @@
     <td class="text"><%= property.city %></td>
     <td class="text"><%= property.ensure_availability_before_booking.to_english %></td>
     <td class="text"><%= property.allow_online_availability_check.to_english %></td>
-    <td class="number">
-			<%= number_to_percentage(property.service_tax_rate, :strip_insignificant_zeros => true) %>
-		</td>
+    <td class="number"><%= number_to_percentage(property.vat_rate, :strip_insignificant_zeros => true) %></td>
+    <td class="number"><%= number_to_percentage(property.service_tax_rate, :strip_insignificant_zeros => true) %></td>
+    <td class="number"><%= number_to_percentage(property.luxury_tax_rate, :strip_insignificant_zeros => true) %></td>
     <td class="currency"><%= number_to_currency(property.price_for_driver) %></td>
     <td class="text"><%= property.email %></td>
     <td>

@@ -135,9 +135,9 @@
 						<tr>
 							<td></td>
 							<% if room.number_of_children_between_5_and_12_years == 0 %>
-                <td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> - <%= room.occupancy %> occupancy @ <%= room.number_of_adults %> / room</li></td>
+                <td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> @ <%= room.number_of_adults %> / room</li></td>
 							<% else %>
-                <td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> - <%= room.occupancy %> occupancy @ <%= room.number_of_adults %> + <%= room.number_of_children_between_5_and_12_years %> / room</li></td>
+                <td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> @ <%= room.number_of_adults %> + <%= room.number_of_children_between_5_and_12_years %> / room</li></td>
 							<% end %>
 							<td class="number"><%= room.number_of_nights %></td>
 							<td class="number"><%= room.number_of_rooms %></td>
@@ -193,7 +193,7 @@
 						<td class="number">( <%= number_to_currency_wo_symbol(@trip.tac) %>)</td>
 					<% end %>
 				</tr>
-        <% if @trip.tds > 0 %>
+				<% if @trip.tds > 0 %>
 					<tr>
 						<td colspan=3></td>
 						<td class="text">T.D.S.</td>
@@ -216,12 +216,47 @@
 					<td colspan=2 class="bold">Balance</td>
 					<td class="number"><span class="bold"> <%= number_to_currency_wo_symbol(@trip.balance_payment) %></span></td>
 				</tr>
+				<tr>
+					<td colspan=6></td>
+				</tr>
+				<tr>
+					<td colspan=1></td>
+					<td colspan=5 class="bold">Tax Break-up (included in Total Payable):</td>
+				</tr>
+				<tr>
+					<td colspan=3></td>
+					<td colspan=2 class="text">Value Added tax</td>
+					<% if @account_setting.id == 3 %>
+						<td class="number"><%= number_to_currency_wo_symbol(@trip.total_vat) %></td>
+					<% else %>
+						<td class="number"><%= number_to_currency_wo_symbol(@trip.banjara_vat) %></td>
+					<% end %>
+				</tr>
+				<tr>
+					<td colspan=3></td>
+					<td colspan=2 class="text">Service tax</td>
+					<% if @account_setting.id == 3 %>
+						<td class="number"><%= number_to_currency_wo_symbol(@trip.total_service_tax) %></td>
+					<% else %>
+						<td class="number"><%= number_to_currency_wo_symbol(@trip.banjara_service_tax) %></td>
+					<% end %>
+				</tr>
+				<tr>
+					<td colspan=3></td>
+					<% if @account_setting.id == 3 %>
+						<td class="number"></td>
+					<% else %>
+						<td colspan=2 class="text">Luxury tax</td>
+						<td class="number"><%= number_to_currency_wo_symbol(@trip.banjara_luxury_tax) %></td>
+					<% end %>
+				</tr>
 			</table>
 			<br/>
 			<p class="amount">
 				Amount in words: Rupees <%= @trip.final_price.to_words %> only.
 			</p>
-      <% if @trip.tds > 0 %>
+
+			<% if @trip.tds > 0 %>
 				<p class="footnote">
 					<span class="bold">PAN NUMBER is mandatory under section 139A (5B) of income tax Act 1961. It is obligatory for all persons responsible for deducting tax at source. </span><span class="red_text">If PAN has not provided by deductees, then TDS rate should be deducted at 20% or actual, whichever is higher.</span> 
 				</p>
@@ -229,28 +264,25 @@
 					Therefore you are requested to please send us your PAN NUMBER along with Name & complete address of your company/agency at the earliest for depositing/ issuing of TDS certificate and fulfilling the statutory requirements.
 				</p>
 			<% end %>	
+
 			<p class="footnote_bold">
-        <%= "Note: #{@account_setting.name} has introduced a #{@account_setting.service_charge}% service charge on its own properties. This is payable directly on site." if @account_setting.service_charge != 0 %>
+				<%= "Note: #{@account_setting.name} has introduced a #{@account_setting.service_charge}% service charge on its own properties. This is payable directly on site." if @account_setting.service_charge != 0 %>
 			</p>
 
-	<% if @account_setting.id == 3 %>
-		<p class="footnote_bold">
-			Important Retreat information for your perusal:
-		</p>
+			<% if @account_setting.id == 3 %>
+				<p class="footnote_bold">Important Retreat information for your perusal:</p>
+				<p class="footnote">1. We are located inside the Binsar Wildlife Sanctuary. The forest checkpost remains closed from sunset (about 7.00 PM during summer, 5.00 PM during winter) to sunrise. We request you to arrive at the checkpost at least an hour before sunset. The forest department charges an entry fee which is not included in our pricing.</p>
+				<p class="footnote">2. The last 600 metres to the Retreat is a steep uphill ride on a very rough and narrow path and you will do this stretch in our 4-wheel drive pickup. There is parking space for self-driven cars where you transfer.</p>
+				<p class="footnote">3. We do not have accommodation for drivers at the Retreat. Upon request, we can arrange for their accommodation outside the Sanctuary (about 15 km away). The driver accommodation is not included in our pricing.</p> 
+				<p class="footnote">4. The Retreat is run on solar power. All rooms have sufficient lights. We do not have any other electric appliances nor plug points in the rooms. There are plug points in the dining room that can be used for charging phones and camera batteries during daylight hours and on clear days only. We do not have any electric appliances in the Retreat and hence can not cool your drinks / provide ice nor do we have laundry services. On rainy days we may not have electricity, with the sun sleeping on the job. We will provide a torch / candles in the rooms when that happens.</p>
+				<p class="footnote">5. We use solar geysers for hot water supply. All rooms and tents have running hot water for bathing only (not in the wash basins). We don't have showers, though. Buckets are provided for bathing in the bathrooms.</p>
+				<p class="footnote">6. All meals are served in the dining room. We don't have room service. The meals are buffet and we don't have an a la carte menu. The buffet is Kumaoni, North Indian or Continental food on rotation (not all together). We can prepare special food for children under the age of 5 years, though.</p> 
+				<p class="footnote">7. We only serve vegetarian food. We do have egg for breakfast and some of our dishes use egg. We don't serve alcohol.</p>
+			<% end %>
 
-<p class="footnote">1. We are located inside the Binsar Wildlife Sanctuary. The forest checkpost remains closed from sunset (about 7.00 PM during summer, 5.00 PM during winter) to sunrise. We request you to arrive at the checkpost at least an hour before sunset. The forest department charges an entry fee which is not included in our pricing.</p>
-<p class="footnote">2. The last 600 metres to the Retreat is a steep uphill ride on a very rough and narrow path and you will do this stretch in our 4-wheel drive pickup. There is parking space for self-driven cars where you transfer.</p>
-<p class="footnote">3. We do not have accommodation for drivers at the Retreat. Upon request, we can arrange for their accommodation outside the Sanctuary (about 15 km away). The driver accommodation is not included in our pricing.</p> 
-<p class="footnote">4. The Retreat is run on solar power. All rooms have sufficient lights. We do not have any other electric appliances nor plug points in the rooms. There are plug points in the dining room that can be used for charging phones and camera batteries during daylight hours and on clear days only. We do not have any electric appliances in the Retreat and hence can not cool your drinks / provide ice nor do we have laundry services. On rainy days we may not have electricity, with the sun sleeping on the job. We will provide a torch / candles in the rooms when that happens.</p>
-<p class="footnote">5. We use solar geysers for hot water supply. All rooms and tents have running hot water for bathing only (not in the wash basins). We don't have showers, though. Buckets are provided for bathing in the bathrooms.</p>
-<p class="footnote">6. All meals are served in the dining room. We don't have room service. The meals are buffet and we don't have an a la carte menu. The buffet is Kumaoni, North Indian or Continental food on rotation (not all together). We can prepare special food for children under the age of 5 years, though.</p> 
-<p class="footnote">7. We only serve vegetarian food. We do have egg for breakfast and some of our dishes use egg. We don't serve alcohol.</p>
-	<% end %>
-
-	<p class="signature">
-		** This is a computer generated invoice. No signature required **
-	</p>
-
-	</div>
+			<p class="signature">
+				** This is a computer generated invoice. No signature required **
+			</p>
+		</div>
 	</body>
 </html>

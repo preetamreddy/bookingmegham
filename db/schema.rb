@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160929082416) do
+ActiveRecord::Schema.define(:version => 20170227044800) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -27,7 +27,11 @@ ActiveRecord::Schema.define(:version => 20160929082416) do
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "service_charge",     :default => 0
+    t.integer  "service_charge",                 :default => 0
+    t.float    "vat_rate",                       :default => 0.0
+    t.float    "service_tax_rate",               :default => 0.0
+    t.float    "tour_operator_service_tax_rate", :default => 0.0
+    t.string   "tax_setting"
   end
 
   add_index "account_settings", ["account_id"], :name => "index_account_settings_on_account_id"
@@ -100,6 +104,8 @@ ActiveRecord::Schema.define(:version => 20160929082416) do
     t.integer  "price_for_rooms",             :default => 0
     t.integer  "price_for_vas",               :default => 0
     t.integer  "counter"
+    t.integer  "vat",                         :default => 0
+    t.integer  "luxury_tax",                  :default => 0
   end
 
   add_index "bookings", ["account_id"], :name => "index_bookings_on_account_id"
@@ -190,6 +196,8 @@ ActiveRecord::Schema.define(:version => 20160929082416) do
     t.string   "city"
     t.float    "service_tax_rate"
     t.integer  "allow_online_availability_check",    :default => 0
+    t.float    "luxury_tax_rate",                    :default => 0.0
+    t.float    "vat_rate",                           :default => 0.0
   end
 
   add_index "properties", ["account_id"], :name => "index_properties_on_account_id"
@@ -209,6 +217,7 @@ ActiveRecord::Schema.define(:version => 20160929082416) do
     t.integer  "price_for_children_below_5_years"
     t.integer  "account_id"
     t.integer  "deleted",                                   :default => 0
+    t.integer  "price_for_transportation_and_guide",        :default => 0
   end
 
   add_index "room_types", ["account_id"], :name => "index_room_types_on_account_id"
@@ -233,6 +242,8 @@ ActiveRecord::Schema.define(:version => 20160929082416) do
     t.integer  "number_of_nights"
     t.integer  "cancelled",                                 :default => 0
     t.integer  "cancellation_charge",                       :default => 0
+    t.integer  "vat",                                       :default => 0
+    t.integer  "luxury_tax",                                :default => 0
   end
 
   add_index "rooms", ["account_id"], :name => "index_rooms_on_account_id"
@@ -332,6 +343,11 @@ ActiveRecord::Schema.define(:version => 20160929082416) do
     t.integer  "bookings_counter",      :default => 0
     t.integer  "taxi_bookings_counter", :default => 0
     t.integer  "tds",                   :default => 0
+    t.integer  "vat",                   :default => 0
+    t.integer  "luxury_tax",            :default => 0
+    t.integer  "banjara_vat",           :default => 0
+    t.integer  "banjara_service_tax",   :default => 0
+    t.integer  "banjara_luxury_tax",    :default => 0
   end
 
   add_index "trips", ["account_id"], :name => "index_trips_on_account_id"
@@ -375,6 +391,7 @@ ActiveRecord::Schema.define(:version => 20160929082416) do
     t.text     "value_added_service"
     t.integer  "total_price",         :default => 0
     t.integer  "every_day",           :default => 0
+    t.string   "tax_type"
   end
 
   add_index "vas_bookings", ["account_id"], :name => "index_vas_bookings_on_account_id"

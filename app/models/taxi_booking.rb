@@ -27,6 +27,12 @@ class TaxiBooking < ActiveRecord::Base
     "#{account_name_abbreviation}/#{trip_id}/#{counter}"
   end
 
+	def service_tax
+		tour_operator_service_tax_rate = AccountSetting.find_by_account_id(account_id).tour_operator_service_tax_rate.to_f / 100.0
+
+		((total_price / (1 + tour_operator_service_tax_rate)) * tour_operator_service_tax_rate).ceil
+	end
+
 	private
 		def update_end_date
 			self.end_date = start_date + number_of_days - 1

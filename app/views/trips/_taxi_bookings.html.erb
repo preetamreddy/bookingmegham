@@ -15,6 +15,7 @@
         <th class="text">Dropoff city</th>
         <th class="number">Unit price</th>
         <th class="number">Total price</th>
+        <th class="number">Service tax</th>
         <th></th>
 			</tr>
 
@@ -38,6 +39,7 @@
 	        <td class="text"><%= taxi_booking.drop_off_city %></td>
 	        <td class="nowrap"><%= number_to_currency(taxi_booking.unit_price) %></td>
 	        <td class="nowrap"><%= number_to_currency(taxi_booking.total_price) %></td>
+	        <td class="nowrap"><%= number_to_currency(taxi_booking.service_tax) %></td>
 	        <td class="nowrap">
 	          <%= link_to 'edit', edit_taxi_booking_path(taxi_booking) %> |
 	          <%= link_to 'destroy', taxi_booking, confirm: 'Are you sure?', 

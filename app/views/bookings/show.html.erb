@@ -46,7 +46,13 @@
 			<th class="number">Children / room</th>
 			<th class="number">Infants / room</th>
 			<th class="currency">Room rate</th>
-			<th class="currency">Price for rooms</th>
+			<th class="currency">Total Price</th>
+			<th class="currency">Food</th>
+			<th class="currency">Transport & Guide</th>
+			<th class="currency">Lodging</th>
+			<th class="currency">VAT</th>
+			<th class="currency">Service Tax</th>
+			<th class="currency">Luxury Tax</th>
       <th class="text">Cancelled?</th>
 			<th class="currency">Cancellation fee</th>
 		</tr>
@@ -60,7 +66,13 @@
 				<td class="number"><%= room.number_of_children_between_5_and_12_years %></td>
 				<td class="number"><%= room.number_of_children_below_5_years %></td>
 				<td class="currency"><%= number_to_currency(room.room_rate) %></td>
-				<td class="currency"><%= number_to_currency(room.price_for_rooms) %></td>
+				<td class="currency"><%= number_to_currency(room.total_price) %></td>
+				<td class="currency"><%= number_to_currency(room.food_charges) %></td>
+				<td class="currency"><%= number_to_currency(room.transportation_and_guide_charges) %></td>
+				<td class="currency"><%= number_to_currency(room.lodging_charges) %></td>
+				<td class="currency"><%= number_to_currency(room.vat) %></td>
+				<td class="currency"><%= number_to_currency(room.service_tax) %></td>
+				<td class="currency"><%= number_to_currency(room.luxury_tax) %></td>
 				<td class="text"><%= room.cancelled.to_english %></td>
 				<td class="currency"><%= number_to_currency(room.cancellation_charge) %></td>
 			</tr>
@@ -76,20 +88,26 @@
 	<b>Other Services:</b>
 	<table class="nested_table">
 		<tr>
+			<th class="text">Tax Type</th>
 			<th class="text">Name</th>
 			<th class="text">All days</th>
 			<th class="number">Unit price</th>
 			<th class="number">#</th>
 			<th class="number">Total price</th>
+			<th class="number">VAT</th>
+			<th class="number">Service Tax</th>
 		</tr>
 	
 		<% @booking.vas_bookings.each do |vas_booking| %>
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+				<td class="text"><%= vas_booking.tax_type %></td>
 				<td class="text"><%= vas_booking.value_added_service %></td>
 				<td class="text"><%= vas_booking.every_day.to_english %></td>
 				<td class="number"><%= number_to_currency(vas_booking.unit_price) %></td>
 				<td class="number"><%= vas_booking.number_of_units %></td>
 				<td class="number"><%= number_to_currency(vas_booking.total_price) %></td>
+				<td class="number"><%= number_to_currency(vas_booking.vat) %></td>
+				<td class="number"><%= number_to_currency(vas_booking.service_tax) %></td>
 			</tr>
 		<% end %>
 	</table>
@@ -116,8 +134,38 @@
 </p>
 
 <p>
-  <b>Service tax:</b>
+  <b>Price for rooms:</b>
+  <span class="saved_value"><%= number_to_currency(@booking.price_for_rooms) if @booking.price_for_rooms %></span>
+</p>
+
+<p>
+  <b>Price for VAS:</b>
+  <span class="saved_value"><%= number_to_currency(@booking.price_for_vas) if @booking.price_for_vas %></span>
+</p>
+
+<p>
+  <b>VAT for Rooms:</b>
+  <span class="saved_value"><%= number_to_currency(@booking.vat) if @booking.vat %></span>
+</p>
+
+<p>
+  <b>Service tax for Rooms:</b>
   <span class="saved_value"><%= number_to_currency(@booking.service_tax) if @booking.service_tax %></span>
+</p>
+
+<p>
+  <b>Luxury tax for Rooms:</b>
+  <span class="saved_value"><%= number_to_currency(@booking.luxury_tax) if @booking.luxury_tax %></span>
+</p>
+
+<p>
+  <b>VAT for Value Added Services:</b>
+  <span class="saved_value"><%= number_to_currency(@booking.vat_vas) if @booking.vat_vas %></span>
+</p>
+
+<p>
+  <b>Service tax for Value Added Services:</b>
+  <span class="saved_value"><%= number_to_currency(@booking.service_tax_vas) if @booking.service_tax_vas %></span>
 </p>
 
 <b>Billing instructions:</b>

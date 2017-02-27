@@ -52,6 +52,23 @@
     <%= f.number_field :tds_percent %>
   </div>
   <div class="field">
+    <%= f.label :vat_rate %><br />
+    <%= f.number_field :vat_rate %>
+  </div>
+  <div class="field">
+    <%= f.label :service_tax_rate %><br />
+    <%= f.number_field :service_tax_rate %>
+  </div>
+  <div class="field">
+    <%= f.label :tour_operator_service_tax_rate %><br />
+    <%= f.number_field :tour_operator_service_tax_rate %>
+  </div>
+  <div class="field">
+    <%= f.label :tax_setting %><br />
+    <%= f.select :tax_setting, AccountSetting::TAX_SETTING,
+		prompt: 'Select Tax Setting' %>
+  </div>
+  <div class="field">
     <%= f.label :service_charge %><br />
     <%= f.number_field :service_charge %>
   </div>
