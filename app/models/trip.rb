@@ -43,7 +43,11 @@ class Trip < ActiveRecord::Base
     		if AccountSetting.find_by_account_id(account_id).tax_setting == AccountSetting::FIXED
 			0
 		else
-			((tac + discount).to_f / price_for_rooms) * 100
+			if price_for_rooms > 0
+				((tac + discount).to_f / price_for_rooms) * 100
+			else
+				0
+			end
 		end
 	end
 

@@ -42,9 +42,8 @@ class Room < ActiveRecord::Base
 		if cancelled == 1
 			0
 		else
-			((number_of_adults * room_type.price_for_triple_occupancy) +
-			(number_of_children_between_5_and_12_years * room_type.price_for_children_between_5_and_12_years) +
-			(number_of_children_below_5_years * room_type.price_for_children_below_5_years)) * number_of_nights * number_of_rooms
+			room_type.price(occupancy, number_of_adults, number_of_children_between_5_and_12_years,
+				number_of_children_below_5_years, check_in_date, meal_plan, "FOOD") * number_of_nights * number_of_rooms
 		end
 	end
 
@@ -52,7 +51,9 @@ class Room < ActiveRecord::Base
 		if cancelled == 1
 			0
 		else
-			room_type.price_for_transportation_and_guide * number_of_nights * number_of_rooms
+			room_type.price(occupancy, number_of_adults, number_of_children_between_5_and_12_years, 
+				number_of_children_below_5_years, check_in_date, meal_plan, 
+				"TRANSPORTATION_AND_GUIDE") * number_of_nights * number_of_rooms
 		end
 	end
 
@@ -183,12 +184,8 @@ class Room < ActiveRecord::Base
 
 		def update_room_rate
 			if booking.trip.payment_status == Trip::NOT_PAID or room_rate == nil
-				self.room_rate = room_type.price(occupancy,
-													number_of_adults,
-													number_of_children_between_5_and_12_years,
-													number_of_children_below_5_years,
-                          check_in_date,
-                          meal_plan)
+				self.room_rate = room_type.price(occupancy, number_of_adults, number_of_children_between_5_and_12_years,
+							number_of_children_below_5_years, check_in_date, meal_plan, "TOTAL_PRICE")
 			end
 		end
 

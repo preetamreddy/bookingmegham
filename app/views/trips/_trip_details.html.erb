@@ -90,7 +90,7 @@
 	<p>
 		<b>VAT:</b>
 		<% if @trip.account_id == 1 %>
-			<b>Banjara VAT:</b>
+			<b>Input VAT:</b>
     			<span class="saved_value"><%= number_to_currency(@trip.banjara_vat) %></span>
 			<b>Calc VAT:</b>
 		<% end %>
@@ -100,7 +100,7 @@
 	<p>
 		<b>Service Tax:</b>
 		<% if @trip.account_id == 1 %>
-			<b>Banjara Service tax:</b>
+			<b>Input Service tax:</b>
     			<span class="saved_value"><%= number_to_currency(@trip.banjara_service_tax) %></span>
 			<b>Calc Service tax:</b>
 		<% end %>
@@ -110,7 +110,7 @@
 	<p>
 		<b>Luxury Tax:</b>
 		<% if @trip.account_id == 1 %>
-			<b>Banjara Luxury Tax:</b>
+			<b>Input Luxury Tax:</b>
     			<span class="saved_value"><%= number_to_currency(@trip.banjara_luxury_tax) %></span>
 			<b>Calc Luxury Tax:</b>
 		<% end %>

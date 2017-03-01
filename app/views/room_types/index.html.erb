@@ -23,6 +23,7 @@
     <th class="number">Extra adults</th>
     <th class="number">Children</th>
     <th class="number">Infants</th>
+    <th class="number">Price for food</th>
     <th class="number">Transportation and Guide</th>
     <th class="number">Lodging</th>
     <th class="number">Service tax</th>
@@ -40,6 +41,10 @@
     <td class="currency"><%= number_to_currency(room_type.price_for_triple_occupancy) %></td>
     <td class="currency"><%= number_to_currency(room_type.price_for_children_between_5_and_12_years) %></td>
     <td class="currency"><%= number_to_currency(room_type.price_for_children_below_5_years) %></td>
+    <td class="currency">
+	Single - <%= number_to_currency(room_type.price_for_food_on_single) %><br/>
+	Double - <%= number_to_currency(room_type.price_for_food_on_double) %>
+    </td>
     <td class="currency"><%= number_to_currency(room_type.price_for_transportation_and_guide) %></td>
     <td class="currency"><%= number_to_currency(room_type.price_for_lodging) %></td>
     <td class="currency"><%= number_to_currency(room_type.service_tax) %></td>

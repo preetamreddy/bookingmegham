@@ -78,15 +78,15 @@
 		</span></p>
 	<% end %>
 	<%= hidden_div_if((@trip.account_id != 1), class: "field") do %>
-    		<%= f.label :banjara_vat, "VAT" %><br />
+    		<%= f.label :banjara_vat, "Input VAT" %><br />
     		<%= f.number_field :banjara_vat, :min => 0 %>
 	<% end %>
 	<%= hidden_div_if((@trip.account_id != 1), class: "field") do %>
-    		<%= f.label :banjara_service_tax, "Service Tax" %><br />
+    		<%= f.label :banjara_service_tax, "Input Service Tax" %><br />
     		<%= f.number_field :banjara_service_tax, :min => 0 %>
 	<% end %>
 	<%= hidden_div_if((@trip.account_id != 1), class: "field") do %>
-    		<%= f.label :banjara_luxury_tax, "Luxury Tax" %><br />
+    		<%= f.label :banjara_luxury_tax, "Input Luxury Tax" %><br />
     		<%= f.number_field :banjara_luxury_tax, :min => 0 %>
 	<% end %>
 	<%= hidden_div_if((@trip.new_record?), class: "field") do %>

@@ -29,35 +29,50 @@ class RoomType < ActiveRecord::Base
 	end
 
 	def price(occupancy, number_of_adults, number_of_children_between_5_and_12_years,
-											number_of_children_below_5_years, check_in_date, meal_plan)
-    rates = get_rates(meal_plan, check_in_date)
+		number_of_children_below_5_years, check_in_date, meal_plan, return_value)
 
-		room_rate = 0
+    		rates = get_rates(meal_plan, check_in_date)
+
+		rate = 0
 		if occupancy == 'Single'
-			room_rate = rates[:price_for_single_occupancy]
+			if return_value == "TOTAL_PRICE"
+				rate = rates[:price_for_single_occupancy]
+			elsif return_value == "FOOD"
+				rate = rates[:price_for_food_on_single]
+			else
+				rate = rates[:price_for_transportation_and_guide]
+			end
 			if number_of_adults > 1
 				extra_adults = (number_of_adults - 1)
 			end
 		else
-			room_rate = rates[:price_for_double_occupancy]
+			if return_value == "TOTAL_PRICE"
+				rate = rates[:price_for_double_occupancy]
+			elsif return_value == "FOOD"
+				rate = rates[:price_for_food_on_double]
+			else
+				rate = rates[:price_for_transportation_and_guide]
+			end
 			if number_of_adults > 2
 				extra_adults = (number_of_adults - 2)
 			end
 		end
 
-		if extra_adults
-			room_rate += extra_adults * rates[:price_for_extra_adults]
+		if return_value == "TOTAL_PRICE" or return_value == "FOOD"
+			if extra_adults
+				rate += extra_adults * rates[:price_for_extra_adults]
+			end
+
+			if number_of_children_between_5_and_12_years > 0
+				rate += number_of_children_between_5_and_12_years * rates[:price_for_children]
+			end	
+
+			if number_of_children_below_5_years > 0
+				rate += number_of_children_below_5_years * rates[:price_for_infants]
+			end	
 		end
 
-		if number_of_children_between_5_and_12_years > 0
-			room_rate += number_of_children_between_5_and_12_years * rates[:price_for_children]
-		end	
-
-		if number_of_children_below_5_years > 0
-			room_rate += number_of_children_below_5_years * rates[:price_for_infants]
-		end	
-
-		return room_rate
+		return rate
 	end
 
 	def long_name
@@ -104,13 +119,23 @@ class RoomType < ActiveRecord::Base
           :price_for_double_occupancy => price_list.first.price_for_double_occupancy,
           :price_for_extra_adults     => price_list.first.price_for_extra_adults, 
           :price_for_children         => price_list.first.price_for_children,
-          :price_for_infants          => price_list.first.price_for_infants }
+          :price_for_infants          => price_list.first.price_for_infants, 
+          :price_for_lodging          => price_list.first.price_for_lodging,
+          :price_for_food_on_single   => price_list.first.price_for_food_on_single,
+          :price_for_food_on_double   => price_list.first.price_for_food_on_double,
+          :price_for_transportation_and_guide => price_list.first.price_for_transportation_and_guide
+	}
       else
         { :price_for_single_occupancy => price_for_single_occupancy,
           :price_for_double_occupancy => price_for_double_occupancy,
           :price_for_extra_adults     => price_for_triple_occupancy, 
           :price_for_children         => price_for_children_between_5_and_12_years,
-          :price_for_infants          => price_for_children_below_5_years }
+          :price_for_infants          => price_for_children_below_5_years,
+          :price_for_lodging          => price_for_lodging,
+          :price_for_food_on_single   => price_for_food_on_single,
+          :price_for_food_on_double   => price_for_food_on_double,
+          :price_for_transportation_and_guide => price_for_transportation_and_guide
+	}
       end
     end
 
