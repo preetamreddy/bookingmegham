@@ -73,6 +73,11 @@
     <%= tooltip('Lodging', :hover) %>
   </div>
   <div class="field">
+    <%= f.label :order_for_booking_chart, "Order for Booking Chart" %><br />
+    <%= f.number_field :order_for_booking_chart, :min => 0 %>
+    <%= tooltip('Booking chart Order', :hover) %>
+  </div>
+  <div class="field">
     <%= f.label :description %><br />
     <%= f.text_area :description, rows: 6 %>
   </div>

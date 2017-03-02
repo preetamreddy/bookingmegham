@@ -26,12 +26,12 @@
     <th class="number">Price for food</th>
     <th class="number">Transportation and Guide</th>
     <th class="number">Lodging</th>
-    <th class="number">Service tax</th>
+    <th class="number">Order</th>
     <th class="text">Deleted</th>
 		<th></th>
   </tr>
 
-<% @room_types.each do |room_type| %>
+<% @room_types.order(order_for_booking_chart).each do |room_type| %>
 	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
     <td class="text"><%= room_type.property.name %></td>
     <td class="text"><%= room_type.room_type %></td>
@@ -47,7 +47,7 @@
     </td>
     <td class="currency"><%= number_to_currency(room_type.price_for_transportation_and_guide) %></td>
     <td class="currency"><%= number_to_currency(room_type.price_for_lodging) %></td>
-    <td class="currency"><%= number_to_currency(room_type.service_tax) %></td>
+    <td class="currency"><%= number_to_currency(room_type.order_for_booking_chart) %></td>
     <td class="text"><%= room_type.deleted.to_english %></td>
     <td>
     	<%= link_to 'Show details', room_type %></br>

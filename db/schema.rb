@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170227122858) do
+ActiveRecord::Schema.define(:version => 20170302120311) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -224,6 +224,7 @@ ActiveRecord::Schema.define(:version => 20170227122858) do
     t.integer  "price_for_transportation_and_guide",        :default => 0
     t.integer  "price_for_food_on_single",                  :default => 0
     t.integer  "price_for_food_on_double",                  :default => 0
+    t.integer  "order_for_booking_chart",                   :default => 0
   end
 
   add_index "room_types", ["account_id"], :name => "index_room_types_on_account_id"
