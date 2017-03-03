@@ -40,7 +40,7 @@ class BookingChartController < ApplicationController
 		alloted_rooms = {}
 		@booking_chart = {}
 
-		@room_types = RoomType.scoped_by_account_id(current_user.account_id).
+		@room_types = RoomType.scoped_by_account_id(current_user.account_id).order("order_for_booking_chart").
       find_all_by_property_id_and_deleted(@property_id, 0)
 
 		@room_types.each do |room_type|

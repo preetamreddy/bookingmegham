@@ -21,11 +21,11 @@ class RoomTypesController < ApplicationController
 
     if session[:property_id]
 			@room_types = @room_types.paginate(page: params[:page], per_page: 10).
-				order('property_id, price_for_double_occupancy').
+				order('property_id, order_for_booking_chart, price_for_double_occupancy').
 				find_all_by_property_id(session[:property_id])
 		else
 			@room_types = @room_types.paginate(page: params[:page], per_page: 10).
-				order('property_id, price_for_double_occupancy')
+				order('property_id, order_for_booking_chart, price_for_double_occupancy')
 		end
 
     respond_to do |format|
