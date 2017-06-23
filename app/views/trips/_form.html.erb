@@ -89,6 +89,10 @@
     		<%= f.label :banjara_luxury_tax, "Input Luxury Tax" %><br />
     		<%= f.number_field :banjara_luxury_tax, :min => 0 %>
 	<% end %>
+	<div class="field">
+		<%= f.label :show_tax_breakup, "Show tax breakup in invoices?" %>
+		<%= f.check_box :show_tax_breakup %>
+	</div>
 	<%= hidden_div_if((@trip.new_record?), class: "field") do %>
     <%= f.label :discount, "Discount" %><br />
    	<%= f.number_field :discount, :min => 0 %>

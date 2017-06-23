@@ -219,11 +219,12 @@
 				<tr>
 					<td colspan=6></td>
 				</tr>
-				<tr>
+				<% if @trip.show_tax_breakup == 1 %>
+				   <tr>
 					<td colspan=1></td>
 					<td colspan=5 class="bold">Tax Break-up (included in Total Payable):</td>
-				</tr>
-				<tr>
+				   </tr>
+				   <tr>
 					<td colspan=3></td>
 					<td colspan=2 class="text">Value Added tax</td>
 					<% if @trip.banjara_vat == 0 %>
@@ -231,8 +232,8 @@
 					<% else %>
 						<td class="number"><%= number_to_currency_wo_symbol(@trip.banjara_vat) %></td>
 					<% end %>
-				</tr>
-				<tr>
+				   </tr>
+				   <tr>
 					<td colspan=3></td>
 					<td colspan=2 class="text">Service tax</td>
 					<% if @trip.banjara_service_tax == 0 %>
@@ -240,8 +241,8 @@
 					<% else %>
 						<td class="number"><%= number_to_currency_wo_symbol(@trip.banjara_service_tax) %></td>
 					<% end %>
-				</tr>
-				<tr>
+				   </tr>
+				   <tr>
 					<td colspan=3></td>
 					<% if @trip.banjara_luxury_tax == 0 and @trip.total_luxury_tax == 0 %>
 						<td colspan=3></td>
@@ -253,7 +254,8 @@
 							<td class="number"><%= number_to_currency_wo_symbol(@trip.banjara_luxury_tax) %></td>
 						<% end %>
 					<% end %>
-				</tr>
+				   </tr>
+				<% end %>
 			</table>
 			<br/>
 			<p class="amount">
