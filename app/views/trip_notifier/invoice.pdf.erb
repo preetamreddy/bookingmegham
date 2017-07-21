@@ -131,20 +131,22 @@
 						<td class="sno"><%= serial_number %></td>
 						<td colspan=5 class="text">Booking charges for <%= booking.property.name %><br/>(from <%= l booking.check_in_date %> to <%= l booking.check_out_date %>)</td>
 					</tr>
-          <% booking.rooms.order(:cancelled).each do |room| %>
-						<tr>
-							<td></td>
-							<% if room.number_of_children_between_5_and_12_years == 0 %>
-                <td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> @ <%= room.number_of_adults %> / room</li></td>
-							<% else %>
-                <td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> @ <%= room.number_of_adults %> + <%= room.number_of_children_between_5_and_12_years %> / room</li></td>
-							<% end %>
-							<td class="number"><%= room.number_of_nights %></td>
-							<td class="number"><%= room.number_of_rooms %></td>
-							<td class="number"> <%= number_to_currency_wo_symbol(room.room_rate) %></td>
-							<td class="number"> <%= number_to_currency_wo_symbol(room.total_price) %></td>
-						</tr>
-					<% end %>
+	<% booking.rooms.order(:cancelled).each do |room| %>
+		<tr>
+			<td></td>
+			<% if room.total_price > 0 %>
+				<% if room.number_of_children_between_5_and_12_years == 0 %>
+                			<td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> @ <%= room.number_of_adults %> / room</li></td>
+				<% else %>
+                			<td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> @ <%= room.number_of_adults %> + <%= room.number_of_children_between_5_and_12_years %> / room</li></td>
+				<% end %>
+				<td class="number"><%= room.number_of_nights %></td>
+				<td class="number"><%= room.number_of_rooms %></td>
+				<td class="number"> <%= number_to_currency_wo_symbol(room.room_rate) %></td>
+				<td class="number"> <%= number_to_currency_wo_symbol(room.total_price) %></td>
+			<% end %>
+		</tr>
+	<% end %>
 					<% booking.vas_bookings.each do |vas_booking| %>
 						<tr>
 							<td></td>
