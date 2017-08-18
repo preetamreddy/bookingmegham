@@ -33,12 +33,11 @@
       <th class="text">Guest</th>
       <th class="text">Operator</th>
       <th class="text">Taxi</th>
-      <th class="text">Pickup time</th>
-      <th class="text">Pickup address</th>
-      <th class="text">Drop off city</th>
       <th class="number">Unit price</th>
-      <th class="number">Total price</th>
-      <th class="number">Service Tax</th>
+      <th class="number">Taxable value</th>
+      <th class="number">CGST</th>
+      <th class="number">SGST</th>
+      <th class="number">Total</th>
       <th></th>
     </tr>
   
@@ -57,16 +56,11 @@
           <span class="nowrap"><%= l taxi_booking.start_date %> to <%= l taxi_booking.end_date %></span><br/>
           <span class="nowrap">(<%= pluralize(taxi_booking.number_of_days, "day") %>)</span>
         </td>
-        <td class="text">
-        <% if taxi_booking.pickup_time %>
-          <%= l taxi_booking.pickup_time, :format => :short %>
-        <% end %>
-        </td>
-        <td class="text"><%= taxi_booking.pickup_address %></td>
-        <td class="text"><%= taxi_booking.drop_off_city %></td>
         <td class="nowrap"><%= number_to_currency(taxi_booking.unit_price) %></td>
+        <td class="nowrap"><%= number_to_currency(taxi_booking.taxable_value) %></td>
+        <td class="nowrap"><%= number_to_currency(taxi_booking.cgst) %></td>
+        <td class="nowrap"><%= number_to_currency(taxi_booking.sgst) %></td>
         <td class="nowrap"><%= number_to_currency(taxi_booking.total_price) %></td>
-        <td class="nowrap"><%= number_to_currency(taxi_booking.service_tax) %></td>
         <td>
           <%= link_to 'Show details', taxi_booking %><br/>
           <%= link_to 'Edit', edit_taxi_booking_path(taxi_booking) %><br/>
