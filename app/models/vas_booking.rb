@@ -73,10 +73,7 @@ class VasBooking < ActiveRecord::Base
 
 	private
 		def update_taxable_value
-			if every_day == 0
-				self.taxable_value = (unit_price * number_of_units * (100 - discount).to_f / 100.0).round
-			elsif every_day == 1
-				self.taxable_value = (unit_price * number_of_units * number_of_days * (100 - discount).to_f / 100.0).round
+				self.taxable_value = (value * (100 - discount).to_f / 100.0).round
 			end
 		end
 
