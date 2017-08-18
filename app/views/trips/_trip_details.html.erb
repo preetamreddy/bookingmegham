@@ -32,26 +32,26 @@
 		<b>Services:</b>
 		<table class="nested_table">
 			<tr>
-				<th class="text">Tax Type</th>
 				<th class="text">Name</th>
-				<th class="text">All days</th>
 				<th class="number">Unit price</th>
 				<th class="number">#</th>
-				<th class="number">Total price</th>
-				<th class="number">VAT</th>
-				<th class="number">Service tax</th>
+				<th class="text">All days</th>
+				<th class="number">Taxable value</th>
+				<th class="number">CGST</th>
+				<th class="number">SGST</th>
+				<th class="number">Total</th>
 			</tr>
 	
 			<% @trip.vas_bookings.each do |vas_booking| %>
 				<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-					<td class="text"><%= vas_booking.tax_type %></td>
 					<td class="text"><%= vas_booking.value_added_service %></td>
-					<td class="text"><%= vas_booking.every_day.to_english %></td>
 					<td class="number"><%= number_to_currency(vas_booking.unit_price) %></td>
 					<td class="number"><%= vas_booking.number_of_units %></td>
+					<td class="text"><%= vas_booking.every_day.to_english %></td>
+					<td class="number"><%= number_to_currency(vas_booking.taxable_value) %></td>
+					<td class="number"><%= number_to_currency(vas_booking.cgst) %></td>
+					<td class="number"><%= number_to_currency(vas_booking.sgst) %></td>
 					<td class="number"><%= number_to_currency(vas_booking.total_price) %></td>
-					<td class="number"><%= number_to_currency(vas_booking.vat) %></td>
-					<td class="number"><%= number_to_currency(vas_booking.service_tax) %></td>
 				</tr>
 			<% end %>
 		</table>

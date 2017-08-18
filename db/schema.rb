@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170818064220) do
+ActiveRecord::Schema.define(:version => 20170818072236) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -422,6 +422,7 @@ ActiveRecord::Schema.define(:version => 20170818064220) do
     t.string   "tax_type"
     t.float    "cgst",                :default => 0.0
     t.float    "sgst",                :default => 0.0
+    t.integer  "taxable_value",       :default => 0
   end
 
   add_index "vas_bookings", ["account_id"], :name => "index_vas_bookings_on_account_id"

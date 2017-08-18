@@ -7,7 +7,7 @@ class VasBooking < ActiveRecord::Base
 	belongs_to :trip
 	belongs_to :booking
 
-	validates :value_added_service, :unit_price, :number_of_units, :tax_type, presence: true
+	validates :value_added_service, :unit_price, :number_of_units, presence: true
 	validates_numericality_of :unit_price,
 		allow_nil: true, only_integer: true, greater_than_or_equal_to: 0,
 		message: ": %{value} should be a number greater than or equal to 0"
@@ -15,7 +15,7 @@ class VasBooking < ActiveRecord::Base
 		allow_nil: true, only_integer: true, greater_than: 0,
 		message: ": %{value} should be a number greater than 0"
 
-	before_save :update_total_price
+	before_save :update_taxable_value, :update_cgst, :update_sgst, :update_total_price
 
 	before_create :set_account_id
 
@@ -39,21 +39,49 @@ class VasBooking < ActiveRecord::Base
 		end
 	end
 
+	def cgst_rate
+		if trip_id
+			AccountSetting.find_by_account_id(account_id).cgst_rate_for_hotel_services.to_f / 100.0
+		elsif booking_id
+			booking.property.cgst_rate.to_f / 100.0
+		end
+	end
+
+	def sgst_rate
+		if trip_id
+			AccountSetting.find_by_account_id(account_id).sgst_rate_for_hotel_services.to_f / 100.0
+		elsif booking_id
+			booking.property.sgst_rate.to_f / 100.0
+		end
+	end
+
+	def number_of_days
+		if trip_id
+			trip.number_of_days
+		elsif booking_id
+			booking.number_of_nights
+		end
+	end
+
 	private
-		def number_of_days
-			if trip_id
-				trip.number_of_days
-			elsif booking_id
-				booking.number_of_nights
+		def update_taxable_value
+			if every_day == 0
+				self.taxable_value = unit_price * number_of_units
+			elsif every_day == 1
+				self.taxable_value = unit_price * number_of_units * number_of_days
 			end
 		end
 
+		def update_cgst
+			self.cgst = (taxable_value * cgst_rate).round
+		end
+
+		def update_sgst
+			self.sgst = (taxable_value * sgst_rate).round
+		end
+
 		def update_total_price
-			if every_day == 0
-				self.total_price = unit_price * number_of_units
-			elsif every_day == 1
-				self.total_price = unit_price * number_of_units * number_of_days
-			end
+			self.total_price = taxable_value + cgst + sgst
 		end
 
 		def set_account_id
