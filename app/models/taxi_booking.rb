@@ -36,11 +36,11 @@ class TaxiBooking < ActiveRecord::Base
 	end
 
 	def cgst_rate
-		cgst_rate = AccountSetting.find_by_account_id(account_id).cgst_rate_for_tour_operator_services.to_f / 100.0
+		AccountSetting.find_by_account_id(account_id).cgst_rate_for_tour_operator_services.to_f / 100.0
 	end
 
 	def sgst_rate
-		sgst_rate = AccountSetting.find_by_account_id(account_id).sgst_rate_for_tour_operator_services.to_f / 100.0
+		AccountSetting.find_by_account_id(account_id).sgst_rate_for_tour_operator_services.to_f / 100.0
 	end
 
 	private
