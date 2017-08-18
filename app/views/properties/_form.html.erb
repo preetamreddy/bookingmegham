@@ -28,19 +28,14 @@
 	<%= f.check_box :allow_online_availability_check %>
   </div>
   <div class="field">
-    <%= f.label :vat_rate %><br />
-    <%= f.number_field :vat_rate %>
-    <%= tooltip('Vat rate', :hover) %>
+    <%= f.label :cgst_rate %><br />
+    <%= f.number_field :cgst_rate %>
+    <%= tooltip('CGST rate', :hover) %>
   </div>
   <div class="field">
-    <%= f.label :service_tax_rate %><br />
-    <%= f.number_field :service_tax_rate %>
-    <%= tooltip('Service tax rate', :hover) %>
-  </div>
-  <div class="field">
-    <%= f.label :luxury_tax_rate %><br />
-    <%= f.number_field :luxury_tax_rate %>
-    <%= tooltip('Luxury tax rate', :hover) %>
+    <%= f.label :sgst_rate %><br />
+    <%= f.number_field :sgst_rate %>
+    <%= tooltip('SGST rate', :hover) %>
   </div>
   <div class="field">
     <%= f.label :price_for_driver %><br />

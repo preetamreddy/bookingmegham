@@ -42,6 +42,18 @@
 </p>
 
 <p>
+  <b>CGST rate:</b>
+	<span class="saved_value"><%= number_to_percentage(@room_type.cgst_rate,
+						:strip_insignificant_zeros => true) %></span>
+</p>
+
+<p>
+  <b>SGST rate:</b>
+	<span class="saved_value"><%= number_to_percentage(@room_type.sgst_rate,
+						:strip_insignificant_zeros => true) %></span>
+</p>
+
+<p>
   <b>Price for food - Single:</b>
   <span class="saved_value"><%= number_to_currency(@room_type.price_for_food_on_single) %>
 </p>

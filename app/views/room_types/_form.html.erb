@@ -53,6 +53,16 @@
     <%= f.number_field :price_for_children_below_5_years, :min => 0 %>
   </div>
   <div class="field">
+    <%= f.label :cgst_rate %><br />
+    <%= f.number_field :cgst_rate %>
+    <%= tooltip('CGST rate', :hover) %>
+  </div>
+  <div class="field">
+    <%= f.label :sgst_rate %><br />
+    <%= f.number_field :sgst_rate %>
+    <%= tooltip('SGST rate', :hover) %>
+  </div>
+  <div class="field">
     <%= f.label :price_for_food_on_single, "Price for food - Single" %><br />
     <%= f.number_field :price_for_food_on_single, :min => 0 %>
     <%= tooltip('Price for food - Single', :hover) %>

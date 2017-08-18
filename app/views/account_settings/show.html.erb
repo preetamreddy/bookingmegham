@@ -47,33 +47,38 @@
 </p>
 
 <p>
+  <b>GSTIN:</b>
+  <span class="saved_value"><%= @account_setting.gstin %></span>
+</p>
+
+<p>
   <b>Tds percent:</b>
   <span class="saved_value"><%= @account_setting.tds_percent %></span>
 </p>
 
 <p>
-  <b>VAT rate:</b>
-  <span class="saved_value"><%= @account_setting.vat_rate %></span>
-</p>
-
-<p>
-  <b>Service tax rate:</b>
-  <span class="saved_value"><%= @account_setting.service_tax_rate %></span>
-</p>
-
-<p>
-  <b>Tour Operator Service tax rate:</b>
-  <span class="saved_value"><%= @account_setting.tour_operator_service_tax_rate %></span>
-</p>
-
-<p>
-  <b>Tax Setting:</b>
-  <span class="saved_value"><%= @account_setting.tax_setting %></span>
-</p>
-
-<p>
   <b>Service charge:</b>
   <span class="saved_value"><%= @account_setting.service_charge %></span>
+</p>
+
+<p>
+  <b>CGST rate for Tour Operator Services:</b>
+  <span class="saved_value"><%= @account_setting.cgst_rate_for_tour_operator_services %></span>
+</p>
+
+<p>
+  <b>SGST rate for Tour Operator Services:</b>
+  <span class="saved_value"><%= @account_setting.sgst_rate_for_tour_operator_services %></span>
+</p>
+
+<p>
+  <b>CGST rate for Hotel Services:</b>
+  <span class="saved_value"><%= @account_setting.cgst_rate_for_hotel_services %></span>
+</p>
+
+<p>
+  <b>SGST rate for Hotel Services:</b>
+  <span class="saved_value"><%= @account_setting.sgst_rate_for_hotel_services %></span>
 </p>
 
 <% if @account_setting.payment_modes.any? %>

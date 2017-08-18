@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170623020557) do
+ActiveRecord::Schema.define(:version => 20170817144553) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -27,11 +27,16 @@ ActiveRecord::Schema.define(:version => 20170623020557) do
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "service_charge",                 :default => 0
-    t.float    "vat_rate",                       :default => 0.0
-    t.float    "service_tax_rate",               :default => 0.0
-    t.float    "tour_operator_service_tax_rate", :default => 0.0
+    t.integer  "service_charge",                       :default => 0
+    t.float    "vat_rate",                             :default => 0.0
+    t.float    "service_tax_rate",                     :default => 0.0
+    t.float    "tour_operator_service_tax_rate",       :default => 0.0
     t.string   "tax_setting"
+    t.string   "gstin"
+    t.float    "cgst_rate_for_tour_operator_services", :default => 0.0
+    t.float    "sgst_rate_for_tour_operator_services", :default => 0.0
+    t.float    "cgst_rate_for_hotel_services",         :default => 0.0
+    t.float    "sgst_rate_for_hotel_services",         :default => 0.0
   end
 
   add_index "account_settings", ["account_id"], :name => "index_account_settings_on_account_id"
@@ -75,6 +80,7 @@ ActiveRecord::Schema.define(:version => 20170623020557) do
     t.integer  "account_id"
     t.string   "phone_number_2"
     t.string   "email_id_2"
+    t.string   "gstin"
   end
 
   add_index "agencies", ["account_id"], :name => "index_agencies_on_account_id"
@@ -106,6 +112,8 @@ ActiveRecord::Schema.define(:version => 20170623020557) do
     t.integer  "counter"
     t.integer  "vat",                         :default => 0
     t.integer  "luxury_tax",                  :default => 0
+    t.float    "cgst",                        :default => 0.0
+    t.float    "sgst",                        :default => 0.0
   end
 
   add_index "bookings", ["account_id"], :name => "index_bookings_on_account_id"
@@ -122,6 +130,7 @@ ActiveRecord::Schema.define(:version => 20170623020557) do
     t.text     "postal_address"
     t.string   "title"
     t.integer  "account_id"
+    t.string   "gstin"
   end
 
   add_index "guests", ["account_id"], :name => "index_guests_on_account_id"
@@ -202,6 +211,8 @@ ActiveRecord::Schema.define(:version => 20170623020557) do
     t.integer  "allow_online_availability_check",    :default => 0
     t.float    "luxury_tax_rate",                    :default => 0.0
     t.float    "vat_rate",                           :default => 0.0
+    t.float    "cgst_rate",                          :default => 0.0
+    t.float    "sgst_rate",                          :default => 0.0
   end
 
   add_index "properties", ["account_id"], :name => "index_properties_on_account_id"
@@ -225,6 +236,8 @@ ActiveRecord::Schema.define(:version => 20170623020557) do
     t.integer  "price_for_food_on_single",                  :default => 0
     t.integer  "price_for_food_on_double",                  :default => 0
     t.integer  "order_for_booking_chart",                   :default => 0
+    t.float    "cgst_rate",                                 :default => 0.0
+    t.float    "sgst_rate",                                 :default => 0.0
   end
 
   add_index "room_types", ["account_id"], :name => "index_room_types_on_account_id"
@@ -251,6 +264,8 @@ ActiveRecord::Schema.define(:version => 20170623020557) do
     t.integer  "cancellation_charge",                       :default => 0
     t.integer  "vat",                                       :default => 0
     t.integer  "luxury_tax",                                :default => 0
+    t.float    "cgst",                                      :default => 0.0
+    t.float    "sgst",                                      :default => 0.0
   end
 
   add_index "rooms", ["account_id"], :name => "index_rooms_on_account_id"
@@ -271,6 +286,8 @@ ActiveRecord::Schema.define(:version => 20170623020557) do
     t.integer  "account_id"
     t.integer  "total_price"
     t.integer  "counter"
+    t.float    "cgst",               :default => 0.0
+    t.float    "sgst",               :default => 0.0
   end
 
   add_index "taxi_bookings", ["account_id"], :name => "index_taxi_bookings_on_account_id"
@@ -356,6 +373,8 @@ ActiveRecord::Schema.define(:version => 20170623020557) do
     t.integer  "banjara_service_tax",   :default => 0
     t.integer  "banjara_luxury_tax",    :default => 0
     t.integer  "show_tax_breakup",      :default => 0
+    t.float    "cgst",                  :default => 0.0
+    t.float    "sgst",                  :default => 0.0
   end
 
   add_index "trips", ["account_id"], :name => "index_trips_on_account_id"
@@ -400,6 +419,8 @@ ActiveRecord::Schema.define(:version => 20170623020557) do
     t.integer  "total_price",         :default => 0
     t.integer  "every_day",           :default => 0
     t.string   "tax_type"
+    t.float    "cgst",                :default => 0.0
+    t.float    "sgst",                :default => 0.0
   end
 
   add_index "vas_bookings", ["account_id"], :name => "index_vas_bookings_on_account_id"

@@ -21,6 +21,7 @@
 	    <th class="text">Name</th>
 	    <th class="text">Email</th>
 	    <th class="text">Resident of</th>
+	    <th class="text">GSTIN</th>
 	    <th class="text">Postal address</th>
 			<th></th>
 	  </tr>
@@ -36,6 +37,7 @@
 					<%= guest.email_id_2 %>
 				</td>
 		    <td class="text"><%= guest.city %></td>
+		    <td class="text"><%= guest.gstin %></td>
 		    <td class="text"><%= guest.postal_address %></td>
 		    <td>
 					<%= link_to 'Edit', edit_guest_path(guest) %></br>
