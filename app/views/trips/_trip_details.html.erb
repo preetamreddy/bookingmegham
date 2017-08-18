@@ -36,6 +36,8 @@
 				<th class="number">Unit price</th>
 				<th class="number">#</th>
 				<th class="text">All days</th>
+				<th class="number">Value</th>
+				<th class="number">Discount</th>
 				<th class="number">Taxable value</th>
 				<th class="number">CGST</th>
 				<th class="number">SGST</th>
@@ -48,6 +50,8 @@
 					<td class="number"><%= number_to_currency(vas_booking.unit_price) %></td>
 					<td class="number"><%= vas_booking.number_of_units %></td>
 					<td class="text"><%= vas_booking.every_day.to_english %></td>
+					<td class="number"><%= number_to_currency(vas_booking.value) %></td>
+					<td class="number"><%= number_to_percentage(vas_booking.discount, precision: 2) %></td>
 					<td class="number"><%= number_to_currency(vas_booking.taxable_value) %></td>
 					<td class="number"><%= number_to_currency(vas_booking.cgst) %></td>
 					<td class="number"><%= number_to_currency(vas_booking.sgst) %></td>

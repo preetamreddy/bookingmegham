@@ -5,6 +5,9 @@
 	<%= f.label :unit_price, "Unit price" %>
 	<%= f.number_field :unit_price, min: 0, max: 9999 %>
 
+	<%= f.label :discount, "Discount" %>
+	<%= f.number_field :discount, min: 0, max: 100 %>
+
 	<%= f.label :number_of_units, "#" %>
 	<%= f.number_field :number_of_units, min: 0, max: 99 %>
 

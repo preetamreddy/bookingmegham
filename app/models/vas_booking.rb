@@ -41,7 +41,7 @@ class VasBooking < ActiveRecord::Base
 
 	def cgst_rate
 		if trip_id
-			AccountSetting.find_by_account_id(account_id).cgst_rate_for_hotel_services.to_f / 100.0
+			AccountSetting.find_by_account_id(trip.account_id).cgst_rate_for_hotel_services.to_f / 100.0
 		elsif booking_id
 			booking.property.cgst_rate.to_f / 100.0
 		end
@@ -49,7 +49,7 @@ class VasBooking < ActiveRecord::Base
 
 	def sgst_rate
 		if trip_id
-			AccountSetting.find_by_account_id(account_id).sgst_rate_for_hotel_services.to_f / 100.0
+			AccountSetting.find_by_account_id(trip.account_id).sgst_rate_for_hotel_services.to_f / 100.0
 		elsif booking_id
 			booking.property.sgst_rate.to_f / 100.0
 		end
@@ -63,12 +63,20 @@ class VasBooking < ActiveRecord::Base
 		end
 	end
 
+	def value
+		if every_day == 0
+			unit_price * number_of_units
+		elsif every_day == 1
+			unit_price * number_of_units * number_of_days
+		end
+	end
+
 	private
 		def update_taxable_value
 			if every_day == 0
-				self.taxable_value = unit_price * number_of_units
+				self.taxable_value = (unit_price * number_of_units * (100 - discount).to_f / 100.0).round
 			elsif every_day == 1
-				self.taxable_value = unit_price * number_of_units * number_of_days
+				self.taxable_value = (unit_price * number_of_units * number_of_days * (100 - discount).to_f / 100.0).round
 			end
 		end
 
