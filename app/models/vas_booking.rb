@@ -41,17 +41,17 @@ class VasBooking < ActiveRecord::Base
 
 	def cgst_rate
 		if trip_id
-			AccountSetting.find_by_account_id(trip.account_id).cgst_rate_for_hotel_services.to_f / 100.0
+			AccountSetting.find_by_account_id(trip.account_id).cgst_rate_for_hotel_services
 		elsif booking_id
-			booking.property.cgst_rate.to_f / 100.0
+			booking.property.cgst_rate
 		end
 	end
 
 	def sgst_rate
 		if trip_id
-			AccountSetting.find_by_account_id(trip.account_id).sgst_rate_for_hotel_services.to_f / 100.0
+			AccountSetting.find_by_account_id(trip.account_id).sgst_rate_for_hotel_services
 		elsif booking_id
-			booking.property.sgst_rate.to_f / 100.0
+			booking.property.sgst_rate
 		end
 	end
 
@@ -73,16 +73,15 @@ class VasBooking < ActiveRecord::Base
 
 	private
 		def update_taxable_value
-				self.taxable_value = (value * (100 - discount).to_f / 100.0).round
-			end
+				self.taxable_value = value - discount
 		end
 
 		def update_cgst
-			self.cgst = (taxable_value * cgst_rate).round
+			self.cgst = (taxable_value * cgst_rate.to_f / 100).round
 		end
 
 		def update_sgst
-			self.sgst = (taxable_value * sgst_rate).round
+			self.sgst = (taxable_value * sgst_rate.to_f / 100).round
 		end
 
 		def update_total_price

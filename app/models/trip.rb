@@ -27,10 +27,9 @@ class Trip < ActiveRecord::Base
 	validates_numericality_of :number_of_days,
 						only_integer: true, greater_than: 1, allow_nil: true,
 						message: "should be a number greater than 1"
-  validates :phone_number, allow_nil: true, :allow_blank => true, :phone_number_format => true
+	validates :phone_number, allow_nil: true, :allow_blank => true, :phone_number_format => true
 
-	before_save :strip_whitespaces, :titleize,
-							:update_end_date, :ensure_booking_dates_are_within_trip_dates,
+	before_save :strip_whitespaces, :titleize, :update_end_date, :ensure_booking_dates_are_within_trip_dates,
               :ensure_customer_exists
 
 	before_update :update_payment_status_and_pay_by_date, :update_tds
@@ -186,28 +185,28 @@ class Trip < ActiveRecord::Base
     AccountSetting.find_by_account_id(account_id).tds_percent
   end
 
-	def final_price
-		total_price - discount - tac + tds
+	def total_payable
+		total_price + tds_on_tac
 	end
 
 	def balance_payment
-		if final_price > paid
-			final_price - paid
+		if total_payable > paid
+			total_payable - paid
 		else
 			0
 		end
 	end
 
 	def refund_amount
-		if paid > final_price
-			paid - final_price
+		if paid > total_payable
+			paid - total_payable
 		else
 			0
 		end
 	end
 
 	def net_after_taxes
-		final_price - tds - service_tax
+		taxable_value
 	end
 
   def itinerary_number
@@ -224,6 +223,10 @@ class Trip < ActiveRecord::Base
     account_name_abbreviation = AccountSetting.find_by_account_id(account_id).name_abbreviation
     "#{account_name_abbreviation}/#{id}"
   end
+
+	def tds_on_tac
+		(discount * tds_percent / 100).round
+	end
 
 	private
 		def init

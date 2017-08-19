@@ -16,18 +16,13 @@ class Booking < ActiveRecord::Base
 	validates :trip_id, :property_id, :check_in_date, :number_of_nights, :meal_plan,
 											presence: true
 
-  validate	:ensure_property_exists,
-						:ensure_trip_exists,
-            :ensure_booking_is_within_trip_dates
+	validate	:ensure_property_exists, :ensure_trip_exists, :ensure_booking_is_within_trip_dates
 
-	before_save :strip_whitespaces, :titleize,
-							:update_total_price
+	before_save :strip_whitespaces, :titleize, :update_total_price
 
-  before_create :set_counter
+	before_create :set_counter
 
-	before_destroy :ensure_payments_are_not_made,
-		:ensure_does_not_have_rooms,
-    :ensure_does_not_have_vas_bookings
+	before_destroy :ensure_payments_are_not_made, :ensure_does_not_have_rooms, :ensure_does_not_have_vas_bookings
 
 	def ensure_availability_before_booking
 		property.ensure_availability_before_booking

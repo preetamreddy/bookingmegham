@@ -6,7 +6,7 @@
 			body {
 				font-family: helvetica, verdana, arial, sans-serif;
 				font-size: 16px;
-			  width: 100%;
+			  	width: 100%;
 			}
 			.amount {
 				font-family: helvetica, verdana, arial, sans-serif;
@@ -38,6 +38,14 @@
 				font-weight: bold;
 				white-space: pre-wrap;
 			}
+			.address_left {
+				text-align: left;
+				white-space: pre-wrap;
+			}
+			.address_not_bold {
+				text-align: right;
+				white-space: pre-wrap;
+			}
 			.client {
 				text-align: left;
 				white-space: pre-wrap;
@@ -64,8 +72,24 @@
 					vertical-align: top;
 				}
 			}
+			.table_with_border {
+				margin-top: 1em;
+				font-size: 11px;
+				width: 100%;
+				tr {
+					padding: 5px 5px;
+				}
+				th {
+					background: #605C59;
+					color: #FFF;
+				}
+				td {
+					vertical-align: top;
+				}
+			}
 			.number {
 				text-align: right;
+				vertical-align: middle;
 				white-space: nowrap;
 			}
 			.text {
@@ -83,53 +107,83 @@
 				vertical-align: top;
 				white-space: nowrap;
 			}
+			.title {
+				text-align: center;
+				font-weight: bold;
+				font-size: 20px;
+			}
+			.gst {
+				text-align: center;
+				vertical-align: top;
+				white-space: nowrap;
+			}
 		</style>
 	</head>
 	<body>
 		<div id="content">
+			<p class="title">Tax Invoice</p>
+
 			<table class="table">
 				<tr>
-					<td colspan=2>
-						<%= wicked_pdf_image_tag Account.find(@trip.account_id).logo_file_name	%>
-					</td>
-					<td colspan=4 class="address">
-						<%= @account_setting.name %>
-						<%= @account_setting.postal_address %>
-						Phone: <%= @account_setting.phone_number_1 %>
-						<%= @account_setting.url %>
-					</td>
-				</tr>
-				<tr>
-           <td colspan=3 class="client">To,<br/><%= @trip.customer.name_with_title %><br/><%= @trip.customer.postal_address %><br/>Phone: <%= @trip.customer.phone_number %><br/><%= "PAN No: #{@trip.customer.pan_number}" if @trip.customer.pan_number != "" %></td>
-					<td colspan=3 class="other_info">
-						Date: <%= l @trip.invoice_date %>
-						<% if @trip.payments.any? %>Receipt No: <%= @trip.payments.order(:date_received).last.receipt_number %>/<%= l @trip.payments.order(:date_received).last.date_received %><% end %>
+					<td colspan=3>
+						GSTIN: <%= @account_setting.gstin %><br/>
+						<%= @account_setting.name %><br/>
+						Serial No. of Invoice: <%= @trip.invoice_number %><br/>
+						Date of Invoice: <%= l @trip.invoice_date %><br/>
 						Ref: <%= @trip.name %>
-						Invoice No: <%= @trip.invoice_number %>
-            <%= "PAN No: #{@account_setting.pan}" if @account_setting.pan != "" %>
-            <%= "S Tax No: #{@account_setting.service_tax_number}" if @account_setting.service_tax_number != "" %>
+					</td>
+					<td colspan=3 class="address_not_bold">
+						<%= @account_setting.postal_address %>
+						<%= @account_setting.email %>
+						<%= @account_setting.phone_number_1 %>
 					</td>
 				</tr>
 			</table>
+
 			<table class="table">
 				<tr>
-					<th class="text">S No</th>
-					<th class="text">Particulars</th>
+           				<td>
+						<b>Details of Receiver (Billed to)</b><br/>
+						<%= @trip.customer.name_with_title %><br/>
+						<span class="address_left"><%= @trip.customer.postal_address %></span><br/>
+						Phone: <%= @trip.customer.phone_number %><br/>
+						<%= "GSTIN: #{@trip.customer.gstin}" if @trip.customer.gstin != "" %>
+					</td>
+				</tr>
+			</table>
+
+			<table class="table_with_border">
+				<tr>
+					<th class="text">SNo</th>
+					<th class="text">Description of Services</th>
+					<th class="number">Qty.</th>
 					<th class="number">Nights</th>
-					<th class="number">Rooms</th>
-					<th class="number">Unit cost</th>
-					<th class="number">Amount</th>
+					<th class="number">Rate</th>
+					<th class="number">Value</th>
+					<th class="number">Discount</th>
+					<th class="number">Taxable</th>
+					<th class="gst" colspan=2>CGST</th>
+					<th class="gst" colspan=2>SGST</th>
+					<th class="gst" colspan=2>IGST</th>
+					<th class="gst">Total</th>
 				</tr>
 				<tr>
-					<td colspan=4></td>
-					<td class="number">(in INR)</td>
-					<td class="number">(in INR)</td>
+					<td colspan=6></td>
+					<td class="number"><b>/ TAC</b></td>
+					<td class="number"><b>Value</b></td>
+					<td class="number"><b>Rate</b></td>
+					<td class="number"><b>Amt.</b></td>
+					<td class="number"><b>Rate</b></td>
+					<td class="number"><b>Amt.</b></td>
+					<td class="number"><b>Rate</b></td>
+					<td class="number"><b>Amt.</b></td>
+					<td colspan=1></td>
 				</tr>
 				<% serial_number = 1 %>
 				<% @trip.bookings.order(:check_in_date).each do |booking| %>
 					<tr>
 						<td class="sno"><%= serial_number %></td>
-						<td colspan=5 class="text">Booking charges for <%= booking.property.name %><br/>(from <%= l booking.check_in_date %> to <%= l booking.check_out_date %>)</td>
+						<td colspan=5 class="text"><%= booking.property.name %><br/>(from <%= l booking.check_in_date %> to <%= l booking.check_out_date %>)</td>
 					</tr>
 	<% booking.rooms.order(:cancelled).each do |room| %>
 		<tr>
@@ -140,131 +194,139 @@
 				<% else %>
                 			<td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> @ <%= room.number_of_adults %> + <%= room.number_of_children_between_5_and_12_years %> / room</li></td>
 				<% end %>
-				<td class="number"><%= room.number_of_nights %></td>
 				<td class="number"><%= room.number_of_rooms %></td>
+				<td class="number"><%= room.number_of_nights %></td>
 				<td class="number"> <%= number_to_currency_wo_symbol(room.room_rate) %></td>
+				<td class="number"> <%= number_to_currency_wo_symbol(room.value) %></td>
+				<td class="number"> <%= number_to_currency_wo_symbol(room.discount) %></td>
+				<td class="number"> <%= number_to_currency_wo_symbol(room.taxable_value) %></td>
+				<td class="number"> <%= number_to_percentage(room.cgst_rate, precision: 1) %></td>
+				<td class="number"> <%= number_to_currency_wo_symbol(room.cgst) %></td>
+				<td class="number"> <%= number_to_percentage(room.sgst_rate, precision: 1) %></td>
+				<td class="number"> <%= number_to_currency_wo_symbol(room.sgst) %></td>
+				<td></td>
+				<td></td>
 				<td class="number"> <%= number_to_currency_wo_symbol(room.total_price) %></td>
 			<% end %>
 		</tr>
 	<% end %>
-					<% booking.vas_bookings.each do |vas_booking| %>
-						<tr>
-							<td></td>
-							<td class="text"><li><%= vas_booking.value_added_service %> (<%= vas_booking.number_of_units %>)</li></td>
-							<td></td>
-							<td></td>
-							<td class="number"> <%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
-							<td class="number"> <%= number_to_currency_wo_symbol(vas_booking.total_price) %></td>
-						</tr>
-					<% end %>
-					<% serial_number += 1 %>
-				<% end %>
-				<% @trip.vas_bookings.each do |vas_booking| %>
-					<tr>
-						<td class="sno"><%= serial_number %></td>
-						<td class="text"><%= vas_booking.value_added_service %> (<%= vas_booking.number_of_units %>)</td>
-						<td></td>
-						<td></td>
-						<td class="number"> <%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
-						<td class="number"> <%= number_to_currency_wo_symbol(vas_booking.total_price) %></td>
-					</tr>
-					<% serial_number += 1 %>
-				<% end %>
-				<% @trip.taxi_bookings.each do |taxi_booking| %>
-					<tr>
-						<td class="sno"><%= serial_number %></td>
-						<td class="text">Taxi: <%= pluralize(taxi_booking.number_of_vehicles, taxi_booking.taxi.model) %> (<%= pluralize(taxi_booking.number_of_days, "day") %>)</td>
-						<td></td>
-						<td></td>
-						<td class="number"> <%= number_to_currency_wo_symbol(taxi_booking.unit_price) %></td>
-						<td class="number"> <%= number_to_currency_wo_symbol(taxi_booking.total_price) %></td>
-					</tr>
-					<% serial_number += 1 %>
-				<% end %>
-				<tr>
-					<td></td>
-					<% if @trip.discount != 0 %>
-						<td colspan=4 class="text">Less: Discount on Room Bookings</td>
-						<td class="number">( <%= number_to_currency_wo_symbol(@trip.discount) %>)</td>
-					<% end %>
-				</tr>
-				<tr>
-					<td></td>
-					<% if @trip.tac != 0 %>
-						<td colspan=4 class="text">Less: TAC on Room Bookings</td>
-						<td class="number">( <%= number_to_currency_wo_symbol(@trip.tac) %>)</td>
-					<% end %>
-				</tr>
-				<% if @trip.tds > 0 %>
-					<tr>
-						<td colspan=3></td>
-						<td class="text">T.D.S.</td>
-						<td class="text"><%= @trip.tds_percent %>%</td>
-						<td class="number"> <%= number_to_currency_wo_symbol(@trip.tds) %></td>
-					</tr>
-				<% end %>
-				<tr>
-					<td colspan=3></td>
-					<td colspan=2 class="bold">Total Payable</td>
-					<td class="number"><span class="bold"> <%= number_to_currency_wo_symbol(@trip.final_price) %></span></td>
-				</tr>
-				<tr>
-					<td colspan=3></td>
-					<td colspan=2 class="text">Advance / Credit</td>
-					<td class="number"> <%= number_to_currency_wo_symbol(@trip.paid) %></td>
-				</tr>
-				<tr>
-					<td colspan=3></td>
-					<td colspan=2 class="bold">Balance</td>
-					<td class="number"><span class="bold"> <%= number_to_currency_wo_symbol(@trip.balance_payment) %></span></td>
-				</tr>
-				<tr>
-					<td colspan=6></td>
-				</tr>
-				<% if @trip.show_tax_breakup == 1 %>
-				   <tr>
-					<td colspan=1></td>
-					<td colspan=5 class="bold">Tax Break-up (included in Total Payable):</td>
-				   </tr>
-				   <tr>
-					<td colspan=3></td>
-					<td colspan=2 class="text">Value Added tax</td>
-					<% if @trip.banjara_vat == 0 %>
-						<td class="number"><%= number_to_currency_wo_symbol(@trip.total_vat) %></td>
-					<% else %>
-						<td class="number"><%= number_to_currency_wo_symbol(@trip.banjara_vat) %></td>
-					<% end %>
-				   </tr>
-				   <tr>
-					<td colspan=3></td>
-					<td colspan=2 class="text">Service tax</td>
-					<% if @trip.banjara_service_tax == 0 %>
-						<td class="number"><%= number_to_currency_wo_symbol(@trip.total_service_tax) %></td>
-					<% else %>
-						<td class="number"><%= number_to_currency_wo_symbol(@trip.banjara_service_tax) %></td>
-					<% end %>
-				   </tr>
-				   <tr>
-					<td colspan=3></td>
-					<% if @trip.banjara_luxury_tax == 0 and @trip.total_luxury_tax == 0 %>
-						<td colspan=3></td>
-					<% else %>
-						<td colspan=2 class="text">Luxury tax</td>
-						<% if @trip.banjara_luxury_tax == 0 %>
-							<td class="number"><%= number_to_currency_wo_symbol(@trip.total_luxury_tax) %></td>
-						<% else %>
-							<td class="number"><%= number_to_currency_wo_symbol(@trip.banjara_luxury_tax) %></td>
-						<% end %>
-					<% end %>
-				   </tr>
-				<% end %>
-			</table>
+	<% booking.vas_bookings.each do |vas_booking| %>
+		<tr>
+			<td></td>
+			<td class="text"><li><%= vas_booking.value_added_service %></li></td>
+			<td class="number"><%= vas_booking.number_of_units %></td>
+			<td class="number"><%= vas_booking.every_day == 0 ? 1 : vas_booking.number_of_days %></td>
+			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
+			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.value) %></td>
+			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.discount) %></td>
+			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.taxable_value) %></td>
+			<td class="number"><%= number_to_percentage(vas_booking.cgst_rate, precision: 1) %></td>
+			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.cgst) %></td>
+			<td class="number"><%= number_to_percentage(vas_booking.sgst_rate, precision: 1) %></td>
+			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.sgst) %></td>
+			<td></td>
+			<td></td>
+			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.total_price) %></td>
+		</tr>
+	<% end %>
+	<% serial_number += 1 %>
+<% end %>
+<% @trip.vas_bookings.each do |vas_booking| %>
+	<tr>
+		<td class="sno"><%= serial_number %></td>
+		<td class="text"><%= vas_booking.value_added_service %></td>
+		<td class="number"><%= vas_booking.number_of_units %></td>
+		<td class="number"><%= vas_booking.every_day == 0 ? 1 : vas_booking.number_of_days %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.value) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.discount) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.taxable_value) %></td>
+		<td class="number"><%= number_to_percentage(vas_booking.cgst_rate, precision: 1) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.cgst) %></td>
+		<td class="number"><%= number_to_percentage(vas_booking.sgst_rate, precision: 1) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.sgst) %></td>
+		<td></td>
+		<td></td>
+		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.total_price) %></td>
+	</tr>
+	<% serial_number += 1 %>
+<% end %>
+<% @trip.taxi_bookings.each do |taxi_booking| %>
+	<tr>
+		<td class="sno"><%= serial_number %></td>
+		<td class="text">Taxi: <%= taxi_booking.taxi.model %></td>
+		<td class="number"><%= taxi_booking.number_of_vehicles %></td>
+		<td class="number"><%= taxi_booking.number_of_days %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.unit_price) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.total_price) %></td>
+		<td class="number"><%= number_to_percentage(0, precision: 2) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.total_price) %></td>
+		<td class="number"><%= number_to_percentage(@account_setting.cgst_rate_for_tour_operator_services, precision: 1) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.cgst) %></td>
+		<td class="number"><%= number_to_percentage(@account_setting.sgst_rate_for_tour_operator_services, precision: 1) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.sgst) %></td>
+	</tr>
+	<% serial_number += 1 %>
+<% end %>
+
+	<tr class="bold">
+		<td class="sno"></td>
+		<td class="text">Total</td>
+		<td class="number"></td>
+		<td class="number"></td>
+		<td class="number"></td>
+		<td class="number"><%= number_to_currency_wo_symbol(@trip.discount + @trip.taxable_value) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(@trip.discount) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(@trip.taxable_value) %></td>
+		<td class="number"></td>
+		<td class="number"> <%= number_to_currency_wo_symbol(@trip.cgst) %></td>
+		<td class="number"></td>
+		<td class="number"> <%= number_to_currency_wo_symbol(@trip.sgst) %></td>
+		<td class="number"></td>
+		<td class="number"></td>
+		<td class="number"> <%= number_to_currency_wo_symbol(@trip.total_price) %></td>
+	</tr>
+
+<% if @trip.tds_on_tac > 0 %>
+	<tr>
+		<td></td>
+		<td class="text">TDS on TAC</td>
+		<td colspan=12></td>
+		<td class="number"> <%= number_to_currency_wo_symbol(@trip.tds_on_tac) %></td>
+	</tr>
+<% end %>
+	<tr>
+		<td></td>
+		<td class="bold">Total Payable</td>
+		<td colspan=12></td>
+		<td class="number"><span class="bold"> <%= number_to_currency_wo_symbol(@trip.total_payable) %></span></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td class="bold">Advance / Credit</td>
+		<td colspan=12></td>
+		<td class="number"><span class="bold"> <%= number_to_currency_wo_symbol(@trip.paid) %></span></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td class="bold">Balance</td>
+		<td colspan=12></td>
+		<td class="number"><span class="bold"> <%= number_to_currency_wo_symbol(@trip.balance_payment) %></span></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td class="bold">Amount of Tax subject to Reverse Charges</td>
+	</tr>
+</table>
 			<br/>
 			<p class="amount">
-				Amount in words: Rupees <%= @trip.final_price.to_words %> only.
+				Total Invoice Value (in figures): Rupees <%= number_to_currency_wo_symbol(@trip.total_payable) %> only.
+			</p>
+			<p class="amount">
+				Total Invoice Value (in words): Rupees <%= @trip.total_payable.to_words %> only.
 			</p>
 
-			<% if @trip.tds > 0 %>
+			<% if @trip.tds_on_tac > 0 %>
 				<p class="footnote">
 					<span class="bold">PAN NUMBER is mandatory under section 139A (5B) of income tax Act 1961. It is obligatory for all persons responsible for deducting tax at source. </span><span class="red_text">If PAN has not provided by deductees, then TDS rate should be deducted at 20% or actual, whichever is higher.</span> 
 				</p>
@@ -277,6 +339,10 @@
 				<%= "Note: #{@account_setting.name} has introduced a #{@account_setting.service_charge}% service charge on its own properties. This is payable directly on site." if @account_setting.service_charge != 0 %>
 			</p>
 
+			<p class="signature">
+				** This is a computer generated invoice. No signature required **
+			</p>
+
 			<% if @account_setting.id == 3 %>
 				<p class="footnote_bold">Important Retreat information for your perusal:</p>
 				<p class="footnote">1. We are located inside the Binsar Wildlife Sanctuary. The forest checkpost remains closed from sunset (about 7.00 PM during summer, 5.00 PM during winter) to sunrise. We request you to arrive at the checkpost at least an hour before sunset. The forest department charges an entry fee which is not included in our pricing.</p>
@@ -287,10 +353,6 @@
 				<p class="footnote">6. All meals are served in the dining room. We don't have room service. The meals are buffet and we don't have an a la carte menu. The buffet is Kumaoni, North Indian or Continental food on rotation (not all together). We can prepare special food for children under the age of 5 years, though.</p> 
 				<p class="footnote">7. We only serve vegetarian food. We do have egg for breakfast and some of our dishes use egg. We don't serve alcohol.</p>
 			<% end %>
-
-			<p class="signature">
-				** This is a computer generated invoice. No signature required **
-			</p>
 		</div>
 	</body>
 </html>

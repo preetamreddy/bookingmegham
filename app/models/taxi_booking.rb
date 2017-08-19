@@ -36,11 +36,11 @@ class TaxiBooking < ActiveRecord::Base
 	end
 
 	def cgst_rate
-		AccountSetting.find_by_account_id(account_id).cgst_rate_for_tour_operator_services.to_f / 100.0
+		AccountSetting.find_by_account_id(account_id).cgst_rate_for_tour_operator_services
 	end
 
 	def sgst_rate
-		AccountSetting.find_by_account_id(account_id).sgst_rate_for_tour_operator_services.to_f / 100.0
+		AccountSetting.find_by_account_id(account_id).sgst_rate_for_tour_operator_services
 	end
 
 	private
@@ -74,17 +74,16 @@ class TaxiBooking < ActiveRecord::Base
 		end
 
 		def update_cgst
-			self.cgst = (taxable_value * cgst_rate).round
+			self.cgst = (taxable_value * cgst_rate.to_f / 100).round
 		end
 
 		def update_sgst
-			self.sgst = (taxable_value * sgst_rate).round
+			self.sgst = (taxable_value * sgst_rate.to_f / 100).round
 		end
 
 		def update_total_price
 			self.total_price = taxable_value + cgst + sgst
 		end
-
 
 		def set_counter
 			self.counter = trip.taxi_bookings_counter + 1

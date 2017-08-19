@@ -35,7 +35,7 @@
 			<th class="text">Rooms</th>
 			<th class="text">Arriving from</th>
 			<th class="text">Medical constraints</th>
-			<th class="text">Total Price</th>
+			<th class="text">Price</th>
 			<th></th>
 		</tr>
 	
@@ -71,10 +71,10 @@
 				</td>
 		    <td class="text"><%= booking.medical_constraints %></td>
 		    <td>
-			<span class="nowrap">Price: <%= number_to_currency(booking.total_price) %><br/></span>
-			<span class="nowrap">VAT: <%= number_to_currency(booking.total_vat) %><br/></span>
-			<span class="nowrap">Service tax: <%= number_to_currency(booking.total_service_tax) %><br/></span>
-			<span class="nowrap">Luxury tax: <%= number_to_currency(booking.luxury_tax) %></span>
+			<span class="nowrap">Taxable value: <%= number_to_currency(booking.taxable_value) %><br/></span>
+			<span class="nowrap">CGST: <%= number_to_currency(booking.cgst) %><br/></span>
+			<span class="nowrap">SGST: <%= number_to_currency(booking.sgst) %><br/></span>
+			<span class="nowrap">Total: <%= number_to_currency(booking.total_price) %><br/></span>
 		    </td>
 		
 		    <td class='link'>

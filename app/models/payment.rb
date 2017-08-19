@@ -38,7 +38,7 @@ class Payment < ActiveRecord::Base
 		amount 'Amount Recd.'
 		payment_mode 'Payment Mode'
 		details 'Payment Details'
-		trip :final_price => 'Booking Cost Total'
+		trip :total_payable => 'Booking Cost Total'
 		trip :paid => 'Total Recd.'
 		trip :balance_payment => 'Balance'
 		trip :discount => 'Discount'
@@ -46,7 +46,7 @@ class Payment < ActiveRecord::Base
 		trip :tds => 'TDS'
 		trip :service_tax => 'Service Tax'
 		trip :net_after_taxes => 'Net After Taxes'
-		trip :final_price => 'Final Price'
+		trip :total_payable => 'Final Price'
 	end
 
 	private

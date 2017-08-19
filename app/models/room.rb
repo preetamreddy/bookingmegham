@@ -6,37 +6,36 @@ class Room < ActiveRecord::Base
 
 	has_many :line_items, dependent: :destroy
 
-	before_validation :set_defaults_if_nil,
-                    :update_check_in_date, :update_number_of_nights,
-										:update_check_out_date, :update_account_id
+	before_validation :set_defaults_if_nil, :update_check_in_date, :update_number_of_nights,
+		:update_check_out_date, :update_account_id
 
 	validates :occupancy, :number_of_rooms, :number_of_adults, presence: true
 	validates :occupancy, :inclusion => { :in => ROOM_OCCUPANCY_TYPES,
-    :message => ": \"%{value}\" is not a valid option" }
+		:message => ": \"%{value}\" is not a valid option" }
 	validates :number_of_adults, allow_nil: true,
-		:inclusion => { :in => [1, 2, 3, 4],
+		:inclusion => { :in => [1, 2],
 		:message => ": %{value} is not a valid option" }
 	validates_numericality_of :number_of_rooms,
 		allow_nil: true, only_integer: true, greater_than: 0,
 		message: ": %{value} should be a number greater than 0"
 	validates :number_of_children_between_5_and_12_years, 
-	  :number_of_children_below_5_years, allow_nil: true,
+		:number_of_children_below_5_years, allow_nil: true,
 		:inclusion => { :in => [0, 1, 2, 3],
 		:message => ": %{value} is not a valid option" }
 
 	validate :ensure_room_type_exists, :ensure_room_availability
 
-  after_validation :update_line_items
+	after_validation :update_line_items
 
-	before_create :update_room_rate, :update_total_price, :update_service_tax, :update_luxury_tax, :update_vat
+	before_create :update_room_rate, :update_taxable_value, :update_cgst, :update_sgst, :update_total_price
 
-	before_update :update_room_rate, :update_total_price, :update_service_tax, :update_luxury_tax, :update_vat
+	before_update :update_room_rate, :update_taxable_value, :update_cgst, :update_sgst, :update_total_price
 
 	before_destroy :ensure_payments_are_not_made
 
-  def meal_plan
-    booking.meal_plan
-  end
+	def meal_plan
+		booking.meal_plan
+	end
 
 	def food_charges
 		if cancelled == 1
@@ -83,9 +82,17 @@ class Room < ActiveRecord::Base
 		end
 	end
 
-  def price_for_rooms
-    cancelled == 1 ? 0 : room_rate * number_of_rooms * number_of_nights
-  end
+	def value
+		cancelled == 1 ? cancellation_charge : room_rate * number_of_rooms * number_of_nights
+	end
+
+	def cgst_rate
+		room_type.cgst_rate
+	end
+
+	def sgst_rate
+		room_type.sgst_rate
+	end
 
 	private
 		def set_defaults_if_nil
@@ -94,6 +101,7 @@ class Room < ActiveRecord::Base
 			self.vat ||= 0
 			self.service_tax ||= 0
 			self.luxury_tax ||= 0
+			self.discount ||= 0
 		end
 
     def update_check_in_date
@@ -189,12 +197,24 @@ class Room < ActiveRecord::Base
 			end
 		end
 
+		def update_taxable_value
+			if cancelled == 1
+				self.taxable_value = cancellation_charge
+			else
+				self.taxable_value = value - discount
+			end
+		end
+
+		def update_cgst
+			self.cgst = (taxable_value * cgst_rate.to_f / 100).round
+		end
+
+		def update_sgst
+			self.sgst = (taxable_value * sgst_rate.to_f / 100).round
+		end
+
 		def update_total_price
-      if cancelled == 1
-        self.total_price = cancellation_charge
-      else
-			  self.total_price = price_for_rooms
-      end
+			self.total_price = taxable_value + cgst + sgst
 		end
 
 	def update_vat
@@ -223,12 +243,12 @@ class Room < ActiveRecord::Base
 		((transportation_and_guide_charges / (1 + tour_operator_service_tax_rate)) * tour_operator_service_tax_rate)).ceil
 	end
 
-		def ensure_payments_are_not_made
-			if booking.trip.payment_status == Trip::NOT_PAID
-				return true
-			else
-				errors.add(:base, "Could not delete room booking as payments have been made for the trip")
-				return false
-			end
+	def ensure_payments_are_not_made
+		if booking.trip.payment_status == Trip::NOT_PAID
+			return true
+		else
+			errors.add(:base, "Could not delete room booking as payments have been made for the trip")
+			return false
 		end
+	end
 end

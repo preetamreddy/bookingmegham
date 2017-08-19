@@ -71,46 +71,10 @@
     	<%= @trip.payment_status %>
 		</span></p>
 	<% end %>
-	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
-    <%= f.label :total_price %><br />
-		<p><span class="highlight">
-			<%= number_to_currency(@trip.total_price) %>
-		</span></p>
-	<% end %>
-	<%= hidden_div_if((@trip.account_id != 1), class: "field") do %>
-    		<%= f.label :banjara_vat, "Input VAT" %><br />
-    		<%= f.number_field :banjara_vat, :min => 0 %>
-	<% end %>
-	<%= hidden_div_if((@trip.account_id != 1), class: "field") do %>
-    		<%= f.label :banjara_service_tax, "Input Service Tax" %><br />
-    		<%= f.number_field :banjara_service_tax, :min => 0 %>
-	<% end %>
-	<%= hidden_div_if((@trip.account_id != 1), class: "field") do %>
-    		<%= f.label :banjara_luxury_tax, "Input Luxury Tax" %><br />
-    		<%= f.number_field :banjara_luxury_tax, :min => 0 %>
-	<% end %>
-	<div class="field">
-		<%= f.label :show_tax_breakup, "Show tax breakup in invoices?" %>
-		<%= f.check_box :show_tax_breakup %>
-	</div>
 	<%= hidden_div_if((@trip.new_record?), class: "field") do %>
-    <%= f.label :discount, "Discount" %><br />
-   	<%= f.number_field :discount, :min => 0 %>
-	<% end %>
-	<%= hidden_div_if((@trip.new_record? or @trip.is_direct_booking?), class: "field") do %>
-    <%= f.label :tac, "TAC" %><br />
-   	<%= f.number_field :tac, :min => 0 %>
-	<% end %>
-	<%= hidden_div_if((@trip.new_record? or @trip.is_direct_booking?), class: "field") do %>
-    <%= f.label :tds, "TDS on TAC" %><br />
+    <%= f.label :total_payable %><br />
 		<p><span class="highlight">
-			<%= number_to_currency(@trip.tds) %>
-		</span></p>
-	<% end %>
-	<%= hidden_div_if((@trip.new_record?), class: "field") do %>
-    <%= f.label :final_price %><br />
-		<p><span class="highlight">
-			<%= number_to_currency(@trip.final_price) %>
+			<%= number_to_currency(@trip.total_payable) %>
 		</span></p>
 	<% end %>
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>

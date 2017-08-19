@@ -51,10 +51,10 @@
 					<td class="number"><%= vas_booking.number_of_units %></td>
 					<td class="text"><%= vas_booking.every_day.to_english %></td>
 					<td class="number"><%= number_to_currency(vas_booking.value) %></td>
-					<td class="number"><%= number_to_percentage(vas_booking.discount, precision: 2) %></td>
+					<td class="number"><%= number_to_currency(vas_booking.discount, precision: 2) %></td>
 					<td class="number"><%= number_to_currency(vas_booking.taxable_value) %></td>
-					<td class="number"><%= number_to_currency(vas_booking.cgst) %></td>
-					<td class="number"><%= number_to_currency(vas_booking.sgst) %></td>
+					<td class="number"><%= number_to_currency(vas_booking.cgst.round) %></td>
+					<td class="number"><%= number_to_currency(vas_booking.sgst.round) %></td>
 					<td class="number"><%= number_to_currency(vas_booking.total_price) %></td>
 				</tr>
 			<% end %>
@@ -62,70 +62,45 @@
 	<% end %>
 	
 	<p>
+	  <b>Value:</b>
+    <span class="saved_value"><%= number_to_currency(@trip.discount + @trip.taxable_value) %></span>
+	</p>
+	
+	<p>
+	  <b>Discount / TAC:</b>
+    <span class="saved_value"><%= number_to_currency(@trip.discount) %></span>
+	</p>
+	
+	<p>
+	  <b>Taxable value:</b>
+    <span class="saved_value"><%= number_to_currency(@trip.taxable_value) %></span>
+	</p>
+	
+	<p>
+	  <b>CGST:</b>
+    <span class="saved_value"><%= number_to_currency(@trip.cgst.round) %></span>
+	</p>
+	
+	<p>
+	  <b>SGST:</b>
+    <span class="saved_value"><%= number_to_currency(@trip.sgst.round) %></span>
+	</p>
+	
+	<p>
 	  <b>Total price:</b>
     <span class="saved_value"><%= number_to_currency(@trip.total_price) %></span>
 	</p>
 	
 	<p>
-	  <b>Discount:</b>
-    <span class="saved_value"><%= number_to_currency(@trip.discount) %></span>
-	</p>
-	
-	<%= hidden_p_unless(!@trip.is_direct_booking?) do %>
-	  <b>TAC:</b>
-    <span class="saved_value"><%= number_to_currency(@trip.tac) %></span>
-	<% end %>
-	
-	<p>
-		<b>Discount and TAC Percent:</b>
-    		<span class="saved_value"><%= number_to_percentage(@trip.discount_and_tac_percent) %></span>
-	</p>
-	
-	<%= hidden_p_unless(!@trip.is_direct_booking?) do %>
 	  <b>TDS on TAC:</b>
-    <span class="saved_value"><%= number_to_currency(@trip.tds) %></span>
-	<% end %>
-	
-	<p>
-	  <b>Final price:</b>
-    <span class="saved_value"><%= number_to_currency(@trip.final_price) %></span>
+    <span class="saved_value"><%= number_to_currency(@trip.tds_on_tac) %></span>
 	</p>
 	
 	<p>
-		<b>VAT:</b>
-		<% if @trip.account_id == 1 %>
-			<b>Input VAT:</b>
-    			<span class="saved_value"><%= number_to_currency(@trip.banjara_vat) %></span>
-			<b>Calc VAT:</b>
-		<% end %>
-    		<span class="saved_value"><%= number_to_currency(@trip.total_vat) %></span>
+	  <b>Total payable:</b>
+    <span class="saved_value"><%= number_to_currency(@trip.total_payable.round) %></span>
 	</p>
-
-	<p>
-		<b>Service Tax:</b>
-		<% if @trip.account_id == 1 %>
-			<b>Input Service tax:</b>
-    			<span class="saved_value"><%= number_to_currency(@trip.banjara_service_tax) %></span>
-			<b>Calc Service tax:</b>
-		<% end %>
-   		<span class="saved_value"><%= number_to_currency(@trip.total_service_tax) %></span>
-	</p>
-
-	<p>
-		<b>Luxury Tax:</b>
-		<% if @trip.account_id == 1 %>
-			<b>Input Luxury Tax:</b>
-    			<span class="saved_value"><%= number_to_currency(@trip.banjara_luxury_tax) %></span>
-			<b>Calc Luxury Tax:</b>
-		<% end %>
-    		<span class="saved_value"><%= number_to_currency(@trip.total_luxury_tax) %></span>
-	</p>
-
-	<p>
-		<b>Show Tax Breakup:</b>	
-		<span class="saved_value"><%= @trip.show_tax_breakup.to_english %></span>
-	</p>
-
+	
 	<p>
 	  <b>Invoice date:</b>
     <span class="saved_value"><%= l @trip.invoice_date if @trip.invoice_date %></span>

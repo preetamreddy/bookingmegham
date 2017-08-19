@@ -96,18 +96,6 @@
     <%= f.label :departure_destination, "Departure to" %><br />
     <%= f.text_field :departure_destination %>
 	</div>
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
-    <%= f.label :total_price %><br />
-		<p><span class="highlight">
-    	<%= number_to_currency(@booking.total_price) %>
-		</span></p>
-	<% end %>
-	<%= hidden_div_if(@booking.new_record?, class: "field") do %>
-    <%= f.label :service_tax %><br />
-		<p><span class="highlight">
-    	<%= number_to_currency(@booking.service_tax) %>
-		</span></p>
-	<% end %>
 	<div class="field">
 		<%= f.label :billing_instructions, "Billing Instr." %><br />
 	</div>

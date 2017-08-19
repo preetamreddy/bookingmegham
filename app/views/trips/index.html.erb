@@ -63,7 +63,7 @@
 				</td>
 		    <td class="text">
 					<%= trip.payment_status %><br/>
-					<span class="nowrap">Final Price: <%= number_to_currency(trip.final_price) %><br/></span>
+					<span class="nowrap">Total Payable: <%= number_to_currency(trip.total_payable) %><br/></span>
 					<% if trip.paid > 0 %>
 						<span class="nowrap">Paid: <%= number_to_currency(trip.paid) %><br/></span>
 					<% end %>

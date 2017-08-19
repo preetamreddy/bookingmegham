@@ -43,17 +43,14 @@
 			<th class="nowrap">Room type</th>
 			<th class="number"># rooms</th>
 			<th class="number">Adults / room</th>
-			<th class="number">Children / room</th>
-			<th class="number">Infants / room</th>
 			<th class="currency">Room rate</th>
-			<th class="currency">Total Price</th>
-			<th class="currency">Food</th>
-			<th class="currency">Transport & Guide</th>
-			<th class="currency">Lodging</th>
-			<th class="currency">VAT</th>
-			<th class="currency">Service Tax</th>
-			<th class="currency">Luxury Tax</th>
-      <th class="text">Cancelled?</th>
+			<th class="currency">Value</th>
+			<th class="number">Discount</th>
+			<th class="currency">Taxable value</th>
+			<th class="currency">CGST</th>
+			<th class="currency">SGST</th>
+			<th class="currency">Total</th>
+			<th class="text">Cancelled?</th>
 			<th class="currency">Cancellation fee</th>
 		</tr>
 
@@ -63,16 +60,13 @@
 				<td class="nowrap"><%= room.room_type.room_type %></td>
 				<td class="number"><%= room.number_of_rooms %></td>
 				<td class="number"><%= room.number_of_adults %></td>
-				<td class="number"><%= room.number_of_children_between_5_and_12_years %></td>
-				<td class="number"><%= room.number_of_children_below_5_years %></td>
 				<td class="currency"><%= number_to_currency(room.room_rate) %></td>
+				<td class="currency"><%= number_to_currency(room.value) %></td>
+				<td class="number"><%= number_to_currency(room.discount) %></td>
+				<td class="currency"><%= number_to_currency(room.taxable_value) %></td>
+				<td class="currency"><%= number_to_currency(room.cgst) %></td>
+				<td class="currency"><%= number_to_currency(room.sgst) %></td>
 				<td class="currency"><%= number_to_currency(room.total_price) %></td>
-				<td class="currency"><%= number_to_currency(room.food_charges) %></td>
-				<td class="currency"><%= number_to_currency(room.transportation_and_guide_charges) %></td>
-				<td class="currency"><%= number_to_currency(room.lodging_charges) %></td>
-				<td class="currency"><%= number_to_currency(room.vat) %></td>
-				<td class="currency"><%= number_to_currency(room.service_tax) %></td>
-				<td class="currency"><%= number_to_currency(room.luxury_tax) %></td>
 				<td class="text"><%= room.cancelled.to_english %></td>
 				<td class="currency"><%= number_to_currency(room.cancellation_charge) %></td>
 			</tr>
@@ -107,7 +101,7 @@
 				<td class="number"><%= vas_booking.number_of_units %></td>
 				<td class="text"><%= vas_booking.every_day.to_english %></td>
 				<td class="number"><%= number_to_currency(vas_booking.value) %></td>
-				<td class="number"><%= number_to_percentage(vas_booking.discount, precision: 2) %></td>
+				<td class="number"><%= number_to_currency(vas_booking.discount) %></td>
 				<td class="number"><%= number_to_currency(vas_booking.taxable_value) %></td>
 				<td class="number"><%= number_to_currency(vas_booking.cgst) %></td>
 				<td class="number"><%= number_to_currency(vas_booking.sgst) %></td>
@@ -133,33 +127,33 @@
 </p>
 
 <p>
+  <b>Value:</b>
+  <span class="saved_value"><%= number_to_currency(@booking.discount + @booking.taxable_value) if @booking.taxable_value %></span>
+</p>
+
+<p>
+  <b>Discount:</b>
+  <span class="saved_value"><%= number_to_currency(@booking.discount) if @booking.discount %></span>
+</p>
+
+<p>
+  <b>Taxable value:</b>
+  <span class="saved_value"><%= number_to_currency(@booking.taxable_value) if @booking.taxable_value %></span>
+</p>
+
+<p>
+  <b>CGST:</b>
+  <span class="saved_value"><%= number_to_currency(@booking.cgst) if @booking.cgst %></span>
+</p>
+
+<p>
+  <b>SGST:</b>
+  <span class="saved_value"><%= number_to_currency(@booking.sgst) if @booking.sgst %></span>
+</p>
+
+<p>
   <b>Total price:</b>
   <span class="saved_value"><%= number_to_currency(@booking.total_price) if @booking.total_price %></span>
-</p>
-
-<p>
-  <b>Price for rooms:</b>
-  <span class="saved_value"><%= number_to_currency(@booking.price_for_rooms) if @booking.price_for_rooms %></span>
-</p>
-
-<p>
-  <b>Price for VAS:</b>
-  <span class="saved_value"><%= number_to_currency(@booking.price_for_vas) if @booking.price_for_vas %></span>
-</p>
-
-<p>
-  <b>VAT for Rooms:</b>
-  <span class="saved_value"><%= number_to_currency(@booking.vat) if @booking.vat %></span>
-</p>
-
-<p>
-  <b>Service tax for Rooms:</b>
-  <span class="saved_value"><%= number_to_currency(@booking.service_tax) if @booking.service_tax %></span>
-</p>
-
-<p>
-  <b>Luxury tax for Rooms:</b>
-  <span class="saved_value"><%= number_to_currency(@booking.luxury_tax) if @booking.luxury_tax %></span>
 </p>
 
 <b>Billing instructions:</b>
