@@ -29,7 +29,7 @@ class Room < ActiveRecord::Base
 
 	before_create :update_room_rate, :update_taxable_value, :update_cgst, :update_sgst, :update_total_price
 
-	before_update :update_room_rate, :update_taxable_value, :update_cgst, :update_sgst, :update_total_price
+	before_update :update_room_rate, :update_discount, :update_taxable_value, :update_cgst, :update_sgst, :update_total_price
 
 	before_destroy :ensure_payments_are_not_made
 
@@ -193,7 +193,13 @@ class Room < ActiveRecord::Base
 		def update_room_rate
 			if booking.trip.payment_status == Trip::NOT_PAID or room_rate == nil
 				self.room_rate = room_type.price(occupancy, number_of_adults, number_of_children_between_5_and_12_years,
-							number_of_children_below_5_years, check_in_date, meal_plan, "TOTAL_PRICE")
+						number_of_children_below_5_years, check_in_date, meal_plan, "TOTAL_PRICE")
+			end
+		end
+
+		def update_discount
+			if cancelled == 1
+				self.discount = 0
 			end
 		end
 
