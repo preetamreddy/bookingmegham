@@ -5,6 +5,16 @@
 	  <span class="dates"><%= l @trip.start_date %> to <%= l @trip.end_date %> (<%= pluralize(@trip.number_of_days, "day") %>)</span>
   </h2>
 	
+	<p>
+	  <b>Tax Invoice Number:</b>
+    <span class="saved_value"><%= @trip.tax_invoice_number %></span>
+	</p>
+	
+	<p>
+	  <b>Pro Forma Invoice Number:</b>
+    <span class="saved_value"><%= @trip.proforma_invoice_number %></span>
+	</p>
+	
 	<% if @trip.trip_rooms.any? %>	
 		<b>Required Rooms:</b>
 		<table class="nested_table">

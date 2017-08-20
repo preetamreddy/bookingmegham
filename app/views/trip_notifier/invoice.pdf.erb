@@ -121,14 +121,22 @@
 	</head>
 	<body>
 		<div id="content">
-			<p class="title">Tax Invoice</p>
+			<% if @trip.checked_out == 0 %>
+				<p class="title">Pro forma Invoice</p>
+			<% else %>
+				<p class="title">Tax Invoice</p>
+			<% end %>
 
 			<table class="table">
 				<tr>
 					<td colspan=3>
 						GSTIN: <%= @account_setting.gstin %><br/>
 						<%= @account_setting.name %><br/>
-						Serial No. of Invoice: <%= @trip.invoice_number %><br/>
+						<% if @trip.checked_out == 0 %>
+							Pro-forma Invoice No.: <%= @trip.invoice_number %><br/>
+						<% else %>
+							Serial No. of Tax Invoice: <%= @trip.invoice_number %><br/>
+						<% end %>
 						Date of Invoice: <%= l @trip.invoice_date %><br/>
 						Ref: <%= @trip.name %>
 					</td>
@@ -326,6 +334,7 @@
 				Total Invoice Value (in words): Rupees <%= @trip.total_payable.to_words %> only.
 			</p>
 
+		<% if @trip.checked_out == 0 %>
 			<% if @trip.tds_on_tac > 0 %>
 				<p class="footnote">
 					<span class="bold">PAN NUMBER is mandatory under section 139A (5B) of income tax Act 1961. It is obligatory for all persons responsible for deducting tax at source. </span><span class="red_text">If PAN has not provided by deductees, then TDS rate should be deducted at 20% or actual, whichever is higher.</span> 
@@ -339,10 +348,6 @@
 				<%= "Note: #{@account_setting.name} has introduced a #{@account_setting.service_charge}% service charge on its own properties. This is payable directly on site." if @account_setting.service_charge != 0 %>
 			</p>
 
-			<p class="signature">
-				** This is a computer generated invoice. No signature required **
-			</p>
-
 			<% if @account_setting.id == 3 %>
 				<p class="footnote_bold">Important Retreat information for your perusal:</p>
 				<p class="footnote">1. We are located inside the Binsar Wildlife Sanctuary. The forest checkpost remains closed from sunset (about 7.00 PM during summer, 5.00 PM during winter) to sunrise. We request you to arrive at the checkpost at least an hour before sunset. The forest department charges an entry fee which is not included in our pricing.</p>
@@ -353,6 +358,12 @@
 				<p class="footnote">6. All meals are served in the dining room. We don't have room service. The meals are buffet and we don't have an a la carte menu. The buffet is Kumaoni, North Indian or Continental food on rotation (not all together). We can prepare special food for children under the age of 5 years, though.</p> 
 				<p class="footnote">7. We only serve vegetarian food. We do have egg for breakfast and some of our dishes use egg. We don't serve alcohol.</p>
 			<% end %>
+		<% end %>
+
+		<p class="signature">
+			** This is a computer generated invoice. No signature required **
+		</p>
+
 		</div>
 	</body>
 </html>

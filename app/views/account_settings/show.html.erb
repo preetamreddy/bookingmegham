@@ -81,6 +81,11 @@
   <span class="saved_value"><%= @account_setting.sgst_rate_for_hotel_services %></span>
 </p>
 
+<p>
+  <b>Counter for Tax Invoice:</b>
+  <span class="saved_value"><%= @account_setting.counter_for_tax_invoice %></span>
+</p>
+
 <% if @account_setting.payment_modes.any? %>
 	<b>Payment modes:</b>
 	<table class="nested_table">

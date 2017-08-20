@@ -16,22 +16,28 @@ class TripsController < ApplicationController
                      'customer_type = ? and customer_id = ?',
                      session[:customer_type], session[:customer_id] ])
 		else
-			if params[:payment_status] == Trip::PARTIALLY_PAID
+			if params[:status] == Trip::PARTIALLY_PAID
     				@trips = @trips.paginate(page: params[:page], per_page: 10).
 					order("start_date DESC, end_date DESC").
-					find_all_by_payment_status(params[:payment_status])
-			elsif params[:payment_status] == Trip::NOT_PAID
+					find_all_by_payment_status(params[:status])
+			elsif params[:status] == Trip::NOT_PAID
     				@trips = @trips.paginate(page: params[:page], per_page: 10).
 					order("start_date DESC, end_date DESC").
 					find(:all, :conditions => [
        					'payment_status = ? and (price_for_rooms > 0 or price_for_transport > 0 or price_for_vas > 0)',
-       					params[:payment_status] ])
-			elsif params[:payment_status] == Trip::PAYMENT_OVERDUE
+       					params[:status] ])
+			elsif params[:status] == Trip::PAYMENT_OVERDUE
     				@trips = @trips.paginate(page: params[:page], per_page: 10).
 					order('start_date DESC, end_date DESC').
 					find(:all, :conditions => [
 					'payment_status != ? and pay_by_date < ?',
 					Trip::FULLY_PAID, Date.today ])
+			elsif params[:status] == Trip::CHECKED_OUT
+    				@trips = @trips.paginate(page: params[:page], per_page: 10).
+					order('end_date, start_date').
+					find(:all, :conditions => [
+					'end_date >= ? and end_date <= ? and counter_for_tax_invoice = ?',
+					Date.strptime('2017-07-01', '%Y-%m-%d'), Date.today, 0 ])
 			else
     				@trips = @trips.paginate(page: params[:page], per_page: 10).
 					order("start_date DESC, end_date DESC").all
@@ -44,8 +50,8 @@ class TripsController < ApplicationController
       @customer_name = customer.name
     end
 
-    if params[:payment_status]
-      @payment_status = params[:payment_status]
+    if params[:status]
+      @status = params[:status]
     end
 
 		@records_returned = @trips.count

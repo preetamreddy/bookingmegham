@@ -128,6 +128,16 @@
 		<% end %>
     <%= f.text_field :advisor_id, :hidden => true %>
   </div>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+		<%= f.label :checked_out, "Checked Out?" %>
+		<% if @trip.checked_out == 0 %>
+			<%= f.check_box :checked_out %>
+		<% else %>
+		  <p><span class="highlight">
+			  <%= @trip.checked_out.to_english %>
+		  </span></p>
+		<% end %>
+	<% end %>
   <div class="action_container">
     <%= f.submit %>
   </div>

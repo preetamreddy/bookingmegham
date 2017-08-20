@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170818125421) do
+ActiveRecord::Schema.define(:version => 20170819151552) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20170818125421) do
     t.float    "sgst_rate_for_tour_operator_services", :default => 0.0
     t.float    "cgst_rate_for_hotel_services",         :default => 0.0
     t.float    "sgst_rate_for_hotel_services",         :default => 0.0
+    t.integer  "counter_for_tax_invoice",              :default => 1
   end
 
   add_index "account_settings", ["account_id"], :name => "index_account_settings_on_account_id"
@@ -358,29 +359,31 @@ ActiveRecord::Schema.define(:version => 20170818125421) do
     t.string   "medical_constraints"
     t.integer  "advisor_id"
     t.date     "invoice_date"
-    t.integer  "tac",                   :default => 0
+    t.integer  "tac",                     :default => 0
     t.integer  "account_id"
-    t.integer  "price_for_vas",         :default => 0
-    t.integer  "price_for_transport",   :default => 0
-    t.integer  "price_for_rooms",       :default => 0
-    t.integer  "service_tax",           :default => 0
-    t.integer  "paid",                  :default => 0
+    t.integer  "price_for_vas",           :default => 0
+    t.integer  "price_for_transport",     :default => 0
+    t.integer  "price_for_rooms",         :default => 0
+    t.integer  "service_tax",             :default => 0
+    t.integer  "paid",                    :default => 0
     t.string   "customer_type"
     t.integer  "customer_id"
     t.string   "phone_number"
-    t.integer  "payments_counter",      :default => 0
-    t.integer  "bookings_counter",      :default => 0
-    t.integer  "taxi_bookings_counter", :default => 0
-    t.integer  "tds",                   :default => 0
-    t.integer  "vat",                   :default => 0
-    t.integer  "luxury_tax",            :default => 0
-    t.integer  "banjara_vat",           :default => 0
-    t.integer  "banjara_service_tax",   :default => 0
-    t.integer  "banjara_luxury_tax",    :default => 0
-    t.integer  "show_tax_breakup",      :default => 0
-    t.float    "cgst",                  :default => 0.0
-    t.float    "sgst",                  :default => 0.0
-    t.integer  "taxable_value",         :default => 0
+    t.integer  "payments_counter",        :default => 0
+    t.integer  "bookings_counter",        :default => 0
+    t.integer  "taxi_bookings_counter",   :default => 0
+    t.integer  "tds",                     :default => 0
+    t.integer  "vat",                     :default => 0
+    t.integer  "luxury_tax",              :default => 0
+    t.integer  "banjara_vat",             :default => 0
+    t.integer  "banjara_service_tax",     :default => 0
+    t.integer  "banjara_luxury_tax",      :default => 0
+    t.integer  "show_tax_breakup",        :default => 0
+    t.float    "cgst",                    :default => 0.0
+    t.float    "sgst",                    :default => 0.0
+    t.integer  "taxable_value",           :default => 0
+    t.integer  "counter_for_tax_invoice", :default => 0
+    t.integer  "checked_out",             :default => 0
   end
 
   add_index "trips", ["account_id"], :name => "index_trips_on_account_id"

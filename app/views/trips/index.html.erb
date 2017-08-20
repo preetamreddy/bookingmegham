@@ -2,11 +2,13 @@
   <span class="search_title">Show</span>
 	<div class="search_container">
 		<%= link_to 'Not Paid Trips', 
-					trips_path(:payment_status => Trip::NOT_PAID) %>
+					trips_path(:status => Trip::NOT_PAID) %>
 		<%= link_to 'Partially Paid Trips', 
-					trips_path(:payment_status => Trip::PARTIALLY_PAID) %> 
+					trips_path(:status => Trip::PARTIALLY_PAID) %> 
 		<%= link_to 'Trips with payment overdue', 
-					trips_path(:payment_status => Trip::PAYMENT_OVERDUE) %>
+					trips_path(:status => Trip::PAYMENT_OVERDUE) %>
+		<%= link_to 'Completed Trips', 
+					trips_path(:status => Trip::CHECKED_OUT) %>
 		<%= link_to 'All trips', trips_path %>
 	</div>
 <% end %>
@@ -15,7 +17,7 @@
   <h2><%= "Trips > #{@customer_name}" %></h2>
 <% else %>
   <hr>
-  <h2><%= "Trips > #{params[:payment_status] || 'All'}" %></h2>
+  <h2><%= "Trips > #{params[:status] || 'All'}" %></h2>
 <% end %>
 
 <% if @records_returned == 0 %>

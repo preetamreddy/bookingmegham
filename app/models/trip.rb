@@ -2,8 +2,9 @@ class Trip < ActiveRecord::Base
 	NOT_PAID = 'Not Paid'
 	PARTIALLY_PAID = 'Partially Paid'
 	FULLY_PAID = 'Fully Paid'
-  PAYMENT_OVERDUE = 'Payment Overdue'
-  GUEST = "Guest"
+	PAYMENT_OVERDUE = 'Payment Overdue'
+	GUEST = "Guest"
+	CHECKED_OUT = 'Checked Out'
 
 	belongs_to :customer, :polymorphic => true
 	belongs_to :advisor
@@ -32,7 +33,7 @@ class Trip < ActiveRecord::Base
 	before_save :strip_whitespaces, :titleize, :update_end_date, :ensure_booking_dates_are_within_trip_dates,
               :ensure_customer_exists
 
-	before_update :update_payment_status_and_pay_by_date, :update_tds
+	before_update :update_payment_status_and_pay_by_date, :update_tds, :update_counter_for_tax_invoice
 
 	before_destroy 	:ensure_does_not_have_bookings,
 									:ensure_does_not_have_taxi_bookings,
@@ -214,10 +215,23 @@ class Trip < ActiveRecord::Base
     "#{account_name_abbreviation}/#{id}"
   end
 
-  def invoice_number
+  def proforma_invoice_number
     account_name_abbreviation = AccountSetting.find_by_account_id(account_id).name_abbreviation
     "#{account_name_abbreviation}/#{start_date.to_s(:year)}/#{id}"
   end
+
+  def tax_invoice_number
+    account_name_abbreviation = AccountSetting.find_by_account_id(account_id).name_abbreviation
+    "#{account_name_abbreviation}/#{start_date.to_s(:year)}/#{counter_for_tax_invoice}"
+  end
+
+	def invoice_number
+		if checked_out == 1
+			tax_invoice_number
+		else
+			proforma_invoice_number
+		end
+	end
 
   def voucher_number
     account_name_abbreviation = AccountSetting.find_by_account_id(account_id).name_abbreviation
@@ -330,5 +344,13 @@ class Trip < ActiveRecord::Base
 
 		def update_tds
 			self.tds = tac * tds_percent / 100
+		end
+
+		def update_counter_for_tax_invoice
+			account_setting = AccountSetting.find_by_account_id(account_id)
+			if checked_out_changed?
+				self.counter_for_tax_invoice = account_setting.counter_for_tax_invoice
+				AccountSetting.update_counters account_setting.id, :counter_for_tax_invoice => 1
+			end
 		end
 end
