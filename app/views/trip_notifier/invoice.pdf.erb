@@ -198,9 +198,9 @@
 			<td></td>
 			<% if room.total_price > 0 %>
 				<% if room.number_of_children_between_5_and_12_years == 0 %>
-                			<td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> @ <%= room.number_of_adults %> / room</li></td>
+                			<td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> @ <%= room.number_of_adults %> / room - <%= room.booking.meal_plan %></li></td>
 				<% else %>
-                			<td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> @ <%= room.number_of_adults %> + <%= room.number_of_children_between_5_and_12_years %> / room</li></td>
+                			<td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> @ <%= room.number_of_adults %> + <%= room.number_of_children_between_5_and_12_years %> / room - <%= room.booking.meal_plan %></li></td>
 				<% end %>
 				<td class="number"><%= room.number_of_rooms %></td>
 				<td class="number"><%= room.number_of_nights %></td>
