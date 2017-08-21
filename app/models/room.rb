@@ -27,9 +27,11 @@ class Room < ActiveRecord::Base
 
 	after_validation :update_line_items
 
-	before_create :update_room_rate, :update_taxable_value, :update_cgst, :update_sgst, :update_total_price
+	before_create :update_number_of_adults, :update_room_rate, :update_taxable_value, 
+							:update_cgst, :update_sgst, :update_total_price
 
-	before_update :update_room_rate, :update_discount, :update_taxable_value, :update_cgst, :update_sgst, :update_total_price
+	before_update :update_number_of_adults, :update_room_rate, :update_discount, :update_taxable_value,
+							 :update_cgst, :update_sgst, :update_total_price
 
 	before_destroy :ensure_payments_are_not_made
 
@@ -187,6 +189,14 @@ class Room < ActiveRecord::Base
            account_id: account_id)
 				line_item.save!
 				date += 1
+			end
+		end
+
+		def update_number_of_adults
+			if occupancy == "Double"
+				self.number_of_adults = 2
+			else
+				self.number_of_adults = 1
 			end
 		end
 

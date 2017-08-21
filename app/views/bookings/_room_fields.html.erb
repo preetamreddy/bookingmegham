@@ -22,10 +22,6 @@
 	<%= f.number_field :number_of_rooms, min: 1, max: 99, :required => true,
 			  :disabled => cannot_edit_room %>
 
-	<%= f.label :number_of_adults, "Adults" %>
-	<%= f.number_field :number_of_adults, min: 1, max: 2, :required => true,
-			  :disabled => cannot_edit_room %>
-		
 	<%= f.label :discount, "Discount" %>
 	<%= f.number_field :discount, min: 0 %>
 
