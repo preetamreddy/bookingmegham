@@ -150,6 +150,8 @@ class TripsController < ApplicationController
 			TripNotifier.invoice(trip, current_user.id).deliver
 		elsif params[:type] == 'vouchers'
 			TripNotifier.vouchers(trip, current_user.id).deliver
+		elsif params[:type] == 'pre_gst_invoice'
+			TripNotifier.pre_gst_invoice(trip, current_user.id).deliver
 		end
 
 		respond_to do |format|

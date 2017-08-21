@@ -186,6 +186,10 @@ class Trip < ActiveRecord::Base
     AccountSetting.find_by_account_id(account_id).tds_percent
   end
 
+	def final_price
+		total_price + tds_on_tac
+	end
+
 	def total_payable
 		total_price + tds_on_tac
 	end

@@ -55,4 +55,22 @@ class TripNotifier < ActionMailer::Base
 			end
 		end
   end
+
+  def pre_gst_invoice(trip, user_id)
+		@trip = trip
+		@user = User.find(user_id)
+    @account_setting = AccountSetting.find_by_account_id(@user.account_id)
+
+		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
+				subject: "Invoice for trip, #{@trip.customer.name} ##{@trip.id} (ref: #{@trip.name})") do |format|
+			format.text
+			format.pdf do
+				attachments["Invoice #{@trip.invoice_number} (ref: #{@trip.name}).pdf"] = 
+					WickedPdf.new.pdf_from_string(
+					render_to_string(:pdf => "invoice", 
+					:template 						=> 'trip_notifier/pre_gst_invoice.pdf.erb',
+					:layout								=> 'layouts/default.html.erb'))
+			end
+		end
+  end
 end
