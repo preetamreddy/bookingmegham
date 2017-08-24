@@ -31,7 +31,7 @@ class Trip < ActiveRecord::Base
 	validates :phone_number, allow_nil: true, :allow_blank => true, :phone_number_format => true
 
 	before_save :strip_whitespaces, :titleize, :update_end_date, :ensure_booking_dates_are_within_trip_dates,
-              :ensure_customer_exists
+              :ensure_customer_exists, :update_tds_on_tac
 
 	before_update :update_payment_status_and_pay_by_date, :update_tds, :update_counter_for_tax_invoice
 
@@ -242,10 +242,6 @@ class Trip < ActiveRecord::Base
     "#{account_name_abbreviation}/#{id}"
   end
 
-	def tds_on_tac
-		(discount * tds_percent / 100).round
-	end
-
 	private
 		def init
 			self.discount ||= 0
@@ -357,4 +353,9 @@ class Trip < ActiveRecord::Base
 				AccountSetting.update_counters account_setting.id, :counter_for_tax_invoice => 1
 			end
 		end
+
+		def update_tds_on_tac
+			self.tds_on_tac = (discount * tds_percent / 100).round
+		end
+
 end

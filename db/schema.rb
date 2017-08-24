@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170819151552) do
+ActiveRecord::Schema.define(:version => 20170823034045) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -384,6 +384,7 @@ ActiveRecord::Schema.define(:version => 20170819151552) do
     t.integer  "taxable_value",           :default => 0
     t.integer  "counter_for_tax_invoice", :default => 0
     t.integer  "checked_out",             :default => 0
+    t.integer  "tds_on_tac",              :default => 0
   end
 
   add_index "trips", ["account_id"], :name => "index_trips_on_account_id"
