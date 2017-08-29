@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170829061845) do
+ActiveRecord::Schema.define(:version => 20170829092433) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -38,6 +38,10 @@ ActiveRecord::Schema.define(:version => 20170829061845) do
     t.float    "cgst_rate_for_hotel_services",         :default => 0.0
     t.float    "sgst_rate_for_hotel_services",         :default => 0.0
     t.integer  "counter_for_tax_invoice",              :default => 1
+    t.string   "hsn_for_lodging"
+    t.string   "hsn_for_food"
+    t.string   "hsn_for_transportation"
+    t.string   "hsn_for_guide_services"
   end
 
   add_index "account_settings", ["account_id"], :name => "index_account_settings_on_account_id"
@@ -441,6 +445,7 @@ ActiveRecord::Schema.define(:version => 20170829061845) do
     t.integer  "taxable_value",       :default => 0
     t.integer  "discount",            :default => 0
     t.float    "discount_percentage", :default => 0.0
+    t.string   "hsn"
   end
 
   add_index "vas_bookings", ["account_id"], :name => "index_vas_bookings_on_account_id"
