@@ -121,13 +121,12 @@
 	</head>
 	<body>
 		<div id="content">
-			<% if @trip.checked_out == 0 %>
-				<p class="title">Pro forma Invoice</p>
-			<% else %>
+			<% if @trip.checked_out == 1 %>
 				<p class="title">Tax Invoice</p>
+				<p class="gst">(Original for Recipient)</p>
+			<% else %>
+				<p class="title">Draft Tax Invoice</p>
 			<% end %>
-
-			<p class="gst">(Original for Recipient)</p>
 
 			<table class="table">
 				<tr>
@@ -257,24 +256,6 @@
 					<td></td>
 					<td></td>
 					<td class="number"> <%= number_to_currency_wo_symbol(room.food_total_price) %></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td class="text"><li>Transportation and Guide charges</li></td>
-					<td class="text"><%= @account_setting.hsn_for_guide_services %></td>
-					<td class="number"><%= room.number_of_rooms %></td>
-					<td class="number"><%= room.number_of_nights %></td>
-					<td class="number"> <%= number_to_currency_wo_symbol(room.transportation_and_guide_rate) %></td>
-					<td class="number"> <%= number_to_currency_wo_symbol(room.transportation_and_guide_value) %></td>
-					<td class="number"> <%= number_to_percentage(room.discount_percentage, precision: 2) %></td>
-					<td class="number"> <%= number_to_currency_wo_symbol(room.transportation_and_guide_taxable_value) %></td>
-					<td class="number"> <%= number_to_percentage(room.cgst_rate_for_tour_operator_services, precision: 1) %></td>
-					<td class="number"> <%= number_to_currency_wo_symbol(room.transportation_and_guide_cgst) %></td>
-					<td class="number"> <%= number_to_percentage(room.sgst_rate_for_tour_operator_services, precision: 1) %></td>
-					<td class="number"> <%= number_to_currency_wo_symbol(room.transportation_and_guide_sgst) %></td>
-					<td></td>
-					<td></td>
-					<td class="number"> <%= number_to_currency_wo_symbol(room.transportation_and_guide_total_price) %></td>
 				</tr>
 			<% end %>
 		<% end %>
