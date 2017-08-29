@@ -210,9 +210,9 @@
 					<td class="number"> <%= number_to_percentage(room.discount_percentage, precision: 2) %></td>
 					<td class="number"> <%= number_to_currency_wo_symbol(room.taxable_value) %></td>
 					<td class="number"> <%= number_to_percentage(room.cgst_rate, precision: 1) %></td>
-					<td class="number"> <%= number_to_currency_wo_symbol(room.cgst) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.cgst.round) %></td>
 					<td class="number"> <%= number_to_percentage(room.sgst_rate, precision: 1) %></td>
-					<td class="number"> <%= number_to_currency_wo_symbol(room.sgst) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.sgst.round) %></td>
 					<td></td>
 					<td></td>
 					<td class="number"> <%= number_to_currency_wo_symbol(room.total_price) %></td>
@@ -288,7 +288,7 @@
 			<td class="number"><%= vas_booking.every_day == 0 ? 1 : vas_booking.number_of_days %></td>
 			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
 			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.value) %></td>
-			<td class="number"><%= number_to_percentage(vas_booking.discount, precision: 2) %></td>
+			<td class="number"><%= number_to_percentage(vas_booking.discount_percentage, precision: 2) %></td>
 			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.taxable_value) %></td>
 			<td class="number"><%= number_to_percentage(vas_booking.cgst_rate, precision: 1) %></td>
 			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.cgst.round) %></td>
@@ -310,7 +310,7 @@
 		<td class="number"><%= vas_booking.every_day == 0 ? 1 : vas_booking.number_of_days %></td>
 		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
 		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.value) %></td>
-		<td class="number"><%= number_to_percentage(vas_booking.discount, precision: 2) %></td>
+		<td class="number"><%= number_to_percentage(vas_booking.discount_percentage, precision: 2) %></td>
 		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.taxable_value) %></td>
 		<td class="number"><%= number_to_percentage(vas_booking.cgst_rate, precision: 1) %></td>
 		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.cgst.round) %></td>
@@ -327,7 +327,6 @@
 		<td class="sno"><%= serial_number %></td>
 		<td class="text">Taxi: <%= taxi_booking.taxi.model %></td>
 		<td class="text"><%= @account_setting.hsn_for_transportation %></td>
-		<td class="text"></td>
 		<td class="number"><%= taxi_booking.number_of_vehicles %></td>
 		<td class="number"><%= taxi_booking.number_of_days %></td>
 		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.unit_price) %></td>
