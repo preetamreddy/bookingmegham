@@ -164,6 +164,7 @@
 				<tr>
 					<th class="text">SNo</th>
 					<th class="text">Description of Services</th>
+					<th class="text">HSN</th>
 					<th class="number">Qty.</th>
 					<th class="number">Nights</th>
 					<th class="number">Rate</th>
@@ -176,7 +177,7 @@
 					<th class="gst">Total</th>
 				</tr>
 				<tr>
-					<td colspan=6></td>
+					<td colspan=7></td>
 					<td class="number"><b>/ TAC</b></td>
 					<td class="number"><b>Value</b></td>
 					<td class="number"><b>Rate</b></td>
@@ -194,44 +195,103 @@
 						<td colspan=5 class="text"><%= booking.property.name %><br/>(from <%= l booking.check_in_date %> to <%= l booking.check_out_date %>)</td>
 					</tr>
 	<% booking.rooms.order(:cancelled).each do |room| %>
-		<tr>
-			<td></td>
-			<% if room.total_price > 0 %>
-				<% if room.number_of_children_between_5_and_12_years == 0 %>
-                			<td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> @ <%= room.number_of_adults %> / room - <%= room.booking.meal_plan %></li></td>
-				<% else %>
-                			<td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> @ <%= room.number_of_adults %> + <%= room.number_of_children_between_5_and_12_years %> / room - <%= room.booking.meal_plan %></li></td>
-				<% end %>
-				<td class="number"><%= room.number_of_rooms %></td>
-				<td class="number"><%= room.number_of_nights %></td>
-				<td class="number"> <%= number_to_currency_wo_symbol(room.room_rate) %></td>
-				<td class="number"> <%= number_to_currency_wo_symbol(room.value) %></td>
-				<td class="number"> <%= number_to_currency_wo_symbol(room.discount) %></td>
-				<td class="number"> <%= number_to_currency_wo_symbol(room.taxable_value) %></td>
-				<td class="number"> <%= number_to_percentage(room.cgst_rate, precision: 1) %></td>
-				<td class="number"> <%= number_to_currency_wo_symbol(room.cgst) %></td>
-				<td class="number"> <%= number_to_percentage(room.sgst_rate, precision: 1) %></td>
-				<td class="number"> <%= number_to_currency_wo_symbol(room.sgst) %></td>
-				<td></td>
-				<td></td>
-				<td class="number"> <%= number_to_currency_wo_symbol(room.total_price) %></td>
+		<% if room.total_price > 0 %>
+			<% if room.cancelled == 1 %>
+				<tr>
+					<td></td>
+					<td class="text"><li>Cancellation fee: <%= room.room_type.room_type %> @ <%= room.number_of_adults %> / room - <%= room.booking.meal_plan %></li></td>
+					<td class="text"></td>
+					<td class="number"><%= room.number_of_rooms %></td>
+					<td class="number"><%= room.number_of_nights %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.room_rate) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.value) %></td>
+					<td class="number"> <%= number_to_percentage(room.discount_percentage, precision: 2) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.taxable_value) %></td>
+					<td class="number"> <%= number_to_percentage(room.cgst_rate, precision: 1) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.cgst) %></td>
+					<td class="number"> <%= number_to_percentage(room.sgst_rate, precision: 1) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.sgst) %></td>
+					<td></td>
+					<td></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.total_price) %></td>
+				</tr>
+			<% else %>
+				<tr>
+					<td></td>
+					<td class="text"><%= room.room_type.room_type %> @ <%= room.number_of_adults %> / room</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="text"><li>Lodging charges</li></td>
+					<td class="text"></td>
+					<td class="number"><%= room.number_of_rooms %></td>
+					<td class="number"><%= room.number_of_nights %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.lodging_rate) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.lodging_value) %></td>
+					<td class="number"> <%= number_to_percentage(room.discount_percentage, precision: 2) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.lodging_taxable_value) %></td>
+					<td class="number"> <%= number_to_percentage(room.cgst_rate, precision: 1) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.lodging_cgst) %></td>
+					<td class="number"> <%= number_to_percentage(room.sgst_rate, precision: 1) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.lodging_sgst) %></td>
+					<td></td>
+					<td></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.lodging_total_price) %></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="text"><li>Food charges - <%= room.booking.meal_plan %></li></td>
+					<td class="text"></td>
+					<td class="number"><%= room.number_of_rooms %></td>
+					<td class="number"><%= room.number_of_nights %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.food_rate) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.food_value) %></td>
+					<td class="number"> <%= number_to_percentage(room.discount_percentage, precision: 2) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.food_taxable_value) %></td>
+					<td class="number"> <%= number_to_percentage(room.cgst_rate_for_food, precision: 1) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.food_cgst) %></td>
+					<td class="number"> <%= number_to_percentage(room.sgst_rate_for_food, precision: 1) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.food_sgst) %></td>
+					<td></td>
+					<td></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.food_total_price) %></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="text"><li>Transportation and Guide charges</li></td>
+					<td class="text"></td>
+					<td class="number"><%= room.number_of_rooms %></td>
+					<td class="number"><%= room.number_of_nights %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.transportation_and_guide_rate) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.transportation_and_guide_value) %></td>
+					<td class="number"> <%= number_to_percentage(room.discount_percentage, precision: 2) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.transportation_and_guide_taxable_value) %></td>
+					<td class="number"> <%= number_to_percentage(room.cgst_rate_for_tour_operator_services, precision: 1) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.transportation_and_guide_cgst) %></td>
+					<td class="number"> <%= number_to_percentage(room.sgst_rate_for_tour_operator_services, precision: 1) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.transportation_and_guide_sgst) %></td>
+					<td></td>
+					<td></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.transportation_and_guide_total_price) %></td>
+				</tr>
 			<% end %>
-		</tr>
+		<% end %>
 	<% end %>
 	<% booking.vas_bookings.each do |vas_booking| %>
 		<tr>
 			<td></td>
-			<td class="text"><li><%= vas_booking.value_added_service %></li></td>
+			<td class="text"><%= vas_booking.value_added_service %></td>
+			<td class="text"></td>
 			<td class="number"><%= vas_booking.number_of_units %></td>
 			<td class="number"><%= vas_booking.every_day == 0 ? 1 : vas_booking.number_of_days %></td>
 			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
 			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.value) %></td>
-			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.discount) %></td>
+			<td class="number"><%= number_to_percentage(vas_booking.discount, precision: 2) %></td>
 			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.taxable_value) %></td>
 			<td class="number"><%= number_to_percentage(vas_booking.cgst_rate, precision: 1) %></td>
-			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.cgst) %></td>
+			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.cgst.round) %></td>
 			<td class="number"><%= number_to_percentage(vas_booking.sgst_rate, precision: 1) %></td>
-			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.sgst) %></td>
+			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.sgst.round) %></td>
 			<td></td>
 			<td></td>
 			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.total_price) %></td>
@@ -243,16 +303,17 @@
 	<tr>
 		<td class="sno"><%= serial_number %></td>
 		<td class="text"><%= vas_booking.value_added_service %></td>
+		<td class="text"></td>
 		<td class="number"><%= vas_booking.number_of_units %></td>
 		<td class="number"><%= vas_booking.every_day == 0 ? 1 : vas_booking.number_of_days %></td>
 		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
 		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.value) %></td>
-		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.discount) %></td>
+		<td class="number"><%= number_to_percentage(vas_booking.discount, precision: 2) %></td>
 		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.taxable_value) %></td>
 		<td class="number"><%= number_to_percentage(vas_booking.cgst_rate, precision: 1) %></td>
-		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.cgst) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.cgst.round) %></td>
 		<td class="number"><%= number_to_percentage(vas_booking.sgst_rate, precision: 1) %></td>
-		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.sgst) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.sgst.round) %></td>
 		<td></td>
 		<td></td>
 		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.total_price) %></td>
@@ -263,16 +324,20 @@
 	<tr>
 		<td class="sno"><%= serial_number %></td>
 		<td class="text">Taxi: <%= taxi_booking.taxi.model %></td>
+		<td class="text"></td>
 		<td class="number"><%= taxi_booking.number_of_vehicles %></td>
 		<td class="number"><%= taxi_booking.number_of_days %></td>
 		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.unit_price) %></td>
-		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.total_price) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.taxable_value) %></td>
 		<td class="number"><%= number_to_percentage(0, precision: 2) %></td>
-		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.total_price) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.taxable_value) %></td>
 		<td class="number"><%= number_to_percentage(@account_setting.cgst_rate_for_tour_operator_services, precision: 1) %></td>
-		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.cgst) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.cgst.round) %></td>
 		<td class="number"><%= number_to_percentage(@account_setting.sgst_rate_for_tour_operator_services, precision: 1) %></td>
-		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.sgst) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.sgst.round) %></td>
+		<td class="text"></td>
+		<td class="text"></td>
+		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.total_price) %></td>
 	</tr>
 	<% serial_number += 1 %>
 <% end %>
@@ -283,43 +348,44 @@
 		<td class="number"></td>
 		<td class="number"></td>
 		<td class="number"></td>
-		<td class="number"><%= number_to_currency_wo_symbol(@trip.discount + @trip.taxable_value) %></td>
-		<td class="number"><%= number_to_currency_wo_symbol(@trip.discount) %></td>
+		<td class="number"></td>
+		<td class="number"><%= number_to_currency_wo_symbol(@trip.discount + @trip.tac + @trip.taxable_value) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(@trip.discount + @trip.tac) %></td>
 		<td class="number"><%= number_to_currency_wo_symbol(@trip.taxable_value) %></td>
 		<td class="number"></td>
-		<td class="number"> <%= number_to_currency_wo_symbol(@trip.cgst) %></td>
+		<td class="number"> <%= number_to_currency_wo_symbol(@trip.cgst.round) %></td>
 		<td class="number"></td>
-		<td class="number"> <%= number_to_currency_wo_symbol(@trip.sgst) %></td>
+		<td class="number"> <%= number_to_currency_wo_symbol(@trip.sgst.round) %></td>
 		<td class="number"></td>
 		<td class="number"></td>
 		<td class="number"> <%= number_to_currency_wo_symbol(@trip.total_price) %></td>
 	</tr>
 
-<% if @trip.tds_on_tac > 0 %>
+<% if @trip.tds > 0 %>
 	<tr>
 		<td></td>
-		<td class="text">TDS on TAC</td>
-		<td colspan=12></td>
-		<td class="number"> <%= number_to_currency_wo_symbol(@trip.tds_on_tac) %></td>
+		<td class="bold">TDS</td>
+		<td colspan=13></td>
+		<td class="number"><span class="bold"><%= number_to_currency_wo_symbol(@trip.tds) %></span></td>
 	</tr>
 <% end %>
 	<tr>
 		<td></td>
 		<td class="bold">Total Payable</td>
-		<td colspan=12></td>
-		<td class="number"><span class="bold"> <%= number_to_currency_wo_symbol(@trip.total_payable) %></span></td>
+		<td colspan=13></td>
+		<td class="number"><span class="bold"><%= number_to_currency_wo_symbol(@trip.total_payable) %></span></td>
 	</tr>
 	<tr>
 		<td></td>
 		<td class="bold">Advance / Credit</td>
-		<td colspan=12></td>
-		<td class="number"><span class="bold"> <%= number_to_currency_wo_symbol(@trip.paid) %></span></td>
+		<td colspan=13></td>
+		<td class="number"><span class="bold"><%= number_to_currency_wo_symbol(@trip.paid) %></span></td>
 	</tr>
 	<tr>
 		<td></td>
 		<td class="bold">Balance</td>
-		<td colspan=12></td>
-		<td class="number"><span class="bold"> <%= number_to_currency_wo_symbol(@trip.balance_payment) %></span></td>
+		<td colspan=13></td>
+		<td class="number"><span class="bold"><%= number_to_currency_wo_symbol(@trip.balance_payment) %></span></td>
 	</tr>
 	<tr>
 		<td></td>
@@ -335,7 +401,7 @@
 			</p>
 
 		<% if @trip.checked_out == 0 %>
-			<% if @trip.tds_on_tac > 0 %>
+			<% if @trip.tds > 0 %>
 				<p class="footnote">
 					<span class="bold">PAN NUMBER is mandatory under section 139A (5B) of income tax Act 1961. It is obligatory for all persons responsible for deducting tax at source. </span><span class="red_text">If PAN has not provided by deductees, then TDS rate should be deducted at 20% or actual, whichever is higher.</span> 
 				</p>

@@ -31,7 +31,7 @@ class Trip < ActiveRecord::Base
 	validates :phone_number, allow_nil: true, :allow_blank => true, :phone_number_format => true
 
 	before_save :strip_whitespaces, :titleize, :update_end_date, :ensure_booking_dates_are_within_trip_dates,
-              :ensure_customer_exists, :update_tds_on_tac
+              :ensure_customer_exists, :update_total_price
 
 	before_update :update_payment_status_and_pay_by_date, :update_tds, :update_counter_for_tax_invoice
 
@@ -178,20 +178,12 @@ class Trip < ActiveRecord::Base
     guest_name_with_agency + " (" + start_date.to_s(:ddmonyy) + " to " + end_date.to_s(:ddmonyy) + ")"
   end
 
-	def total_price
-		price_for_vas + price_for_transport + price_for_rooms
-	end
-
   def tds_percent
     AccountSetting.find_by_account_id(account_id).tds_percent
   end
 
-	def final_price
-		total_price + tds_on_tac
-	end
-
 	def total_payable
-		total_price + tds_on_tac
+		total_price + tds
 	end
 
 	def balance_payment
@@ -241,6 +233,14 @@ class Trip < ActiveRecord::Base
     account_name_abbreviation = AccountSetting.find_by_account_id(account_id).name_abbreviation
     "#{account_name_abbreviation}/#{id}"
   end
+
+	def gst
+		(cgst + sgst).to_i
+	end
+
+	def total_price_excl_discount_and_taxes
+		(total_price + discount + tac - gst).to_i
+	end
 
 	private
 		def init
@@ -354,8 +354,7 @@ class Trip < ActiveRecord::Base
 			end
 		end
 
-		def update_tds_on_tac
-			self.tds_on_tac = (discount * tds_percent / 100).round
+		def update_total_price
+			self.total_price = price_for_vas + price_for_transport + price_for_rooms
 		end
-
 end

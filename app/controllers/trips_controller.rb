@@ -146,6 +146,8 @@ class TripsController < ApplicationController
 		trip = Trip.scoped_by_account_id(current_user.account_id).find(params[:trip_id])
 		if params[:type] == 'itinerary'
 			TripNotifier.itinerary(trip, current_user.id).deliver
+		elsif params[:type] == 'pro_forma_invoice'
+			TripNotifier.pro_forma_invoice(trip, current_user.id).deliver
 		elsif params[:type] == 'invoice'
 			TripNotifier.invoice(trip, current_user.id).deliver
 		elsif params[:type] == 'vouchers'

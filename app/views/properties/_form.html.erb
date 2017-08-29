@@ -28,14 +28,24 @@
 	<%= f.check_box :allow_online_availability_check %>
   </div>
   <div class="field">
-    <%= f.label :cgst_rate %><br />
-    <%= f.number_field :cgst_rate %>
-    <%= tooltip('CGST rate', :hover) %>
+    <%= f.label :cgst_rate_for_food %><br />
+    <%= f.number_field :cgst_rate_for_food %>
+    <%= tooltip('CGST rate for Food', :hover) %>
   </div>
   <div class="field">
-    <%= f.label :sgst_rate %><br />
-    <%= f.number_field :sgst_rate %>
-    <%= tooltip('SGST rate', :hover) %>
+    <%= f.label :sgst_rate_for_food %><br />
+    <%= f.number_field :sgst_rate_for_food %>
+    <%= tooltip('SGST rate for Food', :hover) %>
+  </div>
+  <div class="field">
+    <%= f.label :cgst_rate_for_tour_operator_services %><br />
+    <%= f.number_field :cgst_rate_for_tour_operator_services %>
+    <%= tooltip('CGST rate for Tour Operator Services', :hover) %>
+  </div>
+  <div class="field">
+    <%= f.label :sgst_rate_for_tour_operator_services %><br />
+    <%= f.number_field :sgst_rate_for_tour_operator_services %>
+    <%= tooltip('SGST rate for Tour Operator Services', :hover) %>
   </div>
   <div class="field">
     <%= f.label :price_for_driver %><br />

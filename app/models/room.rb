@@ -9,7 +9,7 @@ class Room < ActiveRecord::Base
 	before_validation :set_defaults_if_nil, :update_check_in_date, :update_number_of_nights,
 		:update_check_out_date, :update_account_id
 
-	validates :occupancy, :number_of_rooms, :number_of_adults, presence: true
+	validates :occupancy, :number_of_rooms, presence: true
 	validates :occupancy, :inclusion => { :in => ROOM_OCCUPANCY_TYPES,
 		:message => ": \"%{value}\" is not a valid option" }
 	validates :number_of_adults, allow_nil: true,
@@ -27,11 +27,13 @@ class Room < ActiveRecord::Base
 
 	after_validation :update_line_items
 
-	before_create :update_number_of_adults, :update_room_rate, :update_taxable_value, 
-							:update_cgst, :update_sgst, :update_total_price
+	before_create :update_number_of_adults, :update_room_rate, 
+							:update_food_rate, :update_lodging_rate, :update_transportation_and_guide_rate,
+							:update_taxable_value, :update_cgst, :update_sgst, :update_total_price, :update_discount
 
-	before_update :update_number_of_adults, :update_room_rate, :update_discount, :update_taxable_value,
-							 :update_cgst, :update_sgst, :update_total_price
+	before_update :update_number_of_adults, :update_room_rate, 
+							:update_food_rate, :update_lodging_rate, :update_transportation_and_guide_rate,
+							:update_taxable_value, :update_cgst, :update_sgst, :update_total_price, :update_discount
 
 	before_destroy :ensure_payments_are_not_made
 
@@ -39,31 +41,104 @@ class Room < ActiveRecord::Base
 		booking.meal_plan
 	end
 
-	def food_charges
+	def food_value
+		food_rate * number_of_rooms * number_of_nights
+	end
+
+	def transportation_and_guide_value
+		transportation_and_guide_rate * number_of_rooms * number_of_nights
+	end
+
+	def lodging_value
+		lodging_rate * number_of_rooms * number_of_nights
+	end
+
+	def food_discount
+		(food_value * discount_percentage / 100.0).round
+	end
+
+	def transportation_and_guide_discount
+		(transportation_and_guide_value * discount_percentage / 100.0).round
+	end
+
+	def lodging_discount
+		(lodging_value * discount_percentage / 100.0).round
+	end
+
+	def food_taxable_value
+		(food_value * (100 - discount_percentage) / 100.0).round
+	end
+
+	def transportation_and_guide_taxable_value
+		(transportation_and_guide_value * (100 - discount_percentage) / 100.0).round
+	end
+
+	def lodging_taxable_value
 		if cancelled == 1
-			0
+			cancellation_charge
 		else
-			room_type.price(occupancy, number_of_adults, number_of_children_between_5_and_12_years,
-				number_of_children_below_5_years, check_in_date, meal_plan, "FOOD") * number_of_nights * number_of_rooms
+			(lodging_value * (100 - discount_percentage) / 100.0).round
 		end
 	end
 
-	def transportation_and_guide_charges
-		if cancelled == 1
-			0
-		else
-			room_type.price(occupancy, number_of_adults, number_of_children_between_5_and_12_years, 
-				number_of_children_below_5_years, check_in_date, meal_plan, 
-				"TRANSPORTATION_AND_GUIDE") * number_of_nights * number_of_rooms
-		end
+	def cgst_rate_for_food
+		room_type.property.cgst_rate_for_food
 	end
 
-	def lodging_charges
-		if cancelled == 1
-			0
-		else
-			total_price - transportation_and_guide_charges - food_charges
-		end
+	def sgst_rate_for_food
+		room_type.property.sgst_rate_for_food
+	end
+
+	def cgst_rate_for_tour_operator_services
+		room_type.property.cgst_rate_for_tour_operator_services
+	end
+
+	def sgst_rate_for_tour_operator_services
+		room_type.property.sgst_rate_for_tour_operator_services
+	end
+
+	def cgst_rate
+		room_type.cgst_rate
+	end
+
+	def sgst_rate
+		room_type.sgst_rate
+	end
+
+	def food_cgst
+		(food_taxable_value * cgst_rate_for_food / 100.0).round
+	end
+
+	def food_sgst
+		(food_taxable_value * sgst_rate_for_food / 100.0).round
+	end
+
+	def transportation_and_guide_cgst
+		(transportation_and_guide_taxable_value * cgst_rate_for_tour_operator_services / 100.0).round
+	end
+
+	def transportation_and_guide_sgst
+		(transportation_and_guide_taxable_value * sgst_rate_for_tour_operator_services / 100.0).round
+	end
+
+	def lodging_cgst
+		(lodging_taxable_value * cgst_rate / 100.0).round
+	end
+
+	def lodging_sgst
+		(lodging_taxable_value * sgst_rate / 100.0).round
+	end
+
+	def food_total_price
+		food_taxable_value + food_cgst + food_sgst
+	end
+
+	def transportation_and_guide_total_price
+		transportation_and_guide_taxable_value + transportation_and_guide_cgst + transportation_and_guide_sgst
+	end
+
+	def lodging_total_price
+		lodging_taxable_value + lodging_cgst + lodging_sgst
 	end
 
 	def guests_per_room
@@ -85,15 +160,15 @@ class Room < ActiveRecord::Base
 	end
 
 	def value
-		cancelled == 1 ? cancellation_charge : room_rate * number_of_rooms * number_of_nights
+		food_value + transportation_and_guide_value + lodging_value
 	end
 
-	def cgst_rate
-		room_type.cgst_rate
-	end
-
-	def sgst_rate
-		room_type.sgst_rate
+	def total_price_excl_discount_and_tax
+		if cancelled == 1
+			cancellation_charge
+		else
+			room_rate * number_of_rooms * number_of_nights
+		end
 	end
 
 	private
@@ -201,32 +276,68 @@ class Room < ActiveRecord::Base
 		end
 
 		def update_room_rate
-			if booking.trip.payment_status == Trip::NOT_PAID or room_rate == nil
-				self.room_rate = room_type.price(occupancy, number_of_adults, number_of_children_between_5_and_12_years,
+			if cancelled == 1
+				self.room_rate = 0
+			else
+				if booking.trip.payment_status == Trip::NOT_PAID or room_rate == nil
+					self.room_rate = room_type.price(occupancy, number_of_adults, number_of_children_between_5_and_12_years,
 						number_of_children_below_5_years, check_in_date, meal_plan, "TOTAL_PRICE")
+				end
+			end
+		end
+
+		def update_food_rate
+			if cancelled == 1
+				self.food_rate = 0
+			else
+				if booking.trip.payment_status == Trip::NOT_PAID or room_rate == nil
+					self.food_rate = room_type.price(occupancy, number_of_adults, number_of_children_between_5_and_12_years,
+						number_of_children_below_5_years, check_in_date, meal_plan, "FOOD")
+				end
+			end
+		end
+
+		def update_transportation_and_guide_rate
+			if cancelled == 1
+				self.transportation_and_guide_rate = 0
+			else
+				if booking.trip.payment_status == Trip::NOT_PAID or room_rate == nil
+					self.transportation_and_guide_rate = room_type.price(occupancy, number_of_adults, 
+						number_of_children_between_5_and_12_years, number_of_children_below_5_years, 
+						check_in_date, meal_plan, "TRANSPORTATION_AND_GUIDE")
+				end
+			end
+		end
+
+		def update_lodging_rate
+			if cancelled == 1
+				self.lodging_rate = 0
+			else
+				if booking.trip.payment_status == Trip::NOT_PAID or room_rate == nil
+					self.lodging_rate = room_type.price(occupancy, number_of_adults, number_of_children_between_5_and_12_years, 
+						number_of_children_below_5_years, check_in_date, meal_plan, "LODGING")
+				end
 			end
 		end
 
 		def update_discount
 			if cancelled == 1
 				self.discount = 0
+			else
+				self.discount = food_discount + transportation_and_guide_discount + lodging_discount
 			end
 		end
 
 		def update_taxable_value
-			if cancelled == 1
-				self.taxable_value = cancellation_charge
-			else
-				self.taxable_value = value - discount
-			end
+			self.taxable_value = food_taxable_value + transportation_and_guide_taxable_value + lodging_taxable_value
 		end
 
 		def update_cgst
-			self.cgst = (taxable_value * cgst_rate.to_f / 100).round
+			self.cgst = food_cgst + transportation_and_guide_cgst + lodging_cgst
 		end
 
 		def update_sgst
-			self.sgst = (taxable_value * sgst_rate.to_f / 100).round
+			self.sgst = food_sgst + transportation_and_guide_sgst + lodging_sgst
 		end
 
 		def update_total_price
@@ -236,7 +347,7 @@ class Room < ActiveRecord::Base
 	def update_vat
 		vat_rate = room_type.property.vat_rate.to_f / 100.0
 
-		self.vat = ((food_charges / (1 + vat_rate)) * vat_rate).ceil
+		self.vat = ((food_value / (1 + vat_rate)) * vat_rate).ceil
 	end
 
 	def update_luxury_tax
@@ -245,7 +356,7 @@ class Room < ActiveRecord::Base
 
 		total_lodging_tax_rate = luxury_tax_rate + service_tax_rate
 
-		self.luxury_tax = ((lodging_charges / (1 + total_lodging_tax_rate)) * luxury_tax_rate).ceil
+		self.luxury_tax = ((lodging_value / (1 + total_lodging_tax_rate)) * luxury_tax_rate).ceil
 	end
 
 	def update_service_tax
@@ -255,8 +366,8 @@ class Room < ActiveRecord::Base
 
 		total_lodging_tax_rate = luxury_tax_rate + service_tax_rate
 
-		self.service_tax = (((lodging_charges / (1 + total_lodging_tax_rate)) * service_tax_rate) +
-		((transportation_and_guide_charges / (1 + tour_operator_service_tax_rate)) * tour_operator_service_tax_rate)).ceil
+		self.service_tax = (((lodging_value / (1 + total_lodging_tax_rate)) * service_tax_rate) +
+		((transportation_and_guide_value / (1 + tour_operator_service_tax_rate)) * tour_operator_service_tax_rate)).ceil
 	end
 
 	def ensure_payments_are_not_made

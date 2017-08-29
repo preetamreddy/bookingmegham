@@ -9,10 +9,14 @@
 <%= render 'payments' %>
 
 <div class="action_container">
-	<%= link_to 'Generate Invoice', email_trip_path(:trip_id => @trip.id,
+	<%= link_to 'Generate Pro forma Invoice', email_trip_path(:trip_id => @trip.id,
+				:type => 'pro_forma_invoice') %>
+	<%= link_to 'Generate Tax Invoice', email_trip_path(:trip_id => @trip.id,
 				:type => 'invoice') %>
 	<%= link_to 'Generate Vouchers', email_trip_path(:trip_id => @trip.id,
 				:type => 'vouchers') %>
+	<%= link_to 'Generate Pre GST Invoice', email_trip_path(:trip_id => @trip.id,
+				:type => 'pre_gst_invoice') %>
 </div>
 
 <%= link_to 'Back to Trip Listing', trips_path, :class => "back_link" %>

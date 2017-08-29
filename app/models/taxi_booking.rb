@@ -43,6 +43,14 @@ class TaxiBooking < ActiveRecord::Base
 		AccountSetting.find_by_account_id(account_id).sgst_rate_for_tour_operator_services
 	end
 
+	def gst
+		(cgst + sgst).to_i
+	end
+
+	def total_price_excl_taxes
+		(total_price - gst).to_i
+	end
+
 	private
 		def update_end_date
 			self.end_date = start_date + number_of_days - 1

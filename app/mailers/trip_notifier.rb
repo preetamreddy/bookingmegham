@@ -20,6 +20,24 @@ class TripNotifier < ActionMailer::Base
 		end
   end
 
+  def pro_forma_invoice(trip, user_id)
+		@trip = trip
+		@user = User.find(user_id)
+    @account_setting = AccountSetting.find_by_account_id(@user.account_id)
+
+		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",
+				subject: "Pro forma Invoice for trip, #{@trip.customer.name} ##{@trip.id} (ref: #{@trip.name})") do |format|
+			format.text
+			format.pdf do
+				attachments["ProFormaInvoice #{@trip.invoice_number} (ref: #{@trip.name}).pdf"] = 
+					WickedPdf.new.pdf_from_string(
+					render_to_string(:pdf => "pro_forma_invoice", 
+					:template 						=> 'trip_notifier/pro_forma_invoice.pdf.erb',
+					:layout								=> 'layouts/default.html.erb'))
+			end
+		end
+  end
+
   def invoice(trip, user_id)
 		@trip = trip
 		@user = User.find(user_id)
@@ -67,7 +85,7 @@ class TripNotifier < ActionMailer::Base
 			format.pdf do
 				attachments["Invoice #{@trip.invoice_number} (ref: #{@trip.name}).pdf"] = 
 					WickedPdf.new.pdf_from_string(
-					render_to_string(:pdf => "invoice", 
+					render_to_string(:pdf => "pre_gst_invoice", 
 					:template 						=> 'trip_notifier/pre_gst_invoice.pdf.erb',
 					:layout								=> 'layouts/default.html.erb'))
 			end

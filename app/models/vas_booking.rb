@@ -2,7 +2,7 @@ class VasBooking < ActiveRecord::Base
 	VAT = 'VAT'
 	ST = 'ST'
 
-	TAX_TYPES = [VAT, ST]
+	TAX_TYPES = ["0-PERCENT", "5-PERCENT", "12-PERCENT", "18-PERCENT", "28-PERCENT", "VAT", "ST"]
 
 	belongs_to :trip
 	belongs_to :booking
@@ -15,7 +15,7 @@ class VasBooking < ActiveRecord::Base
 		allow_nil: true, only_integer: true, greater_than: 0,
 		message: ": %{value} should be a number greater than 0"
 
-	before_save :update_taxable_value, :update_cgst, :update_sgst, :update_total_price
+	before_save :update_discount, :update_taxable_value, :update_cgst, :update_sgst, :update_total_price
 
 	before_create :set_account_id
 
@@ -40,18 +40,30 @@ class VasBooking < ActiveRecord::Base
 	end
 
 	def cgst_rate
-		if trip_id
-			AccountSetting.find_by_account_id(trip.account_id).cgst_rate_for_hotel_services
-		elsif booking_id
-			booking.property.cgst_rate
+		if tax_type == "0-PERCENT"
+			0
+		elsif tax_type == "5-PERCENT"
+			2.5	
+		elsif tax_type == "12-PERCENT"
+			6	
+		elsif tax_type == "18-PERCENT"
+			9	
+		elsif tax_type == "28-PERCENT"
+			14	
 		end
 	end
 
 	def sgst_rate
-		if trip_id
-			AccountSetting.find_by_account_id(trip.account_id).sgst_rate_for_hotel_services
-		elsif booking_id
-			booking.property.sgst_rate
+		if tax_type == "0-PERCENT"
+			0
+		elsif tax_type == "5-PERCENT"
+			2.5	
+		elsif tax_type == "12-PERCENT"
+			6	
+		elsif tax_type == "18-PERCENT"
+			9	
+		elsif tax_type == "28-PERCENT"
+			14	
 		end
 	end
 
@@ -71,17 +83,29 @@ class VasBooking < ActiveRecord::Base
 		end
 	end
 
+	def gst
+		(cgst + sgst).to_i
+	end
+
+	def total_price_excl_discount_and_taxes
+		(total_price - gst + discount).to_i
+	end
+
 	private
+		def update_discount
+			self.discount = (value * discount_percentage / 100.0).round
+		end
+
 		def update_taxable_value
-				self.taxable_value = value - discount
+			self.taxable_value = (value * (100 - discount_percentage) / 100.0).round
 		end
 
 		def update_cgst
-			self.cgst = (taxable_value * cgst_rate.to_f / 100).round
+			self.cgst = (taxable_value * cgst_rate.to_f / 100.0).round
 		end
 
 		def update_sgst
-			self.sgst = (taxable_value * sgst_rate.to_f / 100).round
+			self.sgst = (taxable_value * sgst_rate.to_f / 100.0).round
 		end
 
 		def update_total_price

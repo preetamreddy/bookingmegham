@@ -32,8 +32,6 @@
 					<th class="currency">CGST</th>
 					<th class="currency">SGST</th>
 					<th class="currency">Total</th>
-					<th class="text">Cancelled?</th>
-					<th class="currency">Cancellation fee</th>
 				</tr>
 			
 				<% booking.rooms.order(:cancelled).each do |room| %>
@@ -49,8 +47,6 @@
 						<td class="currency"><%= number_to_currency(room.cgst.round) %></td>
 						<td class="currency"><%= number_to_currency(room.sgst.round) %></td>
 						<td class="currency"><%= number_to_currency(room.total_price) %></td>
-						<td class="text"><%= room.cancelled.to_english %></td>
-						<td class="currency"><%= number_to_currency(room.cancellation_charge) %></td>
 					</tr>
 				<% end %>
 			  </table>
@@ -105,6 +101,7 @@
 				<b>Services:</b>
 				<table class="nested_table">
 					<tr>
+						<th class="text">Tax type</th>
 						<th class="text">Name</th>
 						<th class="number">Unit price</th>
 						<th class="number">#</th>
@@ -119,6 +116,7 @@
 				
 					<% booking.vas_bookings.each do |vas_booking| %>
 						<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+							<td class="text"><%= vas_booking.tax_type %></td>
 							<td class="text"><%= vas_booking.value_added_service %></td>
 							<td class="number"><%= number_to_currency(vas_booking.unit_price) %></td>
 							<td class="number"><%= vas_booking.number_of_units %></td>

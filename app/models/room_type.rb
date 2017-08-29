@@ -39,7 +39,9 @@ class RoomType < ActiveRecord::Base
 				rate = rates[:price_for_single_occupancy]
 			elsif return_value == "FOOD"
 				rate = rates[:price_for_food_on_single]
-			else
+			elsif return_value == "LODGING"
+				rate = rates[:price_for_lodging]
+			elsif return_value == "TRANSPORTATION_AND_GUIDE"
 				rate = rates[:price_for_transportation_and_guide]
 			end
 			if number_of_adults > 1
@@ -50,7 +52,9 @@ class RoomType < ActiveRecord::Base
 				rate = rates[:price_for_double_occupancy]
 			elsif return_value == "FOOD"
 				rate = rates[:price_for_food_on_double]
-			else
+			elsif return_value == "LODGING"
+				rate = rates[:price_for_lodging]
+			elsif return_value == "TRANSPORTATION_AND_GUIDE"
 				rate = rates[:price_for_transportation_and_guide]
 			end
 			if number_of_adults > 2

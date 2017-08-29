@@ -1,4 +1,8 @@
 <div class="nested_form_row">
+   <%= f.label :tax_type, "Tax Type" %>
+   <%= f.select :tax_type, VasBooking::TAX_TYPES,
+      prompt: 'Select Tax Type' %>
+
 	<%= f.label :every_day, "All days" %>
 	<%= f.check_box :every_day, :default => 0 %>
 
@@ -10,8 +14,8 @@
 	<%= f.label :number_of_units, "#" %>
 	<%= f.number_field :number_of_units, min: 0, max: 99 %>
 
-	<%= f.label :discount, "Discount" %>
-	<%= f.number_field :discount, min: 0, max: 100 %>
+	<%= f.label :discount_percentage, "Discount" %>
+	<%= f.number_field :discount_percentage, min: 0, max: 100 %>
 
 	<%= f.link_to_remove "x" %>
 </div>

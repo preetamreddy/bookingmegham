@@ -18,14 +18,20 @@
   <span class="saved_value"><%= @property.allow_online_availability_check.to_english %></span>
 </p>
 <p>
-  <b>CGST rate:</b>
-	<span class="saved_value"><%= number_to_percentage(@property.cgst_rate,
-						:strip_insignificant_zeros => true) %></span>
+  <b>CGST rate for Food:</b>
+	<span class="saved_value"><%= number_to_percentage(@property.cgst_rate_for_food, :precision => 1) %></span>
 </p>
 <p>
-  <b>SGST rate:</b>
-	<span class="saved_value"><%= number_to_percentage(@property.sgst_rate,
-						:strip_insignificant_zeros => true) %></span>
+  <b>SGST rate for Food:</b>
+	<span class="saved_value"><%= number_to_percentage(@property.sgst_rate_for_food, :precision => 1) %></span>
+</p>
+<p>
+  <b>CGST rate for Tour Operator Services:</b>
+	<span class="saved_value"><%= number_to_percentage(@property.cgst_rate_for_tour_operator_services, :precision => 1) %></span>
+</p>
+<p>
+  <b>SGST rate for Tour Operator Services:</b>
+	<span class="saved_value"><%= number_to_percentage(@property.sgst_rate_for_tour_operator_services, :precision => 1) %></span>
 </p>
 <p>
   <b>Price for driver:</b>

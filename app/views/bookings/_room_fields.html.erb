@@ -23,7 +23,7 @@
 			  :disabled => cannot_edit_room %>
 
 	<%= f.label :discount, "Discount" %>
-	<%= f.number_field :discount, min: 0 %>
+	<%= f.number_field :discount_percentage, min: 0, max: 100 %>
 
 	<% if can_edit_room %> 
 		<%= f.link_to_remove "x" %>

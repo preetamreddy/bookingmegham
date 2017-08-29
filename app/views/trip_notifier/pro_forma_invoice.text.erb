@@ -1,0 +1,15 @@
+To: <%= @trip.customer.email_id %>
+
+Dear <%= @trip.customer.last_name_with_title %>
+
+Thank you for planning your holiday with <%= @account_setting.name %>.
+
+Attached is the pro forma invoice for your trip, #<%= @trip.id %>, (ref: <%= @trip.name %>).
+
+With warm regards,
+<%= @user.advisor.name %>
+<%= @user.advisor.email_id %>
+<%= @account_setting.phone_number_1 %>
+<%= @account_setting.name %>
+<%= @account_setting.postal_address %>
+<%= @account_setting.url %>

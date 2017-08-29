@@ -42,6 +42,7 @@
 		<b>Services:</b>
 		<table class="nested_table">
 			<tr>
+				<th class="text">Tax type</th>
 				<th class="text">Name</th>
 				<th class="number">Unit price</th>
 				<th class="number">#</th>
@@ -56,6 +57,7 @@
 	
 			<% @trip.vas_bookings.each do |vas_booking| %>
 				<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+					<td class="text"><%= vas_booking.tax_type %></td>
 					<td class="text"><%= vas_booking.value_added_service %></td>
 					<td class="number"><%= number_to_currency(vas_booking.unit_price) %></td>
 					<td class="number"><%= vas_booking.number_of_units %></td>
@@ -72,13 +74,22 @@
 	<% end %>
 	
 	<p>
-	  <b>Value:</b>
-    <span class="saved_value"><%= number_to_currency(@trip.discount + @trip.taxable_value) %></span>
+		<b>Value:</b>
+		<% if @trip.taxable_value > 0 %>
+			<span class="saved_value"><%= number_to_currency(@trip.taxable_value + @trip.discount + @trip.tac) %></span>
+		<% else %>
+			<span class="saved_value"><%= number_to_currency(@trip.total_price + @trip.discount + @trip.tac) %></span>
+		<% end %>
 	</p>
 	
 	<p>
-	  <b>Discount / TAC:</b>
+	  <b>Discount:</b>
     <span class="saved_value"><%= number_to_currency(@trip.discount) %></span>
+	</p>
+	
+	<p>
+	  <b>TAC:</b>
+    <span class="saved_value"><%= number_to_currency(@trip.tac) %></span>
 	</p>
 	
 	<p>
@@ -103,7 +114,7 @@
 	
 	<p>
 	  <b>TDS on TAC:</b>
-    <span class="saved_value"><%= number_to_currency(@trip.tds_on_tac) %></span>
+    <span class="saved_value"><%= number_to_currency(@trip.tds) %></span>
 	</p>
 	
 	<p>

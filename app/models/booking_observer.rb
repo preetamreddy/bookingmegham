@@ -37,13 +37,24 @@ class BookingObserver < ActiveRecord::Observer
 				delta_price_for_vas, delta_price_for_rooms)
 		if delta_discount != 0 or delta_taxable_value != 0 or delta_cgst != 0 or delta_sgst != 0 or delta_price_for_vas != 0 or delta_price_for_rooms != 0
 			trip = Trip.find(trip_id)
-			trip.update_attributes(
-			  	:discount => trip.discount + delta_discount,
-			  	:taxable_value => trip.taxable_value + delta_taxable_value,
-			  	:cgst => trip.cgst + delta_cgst,
-			  	:sgst => trip.sgst + delta_sgst,
-				:price_for_vas => trip.price_for_vas + delta_price_for_vas,
-				:price_for_rooms => trip.price_for_rooms + delta_price_for_rooms)
+
+			if trip.is_direct_booking?
+				trip.update_attributes(
+			  		:discount => trip.discount + delta_discount,
+			  		:taxable_value => trip.taxable_value + delta_taxable_value,
+			  		:cgst => trip.cgst + delta_cgst,
+			  		:sgst => trip.sgst + delta_sgst,
+					:price_for_vas => trip.price_for_vas + delta_price_for_vas,
+					:price_for_rooms => trip.price_for_rooms + delta_price_for_rooms)
+			else
+				trip.update_attributes(
+			  		:tac => trip.tac + delta_discount,
+			  		:taxable_value => trip.taxable_value + delta_taxable_value,
+			  		:cgst => trip.cgst + delta_cgst,
+			  		:sgst => trip.sgst + delta_sgst,
+					:price_for_vas => trip.price_for_vas + delta_price_for_vas,
+					:price_for_rooms => trip.price_for_rooms + delta_price_for_rooms)
+			end
 		end
 	end
 end
