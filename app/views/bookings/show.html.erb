@@ -88,6 +88,7 @@
 		<tr>
 			<th class="text">Tax type</th>
 			<th class="text">Name</th>
+			<th class="text">HSN</th>
 			<th class="number">Unit price</th>
 			<th class="number">#</th>
 			<th class="text">All days</th>
@@ -103,6 +104,7 @@
 			<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 				<td class="text"><%= vas_booking.tax_type %></td>
 				<td class="text"><%= vas_booking.value_added_service %></td>
+				<td class="text"><%= vas_booking.hsn %></td>
 				<td class="number"><%= number_to_currency(vas_booking.unit_price) %></td>
 				<td class="number"><%= vas_booking.number_of_units %></td>
 				<td class="text"><%= vas_booking.every_day.to_english %></td>

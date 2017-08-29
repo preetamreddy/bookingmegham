@@ -200,7 +200,7 @@
 				<tr>
 					<td></td>
 					<td class="text"><li>Cancellation fee: <%= room.room_type.room_type %> @ <%= room.number_of_adults %> / room - <%= room.booking.meal_plan %></li></td>
-					<td class="text"></td>
+					<td class="text"><%= @account_setting.hsn_for_lodging %></td>
 					<td class="number"><%= room.number_of_rooms %></td>
 					<td class="number"><%= room.number_of_nights %></td>
 					<td class="number"> <%= number_to_currency_wo_symbol(room.room_rate) %></td>
@@ -223,7 +223,7 @@
 				<tr>
 					<td></td>
 					<td class="text"><li>Lodging charges</li></td>
-					<td class="text"></td>
+					<td class="text"><%= @account_setting.hsn_for_lodging %></td>
 					<td class="number"><%= room.number_of_rooms %></td>
 					<td class="number"><%= room.number_of_nights %></td>
 					<td class="number"> <%= number_to_currency_wo_symbol(room.lodging_rate) %></td>
@@ -241,7 +241,7 @@
 				<tr>
 					<td></td>
 					<td class="text"><li>Food charges - <%= room.booking.meal_plan %></li></td>
-					<td class="text"></td>
+					<td class="text"><%= @account_setting.hsn_for_food %></td>
 					<td class="number"><%= room.number_of_rooms %></td>
 					<td class="number"><%= room.number_of_nights %></td>
 					<td class="number"> <%= number_to_currency_wo_symbol(room.food_rate) %></td>
@@ -259,7 +259,7 @@
 				<tr>
 					<td></td>
 					<td class="text"><li>Transportation and Guide charges</li></td>
-					<td class="text"></td>
+					<td class="text"><%= @account_setting.hsn_for_guide_services %></td>
 					<td class="number"><%= room.number_of_rooms %></td>
 					<td class="number"><%= room.number_of_nights %></td>
 					<td class="number"> <%= number_to_currency_wo_symbol(room.transportation_and_guide_rate) %></td>
@@ -281,7 +281,7 @@
 		<tr>
 			<td></td>
 			<td class="text"><%= vas_booking.value_added_service %></td>
-			<td class="text"></td>
+			<td class="text"><%= vas_booking.hsn %></td>
 			<td class="number"><%= vas_booking.number_of_units %></td>
 			<td class="number"><%= vas_booking.every_day == 0 ? 1 : vas_booking.number_of_days %></td>
 			<td class="number"><%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
@@ -303,7 +303,7 @@
 	<tr>
 		<td class="sno"><%= serial_number %></td>
 		<td class="text"><%= vas_booking.value_added_service %></td>
-		<td class="text"></td>
+		<td class="text"><%= vas_booking.hsn %></td>
 		<td class="number"><%= vas_booking.number_of_units %></td>
 		<td class="number"><%= vas_booking.every_day == 0 ? 1 : vas_booking.number_of_days %></td>
 		<td class="number"><%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
@@ -324,6 +324,7 @@
 	<tr>
 		<td class="sno"><%= serial_number %></td>
 		<td class="text">Taxi: <%= taxi_booking.taxi.model %></td>
+		<td class="text"><%= @account_setting.hsn_for_transportation %></td>
 		<td class="text"></td>
 		<td class="number"><%= taxi_booking.number_of_vehicles %></td>
 		<td class="number"><%= taxi_booking.number_of_days %></td>
