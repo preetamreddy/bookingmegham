@@ -13,7 +13,7 @@ class Room < ActiveRecord::Base
 	validates :occupancy, :inclusion => { :in => ROOM_OCCUPANCY_TYPES,
 		:message => ": \"%{value}\" is not a valid option" }
 	validates :number_of_adults, allow_nil: true,
-		:inclusion => { :in => [1, 2],
+		:inclusion => { :in => [1, 2, 3, 4],
 		:message => ": %{value} is not a valid option" }
 	validates_numericality_of :number_of_rooms,
 		allow_nil: true, only_integer: true, greater_than: 0,
