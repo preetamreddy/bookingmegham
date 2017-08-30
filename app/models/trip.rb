@@ -348,7 +348,7 @@ class Trip < ActiveRecord::Base
 
 		def update_counter_for_tax_invoice
 			account_setting = AccountSetting.find_by_account_id(account_id)
-			if checked_out_changed?
+			if checked_out_changed? and checked_out == 1
 				self.counter_for_tax_invoice = account_setting.counter_for_tax_invoice
 				AccountSetting.update_counters account_setting.id, :counter_for_tax_invoice => 1
 			end
