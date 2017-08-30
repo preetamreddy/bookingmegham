@@ -2,20 +2,17 @@ class Property < ActiveRecord::Base
 	has_many :room_types
 	has_many :bookings
 
-	validates :name, :url, :price_for_driver, :service_tax_rate, presence: true
+	validates :name, :url, :price_for_driver, presence: true
 	validates_uniqueness_of :name, :scope => :account_id, :case_sensitive => false
 	validates_numericality_of :price_for_driver,
 		only_integer: true, greater_than_or_equal_to: 0,
-		message: "should be a number greater than or equal to 0"
-	validates_numericality_of :service_tax_rate, allow_nil: true, greater_than_or_equal_to: 0,
 		message: "should be a number greater than or equal to 0"
 	validates :phone_number, :phone_number_2,
 		:format => { :with => /^[\+]?[\d\s]*$/, :allow_blank => true, :message => "is not valid" }
 	
 	before_save :titleize, :strip_whitespaces
 
-	before_destroy 	:ensure_does_not_have_room_types,
-    :ensure_does_not_have_bookings
+	before_destroy	:ensure_does_not_have_room_types, :ensure_does_not_have_bookings
 
 	def number_of_rooms
 		number_of_rooms = room_types.to_a.sum { |room_type| 
