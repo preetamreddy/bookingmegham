@@ -71,6 +71,10 @@
     	<%= @trip.payment_status %>
 		</span></p>
 	<% end %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+    <%= f.label :round_off, "Round off" %><br />
+    <%= f.number_field :round_off %>
+	<% end %>
 	<%= hidden_div_if((@trip.new_record?), class: "field") do %>
     <%= f.label :total_payable %><br />
 		<p><span class="highlight">

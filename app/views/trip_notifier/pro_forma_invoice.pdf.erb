@@ -213,10 +213,17 @@
 					<td colspan=3></td>
 					<td class="number"><span class="bold"><%= number_to_currency_wo_symbol(@trip.gst) %></span></td>
 				</tr>
+				<% if @trip.round_off != 0 %>
+					<tr>
+						<td colspan=2 class="bold">Round-off</td>
+						<td colspan=3></td>
+						<td class="number"><span class="bold"><%= number_to_currency_wo_symbol(@trip.round_off) %></span></td>
+					</tr>
+				<% end %>
 				<tr>
 					<td colspan=2 class="bold">Total Payable</td>
 					<td colspan=3></td>
-					<td class="number"><span class="bold"><%= number_to_currency_wo_symbol(@trip.total_payable) %></span></td>
+					<td class="number" style="border-top: 1px solid #000;"><span class="bold"><%= number_to_currency_wo_symbol(@trip.total_payable) %></span></td>
 				</tr>
 				<tr>
 					<td colspan=2 class="bold">Advance / Credit</td>

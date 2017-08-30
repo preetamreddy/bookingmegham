@@ -183,7 +183,7 @@ class Trip < ActiveRecord::Base
   end
 
 	def total_payable
-		total_price + tds
+		total_price + tds + round_off
 	end
 
 	def balance_payment
