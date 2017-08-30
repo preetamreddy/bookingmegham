@@ -116,9 +116,9 @@
 				<tr>
 					<th class="text">S No</th>
 					<th class="text">Particulars</th>
+					<th class="number">Qty.</th>
 					<th class="number">Nights</th>
-					<th class="number">Rooms</th>
-					<th class="number">Unit cost</th>
+					<th class="number">Rate</th>
 					<th class="number">Amount</th>
 				</tr>
 				<tr>
@@ -141,8 +141,8 @@
 				<% else %>
                 			<td class="text"><li><%= 'Cancellation fee: ' if room.cancelled == 1 %><%= room.room_type.room_type %> @ <%= room.number_of_adults %> + <%= room.number_of_children_between_5_and_12_years %> / room</li></td>
 				<% end %>
-				<td class="number"><%= room.number_of_nights %></td>
 				<td class="number"><%= room.number_of_rooms %></td>
+				<td class="number"><%= room.number_of_nights %></td>
 				<td class="number"> <%= number_to_currency_wo_symbol(room.room_rate) %></td>
 				<td class="number"> <%= number_to_currency_wo_symbol(room.total_price_excl_discount_and_tax) %></td>
 			<% end %>
@@ -151,9 +151,9 @@
 					<% booking.vas_bookings.each do |vas_booking| %>
 						<tr>
 							<td></td>
-							<td class="text"><li><%= vas_booking.value_added_service %> (<%= vas_booking.number_of_units %>)</li></td>
-							<td></td>
-							<td></td>
+							<td class="text"><li><%= vas_booking.value_added_service %></li></td>
+							<td class="number"><%= vas_booking.number_of_units %></td>
+							<td class="number"><%= vas_booking.every_day == 0 ? 1 : vas_booking.number_of_days %></td>
 							<td class="number"> <%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
 							<td class="number"> <%= number_to_currency_wo_symbol(vas_booking.total_price_excl_discount_and_taxes) %></td>
 						</tr>
@@ -163,9 +163,9 @@
 				<% @trip.vas_bookings.each do |vas_booking| %>
 					<tr>
 						<td class="sno"><%= serial_number %></td>
-						<td class="text"><%= vas_booking.value_added_service %> (<%= vas_booking.number_of_units %>)</td>
-						<td></td>
-						<td></td>
+						<td class="text"><%= vas_booking.value_added_service %></td>
+						<td class="number"><%= vas_booking.number_of_units %></td>
+						<td class="number"><%= vas_booking.every_day == 0 ? 1 : vas_booking.number_of_days %></td>
 						<td class="number"> <%= number_to_currency_wo_symbol(vas_booking.unit_price) %></td>
 						<td class="number"> <%= number_to_currency_wo_symbol(vas_booking.total_price_excl_discount_and_taxes) %></td>
 					</tr>
@@ -174,9 +174,9 @@
 				<% @trip.taxi_bookings.each do |taxi_booking| %>
 					<tr>
 						<td class="sno"><%= serial_number %></td>
-						<td class="text">Taxi: <%= pluralize(taxi_booking.number_of_vehicles, taxi_booking.taxi.model) %> (<%= pluralize(taxi_booking.number_of_days, "day") %>)</td>
-						<td></td>
-						<td></td>
+						<td class="text">Taxi: <%= taxi_booking.taxi.model %></td>
+						<td class="number"><%= taxi_booking.number_of_vehicles %></td>
+						<td class="number"><%= taxi_booking.number_of_days %></td>
 						<td class="number"> <%= number_to_currency_wo_symbol(taxi_booking.unit_price) %></td>
 						<td class="number"> <%= number_to_currency_wo_symbol(taxi_booking.total_price_excl_taxes) %></td>
 					</tr>
