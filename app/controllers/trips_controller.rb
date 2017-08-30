@@ -36,7 +36,7 @@ class TripsController < ApplicationController
     				@trips = @trips.paginate(page: params[:page], per_page: 10).
 					order('end_date, start_date').
 					find(:all, :conditions => [
-					'end_date >= ? and end_date <= ? and counter_for_tax_invoice = ?',
+					'end_date >= ? and end_date <= ? and counter_for_tax_invoice = ? and total_price > 0',
 					Date.strptime('2017-07-01', '%Y-%m-%d'), Date.today, 0 ])
 			else
     				@trips = @trips.paginate(page: params[:page], per_page: 10).
