@@ -11,36 +11,36 @@ class TripsController < ApplicationController
 
 		if session[:customer_id]
 			@trips = @trips.paginate(page: params[:page], per_page: 10).
-								order("start_date DESC, end_date DESC").
+								order("start_date DESC, end_date DESC, id").
 								find(:all, :conditions => [
                      'customer_type = ? and customer_id = ?',
                      session[:customer_type], session[:customer_id] ])
 		else
 			if params[:status] == Trip::PARTIALLY_PAID
     				@trips = @trips.paginate(page: params[:page], per_page: 10).
-					order("start_date DESC, end_date DESC").
+					order("start_date DESC, end_date DESC, id").
 					find_all_by_payment_status(params[:status])
 			elsif params[:status] == Trip::NOT_PAID
     				@trips = @trips.paginate(page: params[:page], per_page: 10).
-					order("start_date DESC, end_date DESC").
+					order("start_date DESC, end_date DESC, id").
 					find(:all, :conditions => [
        					'payment_status = ? and (price_for_rooms > 0 or price_for_transport > 0 or price_for_vas > 0)',
        					params[:status] ])
 			elsif params[:status] == Trip::PAYMENT_OVERDUE
     				@trips = @trips.paginate(page: params[:page], per_page: 10).
-					order('start_date DESC, end_date DESC').
+					order('start_date DESC, end_date DESC, id').
 					find(:all, :conditions => [
 					'payment_status != ? and pay_by_date < ?',
 					Trip::FULLY_PAID, Date.today ])
 			elsif params[:status] == Trip::CHECKED_OUT
     				@trips = @trips.paginate(page: params[:page], per_page: 10).
-					order('end_date, start_date').
+					order('end_date, start_date, id').
 					find(:all, :conditions => [
 					'end_date >= ? and end_date <= ? and checked_out = ? and total_price > 0',
 					Date.strptime('2017-07-01', '%Y-%m-%d'), Date.today, 0 ])
 			else
     				@trips = @trips.paginate(page: params[:page], per_page: 10).
-					order("start_date DESC, end_date DESC").all
+					order("start_date DESC, end_date DESC, id").all
 			end
 		end
 
