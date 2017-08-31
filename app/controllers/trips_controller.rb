@@ -30,7 +30,7 @@ class TripsController < ApplicationController
     				@trips = @trips.paginate(page: params[:page], per_page: 10).
 					order('start_date DESC, end_date DESC, id').
 					find(:all, :conditions => [
-					'payment_status != ? and pay_by_date < ?',
+					'payment_status != ? and pay_by_date < ? and total_price > 0',
 					Trip::FULLY_PAID, Date.today ])
 			elsif params[:status] == Trip::CHECKED_OUT
     				@trips = @trips.paginate(page: params[:page], per_page: 10).
@@ -40,7 +40,8 @@ class TripsController < ApplicationController
 					Date.strptime('2017-07-01', '%Y-%m-%d'), Date.today, 0 ])
 			else
     				@trips = @trips.paginate(page: params[:page], per_page: 10).
-					order("start_date DESC, end_date DESC, id").all
+					order("start_date DESC, end_date DESC, id").
+					find(:all, :conditions => [ 'total_price > 0'])
 			end
 		end
 
