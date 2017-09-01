@@ -94,7 +94,7 @@
 					</td>
 					<td colspan=4 class="address">
 						<%= @account_setting.name %>
-						<% if @trip.for_own_property == 1 %>
+						<% if @trip.for_own_properties == 1 %>
 							<%= @account_setting.own_property_postal_address %>
 						<% else %>
 							<%= @account_setting.tour_operator_postal_address %>
@@ -111,7 +111,7 @@
 						Ref: <%= @trip.name %>
 						Invoice No: <%= @trip.invoice_number %>
             		<%= "PAN No: #{@account_setting.pan}" if @account_setting.pan != "" %>
-						<% if @trip.for_own_property == 1 %>
+						<% if @trip.for_own_properties == 1 %>
 							GSTIN: <%= @account_setting.own_property_gstin %><br/>
 						<% else %>
 							GSTIN: <%= @account_setting.tour_operator_gstin %><br/>

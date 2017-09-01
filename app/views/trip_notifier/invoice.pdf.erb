@@ -131,7 +131,7 @@
 			<table class="table">
 				<tr>
 					<td colspan=3>
-						<% if @trip.for_own_property == 1 %>
+						<% if @trip.for_own_properties == 1 %>
 							GSTIN: <%= @account_setting.own_property_gstin %><br/>
 						<% else %>
 							GSTIN: <%= @account_setting.tour_operator_gstin %><br/>
@@ -146,7 +146,7 @@
 						Ref: <%= @trip.name %>
 					</td>
 					<td colspan=3 class="address_not_bold">
-						<% if @trip.for_own_property == 1 %>
+						<% if @trip.for_own_properties == 1 %>
 							<%= @account_setting.own_property_postal_address %>
 						<% else %>
 							<%= @account_setting.tour_operator_postal_address %>
@@ -220,8 +220,8 @@
 					<td class="number"> <%= number_to_currency_wo_symbol(room.cgst.round) %></td>
 					<td class="number"> <%= number_to_percentage(room.sgst_rate, precision: 1) %></td>
 					<td class="number"> <%= number_to_currency_wo_symbol(room.sgst.round) %></td>
-					<td></td>
-					<td></td>
+					<td class="number"> <%= number_to_percentage(room.igst_rate, precision: 1) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.igst.round) %></td>
 					<td class="number"> <%= number_to_currency_wo_symbol(room.total_price) %></td>
 				</tr>
 			<% else %>
@@ -243,8 +243,8 @@
 					<td class="number"> <%= number_to_currency_wo_symbol(room.lodging_cgst) %></td>
 					<td class="number"> <%= number_to_percentage(room.sgst_rate, precision: 1) %></td>
 					<td class="number"> <%= number_to_currency_wo_symbol(room.lodging_sgst) %></td>
-					<td></td>
-					<td></td>
+					<td class="number"> <%= number_to_percentage(room.igst_rate, precision: 1) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.lodging_igst) %></td>
 					<td class="number"> <%= number_to_currency_wo_symbol(room.lodging_total_price) %></td>
 				</tr>
 				<tr>
@@ -261,8 +261,8 @@
 					<td class="number"> <%= number_to_currency_wo_symbol(room.food_cgst) %></td>
 					<td class="number"> <%= number_to_percentage(room.sgst_rate_for_food, precision: 1) %></td>
 					<td class="number"> <%= number_to_currency_wo_symbol(room.food_sgst) %></td>
-					<td></td>
-					<td></td>
+					<td class="number"> <%= number_to_percentage(room.igst_rate_for_food, precision: 1) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.food_igst) %></td>
 					<td class="number"> <%= number_to_currency_wo_symbol(room.food_total_price) %></td>
 				</tr>
 			<% end %>
@@ -348,7 +348,7 @@
 		<td class="number"></td>
 		<td class="number"> <%= number_to_currency_wo_symbol(@trip.sgst.round) %></td>
 		<td class="number"></td>
-		<td class="number"></td>
+		<td class="number"> <%= number_to_currency_wo_symbol(@trip.igst.round) %></td>
 		<td class="number"> <%= number_to_currency_wo_symbol(@trip.total_price) %></td>
 	</tr>
 

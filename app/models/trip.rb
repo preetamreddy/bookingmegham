@@ -235,7 +235,7 @@ class Trip < ActiveRecord::Base
   end
 
 	def gst
-		(cgst + sgst).to_i
+		(cgst + sgst + igst).to_i
 	end
 
 	def total_price_excl_discount_and_taxes
@@ -349,7 +349,7 @@ class Trip < ActiveRecord::Base
 		def update_counter_for_tax_invoice
 			account_setting = AccountSetting.find_by_account_id(account_id)
 			if checked_out_changed? and checked_out == 1
-				if for_own_property == 1
+				if for_own_properties == 1
 					self.counter_for_tax_invoice = account_setting.own_property_counter_for_tax_invoice
 					AccountSetting.update_counters account_setting.id, :own_property_counter_for_tax_invoice => 1
 				else

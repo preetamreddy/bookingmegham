@@ -68,27 +68,27 @@ class Room < ActiveRecord::Base
 	end
 
 	def cgst_rate_for_food
-		room_type.property.cgst_rate_for_food
+		booking.trip.for_own_properties == 1 ? room_type.property.cgst_rate_for_food : room_type.property.tour_operator_cgst_rate
 	end
 
 	def sgst_rate_for_food
-		room_type.property.sgst_rate_for_food
+		booking.trip.for_own_properties == 1 ? room_type.property.sgst_rate_for_food : room_type.property.tour_operator_sgst_rate
 	end
 
 	def igst_rate_for_food
-		room_type.property.igst_rate_for_food
+		booking.trip.for_own_properties == 1 ? 0 : room_type.property.tour_operator_igst_rate
 	end
 
 	def cgst_rate
-		room_type.cgst_rate
+		booking.trip.for_own_properties == 1 ? room_type.cgst_rate : room_type.property.tour_operator_cgst_rate
 	end
 
 	def sgst_rate
-		room_type.sgst_rate
+		booking.trip.for_own_properties == 1 ? room_type.cgst_rate : room_type.property.tour_operator_sgst_rate
 	end
 
 	def igst_rate
-		room_type.igst_rate
+		booking.trip.for_own_properties == 1 ? 0 : room_type.property.tour_operator_igst_rate
 	end
 
 	def food_cgst

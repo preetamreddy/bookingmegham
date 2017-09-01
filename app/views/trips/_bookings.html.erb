@@ -31,6 +31,7 @@
 					<th class="currency">Taxable value</th>
 					<th class="currency">CGST</th>
 					<th class="currency">SGST</th>
+					<th class="currency">IGST</th>
 					<th class="currency">Total</th>
 				</tr>
 			
@@ -46,6 +47,7 @@
 						<td class="currency"><%= number_to_currency(room.taxable_value) %></td>
 						<td class="currency"><%= number_to_currency(room.cgst.round) %></td>
 						<td class="currency"><%= number_to_currency(room.sgst.round) %></td>
+						<td class="currency"><%= number_to_currency(room.igst.round) %></td>
 						<td class="currency"><%= number_to_currency(room.total_price) %></td>
 					</tr>
 				<% end %>
@@ -158,6 +160,11 @@
 <p>
   <b>SGST:</b>
   <span class="saved_value"><%= number_to_currency(booking.sgst.round) if booking.sgst %></span>
+</p>
+
+<p>
+  <b>IGST:</b>
+  <span class="saved_value"><%= number_to_currency(booking.igst.round) if booking.igst %></span>
 </p>
 
 <p>
