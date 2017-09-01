@@ -37,6 +37,7 @@
       <th class="number">Taxable value</th>
       <th class="number">CGST</th>
       <th class="number">SGST</th>
+      <th class="number">IGST</th>
       <th class="number">Total</th>
       <th></th>
     </tr>
@@ -60,6 +61,7 @@
         <td class="nowrap"><%= number_to_currency(taxi_booking.taxable_value) %></td>
         <td class="nowrap"><%= number_to_currency(taxi_booking.cgst) %></td>
         <td class="nowrap"><%= number_to_currency(taxi_booking.sgst) %></td>
+        <td class="nowrap"><%= number_to_currency(taxi_booking.igst) %></td>
         <td class="nowrap"><%= number_to_currency(taxi_booking.total_price) %></td>
         <td>
           <%= link_to 'Show details', taxi_booking %><br/>

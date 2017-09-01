@@ -47,6 +47,21 @@
 </p>
 
 <p>
+  <b>CGST rate for Tour Operator:</b>
+	<span class="saved_value"><%= number_to_percentage(@agency.cgst_rate_for_tour_operator, :precision => 1) %></span>
+</p>
+
+<p>
+  <b>SGST rate for Tour Operator:</b>
+	<span class="saved_value"><%= number_to_percentage(@agency.sgst_rate_for_tour_operator, :precision => 1) %></span>
+</p>
+
+<p>
+  <b>IGST rate for Tour Operator:</b>
+	<span class="saved_value"><%= number_to_percentage(@agency.igst_rate_for_tour_operator, :precision => 1) %></span>
+</p>
+
+<p>
   <b>City:</b>
   <span class="saved_value"><%= @agency.city %></span>
 </p>

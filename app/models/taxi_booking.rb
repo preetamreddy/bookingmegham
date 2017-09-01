@@ -8,9 +8,7 @@ class TaxiBooking < ActiveRecord::Base
 
 	before_validation :update_end_date
 
-	validates :trip_id, :taxi_id, :start_date,
-		:number_of_vehicles, :number_of_days,
-		presence: true
+	validates :trip_id, :taxi_id, :start_date, :number_of_vehicles, :number_of_days, presence: true
 
 	validates_numericality_of :number_of_vehicles, :number_of_days,
 		allow_nil: true, only_integer: true, greater_than: 0,
@@ -19,7 +17,7 @@ class TaxiBooking < ActiveRecord::Base
 	validate :ensure_taxi_booking_is_within_trip_dates
 
 	before_save :strip_whitespaces, :titleize, :update_unit_price, :update_taxable_value,
-		:update_cgst, :update_sgst, :update_total_price
+		:update_cgst, :update_sgst, :update_igst, :update_total_price
 
 	before_create :set_counter
 
@@ -36,15 +34,19 @@ class TaxiBooking < ActiveRecord::Base
 	end
 
 	def cgst_rate
-		AccountSetting.find_by_account_id(account_id).cgst_rate_for_tour_operator_services
+		taxi.agency.cgst_rate_for_tour_operator
 	end
 
 	def sgst_rate
-		AccountSetting.find_by_account_id(account_id).sgst_rate_for_tour_operator_services
+		taxi.agency.sgst_rate_for_tour_operator
+	end
+
+	def igst_rate
+		taxi.agency.igst_rate_for_tour_operator
 	end
 
 	def gst
-		(cgst + sgst).to_i
+		(cgst + sgst + igst).to_i
 	end
 
 	def total_price_excl_taxes
@@ -89,8 +91,12 @@ class TaxiBooking < ActiveRecord::Base
 			self.sgst = (taxable_value * sgst_rate.to_f / 100).round
 		end
 
+		def update_igst
+			self.igst = (taxable_value * igst_rate.to_f / 100).round
+		end
+
 		def update_total_price
-			self.total_price = taxable_value + cgst + sgst
+			self.total_price = taxable_value + cgst + sgst + igst
 		end
 
 		def set_counter

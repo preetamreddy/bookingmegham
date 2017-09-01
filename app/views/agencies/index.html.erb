@@ -26,6 +26,7 @@
       <th>Email</th>
       <th>PAN</th>
       <th>GSTIN</th>
+      <th>GST Rates for Tour Operator</th>
       <th>Url</th>
       <th></th>
     </tr>
@@ -45,6 +46,11 @@
         </td>
         <td class="nowrap"><%= agency.pan_number %></td>
         <td class="nowrap"><%= agency.gstin %></td>
+    		<td class="number">
+				CGST rate: <%= number_to_percentage(agency.cgst_rate_for_tour_operator, :strip_insignificant_zeros => true) %><br/>
+				SGST rate: <%= number_to_percentage(agency.sgst_rate_for_tour_operator, :strip_insignificant_zeros => true) %><br/>
+				IGST rate: <%= number_to_percentage(agency.igst_rate_for_tour_operator, :strip_insignificant_zeros => true) %>
+			</td>
         <td class="nowrap"><%= agency.url %></td>
         <td>
           <%= link_to 'Show details', agency %><br />
