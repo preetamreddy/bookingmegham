@@ -38,9 +38,10 @@ class TripNotifier < ActionMailer::Base
 		end
   end
 
-  def invoice(trip, user_id)
+  def invoice(trip, user_id, invoice_type)
 		@trip = trip
 		@user = User.find(user_id)
+		@invoice_type = invoice_type
     @account_setting = AccountSetting.find_by_account_id(@user.account_id)
 
 		mail(to: "#{@user.advisor.name} <#{@user.advisor.email_id}>",

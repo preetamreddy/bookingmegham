@@ -20,8 +20,7 @@
 		<th class="number">Rooms</th>
     <th class="currency">Rate</th>
     <th class="currency">Extra beds</th>
-    <th class="number">CGST rate</th>
-    <th class="number">SGST rate</th>
+    <th class="number">GST rates for Lodging</th>
     <th class="number">Food</th>
     <th class="number">Transportation and Guide</th>
     <th class="number">Lodging</th>
@@ -44,8 +43,10 @@
 	Child - <%= number_to_currency(room_type.price_for_children_between_5_and_12_years) %><br/>
 	Infant - <%= number_to_currency(room_type.price_for_children_below_5_years) %>
     </td>
-    <td class="number"><%= number_to_percentage(room_type.cgst_rate, :strip_insignificant_zeros => true) %></td>
-    <td class="number"><%= number_to_percentage(room_type.sgst_rate, :strip_insignificant_zeros => true) %></td>
+	<td class="number">
+			CGST: <%= number_to_percentage(room_type.cgst_rate, :strip_insignificant_zeros => true) %><br/>
+    		SGST: <%= number_to_percentage(room_type.sgst_rate, :strip_insignificant_zeros => true) %>
+	</td>
     <td class="currency">
 	Single - <%= number_to_currency(room_type.price_for_food_on_single) %><br/>
 	Double - <%= number_to_currency(room_type.price_for_food_on_double) %>

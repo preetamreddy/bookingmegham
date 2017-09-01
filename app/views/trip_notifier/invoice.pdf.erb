@@ -123,7 +123,11 @@
 		<div id="content">
 			<% if @trip.checked_out == 1 %>
 				<p class="title">Tax Invoice</p>
-				<p class="gst">(Original for Recipient)</p>
+				<% if @invoice_type == "invoice" %>
+					<p class="gst">Original for Recipient</p>
+				<% else %>
+					<p class="gst">Duplicate for Supploer</p>
+				<% end %>
 			<% else %>
 				<p class="title">Draft Tax Invoice</p>
 			<% end %>

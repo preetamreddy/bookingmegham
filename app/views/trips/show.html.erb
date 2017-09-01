@@ -13,6 +13,8 @@
 				:type => 'pro_forma_invoice') %>
 	<%= link_to 'Generate Tax Invoice', email_trip_path(:trip_id => @trip.id,
 				:type => 'invoice') %>
+	<%= link_to 'Generate Tax Invoice (Duplicate)', email_trip_path(:trip_id => @trip.id,
+				:type => 'invoice_duplicate') %>
 	<%= link_to 'Generate Vouchers', email_trip_path(:trip_id => @trip.id,
 				:type => 'vouchers') %>
 	<%= link_to 'Generate Pre GST Invoice', email_trip_path(:trip_id => @trip.id,

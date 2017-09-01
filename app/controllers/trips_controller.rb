@@ -150,7 +150,9 @@ class TripsController < ApplicationController
 		elsif params[:type] == 'pro_forma_invoice'
 			TripNotifier.pro_forma_invoice(trip, current_user.id).deliver
 		elsif params[:type] == 'invoice'
-			TripNotifier.invoice(trip, current_user.id).deliver
+			TripNotifier.invoice(trip, current_user.id, params[:type]).deliver
+		elsif params[:type] == 'invoice_duplicate'
+			TripNotifier.invoice(trip, current_user.id, params[:type]).deliver
 		elsif params[:type] == 'vouchers'
 			TripNotifier.vouchers(trip, current_user.id).deliver
 		elsif params[:type] == 'pre_gst_invoice'
