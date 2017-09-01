@@ -94,7 +94,11 @@
 					</td>
 					<td colspan=4 class="address">
 						<%= @account_setting.name %>
-						<%= @account_setting.postal_address %>
+						<% if @trip.for_own_property == 1 %>
+							<%= @account_setting.own_property_postal_address %>
+						<% else %>
+							<%= @account_setting.tour_operator_postal_address %>
+						<% end %>
 						Phone: <%= @account_setting.phone_number_1 %>
 						<%= @account_setting.url %>
 					</td>
@@ -106,9 +110,12 @@
 						<% if @trip.payments.any? %>Receipt No: <%= @trip.payments.order(:date_received).last.receipt_number %>/<%= l @trip.payments.order(:date_received).last.date_received %><% end %>
 						Ref: <%= @trip.name %>
 						Invoice No: <%= @trip.invoice_number %>
-            <%= "PAN No: #{@account_setting.pan}" if @account_setting.pan != "" %>
-            <%= "S Tax No: #{@account_setting.service_tax_number}" if @account_setting.service_tax_number != "" %>
-            <%= "GSTIN: #{@account_setting.gstin}" if @account_setting.gstin != "" %>
+            		<%= "PAN No: #{@account_setting.pan}" if @account_setting.pan != "" %>
+						<% if @trip.for_own_property == 1 %>
+							GSTIN: <%= @account_setting.own_property_gstin %><br/>
+						<% else %>
+							GSTIN: <%= @account_setting.tour_operator_gstin %><br/>
+						<% end %>
 					</td>
 				</tr>
 			</table>

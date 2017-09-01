@@ -131,7 +131,11 @@
 			<table class="table">
 				<tr>
 					<td colspan=3>
-						GSTIN: <%= @account_setting.gstin %><br/>
+						<% if @trip.for_own_property == 1 %>
+							GSTIN: <%= @account_setting.own_property_gstin %><br/>
+						<% else %>
+							GSTIN: <%= @account_setting.tour_operator_gstin %><br/>
+						<% end %>
 						<%= @account_setting.name %><br/>
 						<% if @trip.checked_out == 0 %>
 							Pro-forma Invoice No.: <%= @trip.invoice_number %><br/>
@@ -142,7 +146,11 @@
 						Ref: <%= @trip.name %>
 					</td>
 					<td colspan=3 class="address_not_bold">
-						<%= @account_setting.postal_address %>
+						<% if @trip.for_own_property == 1 %>
+							<%= @account_setting.own_property_postal_address %>
+						<% else %>
+							<%= @account_setting.tour_operator_postal_address %>
+						<% end %>
 						<%= @account_setting.email %>
 						<%= @account_setting.phone_number_1 %>
 					</td>

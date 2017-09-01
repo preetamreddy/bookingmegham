@@ -56,6 +56,7 @@
 					<span class="nowrap"><%= trip.name %><br/></span>
 		    	<span class="nowrap"><%= l trip.start_date %> to <%= l trip.end_date %><br/></span>
 					(<%= trip.number_of_days %> days)
+					<%= trip.for_own_properties.to_english %>
 				</td>
 		    <td class="text">
 					<% trip.trip_rooms.each do |trip_room| %>

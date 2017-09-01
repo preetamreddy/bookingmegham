@@ -27,11 +27,6 @@
 </p>
 
 <p>
-  <b>Postal address:</b>
-  <span class="saved_value"><%= @account_setting.postal_address %></span>
-</p>
-
-<p>
   <b>Url:</b>
   <span class="saved_value"><%= @account_setting.url %></span>
 </p>
@@ -44,11 +39,6 @@
 <p>
   <b>Service tax number:</b>
   <span class="saved_value"><%= @account_setting.service_tax_number %></span>
-</p>
-
-<p>
-  <b>GSTIN:</b>
-  <span class="saved_value"><%= @account_setting.gstin %></span>
 </p>
 
 <p>
@@ -72,16 +62,6 @@
 </p>
 
 <p>
-  <b>CGST rate for Hotel Services:</b>
-  <span class="saved_value"><%= @account_setting.cgst_rate_for_hotel_services %></span>
-</p>
-
-<p>
-  <b>SGST rate for Hotel Services:</b>
-  <span class="saved_value"><%= @account_setting.sgst_rate_for_hotel_services %></span>
-</p>
-
-<p>
   <b>HSN for Lodging:</b>
   <span class="saved_value"><%= @account_setting.hsn_for_lodging %></span>
 </p>
@@ -102,8 +82,33 @@
 </p>
 
 <p>
-  <b>Counter for Tax Invoice:</b>
-  <span class="saved_value"><%= @account_setting.counter_for_tax_invoice %></span>
+  <b>Tour Operator Postal address:</b>
+  <span class="saved_value"><%= @account_setting.tour_operator_postal_address %></span>
+</p>
+
+<p>
+  <b>Tour Operator GSTIN:</b>
+  <span class="saved_value"><%= @account_setting.tour_operator_gstin %></span>
+</p>
+
+<p>
+  <b>Tour Operator Counter for Tax Invoice:</b>
+  <span class="saved_value"><%= @account_setting.tour_operator_counter_for_tax_invoice %></span>
+</p>
+
+<p>
+  <b>Own Property Postal address:</b>
+  <span class="saved_value"><%= @account_setting.own_property_postal_address %></span>
+</p>
+
+<p>
+  <b>Own Property GSTIN:</b>
+  <span class="saved_value"><%= @account_setting.own_property_gstin %></span>
+</p>
+
+<p>
+  <b>Own Property Counter for Tax Invoice:</b>
+  <span class="saved_value"><%= @account_setting.own_property_counter_for_tax_invoice %></span>
 </p>
 
 <% if @account_setting.payment_modes.any? %>

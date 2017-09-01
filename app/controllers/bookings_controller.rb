@@ -90,14 +90,14 @@ class BookingsController < ApplicationController
   # GET /bookings/new
   # GET /bookings/new.json
   def new
-		if params[:trip_id]
-      store_trip_in_session(params[:trip_id].to_i)
-		end
+	if params[:trip_id]
+     	store_trip_in_session(params[:trip_id].to_i)
+	end
 
-    room_type = find_room_type
-    property = room_type ? room_type.property : find_property 
+	room_type = find_room_type
+	property = room_type ? room_type.property : find_property 
 
-		if property
+	if property
       if session[:trip_id]
 			  trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
 			  @booking.trip_id = trip.id
@@ -120,15 +120,23 @@ class BookingsController < ApplicationController
 
       @cannot_edit_rooms = false
 
-	    respond_to do |format|
-	      format.html # new.html.erb
-	      format.json { render json: @booking }
-	    end
-	  else
-	    @properties = Property.scoped_by_account_id(current_user.account_id).
-	      order('ensure_availability_before_booking desc, name').all
+	   respond_to do |format|
+	     format.html # new.html.erb
+	     format.json { render json: @booking }
+	   end
+  else
+      if session[:trip_id]
+			trip_id = session[:trip_id]
+			trip = Trip.find(trip_id)
+
+			@properties = Property.scoped_by_account_id(current_user.account_id).
+				find(:all, :conditions => ['ensure_availability_before_booking = ?', trip.for_own_properties])
+		else
+			@properties = Property.scoped_by_account_id(current_user.account_id).
+				order('ensure_availability_before_booking desc, name').all
 		end
   end
+end
 
   # GET /bookings/1/edit
   def edit

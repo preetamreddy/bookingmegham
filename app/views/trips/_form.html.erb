@@ -29,6 +29,16 @@
 		<% end %>
     <%= f.text_field :customer_id, :hidden => true %>
   </div>
+	<%= hidden_div_if(!@trip.new_record?, class: "field") do %>
+		<%= f.label :for_own_properties, "For Own Properties?" %>
+		<%= f.check_box :for_own_properties %>
+	<% end %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+		<%= f.label :for_own_properties, "For Own Properties?" %>
+		  <p><span class="highlight">
+			  <%= @trip.for_own_properties.to_english %>
+		  </span></p>
+	<% end %>
   <div class="field">
     <%= f.label :name, "Trip tag" %><br />
     <%= f.text_field :name, 

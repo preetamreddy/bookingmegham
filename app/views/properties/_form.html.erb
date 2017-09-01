@@ -38,14 +38,16 @@
     <%= tooltip('SGST rate for Food', :hover) %>
   </div>
   <div class="field">
-    <%= f.label :cgst_rate_for_tour_operator_services %><br />
-    <%= f.number_field :cgst_rate_for_tour_operator_services %>
-    <%= tooltip('CGST rate for Tour Operator Services', :hover) %>
+    <%= f.label :tour_operator_cgst_rate %><br />
+    <%= f.number_field :tour_operator_cgst_rate %>
   </div>
   <div class="field">
-    <%= f.label :sgst_rate_for_tour_operator_services %><br />
-    <%= f.number_field :sgst_rate_for_tour_operator_services %>
-    <%= tooltip('SGST rate for Tour Operator Services', :hover) %>
+    <%= f.label :tour_operator_sgst_rate %><br />
+    <%= f.number_field :tour_operator_sgst_rate %>
+  </div>
+  <div class="field">
+    <%= f.label :tour_operator_igst_rate %><br />
+    <%= f.number_field :tour_operator_igst_rate %>
   </div>
   <div class="field">
     <%= f.label :price_for_driver %><br />

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170830063925) do
+ActiveRecord::Schema.define(:version => 20170901003658) do
 
   create_table "account_settings", :force => true do |t|
     t.string   "registered_name"
@@ -27,21 +27,25 @@ ActiveRecord::Schema.define(:version => 20170830063925) do
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "service_charge",                       :default => 0
-    t.float    "vat_rate",                             :default => 0.0
-    t.float    "service_tax_rate",                     :default => 0.0
-    t.float    "tour_operator_service_tax_rate",       :default => 0.0
+    t.integer  "service_charge",                        :default => 0
+    t.float    "vat_rate",                              :default => 0.0
+    t.float    "service_tax_rate",                      :default => 0.0
+    t.float    "tour_operator_service_tax_rate",        :default => 0.0
     t.string   "tax_setting"
     t.string   "gstin"
-    t.float    "cgst_rate_for_tour_operator_services", :default => 0.0
-    t.float    "sgst_rate_for_tour_operator_services", :default => 0.0
-    t.float    "cgst_rate_for_hotel_services",         :default => 0.0
-    t.float    "sgst_rate_for_hotel_services",         :default => 0.0
-    t.integer  "counter_for_tax_invoice",              :default => 1
+    t.float    "cgst_rate_for_tour_operator_services",  :default => 0.0
+    t.float    "sgst_rate_for_tour_operator_services",  :default => 0.0
+    t.integer  "counter_for_tax_invoice",               :default => 1
     t.string   "hsn_for_lodging"
     t.string   "hsn_for_food"
     t.string   "hsn_for_transportation"
     t.string   "hsn_for_guide_services"
+    t.string   "tour_operator_gstin",                   :default => ""
+    t.text     "tour_operator_postal_address",          :default => ""
+    t.integer  "tour_operator_counter_for_tax_invoice", :default => 1
+    t.string   "own_property_gstin",                    :default => ""
+    t.text     "own_property_postal_address",           :default => ""
+    t.integer  "own_property_counter_for_tax_invoice",  :default => 1
   end
 
   add_index "account_settings", ["account_id"], :name => "index_account_settings_on_account_id"
@@ -121,6 +125,7 @@ ActiveRecord::Schema.define(:version => 20170830063925) do
     t.float    "sgst",                        :default => 0.0
     t.integer  "taxable_value",               :default => 0
     t.integer  "discount",                    :default => 0
+    t.float    "igst",                        :default => 0.0
   end
 
   add_index "bookings", ["account_id"], :name => "index_bookings_on_account_id"
@@ -205,7 +210,7 @@ ActiveRecord::Schema.define(:version => 20170830063925) do
     t.integer  "price_for_driver"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "ensure_availability_before_booking",   :default => 0
+    t.integer  "ensure_availability_before_booking", :default => 0
     t.string   "phone_number"
     t.string   "phone_number_2"
     t.text     "address"
@@ -215,13 +220,14 @@ ActiveRecord::Schema.define(:version => 20170830063925) do
     t.string   "email"
     t.string   "city"
     t.float    "service_tax_rate"
-    t.integer  "allow_online_availability_check",      :default => 0
-    t.float    "luxury_tax_rate",                      :default => 0.0
-    t.float    "vat_rate",                             :default => 0.0
-    t.float    "cgst_rate_for_food",                   :default => 0.0
-    t.float    "sgst_rate_for_food",                   :default => 0.0
-    t.float    "cgst_rate_for_tour_operator_services", :default => 0.0
-    t.float    "sgst_rate_for_tour_operator_services", :default => 0.0
+    t.integer  "allow_online_availability_check",    :default => 0
+    t.float    "luxury_tax_rate",                    :default => 0.0
+    t.float    "vat_rate",                           :default => 0.0
+    t.float    "cgst_rate_for_food",                 :default => 0.0
+    t.float    "sgst_rate_for_food",                 :default => 0.0
+    t.float    "tour_operator_cgst_rate",            :default => 0.0
+    t.float    "tour_operator_sgst_rate",            :default => 0.0
+    t.float    "tour_operator_igst_rate",            :default => 0.0
   end
 
   add_index "properties", ["account_id"], :name => "index_properties_on_account_id"
@@ -281,6 +287,7 @@ ActiveRecord::Schema.define(:version => 20170830063925) do
     t.integer  "food_rate",                                 :default => 0
     t.integer  "transportation_and_guide_rate",             :default => 0
     t.float    "discount_percentage",                       :default => 0.0
+    t.float    "igst",                                      :default => 0.0
   end
 
   add_index "rooms", ["account_id"], :name => "index_rooms_on_account_id"
@@ -397,6 +404,8 @@ ActiveRecord::Schema.define(:version => 20170830063925) do
     t.integer  "tds_on_tac",              :default => 0
     t.integer  "total_price",             :default => 0
     t.integer  "round_off",               :default => 0
+    t.integer  "for_own_properties",      :default => 1
+    t.float    "igst",                    :default => 0.0
   end
 
   add_index "trips", ["account_id"], :name => "index_trips_on_account_id"

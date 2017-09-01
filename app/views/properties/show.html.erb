@@ -26,12 +26,16 @@
 	<span class="saved_value"><%= number_to_percentage(@property.sgst_rate_for_food, :precision => 1) %></span>
 </p>
 <p>
-  <b>CGST rate for Tour Operator Services:</b>
-	<span class="saved_value"><%= number_to_percentage(@property.cgst_rate_for_tour_operator_services, :precision => 1) %></span>
+  <b>Tour Operator CGST rate:</b>
+	<span class="saved_value"><%= number_to_percentage(@property.tour_operator_cgst_rate, :precision => 1) %></span>
 </p>
 <p>
-  <b>SGST rate for Tour Operator Services:</b>
-	<span class="saved_value"><%= number_to_percentage(@property.sgst_rate_for_tour_operator_services, :precision => 1) %></span>
+  <b>Tour Operator SGST rate:</b>
+	<span class="saved_value"><%= number_to_percentage(@property.tour_operator_sgst_rate, :precision => 1) %></span>
+</p>
+<p>
+  <b>Tour Operator IGST rate:</b>
+	<span class="saved_value"><%= number_to_percentage(@property.tour_operator_igst_rate, :precision => 1) %></span>
 </p>
 <p>
   <b>Price for driver:</b>

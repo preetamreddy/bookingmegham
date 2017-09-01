@@ -15,6 +15,11 @@
     <span class="saved_value"><%= @trip.proforma_invoice_number %></span>
 	</p>
 	
+	<p>
+	  <b>For Own Properties?:</b>
+    <span class="saved_value"><%= @trip.for_own_properties.to_english %></span>
+	</p>
+	
 	<% if @trip.trip_rooms.any? %>	
 		<b>Required Rooms:</b>
 		<table class="nested_table">

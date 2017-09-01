@@ -39,8 +39,9 @@
 		SGST rate: <%= number_to_percentage(property.sgst_rate_for_food, :strip_insignificant_zeros => true) %>
 	</td>
     <td class="number">
-		CGST rate: <%= number_to_percentage(property.cgst_rate_for_tour_operator_services, :strip_insignificant_zeros => true) %><br/>
-		SGST rate: <%= number_to_percentage(property.sgst_rate_for_tour_operator_services, :strip_insignificant_zeros => true) %>
+		CGST rate: <%= number_to_percentage(property.tour_operator_cgst_rate, :strip_insignificant_zeros => true) %><br/>
+		SGST rate: <%= number_to_percentage(property.tour_operator_sgst_rate, :strip_insignificant_zeros => true) %>
+		IGST rate: <%= number_to_percentage(property.tour_operator_igst_rate, :strip_insignificant_zeros => true) %>
 	</td>
     <td class="currency"><%= number_to_currency(property.price_for_driver) %></td>
     <td class="text"><%= property.email %></td>

@@ -32,10 +32,6 @@
     <%= f.text_field :email %>
   </div>
   <div class="field">
-    <%= f.label :postal_address %><br />
-    <%= f.text_area :postal_address, rows: 6 %>
-  </div>
-  <div class="field">
     <%= f.label :url %><br />
     <%= f.text_field :url %>
   </div>
@@ -48,24 +44,12 @@
     <%= f.text_field :service_tax_number %>
   </div>
   <div class="field">
-    <%= f.label :gstin %><br />
-    <%= f.text_field :gstin %>
-  </div>
-  <div class="field">
     <%= f.label :tds_percent %><br />
     <%= f.number_field :tds_percent %>
   </div>
   <div class="field">
     <%= f.label :service_charge %><br />
     <%= f.number_field :service_charge %>
-  </div>
-  <div class="field">
-    <%= f.label :cgst_rate_for_hotel_services %><br />
-    <%= f.number_field :cgst_rate_for_hotel_services %>
-  </div>
-  <div class="field">
-    <%= f.label :sgst_rate_for_hotel_services %><br />
-    <%= f.number_field :sgst_rate_for_hotel_services %>
   </div>
   <div class="field">
     <%= f.label :cgst_rate_for_tour_operator_services %><br />
@@ -92,10 +76,30 @@
     <%= f.text_field :hsn_for_transportation %>
   </div>
   <div class="field">
-    <%= f.label :counter_for_tax_invoice %><br />
-    <%= f.number_field :counter_for_tax_invoice %>
+    <%= f.label :tour_operator_postal_address %><br />
+    <%= f.text_area :tour_operator_postal_address, rows: 6 %>
   </div>
-
+  <div class="field">
+    <%= f.label :tour_operator_gstin %><br />
+    <%= f.text_field :tour_operator_gstin %>
+  </div>
+  <div class="field">
+    <%= f.label :tour_operator_counter_for_tax_invoice %><br />
+    <%= f.number_field :tour_operator_counter_for_tax_invoice %>
+  </div>
+	</br>
+  <div class="field">
+    <%= f.label :own_property_postal_address %><br />
+    <%= f.text_area :own_property_postal_address, rows: 6 %>
+  </div>
+  <div class="field">
+    <%= f.label :own_property_gstin %><br />
+    <%= f.text_field :own_property_gstin %>
+  </div>
+  <div class="field">
+    <%= f.label :own_property_counter_for_tax_invoice %><br />
+    <%= f.number_field :own_property_counter_for_tax_invoice %>
+  </div>
 	<div class="field">
 		<%= f.label :payment_modes %><br />
 	</div>
