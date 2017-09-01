@@ -40,7 +40,7 @@ class RoomType < ActiveRecord::Base
 			elsif return_value == "FOOD"
 				rate = rates[:price_for_food_on_single]
 			elsif return_value == "LODGING"
-				rate = rates[:price_for_lodging]
+				rate = rates[:price_for_lodging_on_single]
 			elsif return_value == "TRANSPORTATION_AND_GUIDE"
 				rate = rates[:price_for_transportation_and_guide]
 			end
@@ -53,7 +53,7 @@ class RoomType < ActiveRecord::Base
 			elsif return_value == "FOOD"
 				rate = rates[:price_for_food_on_double]
 			elsif return_value == "LODGING"
-				rate = rates[:price_for_lodging]
+				rate = rates[:price_for_lodging_on_double]
 			elsif return_value == "TRANSPORTATION_AND_GUIDE"
 				rate = rates[:price_for_transportation_and_guide]
 			end
@@ -124,7 +124,8 @@ class RoomType < ActiveRecord::Base
           :price_for_extra_adults     => price_list.first.price_for_extra_adults, 
           :price_for_children         => price_list.first.price_for_children,
           :price_for_infants          => price_list.first.price_for_infants, 
-          :price_for_lodging          => price_list.first.price_for_lodging,
+          :price_for_lodging_on_single => price_list.first.price_for_lodging_on_single,
+          :price_for_lodging_on_double => price_list.first.price_for_lodging_on_double,
           :price_for_food_on_single   => price_list.first.price_for_food_on_single,
           :price_for_food_on_double   => price_list.first.price_for_food_on_double,
           :price_for_transportation_and_guide => price_list.first.price_for_transportation_and_guide
@@ -135,7 +136,8 @@ class RoomType < ActiveRecord::Base
           :price_for_extra_adults     => price_for_triple_occupancy, 
           :price_for_children         => price_for_children_between_5_and_12_years,
           :price_for_infants          => price_for_children_below_5_years,
-          :price_for_lodging          => price_for_lodging,
+          :price_for_lodging_on_single => price_for_lodging_on_single,
+          :price_for_lodging_on_double => price_for_lodging_on_double,
           :price_for_food_on_single   => price_for_food_on_single,
           :price_for_food_on_double   => price_for_food_on_double,
           :price_for_transportation_and_guide => price_for_transportation_and_guide
