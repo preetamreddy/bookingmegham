@@ -130,6 +130,7 @@ class BookingsController < ApplicationController
 			trip = Trip.find(trip_id)
 
 			@properties = Property.scoped_by_account_id(current_user.account_id).
+				order('ensure_availability_before_booking desc, name').
 				find(:all, :conditions => ['ensure_availability_before_booking = ?', trip.for_own_properties])
 		else
 			@properties = Property.scoped_by_account_id(current_user.account_id).

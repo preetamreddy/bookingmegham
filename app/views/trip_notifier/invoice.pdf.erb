@@ -232,7 +232,24 @@
 				<tr>
 					<td></td>
 					<td class="text"><%= room.room_type.room_type %> @ <%= room.number_of_adults %> / room</td>
+					<% if @trip.for_own_properties == 0 %>
+						<td class="text"><%= @account_setting.hsn_for_lodging %></td>
+						<td class="number"><%= room.number_of_rooms %></td>
+						<td class="number"><%= room.number_of_nights %></td>
+						<td class="number"> <%= number_to_currency_wo_symbol(room.room_rate) %></td>
+						<td class="number"> <%= number_to_currency_wo_symbol(room.value) %></td>
+						<td class="number"> <%= number_to_percentage(room.discount_percentage, precision: 2) %></td>
+						<td class="number"> <%= number_to_currency_wo_symbol(room.taxable_value) %></td>
+						<td class="number"> <%= number_to_percentage(room.cgst_rate, precision: 1) %></td>
+						<td class="number"> <%= number_to_currency_wo_symbol(room.cgst.round) %></td>
+						<td class="number"> <%= number_to_percentage(room.sgst_rate, precision: 1) %></td>
+						<td class="number"> <%= number_to_currency_wo_symbol(room.sgst.round) %></td>
+						<td class="number"> <%= number_to_percentage(room.igst_rate, precision: 1) %></td>
+						<td class="number"> <%= number_to_currency_wo_symbol(room.igst.round) %></td>
+						<td class="number"> <%= number_to_currency_wo_symbol(room.total_price) %></td>
+					<% end %>
 				</tr>
+				<% if @trip.for_own_properties == 1 %>
 				<tr>
 					<td></td>
 					<td class="text"><li>Lodging charges</li></td>
@@ -269,6 +286,7 @@
 					<td class="number"> <%= number_to_currency_wo_symbol(room.food_igst) %></td>
 					<td class="number"> <%= number_to_currency_wo_symbol(room.food_total_price) %></td>
 				</tr>
+				<% end %>
 			<% end %>
 		<% end %>
 	<% end %>
@@ -326,12 +344,12 @@
 		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.taxable_value) %></td>
 		<td class="number"><%= number_to_percentage(0, precision: 2) %></td>
 		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.taxable_value) %></td>
-		<td class="number"><%= number_to_percentage(@account_setting.cgst_rate_for_tour_operator_services, precision: 1) %></td>
+		<td class="number"><%= number_to_percentage(taxi_booking.cgst_rate, precision: 1) %></td>
 		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.cgst.round) %></td>
-		<td class="number"><%= number_to_percentage(@account_setting.sgst_rate_for_tour_operator_services, precision: 1) %></td>
+		<td class="number"><%= number_to_percentage(taxi_booking.sgst_rate, precision: 1) %></td>
 		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.sgst.round) %></td>
-		<td class="text"></td>
-		<td class="text"></td>
+		<td class="number"><%= number_to_percentage(taxi_booking.igst_rate, precision: 1) %></td>
+		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.igst.round) %></td>
 		<td class="number"><%= number_to_currency_wo_symbol(taxi_booking.total_price) %></td>
 	</tr>
 	<% serial_number += 1 %>
