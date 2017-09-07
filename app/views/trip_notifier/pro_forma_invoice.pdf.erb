@@ -104,13 +104,7 @@
 					</td>
 				</tr>
 				<tr>
-				<td colspan=3 class="client">
-					To,<br/>
-					<%= @trip.customer.name_with_title %><br/>
-					<%= @trip.customer.postal_address %><br/>
-					Phone: <%= @trip.customer.phone_number %><br/>
-					<%= "GSTIN: #{@trip.customer.gstin}" if @trip.customer.gstin != "" %>
-				</td>
+				<td colspan=3 class="client">To,<br/><%= @trip.customer.name_with_title %><br/><%= @trip.customer.postal_address %><br/>Phone: <%= @trip.customer.phone_number %><br/><%= "GSTIN: #{@trip.customer.gstin}" if @trip.customer.gstin != "" %></td>
 					<td colspan=3 class="other_info">
 						Date: <%= l @trip.invoice_date %>
 						<% if @trip.payments.any? %>Receipt No: <%= @trip.payments.order(:date_received).last.receipt_number %>/<%= l @trip.payments.order(:date_received).last.date_received %><% end %>
