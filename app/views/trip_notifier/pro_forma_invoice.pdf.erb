@@ -265,6 +265,19 @@
 			</p>
 
 			<% if @account_setting.id == 3 %>
+				<p class="footnote_bold">Payment Schedule</p>
+				<p class="footnote">For confirmation: 50% of the booking amount</p>
+				<p class="footnote">One (1) week before arrival: remaining 50% of the booking amount</p>
+				<p class="footnote">All and full payment should be made at least one (1) week before arrival directly into our bank – by online transfer, cheque or cash deposit. We will not accept any payments upon arrival at the Retreat.</p>
+			<% end %>
+
+			<% if @account_setting.id == 3 %>
+				<p class="footnote_bold">Cancellation fee</p>
+				<p class="footnote">If cancelled more than 1 week before the arrival date: cancellation fee will be 50% of the booking cost.</p>
+				<p class="footnote">If cancelled within 1 week before the arrival date: cancellation fee will be 100% of the booking cost.</p>
+			<% end %>
+
+			<% if @account_setting.id == 3 %>
 				<p class="footnote_bold">Important Retreat information for your perusal:</p>
 				<p class="footnote">1. We are located inside the Binsar Wildlife Sanctuary. The forest checkpost remains closed from sunset (about 7.00 PM during summer, 5.00 PM during winter) to sunrise. We request you to arrive at the checkpost at least an hour before sunset. The forest department charges an entry fee which is not included in our pricing.</p>
 				<p class="footnote">2. The last 600 metres to the Retreat is a steep uphill ride on a very rough and narrow path and you will do this stretch in our 4-wheel drive pickup. There is parking space for self-driven cars where you transfer.</p>
