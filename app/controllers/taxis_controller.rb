@@ -20,11 +20,11 @@ class TaxisController < ApplicationController
 
     if session[:taxi_operator_id]
 			@taxis = @taxis.paginate(page: params[:page], per_page: 10).
-        order('agency_id, unit_price').
+        order('agency_id, model, unit_price').
 				find_all_by_agency_id(session[:taxi_operator_id])
 		else
 			@taxis = @taxis.paginate(page: params[:page], per_page: 10).
-        order('agency_id, unit_price')
+        order('agency_id, model, unit_price')
 		end
 
     respond_to do |format|
