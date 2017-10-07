@@ -203,7 +203,7 @@
 				</tr>
 				<tr>
 					<% if @trip.tac != 0 %>
-						<td colspan=2 class="bold">Less: TAC on Room Bookings</td>
+						<td colspan=2 class="bold">Less: TAC on Room Bookings (inclusive of applicable GST)</td>
 						<td colspan=3></td>
 						<td class="number"><span class="bold">(<%= number_to_currency_wo_symbol(@trip.tac) %>)</span></td>
 					<% end %>
