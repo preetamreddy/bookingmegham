@@ -45,8 +45,24 @@
     <%= f.number_field :price_for_single_occupancy %>
   </div>
   <div class="field">
+    <%= f.label :price_for_lodging_on_single, "Price for lodging - Single" %><br />
+    <%= f.number_field :price_for_lodging_on_single, :min => 0 %>
+  </div>
+  <div class="field">
+    <%= f.label :price_for_food_on_single, "Price for food - Single" %><br />
+    <%= f.number_field :price_for_food_on_single, :min => 0 %>
+  </div>
+  <div class="field">
     <%= f.label :price_for_double_occupancy, "Double occupancy" %><br />
     <%= f.number_field :price_for_double_occupancy %>
+  </div>
+  <div class="field">
+    <%= f.label :price_for_lodging_on_double, "Price for lodging - Double" %><br />
+    <%= f.number_field :price_for_lodging_on_double, :min => 0 %>
+  </div>
+  <div class="field">
+    <%= f.label :price_for_food_on_double, "Price for food - Double" %><br />
+    <%= f.number_field :price_for_food_on_double, :min => 0 %>
   </div>
   <div class="field">
     <%= f.label :price_for_extra_adults %><br />

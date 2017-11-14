@@ -15,11 +15,10 @@
 	    <th class="nowrap">Meal plan</th>
 	    <th class="nowrap">Start date</th>
 	    <th class="nowrap">End date</th>
-	    <th class="number">Single occupancy</th>
-	    <th class="number">Double occupancy</th>
-	    <th class="number">Extra adult</th>
-	    <th class="number">Children</th>
-	    <th class="number">Infants</th>
+		<th class="currency">Rate</th>
+		<th class="number">Lodging</th>
+		<th class="number">Food</th>
+		<th class="currency">Extra beds</th>
 	    <th></th>
 	  </tr>
 	
@@ -29,11 +28,23 @@
 	    <td class="nowrap"><%= price_list.meal_plan %></td>
 	    <td class="nowrap"><%= l price_list.start_date if price_list.start_date %></td>
 	    <td class="nowrap"><%= l price_list.end_date if price_list.end_date %></td>
-	    <td class="number"><%= number_to_currency(price_list.price_for_single_occupancy) %></td>
-	    <td class="number"><%= number_to_currency(price_list.price_for_double_occupancy) %></td>
-	    <td class="number"><%= number_to_currency(price_list.price_for_extra_adults) %></td>
-	    <td class="number"><%= number_to_currency(price_list.price_for_children) %></td>
-	    <td class="number"><%= number_to_currency(price_list.price_for_infants) %></td>
+		<td class="currency">
+			Single - <%= number_to_currency(price_list.price_for_single_occupancy) %><br/>
+			Double - <%= number_to_currency(price_list.price_for_double_occupancy) %>
+		</td>
+		<td class="currency">
+			Single - <%= number_to_currency(price_list.price_for_lodging_on_single) %><br/>
+			Double - <%= number_to_currency(price_list.price_for_lodging_on_double) %>
+		</td>
+		<td class="currency">
+			Single - <%= number_to_currency(price_list.price_for_food_on_single) %><br/>
+			Double - <%= number_to_currency(price_list.price_for_food_on_double) %>
+		</td>
+		<td class="currency">
+			Adult - <%= number_to_currency(price_list.price_for_extra_adults) %><br/>
+			Child - <%= number_to_currency(price_list.price_for_children) %><br/>
+			Infant - <%= number_to_currency(price_list.price_for_infants) %>
+		</td>
 	    <td>
 	      <%= link_to 'Edit', edit_price_list_path(price_list) %></br>
 	      <%= link_to 'Destroy', price_list, confirm: 'Are you sure?', method: :delete %>
