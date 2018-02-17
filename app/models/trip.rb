@@ -211,14 +211,22 @@ class Trip < ActiveRecord::Base
     "#{account_name_abbreviation}/#{id}"
   end
 
+	def trip_year
+		if end_date.month <= 3
+			end_date.year - 1 - 2000
+		else
+			end_date.year - 2000
+		end
+	end
+
   def proforma_invoice_number
     account_name_abbreviation = AccountSetting.find_by_account_id(account_id).name_abbreviation
-    "#{account_name_abbreviation}/#{start_date.to_s(:year)}/#{id}"
+    "#{account_name_abbreviation}/#{trip_year}/#{id}"
   end
 
   def tax_invoice_number
     account_name_abbreviation = AccountSetting.find_by_account_id(account_id).name_abbreviation
-    "#{account_name_abbreviation}/#{start_date.to_s(:year)}/#{counter_for_tax_invoice}"
+    "#{account_name_abbreviation}/#{trip_year}/#{counter_for_tax_invoice}"
   end
 
 	def invoice_number
