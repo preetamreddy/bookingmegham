@@ -81,6 +81,16 @@
     	<%= @trip.payment_status %>
 		</span></p>
 	<% end %>
+	<%= hidden_div_if((@trip.new_record?), class: "field") do %>
+    <%= f.label :total_price %><br />
+		<p><span class="highlight">
+			<%= number_to_currency(@trip.total_price) %>
+		</span></p>
+	<% end %>
+	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
+    <%= f.label :tds, "TDS on TAC" %><br />
+    <%= f.number_field :tds %>
+	<% end %>
 	<%= hidden_div_if(@trip.new_record?, class: "field") do %>
     <%= f.label :round_off, "Round off" %><br />
     <%= f.number_field :round_off %>
