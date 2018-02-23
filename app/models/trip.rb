@@ -254,7 +254,6 @@ class Trip < ActiveRecord::Base
 		def init
 			self.discount ||= 0
 			self.tac ||= 0
-			self.tds ||= 0
 			self.payment_status ||= NOT_PAID
 			self.vat ||= 0
 			self.luxury_tax ||= 0
@@ -351,7 +350,9 @@ class Trip < ActiveRecord::Base
 		end
 
 		def update_tds
-			self.tds = tac * tds_percent / 100
+			if tds != 0
+				self.tds = tac * tds_percent / 100
+			end
 		end
 
 		def update_counter_for_tax_invoice
