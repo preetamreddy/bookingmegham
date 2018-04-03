@@ -4,6 +4,8 @@ class RoomType < ActiveRecord::Base
 	has_many :rooms
   has_many :price_lists, :dependent => :destroy
 
+	after_initialize :init
+
 	validates :property_id, :room_type, :number_of_rooms,
 		:price_for_single_occupancy, :price_for_double_occupancy,
     :price_for_triple_occupancy, :price_for_children_between_5_and_12_years,
@@ -112,6 +114,10 @@ class RoomType < ActiveRecord::Base
 	end
 
   private
+	def init
+		self.price_for_lodging ||= 0
+	end
+
     def get_rates(meal_plan, check_in_date)
       price_list = PriceList.where('room_type_id = :room_type_id and meal_plan = :meal_plan and
                                     start_date <= :check_in_date and end_date >= :check_in_date',
