@@ -18,9 +18,18 @@
           { :disabled => cannot_edit_room } ) %>
 	<% end %>
 
-	<%= f.label :number_of_rooms, "#" %>
-	<%= f.number_field :number_of_rooms, min: 1, max: 99, :required => true,
-			  :disabled => cannot_edit_room %>
+   <%= f.label :number_of_rooms, "#" %>
+   <%= f.select :number_of_rooms, Booking::NUMBER_OF_ROOMS, :include_blank => false, :class => 'room_details', :disabled => cannot_edit_room %>
+
+
+   <%= f.label :number_of_adults, "Adults" %>
+   <%= f.select :number_of_adults, Booking::OCCUPANTS, :include_blank => false, :disabled => cannot_edit_room %>
+
+   <%= f.label :number_of_children_between_5_and_12_years, "Children" %>
+   <%= f.select :number_of_children_between_5_and_12_years, Booking::OCCUPANTS, :include_blank => true, :disabled => cannot_edit_room %>
+
+   <%= f.label :number_of_children_below_5_years, "Infants" %>
+   <%= f.select :number_of_children_below_5_years, Booking::OCCUPANTS, :include_blank => true, :disabled => cannot_edit_room %>
 
 	<%= f.label :discount, "Discount" %>
 	<%= f.number_field :discount_percentage, min: 0, max: 100 %>

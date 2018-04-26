@@ -212,7 +212,7 @@
 			<% if room.cancelled == 1 %>
 				<tr>
 					<td></td>
-					<td class="text"><li>Cancellation fee: <%= room.room_type.room_type %> @ <%= room.number_of_adults %> / room - <%= room.booking.meal_plan %></li></td>
+					<td class="text"><li>Cancellation fee: <%= room.room_type.room_type %> - <%= room.occupancy %></li></td>
 					<td class="text"><%= @account_setting.hsn_for_lodging %></td>
 					<td class="number"><%= room.number_of_rooms %></td>
 					<td class="number"><%= room.number_of_nights %></td>
@@ -231,7 +231,7 @@
 			<% else %>
 				<tr>
 					<td></td>
-					<td class="text"><%= room.room_type.room_type %> @ <%= room.number_of_adults %> / room</td>
+					<td class="text"><%= room.room_type.room_type %> - <%= room.occupancy %></td>
 					<% if @trip.for_own_properties == 0 %>
 						<td class="text"><%= @account_setting.hsn_for_lodging %></td>
 						<td class="number"><%= room.number_of_rooms %></td>

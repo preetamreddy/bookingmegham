@@ -251,9 +251,9 @@ class Room < ActiveRecord::Base
 
 		def update_number_of_adults
 			if occupancy == "Double"
-				self.number_of_adults = 2
+				self.number_of_adults ||= 2
 			else
-				self.number_of_adults = 1
+				self.number_of_adults ||= 1
 			end
 		end
 

@@ -42,7 +42,9 @@
 			<th class="text">Occupancy</th>
 			<th class="nowrap">Room type</th>
 			<th class="number"># rooms</th>
-			<th class="number">Adults / room</th>
+			<th class="number">Adults</th>
+			<th class="number">Children</th>
+			<th class="number">Infants</th>
 			<th class="currency">Room rate</th>
 			<th class="currency">Value</th>
 			<th class="number">Discount / TAC</th>
@@ -60,6 +62,8 @@
 					<td class="nowrap"><%= room.room_type.room_type %></td>
 					<td class="number"><%= room.number_of_rooms %></td>
 					<td class="number"><%= room.number_of_adults %></td>
+					<td class="number"><%= room.number_of_children_between_5_and_12_years %></td>
+					<td class="number"><%= room.number_of_children_below_5_years %></td>
 					<td class="currency"><%= number_to_currency(room.room_rate) %></td>
 				<% else %>
 					<td class="strikethrough"><%= room.occupancy %></td>

@@ -64,20 +64,6 @@ class RoomType < ActiveRecord::Base
 			end
 		end
 
-		if return_value == "TOTAL_PRICE" or return_value == "FOOD"
-			if extra_adults
-				rate += extra_adults * rates[:price_for_extra_adults]
-			end
-
-			if number_of_children_between_5_and_12_years > 0
-				rate += number_of_children_between_5_and_12_years * rates[:price_for_children]
-			end	
-
-			if number_of_children_below_5_years > 0
-				rate += number_of_children_below_5_years * rates[:price_for_infants]
-			end	
-		end
-
 		return rate
 	end
 
