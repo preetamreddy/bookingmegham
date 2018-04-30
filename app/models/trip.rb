@@ -314,7 +314,7 @@ class Trip < ActiveRecord::Base
 			else 
 				if balance_payment > 0
 					self.payment_status = PARTIALLY_PAID
-					self.pay_by_date = start_date - 21
+					self.pay_by_date = start_date - 7
 				else
 					self.payment_status = FULLY_PAID
 					self.pay_by_date = nil
