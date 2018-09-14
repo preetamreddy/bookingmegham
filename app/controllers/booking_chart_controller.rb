@@ -4,12 +4,12 @@ class BookingChartController < ApplicationController
 			trip = Trip.scoped_by_account_id(current_user.account_id).find(session[:trip_id])
     end
 
-		if params[:property_id]
-      property_id = params[:property_id].to_i
-      if Property.scoped_by_account_id(current_user.account_id).find_all_by_id(property_id).any?
-        @property_name = Property.scoped_by_account_id(current_user.account_id).find(property_id).name
-			  @property_id = property_id
-      end
+		if params[:property_id] and params[:property_id] != ""
+      	property_id = params[:property_id].to_i
+      	if Property.scoped_by_account_id(current_user.account_id).find_all_by_id(property_id).any?
+        		@property_name = Property.scoped_by_account_id(current_user.account_id).find(property_id).name
+			  	@property_id = property_id
+      	end
 		else
 			properties = Property.scoped_by_account_id(current_user.account_id).order("name").
 				find_all_by_ensure_availability_before_booking(1)
