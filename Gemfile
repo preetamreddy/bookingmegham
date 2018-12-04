@@ -91,3 +91,5 @@ gem 'rails3-jquery-autocomplete'
 
 # For recaptcha
 gem "recaptcha", :require => "recaptcha/rails"
+
+gem 'rails_12factor'
