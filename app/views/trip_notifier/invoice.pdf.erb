@@ -230,9 +230,9 @@
 				</tr>
 			<% else %>
 				<% if @trip.for_own_properties == 0 %>
-				<tr>
-					<td></td>
-					<td class="text"><%= room.room_type.room_type %></td>
+					<tr>
+						<td></td>
+						<td class="text"><%= room.room_type.room_type %></td>
 						<td class="text"><%= @account_setting.hsn_for_lodging %></td>
 						<td class="number"><%= room.number_of_rooms %></td>
 						<td class="number"><%= room.number_of_nights %></td>
@@ -247,7 +247,7 @@
 						<td class="number"> <%= number_to_percentage(room.igst_rate, precision: 1) %></td>
 						<td class="number"> <%= number_to_currency_wo_symbol(room.igst.round) %></td>
 						<td class="number"> <%= number_to_currency_wo_symbol(room.total_price) %></td>
-				</tr>
+					</tr>
 				<% end %>
 				<% if @trip.for_own_properties == 1 %>
 				<tr>
@@ -268,6 +268,26 @@
 					<td class="number"> <%= number_to_currency_wo_symbol(room.lodging_igst) %></td>
 					<td class="number"> <%= number_to_currency_wo_symbol(room.lodging_total_price) %></td>
 				</tr>
+				<% if booking.check_in_date <= "31-03-2019".to_date %>
+				<tr>
+					<td></td>
+					<td class="text"><li>Food charges - <%= room.occupancy %></li></td>
+					<td class="text"><%= @account_setting.hsn_for_food %></td>
+					<td class="number"><%= room.number_of_rooms %></td>
+					<td class="number"><%= room.number_of_nights %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.food_rate) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.food_value) %></td>
+					<td class="number"> <%= number_to_percentage(room.discount_percentage, precision: 2) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.food_taxable_value) %></td>
+					<td class="number"> <%= number_to_percentage(room.cgst_rate_for_food, precision: 1) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.food_cgst) %></td>
+					<td class="number"> <%= number_to_percentage(room.sgst_rate_for_food, precision: 1) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.food_sgst) %></td>
+					<td class="number"> <%= number_to_percentage(room.igst_rate_for_food, precision: 1) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.food_igst) %></td>
+					<td class="number"> <%= number_to_currency_wo_symbol(room.food_total_price) %></td>
+				</tr>
+				<% end %>
 				<% end %>
 			<% end %>
 		<% end %>
