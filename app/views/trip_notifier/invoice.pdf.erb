@@ -439,9 +439,9 @@
 
 			<% if @account_setting.id == 3 %>
 				<p class="footnote_bold">Payment Schedule</p>
-				<p class="footnote">For confirmation: 100% of the lodging tariff</p>
-				<p class="footnote">One (1) week before arrival: 100% of the food amount</p>
-				<p class="footnote">All and full payment for food should be made at least one (1) week before arrival directly to our banks (by online transfer, cheque or cash deposit) OR credit card payment over a payment gateway (we will send you a custom link for the same). We do not accept any payments upon arrival at the Retreat.</p>
+				<p class="footnote">For confirmation: 50% of the invoice amount</p>
+				<p class="footnote">One (1) week before arrival: 50% of the invoice amount</p>
+				<p class="footnote">All and full payment for food should be made at least one (1) week before arrival directly to our banks (by online transfer, cheque or cash deposit). We do not accept any payments upon arrival at the Retreat.</p>
 			<% end %>
 
 			<% if @account_setting.id == 3 %>
@@ -451,15 +451,16 @@
 				<p class="footnote">Account Name: Yasumi Nature Holidays</p>
 				<p class="footnote">Account Type: Current</p>
 				<p class="footnote">IFSC Code: HDFC0001919</p>
+				<p class="footnote">Branch: Almora, Uttarakhand</p>
 				<p class="footnote">SWIFT Code (for international remittance): HDFCINBBXXX</p>
 				<p class="footnote">UPI: binsarforestretreat@upi</p>
 			<% end %>
 
 			<% if @account_setting.id == 3 %>
 				<p class="footnote_bold">Cancellation fee</p>
-				<p class="footnote">If cancelled up to 14 days before arrival, cancellation fee will be 50% of lodging tariff</p>
-				<p class="footnote">If cancelled within 14 days of arrival, cancellation fee will be 100% of lodging tariff</p>
-				<p class="footnote">Food tariff is non-refundable</p>
+				<p class="footnote">If cancelled up to 14 days before arrival, cancellation fee will be 20% of the invoice amount</p>
+				<p class="footnote">If cancelled between 14 – 7 days before arrival, cancellation fee will be 50% of the invoice amount</p>
+				<p class="footnote">If cancelled less than 7 days before arrival, cancellation fee will be 100% of the invoice amount</p>
 			<% end %>
 
 			<% if @account_setting.id == 3 %>
