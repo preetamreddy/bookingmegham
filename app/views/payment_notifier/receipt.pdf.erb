@@ -81,7 +81,7 @@
 							Phone: <%= @account_setting.phone_number_1 %>
 						</span>
             <%= "PAN No: #{@account_setting.pan}" if @account_setting.pan != "" %>
-            <%= "S Tax No: #{@account_setting.service_tax_number}" if @account_setting.service_tax_number != "" %>
+            <%= "GSTIN: #{@account_setting.gstin}" if @account_setting.gstin != "" %>
 					</td>
 				</tr>
 			</table>
@@ -98,11 +98,11 @@
 			<% if @trip.balance_payment > 0 %>
 				<% if @trip.pay_by_date > Date.today %>
 					<p>
-						You are requested to make the balance payment of Rs. <%= number_to_currency_wo_symbol(@trip.balance_payment) %> by <%= l @trip.pay_by_date %> for issue of vouchers.
+						You are requested to make the balance payment of Rs. <%= number_to_currency_wo_symbol(@trip.balance_payment) %> by <%= l @trip.pay_by_date %>.
 					</p>
 				<% else %>
 					<p>
-						You are requested to make the balance payment of Rs. <%= number_to_currency_wo_symbol(@trip.balance_payment) %> for issue of vouchers.
+						You are requested to make the balance payment of Rs. <%= number_to_currency_wo_symbol(@trip.balance_payment) %>.
 				<% end %>
 			<% end %>
 			<p>
