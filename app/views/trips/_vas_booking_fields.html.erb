@@ -3,16 +3,16 @@
    <%= f.select :tax_type, VasBooking::TAX_TYPES,
       prompt: 'Select Tax Type' %>
 
-	<%= f.label :every_day, "All days" %>
 	<%= f.check_box :every_day, :default => 0 %>
+	<%= f.label :every_day, "All days" %>
 
-	<%= f.text_field :value_added_service, size: 15 %>
+	<%= f.text_field :value_added_service, size: 20 %>
 
 	<%= f.label :unit_price, "Unit price" %>
 	<%= f.number_field :unit_price, min: 0, max: 9999 %>
 
 	<%= f.label :number_of_units, "#" %>
-	<%= f.number_field :number_of_units, min: 0, max: 99 %>
+   <%= f.select :number_of_units, Booking::NUMBER_OF_ROOMS, :include_blank => false, :class => 'room_details' %>
 
 	<%= f.label :discount_percentage, "Discount" %>
 	<%= f.number_field :discount_percentage, min: 0, max: 100 %>
