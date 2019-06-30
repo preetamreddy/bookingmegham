@@ -15,7 +15,7 @@
 					RoomType.scoped_by_account_id(current_user.account_id).
             find_all_by_property_id_and_deleted(@booking.property_id, 0),
           :id, :room_type, {}, 
-          { :disabled => cannot_edit_room } ) %>
+          { :disabled => 0 } ) %>
 	<% end %>
 
    <%= f.label :number_of_rooms, "#" %>
