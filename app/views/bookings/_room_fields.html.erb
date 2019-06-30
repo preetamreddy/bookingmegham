@@ -34,9 +34,7 @@
 	<%= f.label :discount, "Discount" %>
 	<%= f.number_field :discount_percentage, min: 0, max: 100 %>
 
-	<% if can_edit_room %> 
-		<%= f.link_to_remove "x" %>
-	<% end %>
+	<%= f.link_to_remove "x" %>
 
   <% if cannot_edit_room %> 
     <%= f.label :cancelled, "CXL" %>
