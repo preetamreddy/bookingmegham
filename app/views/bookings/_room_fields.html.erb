@@ -15,7 +15,7 @@
 					RoomType.scoped_by_account_id(current_user.account_id).
             find_all_by_property_id_and_deleted(@booking.property_id, 0),
           :id, :room_type, {}, 
-          { :disabled => 0 } ) %>
+          { :disabled => cannot_edit_room } ) %>
 	<% end %>
 
    <%= f.label :number_of_rooms, "#" %>
@@ -34,7 +34,9 @@
 	<%= f.label :discount, "Discount" %>
 	<%= f.number_field :discount_percentage, min: 0, max: 100 %>
 
-	<%= f.link_to_remove "x" %>
+	<% if can_edit_room %> 
+		<%= f.link_to_remove "x" %>
+	<% end %>
 
   <% if cannot_edit_room %> 
     <%= f.label :cancelled, "CXL" %>
